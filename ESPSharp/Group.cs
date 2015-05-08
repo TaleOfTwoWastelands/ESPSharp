@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace ESPSharp
 {
@@ -14,13 +15,76 @@ namespace ESPSharp
         public ushort DateStamp { get; protected set; }
         public byte[] Unknown { get; protected set; }
 
-        public abstract void WriteXML(string destinationFolder);
+        public List<Record> Records = new List<Record>();
+        public List<Group> Subgroups = new List<Group>();
 
-        public abstract void ReadXML(string sourceFile);
+        protected GroupType type;
 
-        public abstract void WriteBinary(BinaryWriter writer);
+        public void WriteXML(string destinationFolder)
+        {
+            throw new NotImplementedException();
+        }
 
-        public abstract void ReadBinary(BinaryReader reader);
+        public void ReadXML(string sourceFile)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteBinary(BinaryWriter writer)
+        {
+            byte[] writeBytes;
+
+            using (MemoryStream stream = new MemoryStream())
+            using (BinaryWriter subWriter = new BinaryWriter(stream))
+            {
+                foreach (var group in Subgroups)
+                    group.WriteBinary(subWriter);
+
+                foreach (var record in Records)
+                    record.WriteBinary(subWriter);
+
+                writeBytes = stream.ToArray();
+            }
+
+            writer.Write(Tag);
+            writer.Write(writeBytes.Length + 24);
+            WriteTypeData(writer);
+            writer.Write((uint)type);
+            writer.Write(DateStamp);
+            writer.Write(Unknown);
+            writer.Write(writeBytes);
+        }
+
+        public void ReadBinary(BinaryReader reader)
+        {
+            Tag = reader.ReadTag();
+            Size = reader.ReadUInt32() - 24;
+            ReadTypeData(reader);
+            Debug.Assert((GroupType)reader.ReadUInt32() == type);
+            DateStamp = reader.ReadUInt16();
+            Unknown = reader.ReadBytes(6);
+
+            long offset = reader.BaseStream.Position;
+            while (reader.BaseStream.Position < offset + Size)
+            {
+                if (reader.PeekTag().ToString() == "GRUP")
+                {
+                    Group newGroup = Group.CreateGroup(reader);
+                    newGroup.ReadBinary(reader);
+                    Subgroups.Add(newGroup);
+                }
+                else
+                {
+                    Record newRecord = new Record();
+                    newRecord.ReadBinary(reader);
+                }
+            }
+        }
+
+        public abstract void WriteTypeData(BinaryWriter writer);
+        public abstract void ReadTypeData(BinaryReader reader);
+        public abstract void WriteTypeDataXML(XElement element);
+        public abstract void ReadTypeDataXML(XElement element);
 
         public static Group CreateGroup(GroupType type)
         {
@@ -83,5 +147,7 @@ namespace ESPSharp
         {
             throw new NotImplementedException();
         }
+
+        public override abstract string ToString();
     }
 }
