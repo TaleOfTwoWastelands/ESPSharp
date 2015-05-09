@@ -9,8 +9,8 @@ namespace ESPSharp
 {
     public class ElderScrollsPlugin : IESPSerializable
     {
-        public Header Header;
-        public List<Group> Groups;
+        public Header Header = new Header();
+        public List<Group> Groups = new List<Group>();
 
         public void WriteXML(string destinationFolder)
         {
@@ -24,12 +24,21 @@ namespace ESPSharp
 
         public void WriteBinary(BinaryWriter writer)
         {
-            throw new NotImplementedException();
+            Header.WriteBinary(writer);
+            foreach (var group in Groups)
+                group.WriteBinary(writer);
         }
 
         public void ReadBinary(BinaryReader reader)
         {
-            throw new NotImplementedException();
+            Header.ReadBinary(reader);
+            while (reader.BaseStream.Position < reader.BaseStream.Length)
+            {
+                var group = Group.CreateGroup(reader);
+                group.ReadBinary(reader);
+
+                Groups.Add(group);
+            }
         }
     }
 }

@@ -67,7 +67,7 @@ namespace ESPSharp
             long offset = reader.BaseStream.Position;
             while (reader.BaseStream.Position < offset + Size)
             {
-                if (reader.PeekTag().ToString() == "GRUP")
+                if (new string(reader.PeekTag()) == "GRUP")
                 {
                     Group newGroup = Group.CreateGroup(reader);
                     newGroup.ReadBinary(reader);
@@ -77,6 +77,7 @@ namespace ESPSharp
                 {
                     Record newRecord = new Record();
                     newRecord.ReadBinary(reader);
+                    Records.Add(newRecord);
                 }
             }
         }

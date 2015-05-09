@@ -35,7 +35,7 @@ namespace ESPSharp
 
         public override string ToString()
         {
-            return RecordType.ToString();
+            return new String(RecordType);
         }
     }
 }

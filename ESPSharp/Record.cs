@@ -94,7 +94,12 @@ namespace ESPSharp
 
             if (Flags.HasFlag(RecordFlag.Compressed))
             {
-                Bytes = Zlib.Decompress(reader.BaseStream, reader.ReadUInt32());
+                uint origSize = reader.ReadUInt32();
+                MemoryStream stream = new MemoryStream(reader.ReadBytes((int)Size - 4));
+
+                Bytes = Zlib.Decompress(stream, origSize - 4);
+
+                stream.Dispose();
             }
             else
             {
