@@ -18,6 +18,8 @@ namespace ESPSharp
         public ushort VersionControlInfo2 { get; set; }
         public byte[] Bytes { get; protected set; }
 
+        protected bool corrupted = false;
+
         public void WriteXML(string destinationfolder)
         {
             XDocument doc = new XDocument();
@@ -57,7 +59,7 @@ namespace ESPSharp
             writer.Write(Tag);
 
             byte[] outBytes;
-            if (Flags.HasFlag(RecordFlag.Compressed))
+            if (Flags.HasFlag(RecordFlag.Compressed) && !corrupted)
             {
                 outBytes = (Zlib.Compress(Bytes));
                 writer.Write((uint)outBytes.Length + 4);
@@ -95,11 +97,19 @@ namespace ESPSharp
             if (Flags.HasFlag(RecordFlag.Compressed))
             {
                 uint origSize = reader.ReadUInt32();
-                MemoryStream stream = new MemoryStream(reader.ReadBytes((int)Size - 4));
-
-                Bytes = Zlib.Decompress(stream, origSize - 4);
-
-                stream.Dispose();
+                byte[] compressedBytes = reader.ReadBytes((int)Size - 4);
+                try
+                {
+                    using(MemoryStream stream = new MemoryStream(compressedBytes))
+                        Bytes = Zlib.Decompress(stream, origSize - 4);
+                }
+                catch
+                {
+                    corrupted = true;
+                    List<byte> temp = BitConverter.GetBytes(origSize).ToList();
+                    temp.AddRange(compressedBytes);
+                    Bytes = temp.ToArray();
+                }
             }
             else
             {
