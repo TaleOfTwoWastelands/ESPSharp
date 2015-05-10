@@ -10,8 +10,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        string testFile = "FalloutNV.esm";
-        string outFile = "Fallout3.esm";
+        string testFile = "GunRunnersArsenal.esm";
+        string outFile = "NEWGunRunnersArsenal.esm";
         ElderScrollsPlugin pluggy = new ElderScrollsPlugin();
 
         using (FileStream stream = new FileStream(testFile, FileMode.Open))
@@ -19,6 +19,12 @@ class Program
         {
             pluggy.ReadBinary(reader);
         }
+
+        Directory.CreateDirectory("GunRunnersArsenal");
+        pluggy.WriteXML("GunRunnersArsenal");
+
+        pluggy = new ElderScrollsPlugin();
+        pluggy.ReadXML("GunRunnersArsenal\\0.xml");
 
         using (FileStream stream = new FileStream(outFile, FileMode.Create, FileAccess.ReadWrite))
         using (BinaryWriter writer = new BinaryWriter(stream))

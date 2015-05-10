@@ -6,7 +6,7 @@ namespace ESPSharp
 {
     class TopGroup : Group
     {
-        public char[] RecordType { get; protected set; }
+        public string RecordType { get; protected set; }
 
         public TopGroup()
         {
@@ -15,27 +15,27 @@ namespace ESPSharp
 
         public override void WriteTypeData(BinaryWriter writer)
         {
-            writer.Write(RecordType);
+            writer.Write(RecordType.ToCharArray());
         }
 
         public override void ReadTypeData(BinaryReader reader)
         {
-            RecordType = reader.ReadChars(4);
+            RecordType = reader.ReadTag();
         }
 
-        public override void WriteTypeDataXML(XElement element)
+        public override XElement WriteTypeDataXML()
         {
-            throw new NotImplementedException();
+            return new XElement("RecordType", RecordType);
         }
 
         public override void ReadTypeDataXML(XElement element)
         {
-            throw new NotImplementedException();
+            RecordType = element.Element("RecordType").Value;
         }
 
         public override string ToString()
         {
-            return new String(RecordType);
+            return RecordType;
         }
     }
 }

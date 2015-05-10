@@ -23,14 +23,14 @@ namespace ESPSharp
             Worldspace = reader.ReadUInt32();
         }
 
-        public override void WriteTypeDataXML(XElement element)
+        public override XElement WriteTypeDataXML()
         {
-            throw new NotImplementedException();
+            return new XElement("Worldspace", Worldspace.ToString());
         }
 
         public override void ReadTypeDataXML(XElement element)
         {
-            throw new NotImplementedException();
+            Worldspace = element.Element("Worldspace").ToUInt32();
         }
 
         public override string ToString()

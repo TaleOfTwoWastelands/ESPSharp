@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace ESPSharp
 {
@@ -39,6 +40,8 @@ namespace ESPSharp
                 );
 
             WriteDataXML(root);
+
+            doc.Save(Path.ChangeExtension(Path.Combine(destinationfolder, this.ToString()), "xml"));
         }
 
         public void ReadXML(string sourceFile)
@@ -48,7 +51,7 @@ namespace ESPSharp
 
             Tag = root.Attribute("Tag").Value;
             Flags = root.Element("Flags").ToEnum<RecordFlag>();
-            FormID = root.Element("FormID").ToUInt32();
+            FormID = root.Element("FormID").ToFormID();
             FormVersion = root.Element("FormVersion").ToUInt16();
             VersionControlInfo1 = root.Element("VersionControlInfo").Element("Info1").ToUInt32();
             VersionControlInfo2 = root.Element("VersionControlInfo").Element("Info2").ToUInt16();
@@ -160,9 +163,14 @@ namespace ESPSharp
             return CreateRecord(reader.PeekTag());
         }
 
-        public static Record CreateRecord(XElement doc)
+        public static Record CreateRecord(XDocument doc)
         {
-            throw new NotImplementedException();
+            return Record.CreateRecord(doc.Element("Record").Attribute("Tag").Value);
+        }
+
+        public override string ToString()
+        {
+            return FormID.ToString();
         }
     }
 }

@@ -26,14 +26,17 @@ namespace ESPSharp
             CoordX = reader.ReadInt16();
         }
 
-        public override void WriteTypeDataXML(XElement element)
+        public override XElement WriteTypeDataXML()
         {
-            throw new NotImplementedException();
+            return new XElement("Block",
+                new XElement("X", CoordX),
+                new XElement("Y", CoordY));
         }
 
         public override void ReadTypeDataXML(XElement element)
         {
-            throw new NotImplementedException();
+            CoordX = element.Element("Block").Element("X").ToInt16();
+            CoordY = element.Element("Block").Element("Y").ToInt16();
         }
 
         public override string ToString()

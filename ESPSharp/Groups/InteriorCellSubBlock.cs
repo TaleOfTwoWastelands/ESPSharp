@@ -15,5 +15,15 @@ namespace ESPSharp
         {
             return "Sub-Block " + Index;
         }
+
+        public override XElement WriteTypeDataXML()
+        {
+            return new XElement("Sub-Block", Index);
+        }
+
+        public override void ReadTypeDataXML(XElement element)
+        {
+            Index = element.Element("Sub-Block").ToInt16();
+        }
     }
 }

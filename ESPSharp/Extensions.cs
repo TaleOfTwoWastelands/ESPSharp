@@ -24,6 +24,11 @@ namespace ESPSharp
             return float.Parse(ele.Value);
         }
 
+        public static FormID ToFormID(this XElement ele)
+        {
+            return uint.Parse(ele.Value, System.Globalization.NumberStyles.HexNumber);
+        }
+
         public static uint ToUInt32(this XElement ele)
         {
             return uint.Parse(ele.Value);

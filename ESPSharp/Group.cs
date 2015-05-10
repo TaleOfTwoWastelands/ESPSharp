@@ -22,12 +22,58 @@ namespace ESPSharp
 
         public void WriteXML(string destinationFolder)
         {
-            throw new NotImplementedException();
+            XDocument header = new XDocument();
+            XElement root = new XElement("GroupInfo");
+            header.Add(root);
+
+            root.Add(
+                new XElement("Type", type.ToString()),
+                WriteTypeDataXML(),
+                new XElement("DateStamp", DateStamp),
+                new XElement("Unknown", Unknown.ToBase64())
+                );
+
+            header.Save(Path.Combine(destinationFolder, "GroupHeader.metadata"));
+
+            foreach (var group in Subgroups)
+            {
+                string newDir = Path.Combine(destinationFolder, group.ToString());
+                Directory.CreateDirectory(newDir);
+                group.WriteXML(newDir);
+            }
+
+            foreach (var record in Records)
+                record.WriteXML(destinationFolder);
         }
 
         public void ReadXML(string sourceFile)
         {
-            throw new NotImplementedException();
+            XDocument doc = XDocument.Load(sourceFile);
+            XElement root = (XElement)doc.FirstNode;
+            Tag = "GRUP";
+            type = root.Element("Type").ToEnum<GroupType>();
+            ReadTypeDataXML(root);
+            DateStamp = root.Element("DateStamp").ToUInt16();
+            Unknown = root.Element("Unknown").ToBytes();
+
+            string sourceFolder = Path.GetDirectoryName(sourceFile);
+
+            foreach (var file in Directory.EnumerateFiles(sourceFolder, "*.*", SearchOption.TopDirectoryOnly).Where(f => Path.GetFileName(f) != "GroupHeader.metadata"))
+            {
+                Record newRecord = Record.CreateRecord(XDocument.Load(file));
+                newRecord.ReadXML(file);
+
+                Records.Add(newRecord);
+            }
+
+            foreach (var folder in Directory.EnumerateDirectories(sourceFolder, "*.*", SearchOption.TopDirectoryOnly))
+            {
+                string xmlLocation = Path.Combine(folder, "GroupHeader.metadata");
+                Group newGroup = Group.CreateGroup(XDocument.Load(xmlLocation));
+                newGroup.ReadXML(xmlLocation);
+
+                Subgroups.Add(newGroup);
+            }
         }
 
         public void WriteBinary(BinaryWriter writer)
@@ -85,7 +131,7 @@ namespace ESPSharp
 
         public abstract void WriteTypeData(BinaryWriter writer);
         public abstract void ReadTypeData(BinaryReader reader);
-        public abstract void WriteTypeDataXML(XElement element);
+        public abstract XElement WriteTypeDataXML();
         public abstract void ReadTypeDataXML(XElement element);
 
         public static Group CreateGroup(GroupType type)
@@ -147,7 +193,7 @@ namespace ESPSharp
 
         public static Group CreateGroup(XDocument doc)
         {
-            throw new NotImplementedException();
+            return Group.CreateGroup(doc.Element("GroupInfo").Element("Type").ToEnum<GroupType>());
         }
 
         public override abstract string ToString();

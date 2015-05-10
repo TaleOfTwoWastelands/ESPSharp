@@ -23,14 +23,14 @@ namespace ESPSharp
             Cell = reader.ReadUInt32();
         }
 
-        public override void WriteTypeDataXML(XElement element)
+        public override XElement WriteTypeDataXML()
         {
-            throw new NotImplementedException();
+            return new XElement("Cell", Cell.ToString());
         }
 
         public override void ReadTypeDataXML(XElement element)
         {
-            throw new NotImplementedException();
+            Cell = element.Element("Cell").ToFormID();
         }
 
         public override string ToString()

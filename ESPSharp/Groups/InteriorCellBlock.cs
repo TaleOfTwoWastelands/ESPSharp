@@ -23,14 +23,14 @@ namespace ESPSharp
             Index = reader.ReadInt32();
         }
 
-        public override void WriteTypeDataXML(XElement element)
+        public override XElement WriteTypeDataXML()
         {
-            throw new NotImplementedException();
+            return new XElement("Index", Index);
         }
 
         public override void ReadTypeDataXML(XElement element)
         {
-            throw new NotImplementedException();
+            Index = element.Element("Index").ToInt16();
         }
 
         public override string ToString()
