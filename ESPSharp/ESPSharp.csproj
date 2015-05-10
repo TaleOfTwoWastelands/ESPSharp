@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumsAndFlags\GameSettingType.cs" />
     <Compile Include="Groups\CellGroup.cs" />
     <Compile Include="Groups\CellPersistentChildren.cs" />
     <Compile Include="Groups\CellTemporaryChildren.cs" />
@@ -50,10 +51,10 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Groups\ExteriorCellBlock.cs" />
     <Compile Include="Groups\ExteriorCellSubBlock.cs" />
-    <Compile Include="GroupType.cs" />
+    <Compile Include="EnumsAndFlags\GroupType.cs" />
     <Compile Include="Groups\InteriorCellBlock.cs" />
     <Compile Include="Groups\InteriorCellSubBlock.cs" />
-    <Compile Include="RecordFlag.cs" />
+    <Compile Include="EnumsAndFlags\RecordFlag.cs" />
     <Compile Include="FormID.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Header.cs" />
@@ -63,6 +64,8 @@
     <Compile Include="Groups\TopGroup.cs" />
     <Compile Include="Groups\TopicGroup.cs" />
     <Compile Include="Groups\WorldGroup.cs" />
+    <Compile Include="Records\GenericRecord.cs" />
+    <Compile Include="Records\GameSetting.cs" />
     <Compile Include="Zlib.cs" />
   </ItemGroup>
   <ItemGroup>

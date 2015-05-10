@@ -10,7 +10,7 @@ namespace ESPSharp
 {
     public abstract class Group : IESPSerializable
     {
-        public char[] Tag { get; protected set; }
+        public string Tag { get; protected set; }
         public uint Size { get; protected set; }
         public ushort DateStamp { get; protected set; }
         public byte[] Unknown { get; protected set; }
@@ -46,7 +46,7 @@ namespace ESPSharp
                 writeBytes = stream.ToArray();
             }
 
-            writer.Write(Tag);
+            writer.Write(Tag.ToCharArray());
             writer.Write(writeBytes.Length + 24);
             WriteTypeData(writer);
             writer.Write((uint)type);
@@ -68,7 +68,7 @@ namespace ESPSharp
             long offset = reader.BaseStream.Position;
             while (reader.BaseStream.Position < offset + Size)
             {
-                if (new string(reader.PeekTag()) == "GRUP")
+                if (reader.PeekTag() == "GRUP")
                 {
                     Group newGroup = Group.CreateGroup(reader);
                     newGroup.ReadBinary(reader);
@@ -76,7 +76,7 @@ namespace ESPSharp
                 }
                 else
                 {
-                    Record newRecord = new Record();
+                    Record newRecord = Record.CreateRecord(reader);
                     newRecord.ReadBinary(reader);
                     Records.Add(newRecord);
                 }

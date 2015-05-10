@@ -66,17 +66,17 @@ namespace ESPSharp
         #endregion
 
         #region BinaryReaderExtensions
-        public static char[] PeekTag(this BinaryReader reader)
+        public static string PeekTag(this BinaryReader reader)
         {
-            char[] peek = reader.ReadTag();
+            string peek = reader.ReadTag();
             reader.BaseStream.Seek(-4, SeekOrigin.Current);
 
             return peek;
         }
 
-        public static char[] ReadTag(this BinaryReader reader)
+        public static string ReadTag(this BinaryReader reader)
         {
-            return reader.ReadChars(4);
+            return new string(reader.ReadChars(4));
         }
         #endregion
 
