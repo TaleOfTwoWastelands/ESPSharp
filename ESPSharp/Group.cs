@@ -60,7 +60,8 @@ namespace ESPSharp
             Tag = reader.ReadTag();
             Size = reader.ReadUInt32() - 24;
             ReadTypeData(reader);
-            Debug.Assert((GroupType)reader.ReadUInt32() == type);
+            GroupType thisType = (GroupType)reader.ReadUInt32();
+            Debug.Assert(thisType == type);
             DateStamp = reader.ReadUInt16();
             Unknown = reader.ReadBytes(6);
 

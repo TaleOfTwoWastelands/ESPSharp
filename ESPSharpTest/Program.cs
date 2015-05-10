@@ -11,6 +11,7 @@ class Program
     static void Main(string[] args)
     {
         string testFile = "FalloutNV.esm";
+        string outFile = "Fallout3.esm";
         ElderScrollsPlugin pluggy = new ElderScrollsPlugin();
 
         using (FileStream stream = new FileStream(testFile, FileMode.Open))
@@ -19,7 +20,7 @@ class Program
             pluggy.ReadBinary(reader);
         }
 
-        using (FileStream stream = new FileStream("NEW" + testFile, FileMode.Create, FileAccess.ReadWrite))
+        using (FileStream stream = new FileStream(outFile, FileMode.Create, FileAccess.ReadWrite))
         using (BinaryWriter writer = new BinaryWriter(stream))
         {
             pluggy.WriteBinary(writer);
