@@ -58,14 +58,6 @@ namespace ESPSharp
 
             string sourceFolder = Path.GetDirectoryName(sourceFile);
 
-            foreach (var file in Directory.EnumerateFiles(sourceFolder, "*.*", SearchOption.TopDirectoryOnly).Where(f => Path.GetFileName(f) != "GroupHeader.metadata"))
-            {
-                Record newRecord = Record.CreateRecord(XDocument.Load(file));
-                newRecord.ReadXML(file);
-
-                Records.Add(newRecord);
-            }
-
             foreach (var folder in Directory.EnumerateDirectories(sourceFolder, "*.*", SearchOption.TopDirectoryOnly))
             {
                 string xmlLocation = Path.Combine(folder, "GroupHeader.metadata");
@@ -74,31 +66,51 @@ namespace ESPSharp
 
                 Subgroups.Add(newGroup);
             }
+
+            foreach (var file in Directory.EnumerateFiles(sourceFolder, "*.*", SearchOption.TopDirectoryOnly).Where(f => Path.GetFileName(f) != "GroupHeader.metadata"))
+            {
+                Record newRecord = Record.CreateRecord(XDocument.Load(file));
+                newRecord.ReadXML(file);
+
+                Records.Add(newRecord);
+            }
         }
 
         public void WriteBinary(BinaryWriter writer)
         {
-            byte[] writeBytes;
-
-            using (MemoryStream stream = new MemoryStream())
-            using (BinaryWriter subWriter = new BinaryWriter(stream))
-            {
-                foreach (var group in Subgroups)
-                    group.WriteBinary(subWriter);
-
-                foreach (var record in Records)
-                    record.WriteBinary(subWriter);
-
-                writeBytes = stream.ToArray();
-            }
-
             writer.Write(Tag.ToCharArray());
-            writer.Write(writeBytes.Length + 24);
+
+            long sizePoint = writer.BaseStream.Position;
+            writer.Write((uint)0);
             WriteTypeData(writer);
             writer.Write((uint)type);
             writer.Write(DateStamp);
             writer.Write(Unknown);
-            writer.Write(writeBytes);
+
+            long dataStart = writer.BaseStream.Position;
+
+            List<Group> groups = new List<Group>(Subgroups);
+
+            foreach (var record in Records)
+            {
+                record.WriteBinary(writer);
+                Group recordGroup = groups.FirstOrDefault(g => g is ISubgroup && (g as ISubgroup).GetRecordID() == record.FormID);
+
+                if (recordGroup != null)
+                {
+                    groups.Remove(recordGroup);
+                    recordGroup.WriteBinary(writer);
+                }
+            }
+
+            foreach (var group in groups)
+                group.WriteBinary(writer);
+
+            long dataEnd = writer.BaseStream.Position;
+
+            writer.BaseStream.Seek(sizePoint, SeekOrigin.Begin);
+            writer.Write((uint)(dataEnd - dataStart + 24));
+            writer.BaseStream.Seek(dataEnd, SeekOrigin.Begin);
         }
 
         public void ReadBinary(BinaryReader reader)

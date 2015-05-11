@@ -36,10 +36,14 @@ namespace ESPSharp
                 new XElement("FormVersion", FormVersion),
                 new XElement("VersionControlInfo",
                     new XElement("Info1", VersionControlInfo1),
-                    new XElement("Info2", VersionControlInfo2))
+                    new XElement("Info2", VersionControlInfo2)),
+                new XElement("CompressionCorrupted", compressionCorrupted)
                 );
 
-            WriteDataXML(root);
+            if (compressionCorrupted)
+                root.Add(new XElement("CorruptedBytes"), corruptedBytes.ToBase64());
+            else
+                WriteDataXML(root);
 
             doc.Save(Path.ChangeExtension(Path.Combine(destinationfolder, this.ToString()), "xml"));
         }
@@ -55,8 +59,13 @@ namespace ESPSharp
             FormVersion = root.Element("FormVersion").ToUInt16();
             VersionControlInfo1 = root.Element("VersionControlInfo").Element("Info1").ToUInt32();
             VersionControlInfo2 = root.Element("VersionControlInfo").Element("Info2").ToUInt16();
+            compressionCorrupted = root.Element("CompressionCorrupted").ToBoolean();
 
-            ReadDataXML(root);
+            if (compressionCorrupted)
+                corruptedBytes = root.Element("CorruptedBytes").ToBytes();
+            else
+                ReadDataXML(root);
+
         }
 
         public void WriteBinary(BinaryWriter writer)

@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace ESPSharp
 {
-    class TopicGroup : Group
+    class TopicGroup : Group, ISubgroup
     {
         public FormID Topic { get; protected set; }
 
@@ -36,6 +36,11 @@ namespace ESPSharp
         public override string ToString()
         {
             return Topic.ToString();
+        }
+
+        public FormID GetRecordID()
+        {
+            return Topic;
         }
     }
 }

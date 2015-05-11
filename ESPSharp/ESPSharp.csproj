@@ -59,6 +59,7 @@
     <Compile Include="Group.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="IESPSerializable.cs" />
+    <Compile Include="ISubgroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Record.cs" />
     <Compile Include="Groups\TopGroup.cs" />

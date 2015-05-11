@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace ESPSharp
 {
-    class WorldGroup : Group
+    class WorldGroup : Group, ISubgroup
     {
         public FormID Worldspace { get; protected set; }
 
@@ -30,12 +30,17 @@ namespace ESPSharp
 
         public override void ReadTypeDataXML(XElement element)
         {
-            Worldspace = element.Element("Worldspace").ToUInt32();
+            Worldspace = element.Element("Worldspace").ToFormID();
         }
 
         public override string ToString()
         {
             return Worldspace.ToString();
+        }
+
+        public FormID GetRecordID()
+        {
+            return Worldspace;
         }
     }
 }

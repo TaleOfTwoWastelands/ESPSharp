@@ -10,23 +10,22 @@ class Program
 {
     static void Main(string[] args)
     {
-        string testFile = "GunRunnersArsenal.esm";
-        string outFile = "NEWGunRunnersArsenal.esm";
+        string testFile = "FalloutNV";
         ElderScrollsPlugin pluggy = new ElderScrollsPlugin();
 
-        using (FileStream stream = new FileStream(testFile, FileMode.Open))
-        using (BinaryReader reader = new BinaryReader(stream))
-        {
-            pluggy.ReadBinary(reader);
-        }
+        //using (FileStream stream = new FileStream(testFile + ".esm", FileMode.Open))
+        //using (BinaryReader reader = new BinaryReader(stream))
+        //{
+        //    pluggy.ReadBinary(reader);
+        //}
 
-        Directory.CreateDirectory("GunRunnersArsenal");
-        pluggy.WriteXML("GunRunnersArsenal");
+        //Directory.CreateDirectory(testFile);
+        //pluggy.WriteXML(testFile);
 
         pluggy = new ElderScrollsPlugin();
-        pluggy.ReadXML("GunRunnersArsenal\\0.xml");
+        pluggy.ReadXML(testFile + "\\0.xml");
 
-        using (FileStream stream = new FileStream(outFile, FileMode.Create, FileAccess.ReadWrite))
+        using (FileStream stream = new FileStream("NEW" + testFile + ".esm", FileMode.Create, FileAccess.ReadWrite))
         using (BinaryWriter writer = new BinaryWriter(stream))
         {
             pluggy.WriteBinary(writer);
