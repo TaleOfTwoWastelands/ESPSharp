@@ -16,23 +16,23 @@ class Program
         DateTime startTimeAll = DateTime.Now;
         DateTime startTime = startTimeAll;
 
-        Console.WriteLine("Loading binary...");
+        //Console.WriteLine("Loading binary...");
 
-        using (FileStream stream = new FileStream(testFile + ".esm", FileMode.Open))
-        using (BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("ISO-8859-1")))
-        {
-            pluggy.ReadBinary(reader);
-        }
+        //using (FileStream stream = new FileStream(testFile + ".esm", FileMode.Open))
+        //using (BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("ISO-8859-1")))
+        //{
+        //    pluggy.ReadBinary(reader);
+        //}
 
-        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
-        startTime = DateTime.Now;
-        Console.WriteLine("Writing XML...");
+        //Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+        //startTime = DateTime.Now;
+        //Console.WriteLine("Writing XML...");
 
-        Directory.CreateDirectory(testFile);
-        pluggy.WriteXML(testFile);
+        //Directory.CreateDirectory(testFile);
+        //pluggy.WriteXML(testFile);
 
-        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
-        startTime = DateTime.Now;
+        //Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+        //startTime = DateTime.Now;
         Console.WriteLine("Loading XML...");
 
         pluggy = ElderScrollsPlugin.ReadXML(testFile);

@@ -33,7 +33,7 @@ namespace ESPSharp
             XElement subRecRoot = new XElement("Subrecords");
             ele.Add(subRecRoot);
 
-            foreach (Subrecord sub in Subrecords)
+            foreach (UndecodedSubrecord sub in Subrecords)
                 sub.WriteXML(subRecRoot);
         }
 

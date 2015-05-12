@@ -40,10 +40,13 @@ namespace ESPSharp
             WriteData(writer);
             long dataEnd = writer.BaseStream.Position;
 
-            writer.BaseStream.Seek(dataPoint - 2, SeekOrigin.Begin);
-            writer.Write((ushort)(dataEnd - dataPoint));
+            if ((dataEnd - dataPoint) <= ushort.MaxValue)
+            {
+                writer.BaseStream.Seek(dataPoint - 2, SeekOrigin.Begin);
+                writer.Write((ushort)(dataEnd - dataPoint));
 
-            writer.BaseStream.Seek(dataEnd, SeekOrigin.Begin);
+                writer.BaseStream.Seek(dataEnd, SeekOrigin.Begin);
+            }
         }
 
         public virtual void ReadBinary(BinaryReader reader)
