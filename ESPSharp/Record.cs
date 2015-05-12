@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace ESPSharp
 {
-    public abstract class Record : IESPSerializable
+    public abstract class Record
     {
         public string Tag { get; protected set; }
         public uint Size { get; protected set; }
@@ -21,7 +21,7 @@ namespace ESPSharp
         protected bool compressionCorrupted = false;
         protected byte[] corruptedBytes;
 
-        public void WriteXML(string destinationfolder)
+        public void WriteXML(string destinationFile)
         {
             XDocument doc = new XDocument();
 
@@ -45,27 +45,29 @@ namespace ESPSharp
             else
                 WriteDataXML(root);
 
-            doc.Save(Path.ChangeExtension(Path.Combine(destinationfolder, this.ToString()), "xml"));
+            doc.Save(destinationFile);
         }
 
-        public void ReadXML(string sourceFile)
+        public static Record ReadXML(string sourceFile)
         {
             XDocument doc = XDocument.Load(sourceFile);
             XElement root = (XElement)doc.FirstNode;
 
-            Tag = root.Attribute("Tag").Value;
-            Flags = root.Element("Flags").ToEnum<RecordFlag>();
-            FormID = root.Element("FormID").ToFormID();
-            FormVersion = root.Element("FormVersion").ToUInt16();
-            VersionControlInfo1 = root.Element("VersionControlInfo").Element("Info1").ToUInt32();
-            VersionControlInfo2 = root.Element("VersionControlInfo").Element("Info2").ToUInt16();
-            compressionCorrupted = root.Element("CompressionCorrupted").ToBoolean();
+            Record outRecord = Record.CreateRecord(root.Attribute("Tag").Value);
 
-            if (compressionCorrupted)
-                corruptedBytes = root.Element("CorruptedBytes").ToBytes();
+            outRecord.Flags = root.Element("Flags").ToEnum<RecordFlag>();
+            outRecord.FormID = root.Element("FormID").ToFormID();
+            outRecord.FormVersion = root.Element("FormVersion").ToUInt16();
+            outRecord.VersionControlInfo1 = root.Element("VersionControlInfo").Element("Info1").ToUInt32();
+            outRecord.VersionControlInfo2 = root.Element("VersionControlInfo").Element("Info2").ToUInt16();
+            outRecord.compressionCorrupted = root.Element("CompressionCorrupted").ToBoolean();
+
+            if (outRecord.compressionCorrupted)
+                outRecord.corruptedBytes = root.Element("CorruptedBytes").ToBytes();
             else
-                ReadDataXML(root);
+                outRecord.ReadDataXML(root);
 
+            return outRecord;
         }
 
         public void WriteBinary(BinaryWriter writer)
@@ -82,7 +84,7 @@ namespace ESPSharp
             else
                 dataBytes = WriteData();
 
-            writer.Write(Tag.ToCharArray());
+            writer.Write(Utility.DesanitizeTag(Tag).ToCharArray());
             writer.Write(dataBytes.Length);
             writer.Write((uint)Flags);
             writer.Write(FormID);
@@ -160,11 +162,18 @@ namespace ESPSharp
 
         public static Record CreateRecord(string Tag)
         {
+            Record outRecord;
+
             switch (Tag)
             {
                 default:
-                    return new GenericRecord();
+                    outRecord = new GenericRecord();
+                    break;
             }
+
+            outRecord.Tag = Tag;
+
+            return outRecord;
         }
 
         public static Record CreateRecord(BinaryReader reader)

@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace ESPSharp
 {
-    public abstract class Group : IESPSerializable
+    public abstract class Group
     {
         public string Tag { get; protected set; }
         public uint Size { get; protected set; }
@@ -43,42 +43,32 @@ namespace ESPSharp
             }
 
             foreach (var record in Records)
-                record.WriteXML(destinationFolder);
+                record.WriteXML(Path.Combine(destinationFolder, record.ToString() + ".xml"));
         }
 
-        public void ReadXML(string sourceFile)
+        public static Group ReadXML(string sourceFolder)
         {
-            XDocument doc = XDocument.Load(sourceFile);
-            XElement root = (XElement)doc.FirstNode;
-            Tag = "GRUP";
-            type = root.Element("Type").ToEnum<GroupType>();
-            ReadTypeDataXML(root);
-            DateStamp = root.Element("DateStamp").ToUInt16();
-            Unknown = root.Element("Unknown").ToBytes();
+            XDocument doc = XDocument.Load(Path.Combine(sourceFolder, "GroupHeader.metadata"));
+            XElement headerRoot = (XElement)doc.FirstNode;
+            Group outGroup = Group.CreateGroup(headerRoot.Element("Type").ToEnum<GroupType>());
 
-            string sourceFolder = Path.GetDirectoryName(sourceFile);
+            outGroup.Tag = "GRUP";
+            outGroup.ReadTypeDataXML(headerRoot);
+            outGroup.DateStamp = headerRoot.Element("DateStamp").ToUInt16();
+            outGroup.Unknown = headerRoot.Element("Unknown").ToBytes();
 
             foreach (var folder in Directory.EnumerateDirectories(sourceFolder, "*.*", SearchOption.TopDirectoryOnly))
-            {
-                string xmlLocation = Path.Combine(folder, "GroupHeader.metadata");
-                Group newGroup = Group.CreateGroup(XDocument.Load(xmlLocation));
-                newGroup.ReadXML(xmlLocation);
-
-                Subgroups.Add(newGroup);
-            }
+                outGroup.Subgroups.Add(Group.ReadXML(folder));
 
             foreach (var file in Directory.EnumerateFiles(sourceFolder, "*.*", SearchOption.TopDirectoryOnly).Where(f => Path.GetFileName(f) != "GroupHeader.metadata"))
-            {
-                Record newRecord = Record.CreateRecord(XDocument.Load(file));
-                newRecord.ReadXML(file);
+                outGroup.Records.Add(Record.ReadXML(file));
 
-                Records.Add(newRecord);
-            }
+            return outGroup;
         }
 
         public void WriteBinary(BinaryWriter writer)
         {
-            writer.Write(Tag.ToCharArray());
+            writer.Write(Utility.DesanitizeTag(Tag).ToCharArray());
 
             long sizePoint = writer.BaseStream.Position;
             writer.Write((uint)0);
@@ -189,6 +179,7 @@ namespace ESPSharp
                     throw new ArgumentOutOfRangeException(type + " is unknown type of group");
             }
 
+            outGroup.type = type;
             return outGroup;
         }
 
@@ -201,11 +192,6 @@ namespace ESPSharp
             reader.BaseStream.Seek(-16, SeekOrigin.Current);
 
             return outGroup;
-        }
-
-        public static Group CreateGroup(XDocument doc)
-        {
-            return Group.CreateGroup(doc.Element("GroupInfo").Element("Type").ToEnum<GroupType>());
         }
 
         public override abstract string ToString();

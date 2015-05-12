@@ -10,26 +10,55 @@ namespace ESPSharp
 {
     public class GenericRecord : Record
     {
-        public byte[] Bytes { get; protected set; }
+        public List<Subrecord> Subrecords = new List<Subrecord>();
 
         public override void ReadData(byte[] bytes)
         {
-            Bytes = bytes;
+            using (MemoryStream stream = new MemoryStream(bytes))
+            using (BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("ISO-8859-1")))
+            {
+                while (stream.Position < stream.Length)
+                {
+                    Subrecord sub = new Subrecord();
+                    sub.ReadBinary(reader);
+                    Subrecords.Add(sub);
+                }
+            }
         }
 
         public override byte[] WriteData()
         {
-            return Bytes;
-        }
+            byte[] outBytes;
 
-        public override void ReadDataXML(XElement ele)
-        {
-            Bytes = ele.Element("Bytes").ToBytes();
+            using (MemoryStream stream = new MemoryStream())
+            using (BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("ISO-8859-1")))
+            {
+                foreach (Subrecord sub in Subrecords)
+                    sub.WriteBinary(writer);
+
+                outBytes = stream.ToArray();
+            }
+
+            return outBytes;
         }
 
         public override void WriteDataXML(XElement ele)
         {
-            ele.Add(new XElement("Bytes", Bytes.ToBase64()));
+            XElement subRecRoot = new XElement("Subrecords");
+            ele.Add(subRecRoot);
+
+            foreach (Subrecord sub in Subrecords)
+                sub.WriteXML(subRecRoot);
+        }
+
+        public override void ReadDataXML(XElement ele)
+        {
+            foreach(XElement subEle in ele.Element("Subrecords").Elements())
+            {
+                Subrecord sub = new Subrecord();
+                sub.ReadXML(subEle);
+                Subrecords.Add(sub);
+            }
         }
     }
 }

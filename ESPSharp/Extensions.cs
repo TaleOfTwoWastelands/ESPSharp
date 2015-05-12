@@ -81,7 +81,7 @@ namespace ESPSharp
 
         public static string ReadTag(this BinaryReader reader)
         {
-            return new string(reader.ReadChars(4));
+            return Utility.SanitizeTag(new string(reader.ReadChars(4)));
         }
         #endregion
 

@@ -13,22 +13,45 @@ class Program
         string testFile = "FalloutNV";
         ElderScrollsPlugin pluggy = new ElderScrollsPlugin();
 
-        //using (FileStream stream = new FileStream(testFile + ".esm", FileMode.Open))
-        //using (BinaryReader reader = new BinaryReader(stream))
-        //{
-        //    pluggy.ReadBinary(reader);
-        //}
+        DateTime startTimeAll = DateTime.Now;
+        DateTime startTime = startTimeAll;
 
-        //Directory.CreateDirectory(testFile);
-        //pluggy.WriteXML(testFile);
+        Console.WriteLine("Loading binary...");
 
-        pluggy = new ElderScrollsPlugin();
-        pluggy.ReadXML(testFile + "\\0.xml");
+        using (FileStream stream = new FileStream(testFile + ".esm", FileMode.Open))
+        using (BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("ISO-8859-1")))
+        {
+            pluggy.ReadBinary(reader);
+        }
+
+        Console.WriteLine("...Done" + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+        startTime = DateTime.Now;
+        Console.WriteLine("Writing XML...");
+
+        Directory.CreateDirectory(testFile);
+        pluggy.WriteXML(testFile);
+
+        Console.WriteLine("...Done" + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+        startTime = DateTime.Now;
+        Console.WriteLine("Loading XML...");
+
+        pluggy = ElderScrollsPlugin.ReadXML(testFile);
+
+
+        Console.WriteLine("...Done" + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+        startTime = DateTime.Now;
+        Console.WriteLine("Writing binary...");
 
         using (FileStream stream = new FileStream("NEW" + testFile + ".esm", FileMode.Create, FileAccess.ReadWrite))
-        using (BinaryWriter writer = new BinaryWriter(stream))
+        using (BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("ISO-8859-1")))
         {
             pluggy.WriteBinary(writer);
         }
+
+        Console.WriteLine("...Done" + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+
+        Console.WriteLine("Total Time: " + (DateTime.Now - startTimeAll).ToString(@"mm\:ss\.ffff"));
+
+        Console.ReadLine();
     }
 }

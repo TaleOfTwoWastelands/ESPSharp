@@ -8,14 +8,14 @@ using System.Xml.Linq;
 
 namespace ESPSharp
 {
-    public class ElderScrollsPlugin : IESPSerializable
+    public class ElderScrollsPlugin
     {
         public Record Header;
         public List<Group> Groups = new List<Group>();
 
         public void WriteXML(string destinationFolder)
         {
-            Header.WriteXML(destinationFolder);
+            Header.WriteXML(Path.Combine(destinationFolder, "0.xml"));
 
             foreach (Group group in Groups)
             {
@@ -25,19 +25,19 @@ namespace ESPSharp
             }
         }
 
-        public void ReadXML(string sourceFile)
+        public static ElderScrollsPlugin ReadXML(string sourceFolder)
         {
-            Header = Record.CreateRecord(XDocument.Load(sourceFile));
-            Header.ReadXML(sourceFile);
+            ElderScrollsPlugin outPlug = new ElderScrollsPlugin();
+            outPlug.Header = Record.ReadXML(Path.Combine(sourceFolder, "0.xml"));
 
-            foreach (var folder in Directory.EnumerateDirectories(Path.GetDirectoryName(sourceFile), "*.*", SearchOption.TopDirectoryOnly))
+            foreach (var folder in Directory.EnumerateDirectories(sourceFolder, "*.*", SearchOption.TopDirectoryOnly))
             {
-                string xmlLocation = Path.Combine(folder, "GroupHeader.metadata");
-                Group newGroup = Group.CreateGroup(XDocument.Load(xmlLocation));
-                newGroup.ReadXML(xmlLocation);
+                Group newGroup = Group.ReadXML(folder);
 
-                Groups.Add(newGroup);
+                outPlug.Groups.Add(newGroup);
             }
+
+            return outPlug;
         }
 
         public void WriteBinary(BinaryWriter writer)
