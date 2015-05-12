@@ -10,36 +10,22 @@ namespace ESPSharp
 {
     public class GenericRecord : Record
     {
-        public List<Subrecord> Subrecords = new List<Subrecord>();
+        public List<UndecodedSubrecord> Subrecords = new List<UndecodedSubrecord>();
 
-        public override void ReadData(byte[] bytes)
+        public override void ReadData(BinaryReader reader, long dataEnd)
         {
-            using (MemoryStream stream = new MemoryStream(bytes))
-            using (BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("ISO-8859-1")))
+            while (reader.BaseStream.Position < dataEnd)
             {
-                while (stream.Position < stream.Length)
-                {
-                    Subrecord sub = new Subrecord();
-                    sub.ReadBinary(reader);
-                    Subrecords.Add(sub);
-                }
+                UndecodedSubrecord sub = new UndecodedSubrecord();
+                sub.ReadBinary(reader);
+                Subrecords.Add(sub);
             }
         }
 
-        public override byte[] WriteData()
+        public override void WriteData(BinaryWriter writer)
         {
-            byte[] outBytes;
-
-            using (MemoryStream stream = new MemoryStream())
-            using (BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("ISO-8859-1")))
-            {
-                foreach (Subrecord sub in Subrecords)
-                    sub.WriteBinary(writer);
-
-                outBytes = stream.ToArray();
-            }
-
-            return outBytes;
+            foreach (Subrecord sub in Subrecords)
+                sub.WriteBinary(writer);
         }
 
         public override void WriteDataXML(XElement ele)
@@ -55,7 +41,7 @@ namespace ESPSharp
         {
             foreach(XElement subEle in ele.Element("Subrecords").Elements())
             {
-                Subrecord sub = new Subrecord();
+                UndecodedSubrecord sub = new UndecodedSubrecord();
                 sub.ReadXML(subEle);
                 Subrecords.Add(sub);
             }

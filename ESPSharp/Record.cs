@@ -72,26 +72,39 @@ namespace ESPSharp
 
         public void WriteBinary(BinaryWriter writer)
         {
-            byte[] dataBytes;
-
-            if (Flags.HasFlag(RecordFlag.Compressed))
-            {
-                if (compressionCorrupted)
-                    dataBytes = corruptedBytes;
-                else
-                    dataBytes = CompressData(WriteData());
-            }
-            else
-                dataBytes = WriteData();
-
             writer.Write(Utility.DesanitizeTag(Tag).ToCharArray());
-            writer.Write(dataBytes.Length);
+            writer.Write((uint)0);
             writer.Write((uint)Flags);
             writer.Write(FormID);
             writer.Write(VersionControlInfo1);
             writer.Write(FormVersion);
             writer.Write(VersionControlInfo2);
-            writer.Write(dataBytes);
+
+            long dataStart = writer.BaseStream.Position;
+
+            if (Flags.HasFlag(RecordFlag.Compressed))
+            {
+                if (compressionCorrupted)
+                    writer.Write(corruptedBytes);
+                else
+                {
+                    using (MemoryStream stream = new MemoryStream())
+                    using (BinaryWriter subWriter = new BinaryWriter(stream))
+                    {
+                        WriteData(subWriter);
+                        stream.Position = 0;
+                        writer.Write(Zlib.Compress(stream));
+                    }
+                }
+            }
+            else
+                WriteData(writer);
+
+            long dataEnd = writer.BaseStream.Position;
+
+            writer.BaseStream.Seek(dataStart - 20, SeekOrigin.Begin);
+            writer.Write((uint)(dataEnd - dataStart));
+            writer.BaseStream.Seek(dataEnd, SeekOrigin.Begin);
         }
 
         public void ReadBinary(BinaryReader reader)
@@ -112,11 +125,13 @@ namespace ESPSharp
                 if (compressionCorrupted)
                     corruptedBytes = outBytes;
                 else
-                    ReadData(outBytes);
+                    using (MemoryStream stream = new MemoryStream(outBytes))
+                    using (BinaryReader subReader = new BinaryReader(stream))
+                        ReadData(subReader, stream.Length);
             }
             else
             {
-                ReadData(reader.ReadBytes((int)Size));
+                ReadData(reader, reader.BaseStream.Position + Size);
             }
         }
 
@@ -152,9 +167,9 @@ namespace ESPSharp
             return byteList.ToArray();
         }
 
-        public abstract void ReadData(byte[] bytes);
+        public abstract void ReadData(BinaryReader reader, long dataEnd);
 
-        public abstract byte[] WriteData();
+        public abstract void WriteData(BinaryWriter writer);
 
         public abstract void ReadDataXML(XElement ele);
 

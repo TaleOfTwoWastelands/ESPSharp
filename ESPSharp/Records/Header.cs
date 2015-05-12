@@ -8,13 +8,16 @@ using System.Xml.Linq;
 
 namespace ESPSharp
 {
-    public class GameSetting : Record
+    public class Header : Record
     {
-        public string EditorID { get; set; }
-        public GameSettingType Type { get; set; }
-        public string ValueString { get; set; }
-        public int ValueInt { get; set; }
-        public float ValueFloat { get; set; }
+        PluginHeader PluginHeader { get; set; }
+        byte[] OffsetData { get; set; }
+        byte[] DeletionsData { get; set; }
+        string Author { get; set; }
+        string Description { get; set; }
+        Dictionary<string, long> MasterFileData { get; set; }
+        List<FormID> OverriddenRecords { get; set; }
+        byte[] ScreenshotData { get; set; }
 
         public override void ReadData(BinaryReader reader, long dataEnd)
         {

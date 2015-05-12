@@ -9,57 +9,54 @@ using System.Diagnostics;
 
 namespace ESPSharp
 {
-    public class Subrecord
+    public abstract class Subrecord
     {
         public string Tag { get; set; }
-        private int size;
-        public byte[] Data { get; set; }
+        protected int size;
 
 
-        public void WriteXML(XElement root)
+        public virtual void WriteXML(XElement root)
         {
-            XElement ele = new XElement(Tag,
-                                new XElement("Size", size),
-                                new XElement("Data", Data.ToBase64()));
+            XElement ele = new XElement(this.ToString(),
+                                new XAttribute("Tag", Tag));
+
+            WriteDataXML(ele);
 
             root.Add(ele);
         }
 
-        public void ReadXML(XElement ele)
+        public virtual void ReadXML(XElement ele)
         {
-            Tag = ele.Name.ToString();
-            size = ele.Element("Size").ToInt32();
-            Data = ele.Element("Data").ToBytes();
+            Tag = ele.Attribute("Tag").Value;
+            ReadDataXML(ele);
         }
 
-        public void WriteBinary(BinaryWriter writer)
+        public virtual void WriteBinary(BinaryWriter writer)
         {
             writer.Write(Utility.DesanitizeTag(Tag).ToCharArray());
-            writer.Write((ushort)size);
-            writer.Write(Data);
+            writer.Write((ushort)0);
+
+            long dataPoint = writer.BaseStream.Position;
+            WriteData(writer);
+            long dataEnd = writer.BaseStream.Position;
+
+            writer.BaseStream.Seek(dataPoint - 2, SeekOrigin.Begin);
+            writer.Write((ushort)(dataEnd - dataPoint));
+
+            writer.BaseStream.Seek(dataEnd, SeekOrigin.Begin);
         }
 
-        public void ReadBinary(BinaryReader reader)
+        public virtual void ReadBinary(BinaryReader reader)
         {
             Tag = reader.ReadTag();
-            int readSize = size = reader.ReadUInt16();
+            size = reader.ReadUInt16();
 
-            if (size == 0)
-            {
-                reader.BaseStream.Seek(-16, SeekOrigin.Current);
-                if (reader.ReadTag() == "XXXX")
-                {
-                    Debug.Assert(reader.ReadUInt16() == 4);
-                    readSize = reader.ReadInt32();
-                    reader.BaseStream.Seek(6, SeekOrigin.Current);
-                }
-                else
-                {
-                    reader.BaseStream.Seek(12, SeekOrigin.Current);
-                }
-            }
-
-            Data = reader.ReadBytes(readSize);
+            ReadData(reader);
         }
+
+        public abstract void ReadData(BinaryReader reader);
+        public abstract void WriteData(BinaryWriter writer);
+        public abstract void WriteDataXML(XElement ele);
+        public abstract void ReadDataXML(XElement ele);
     }
 }

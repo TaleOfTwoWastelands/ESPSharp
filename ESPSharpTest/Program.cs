@@ -24,21 +24,21 @@ class Program
             pluggy.ReadBinary(reader);
         }
 
-        Console.WriteLine("...Done" + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
         startTime = DateTime.Now;
         Console.WriteLine("Writing XML...");
 
         Directory.CreateDirectory(testFile);
         pluggy.WriteXML(testFile);
 
-        Console.WriteLine("...Done" + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
         startTime = DateTime.Now;
         Console.WriteLine("Loading XML...");
 
         pluggy = ElderScrollsPlugin.ReadXML(testFile);
 
 
-        Console.WriteLine("...Done" + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
         startTime = DateTime.Now;
         Console.WriteLine("Writing binary...");
 
@@ -48,7 +48,7 @@ class Program
             pluggy.WriteBinary(writer);
         }
 
-        Console.WriteLine("...Done" + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
 
         Console.WriteLine("Total Time: " + (DateTime.Now - startTimeAll).ToString(@"mm\:ss\.ffff"));
 
