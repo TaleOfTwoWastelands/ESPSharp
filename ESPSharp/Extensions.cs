@@ -29,6 +29,16 @@ namespace ESPSharp
             return uint.Parse(ele.Value, System.Globalization.NumberStyles.HexNumber);
         }
 
+        public static ulong ToUInt64(this XElement ele)
+        {
+            return ulong.Parse(ele.Value);
+        }
+
+        public static long ToInt64(this XElement ele)
+        {
+            return long.Parse(ele.Value);
+        }
+
         public static uint ToUInt32(this XElement ele)
         {
             return uint.Parse(ele.Value);
@@ -54,6 +64,11 @@ namespace ESPSharp
             return byte.Parse(ele.Value);
         }
 
+        public static char ToChar(this XElement ele)
+        {
+            return char.Parse(ele.Value);
+        }
+
         public static sbyte ToSByte(this XElement ele)
         {
             return sbyte.Parse(ele.Value);
@@ -68,26 +83,20 @@ namespace ESPSharp
         {
             return Convert.FromBase64String(ele.Value);
         }
-        #endregion
 
-        #region BinaryReaderExtensions
-        public static string PeekTag(this BinaryReader reader)
+        public static char[] ToChars(this XElement ele)
         {
-            string peek = reader.ReadTag();
-            reader.BaseStream.Seek(-4, SeekOrigin.Current);
-
-            return peek;
-        }
-
-        public static string ReadTag(this BinaryReader reader)
-        {
-            return Utility.SanitizeTag(new string(reader.ReadChars(4)));
+            return ele.Value.ToArray();
         }
         #endregion
 
         public static string ToBase64(this byte[] bytes)
         {
             return Convert.ToBase64String(bytes);
+        }
+        public static string ToHex(this byte[] bytes)
+        {
+            return bytes.ToBase64();
         }
     }
 }

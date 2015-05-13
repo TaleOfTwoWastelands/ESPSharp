@@ -13,12 +13,12 @@ namespace ESPSharp
             type = GroupType.InteriorCellBlock;
         }
 
-        public override void WriteTypeData(BinaryWriter writer)
+        public override void WriteTypeData(ESPWriter writer)
         {
             writer.Write(Index);
         }
 
-        public override void ReadTypeData(BinaryReader reader)
+        public override void ReadTypeData(ESPReader reader)
         {
             Index = reader.ReadInt32();
         }

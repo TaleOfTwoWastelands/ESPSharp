@@ -13,12 +13,12 @@ namespace ESPSharp
             type = GroupType.WorldGroup;
         }
 
-        public override void WriteTypeData(BinaryWriter writer)
+        public override void WriteTypeData(ESPWriter writer)
         {
             writer.Write(Worldspace);
         }
 
-        public override void ReadTypeData(BinaryReader reader)
+        public override void ReadTypeData(ESPReader reader)
         {
             Worldspace = reader.ReadUInt32();
         }

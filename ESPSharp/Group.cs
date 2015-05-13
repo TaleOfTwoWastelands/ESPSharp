@@ -66,7 +66,7 @@ namespace ESPSharp
             return outGroup;
         }
 
-        public void WriteBinary(BinaryWriter writer)
+        public void WriteBinary(ESPWriter writer)
         {
             writer.Write(Utility.DesanitizeTag(Tag).ToCharArray());
 
@@ -103,7 +103,7 @@ namespace ESPSharp
             writer.BaseStream.Seek(dataEnd, SeekOrigin.Begin);
         }
 
-        public void ReadBinary(BinaryReader reader)
+        public void ReadBinary(ESPReader reader)
         {
             Tag = reader.ReadTag();
             Size = reader.ReadUInt32() - 24;
@@ -131,8 +131,8 @@ namespace ESPSharp
             }
         }
 
-        public abstract void WriteTypeData(BinaryWriter writer);
-        public abstract void ReadTypeData(BinaryReader reader);
+        public abstract void WriteTypeData(ESPWriter writer);
+        public abstract void ReadTypeData(ESPReader reader);
         public abstract XElement WriteTypeDataXML();
         public abstract void ReadTypeDataXML(XElement element);
 
@@ -183,7 +183,7 @@ namespace ESPSharp
             return outGroup;
         }
 
-        public static Group CreateGroup(BinaryReader reader)
+        public static Group CreateGroup(ESPReader reader)
         {
             reader.BaseStream.Seek(12, SeekOrigin.Current);
 

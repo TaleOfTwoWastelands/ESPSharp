@@ -14,13 +14,13 @@ namespace ESPSharp
             type = GroupType.ExteriorCellBlock;
         }
 
-        public override void WriteTypeData(BinaryWriter writer)
+        public override void WriteTypeData(ESPWriter writer)
         {
             writer.Write(CoordY);
             writer.Write(CoordX);
         }
 
-        public override void ReadTypeData(BinaryReader reader)
+        public override void ReadTypeData(ESPReader reader)
         {
             CoordY = reader.ReadInt16();
             CoordX = reader.ReadInt16();

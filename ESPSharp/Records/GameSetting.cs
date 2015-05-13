@@ -16,12 +16,12 @@ namespace ESPSharp
         public int ValueInt { get; set; }
         public float ValueFloat { get; set; }
 
-        public override void ReadData(BinaryReader reader, long dataEnd)
+        public override void ReadData(ESPReader reader, long dataEnd)
         {
             throw new NotImplementedException();
         }
 
-        public override void WriteData(BinaryWriter writer)
+        public override void WriteData(ESPWriter writer)
         {
             throw new NotImplementedException();
         }

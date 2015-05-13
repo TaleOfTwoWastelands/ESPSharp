@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnumsAndFlags\GameSettingType.cs" />
+    <Compile Include="ESPReader.cs" />
+    <Compile Include="ESPWriter.cs" />
     <Compile Include="Groups\CellGroup.cs" />
     <Compile Include="Groups\CellPersistentChildren.cs" />
     <Compile Include="Groups\CellTemporaryChildren.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Records\GameSetting.cs" />
     <Compile Include="Subrecord.cs" />
     <Compile Include="Subrecords\PluginHeader.cs" />
+    <Compile Include="Subrecords\SimpleSubrecord.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Zlib.cs" />

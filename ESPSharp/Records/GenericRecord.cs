@@ -12,7 +12,7 @@ namespace ESPSharp
     {
         public List<UndecodedSubrecord> Subrecords = new List<UndecodedSubrecord>();
 
-        public override void ReadData(BinaryReader reader, long dataEnd)
+        public override void ReadData(ESPReader reader, long dataEnd)
         {
             while (reader.BaseStream.Position < dataEnd)
             {
@@ -22,7 +22,7 @@ namespace ESPSharp
             }
         }
 
-        public override void WriteData(BinaryWriter writer)
+        public override void WriteData(ESPWriter writer)
         {
             foreach (Subrecord sub in Subrecords)
                 sub.WriteBinary(writer);
@@ -30,11 +30,12 @@ namespace ESPSharp
 
         public override void WriteDataXML(XElement ele)
         {
-            XElement subRecRoot = new XElement("Subrecords");
-            ele.Add(subRecRoot);
-
             foreach (UndecodedSubrecord sub in Subrecords)
-                sub.WriteXML(subRecRoot);
+            {
+                XElement subEle = new XElement("Subrecord");
+                sub.WriteXML(subEle);
+                ele.Add(subEle);
+            }
         }
 
         public override void ReadDataXML(XElement ele)

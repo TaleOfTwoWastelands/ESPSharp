@@ -40,7 +40,7 @@ namespace ESPSharp
             return outPlug;
         }
 
-        public void WriteBinary(BinaryWriter writer)
+        public void WriteBinary(ESPWriter writer)
         {
             Header.WriteBinary(writer);
 
@@ -48,7 +48,7 @@ namespace ESPSharp
                 group.WriteBinary(writer);
         }
 
-        public void ReadBinary(BinaryReader reader)
+        public void ReadBinary(ESPReader reader)
         {
             Header = Record.CreateRecord(reader);
             Header.ReadBinary(reader);

@@ -14,14 +14,14 @@ namespace ESPSharp
         public uint RecordCount { get; set; }
         public uint NextFormID { get; set; }
 
-        public override void ReadData(BinaryReader reader)
+        public override void ReadData(ESPReader reader)
         {
             Version = reader.ReadSingle();
             RecordCount = reader.ReadUInt32();
             NextFormID = reader.ReadUInt32();
         }
 
-        public override void WriteData(BinaryWriter writer)
+        public override void WriteData(ESPWriter writer)
         {
             writer.Write(Version);
             writer.Write(RecordCount);

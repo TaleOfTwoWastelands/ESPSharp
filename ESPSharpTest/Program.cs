@@ -19,7 +19,7 @@ class Program
         //Console.WriteLine("Loading binary...");
 
         //using (FileStream stream = new FileStream(testFile + ".esm", FileMode.Open))
-        //using (BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("ISO-8859-1")))
+        //using (ESPReader reader = new ESPReader(stream))
         //{
         //    pluggy.ReadBinary(reader);
         //}
@@ -32,7 +32,7 @@ class Program
         //pluggy.WriteXML(testFile);
 
         //Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
-        //startTime = DateTime.Now;
+        startTime = DateTime.Now;
         Console.WriteLine("Loading XML...");
 
         pluggy = ElderScrollsPlugin.ReadXML(testFile);
@@ -43,7 +43,7 @@ class Program
         Console.WriteLine("Writing binary...");
 
         using (FileStream stream = new FileStream("NEW" + testFile + ".esm", FileMode.Create, FileAccess.ReadWrite))
-        using (BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("ISO-8859-1")))
+        using (ESPWriter writer = new ESPWriter(stream))
         {
             pluggy.WriteBinary(writer);
         }

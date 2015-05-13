@@ -13,12 +13,12 @@ namespace ESPSharp
             type = GroupType.TopicGroup;
         }
 
-        public override void WriteTypeData(BinaryWriter writer)
+        public override void WriteTypeData(ESPWriter writer)
         {
             writer.Write(Topic);
         }
 
-        public override void ReadTypeData(BinaryReader reader)
+        public override void ReadTypeData(ESPReader reader)
         {
             Topic = reader.ReadUInt32();
         }

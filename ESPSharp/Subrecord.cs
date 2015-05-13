@@ -17,12 +17,8 @@ namespace ESPSharp
 
         public virtual void WriteXML(XElement root)
         {
-            XElement ele = new XElement(this.ToString(),
-                                new XAttribute("Tag", Tag));
-
-            WriteDataXML(ele);
-
-            root.Add(ele);
+            root.Add(new XAttribute("Tag", Tag));
+            WriteDataXML(root);
         }
 
         public virtual void ReadXML(XElement ele)
@@ -31,7 +27,7 @@ namespace ESPSharp
             ReadDataXML(ele);
         }
 
-        public virtual void WriteBinary(BinaryWriter writer)
+        public virtual void WriteBinary(ESPWriter writer)
         {
             writer.Write(Utility.DesanitizeTag(Tag).ToCharArray());
             writer.Write((ushort)0);
@@ -49,7 +45,7 @@ namespace ESPSharp
             }
         }
 
-        public virtual void ReadBinary(BinaryReader reader)
+        public virtual void ReadBinary(ESPReader reader)
         {
             Tag = reader.ReadTag();
             size = reader.ReadUInt16();
@@ -57,8 +53,8 @@ namespace ESPSharp
             ReadData(reader);
         }
 
-        public abstract void ReadData(BinaryReader reader);
-        public abstract void WriteData(BinaryWriter writer);
+        public abstract void ReadData(ESPReader reader);
+        public abstract void WriteData(ESPWriter writer);
         public abstract void WriteDataXML(XElement ele);
         public abstract void ReadDataXML(XElement ele);
     }

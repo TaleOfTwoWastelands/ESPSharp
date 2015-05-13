@@ -70,7 +70,7 @@ namespace ESPSharp
             return outRecord;
         }
 
-        public void WriteBinary(BinaryWriter writer)
+        public void WriteBinary(ESPWriter writer)
         {
             writer.Write(Utility.DesanitizeTag(Tag).ToCharArray());
             writer.Write((uint)0);
@@ -89,7 +89,7 @@ namespace ESPSharp
                 else
                 {
                     using (MemoryStream stream = new MemoryStream())
-                    using (BinaryWriter subWriter = new BinaryWriter(stream))
+                    using (ESPWriter subWriter = new ESPWriter(stream))
                     {
                         WriteData(subWriter);
                         stream.Position = 0;
@@ -107,7 +107,7 @@ namespace ESPSharp
             writer.BaseStream.Seek(dataEnd, SeekOrigin.Begin);
         }
 
-        public void ReadBinary(BinaryReader reader)
+        public void ReadBinary(ESPReader reader)
         {
             Tag = reader.ReadTag();
             Size = reader.ReadUInt32();
@@ -126,7 +126,7 @@ namespace ESPSharp
                     corruptedBytes = outBytes;
                 else
                     using (MemoryStream stream = new MemoryStream(outBytes))
-                    using (BinaryReader subReader = new BinaryReader(stream))
+                    using (ESPReader subReader = new ESPReader(stream))
                         ReadData(subReader, stream.Length);
             }
             else
@@ -135,7 +135,7 @@ namespace ESPSharp
             }
         }
 
-        bool TryDecompressData(BinaryReader reader, out byte[] outBytes)
+        bool TryDecompressData(ESPReader reader, out byte[] outBytes)
         {
             uint origSize = reader.ReadUInt32();
             byte[] compressedBytes = reader.ReadBytes((int)Size - 4);
@@ -167,13 +167,13 @@ namespace ESPSharp
             return byteList.ToArray();
         }
 
-        public abstract void ReadData(BinaryReader reader, long dataEnd);
+        public abstract void ReadData(ESPReader reader, long dataEnd);
 
-        public abstract void WriteData(BinaryWriter writer);
-
-        public abstract void ReadDataXML(XElement ele);
+        public abstract void WriteData(ESPWriter writer);
 
         public abstract void WriteDataXML(XElement ele);
+
+        public abstract void ReadDataXML(XElement ele);
 
         public static Record CreateRecord(string Tag)
         {
@@ -181,6 +181,9 @@ namespace ESPSharp
 
             switch (Tag)
             {
+                case "TES4":
+                    outRecord = new Header();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;
@@ -191,7 +194,7 @@ namespace ESPSharp
             return outRecord;
         }
 
-        public static Record CreateRecord(BinaryReader reader)
+        public static Record CreateRecord(ESPReader reader)
         {
             return CreateRecord(reader.PeekTag());
         }
