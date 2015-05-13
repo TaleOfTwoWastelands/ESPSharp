@@ -40,7 +40,7 @@ namespace ESPSharp
 
         public override void ReadDataXML(XElement ele)
         {
-            foreach(XElement subEle in ele.Element("Subrecords").Elements())
+            foreach(XElement subEle in ele.Elements("Subrecord"))
             {
                 UndecodedSubrecord sub = new UndecodedSubrecord();
                 sub.ReadXML(subEle);
