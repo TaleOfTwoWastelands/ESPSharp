@@ -192,6 +192,9 @@ namespace ESPSharp
                 case "GMST":
                     outRecord = new GameSetting();
                     break;
+                case "TXST":
+                    outRecord = new TextureSet();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;

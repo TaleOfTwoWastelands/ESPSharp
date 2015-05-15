@@ -53,4 +53,12 @@ namespace ESPSharp
         public float y;
         public float z;
     }
+
+    public struct Color
+    {
+        public byte Red;
+        public byte Green;
+        public byte Blue;
+        public byte Alpha;
+    }
 }

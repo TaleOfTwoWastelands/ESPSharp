@@ -17,7 +17,7 @@ namespace ESPSharp
         {
             Header.WriteXML(Path.Combine(destinationFolder, "Header.xml"));
 
-            foreach (Group group in Groups)
+            foreach (Group group in Groups.Where(g => g.ToString() != "Interior Cells" && g.ToString() != "Worldspaces" && g.ToString() != "Dialog Topics"))
             {
                 string newDir = Path.Combine(destinationFolder, group.ToString());
                 Directory.CreateDirectory(newDir);

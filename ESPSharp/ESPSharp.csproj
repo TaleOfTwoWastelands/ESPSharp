@@ -78,7 +78,6 @@
     <Compile Include="Subrecords\FormArray.cs" />
     <Compile Include="Subrecords\ObjectBounds.cs" />
     <Compile Include="Subrecords\PluginHeader.cs" />
-    <Compile Include="Subrecords\SimpleSubrecord.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Zlib.cs" />

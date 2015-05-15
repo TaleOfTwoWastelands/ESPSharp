@@ -10,7 +10,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        string testFile = "FalloutNV_Stripped";
+        string testFile = "FalloutNV";
         ElderScrollsPlugin pluggy = new ElderScrollsPlugin();
 
         DateTime startTimeAll = DateTime.Now;
