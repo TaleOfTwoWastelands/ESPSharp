@@ -88,6 +88,13 @@ namespace ESPSharp
         {
             return ele.Value.ToArray();
         }
+        public static void AddSimpleSubrecord(this XElement ele, string name, string tag, object value)
+        {
+            ele.Add(
+                new XElement(name,
+                    new XAttribute("Tag", tag),
+                    value));
+        }
         #endregion
 
         public static string ToBase64(this byte[] bytes)

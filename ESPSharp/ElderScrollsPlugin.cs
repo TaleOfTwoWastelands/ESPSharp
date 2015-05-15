@@ -15,7 +15,7 @@ namespace ESPSharp
 
         public void WriteXML(string destinationFolder)
         {
-            Header.WriteXML(Path.Combine(destinationFolder, "0.xml"));
+            Header.WriteXML(Path.Combine(destinationFolder, "Header.xml"));
 
             foreach (Group group in Groups)
             {
@@ -28,7 +28,7 @@ namespace ESPSharp
         public static ElderScrollsPlugin ReadXML(string sourceFolder)
         {
             ElderScrollsPlugin outPlug = new ElderScrollsPlugin();
-            outPlug.Header = Record.ReadXML(Path.Combine(sourceFolder, "0.xml"));
+            outPlug.Header = Record.ReadXML(Path.Combine(sourceFolder, "Header.xml"));
 
             foreach (var folder in Directory.EnumerateDirectories(sourceFolder, "*.*", SearchOption.TopDirectoryOnly))
             {

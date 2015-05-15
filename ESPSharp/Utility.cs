@@ -39,4 +39,18 @@ namespace ESPSharp
             return outString;
         }
     }
+
+    public struct ShortVector3
+    {
+        public short x;
+        public short y;
+        public short z;
+    }
+
+    public struct Vector3
+    {
+        public float x;
+        public float y;
+        public float z;
+    }
 }

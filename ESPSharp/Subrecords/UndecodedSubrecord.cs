@@ -13,12 +13,12 @@ namespace ESPSharp
     {
         public byte[] Data { get; set; }
 
-        public override void WriteData(ESPWriter writer)
+        protected override void WriteData(ESPWriter writer)
         {
             writer.Write(Data);
         }
 
-        public override void ReadData(ESPReader reader)
+        protected override void ReadData(ESPReader reader)
         {
             int readSize = size;
             if (size == 0)
@@ -39,12 +39,12 @@ namespace ESPSharp
             Data = reader.ReadBytes(readSize);
         }
 
-        public override void WriteDataXML(XElement ele)
+        protected override void WriteDataXML(XElement ele)
         {
             ele.Value = Data.ToBase64();
         }
 
-        public override void ReadDataXML(XElement ele)
+        protected override void ReadDataXML(XElement ele)
         {
             Data = ele.ToBytes();
         }

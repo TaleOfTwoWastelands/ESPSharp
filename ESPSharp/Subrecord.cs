@@ -53,9 +53,9 @@ namespace ESPSharp
             ReadData(reader);
         }
 
-        public abstract void ReadData(ESPReader reader);
-        public abstract void WriteData(ESPWriter writer);
-        public abstract void WriteDataXML(XElement ele);
-        public abstract void ReadDataXML(XElement ele);
+        protected abstract void ReadData(ESPReader reader);
+        protected abstract void WriteData(ESPWriter writer);
+        protected abstract void WriteDataXML(XElement ele);
+        protected abstract void ReadDataXML(XElement ele);
     }
 }

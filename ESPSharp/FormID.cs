@@ -27,7 +27,7 @@ namespace ESPSharp
 
         public override string ToString()
         {
-            return rawVal.ToString("x");
+            return rawVal.ToString("X8");
         }
     }
 }

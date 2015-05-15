@@ -59,6 +59,8 @@
     <Compile Include="EnumsAndFlags\RecordFlag.cs" />
     <Compile Include="FormID.cs" />
     <Compile Include="Group.cs" />
+    <Compile Include="Interfaces\IEditorID.cs" />
+    <Compile Include="Interfaces\IReferenceContainer.cs" />
     <Compile Include="Records\Header.cs" />
     <Compile Include="ISubgroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,7 +70,13 @@
     <Compile Include="Groups\WorldGroup.cs" />
     <Compile Include="Records\GenericRecord.cs" />
     <Compile Include="Records\GameSetting.cs" />
+    <Compile Include="Records\TextureSet.cs" />
     <Compile Include="Subrecord.cs" />
+    <Compile Include="SubrecordCollection.cs" />
+    <Compile Include="SubrecordCollection\MasterFileData.cs" />
+    <Compile Include="Subrecords\DecalData.cs" />
+    <Compile Include="Subrecords\FormArray.cs" />
+    <Compile Include="Subrecords\ObjectBounds.cs" />
     <Compile Include="Subrecords\PluginHeader.cs" />
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />

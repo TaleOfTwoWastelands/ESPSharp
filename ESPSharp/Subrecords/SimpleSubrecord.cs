@@ -12,7 +12,7 @@ namespace ESPSharp
     {
         public T Value;
 
-        public override void ReadData(ESPReader reader)
+        protected override void ReadData(ESPReader reader)
         {
             string typeT = typeof(T).ToString();
 
@@ -71,7 +71,7 @@ namespace ESPSharp
             }
         }
 
-        public override void WriteData(ESPWriter writer)
+        protected override void WriteData(ESPWriter writer)
         {
             string typeT = typeof(T).ToString();
 
@@ -120,7 +120,7 @@ namespace ESPSharp
             }
         }
 
-        public override void WriteDataXML(XElement ele)
+        protected override void WriteDataXML(XElement ele)
         {
             string typeT = typeof(T).ToString();
 
@@ -168,7 +168,7 @@ namespace ESPSharp
             }
         }
 
-        public override void ReadDataXML(XElement ele)
+        protected override void ReadDataXML(XElement ele)
         {
             string typeT = typeof(T).ToString();
 

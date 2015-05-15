@@ -14,21 +14,21 @@ namespace ESPSharp
         public uint RecordCount { get; set; }
         public uint NextFormID { get; set; }
 
-        public override void ReadData(ESPReader reader)
+        protected override void ReadData(ESPReader reader)
         {
             Version = reader.ReadSingle();
             RecordCount = reader.ReadUInt32();
             NextFormID = reader.ReadUInt32();
         }
 
-        public override void WriteData(ESPWriter writer)
+        protected override void WriteData(ESPWriter writer)
         {
             writer.Write(Version);
             writer.Write(RecordCount);
             writer.Write(NextFormID);
         }
 
-        public override void WriteDataXML(XElement ele)
+        protected override void WriteDataXML(XElement ele)
         {
             ele.Add(
                 new XElement("Version", Version),
@@ -36,7 +36,7 @@ namespace ESPSharp
                 new XElement("NextFormID", NextFormID));
         }
 
-        public override void ReadDataXML(XElement ele)
+        protected override void ReadDataXML(XElement ele)
         {
             Version = ele.Element("Version").ToSingle();
             RecordCount = ele.Element("RecordCount").ToUInt32();

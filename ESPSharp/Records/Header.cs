@@ -9,71 +9,17 @@ using System.Diagnostics;
 
 namespace ESPSharp
 {
-    public class Header : Record
+    public class Header : Record, IReferenceContainer
     {
         public PluginHeader PluginHeader { get; set; }
 
-        public byte[] OffsetData {
-            get
-            {
-                return offsetData.Value;
-            }
-            set
-            {
-                offsetData.Value = value;
-            }
-        }
-        protected SimpleSubrecord<byte[]> offsetData;
-        public byte[] DeletionsData
-        {
-            get
-            {
-                return deletionsData.Value;
-            }
-            set
-            {
-                deletionsData.Value = value;
-            }
-        }
-        protected SimpleSubrecord<byte[]> deletionsData;
-        public string Author
-        {
-            get
-            {
-                return author.Value;
-            }
-            set
-            {
-                author.Value = value;
-            }
-        }
-        protected SimpleSubrecord<string> author;
-        public string Description
-        {
-            get
-            {
-                return description.Value;
-            }
-            set
-            {
-                description.Value = value;
-            }
-        }
-        protected SimpleSubrecord<string> description;
-        public Dictionary<string, ulong> MasterFileData { get; set; }
-        public List<FormID> OverriddenRecords { get; set; }
-        public byte[] ScreenshotData
-        {
-            get
-            {
-                return screenshotData.Value;
-            }
-            set
-            {
-                screenshotData.Value = value;
-            }
-        }
-        protected SimpleSubrecord<byte[]> screenshotData;
+        public byte[] OffsetData { get; set; }
+        public byte[] DeletionsData { get; set; }
+        public string Author { get; set; }
+        public string Description { get; set; }
+        public List<MasterFileData> MasterFiles { get; set; }
+        public FormArray OverriddenRecords { get; set; }
+        public byte[] ScreenshotData { get; set; }
 
         public override void ReadData(ESPReader reader, long dataEnd)
         {
@@ -90,64 +36,33 @@ namespace ESPSharp
                         PluginHeader.ReadBinary(reader);
                         break;
                     case "OFST":
-                        if (offsetData == null)
-                            offsetData = new SimpleSubrecord<byte[]>();
-
-                        offsetData.ReadBinary(reader);
+                        OffsetData = reader.ReadSimpleSubrecord<byte[]>();
                         break;
                     case "DELE":
-                        if (deletionsData == null)
-                            deletionsData = new SimpleSubrecord<byte[]>();
-
-                        deletionsData.ReadBinary(reader);
+                        DeletionsData = reader.ReadSimpleSubrecord<byte[]>();
                         break;
                     case "CNAM":
-                        if (author == null)
-                            author = new SimpleSubrecord<string>();
-
-                        author.ReadBinary(reader);
+                        Author = reader.ReadSimpleSubrecord<string>();
                         break;
                     case "SNAM":
-                        if (description == null)
-                            description = new SimpleSubrecord<string>();
-
-                        description.ReadBinary(reader);
+                        Description = reader.ReadSimpleSubrecord<string>();
                         break;
                     case "MAST":
-                        reader.ReadTag();
+                        if (MasterFiles == null)
+                            MasterFiles = new List<MasterFileData>();
 
-                        if (MasterFileData == null)
-                            MasterFileData = new Dictionary<string, ulong>();
+                        MasterFileData data = new MasterFileData();
+                        data.ReadBinary(reader);
 
-                        string fileName = reader.ReadNullTermString(reader.ReadUInt16());
-                        ulong size = 0;
-
-                        if (reader.PeekTag() == "DATA")
-                        {
-                            reader.ReadTag();
-                            reader.ReadUInt16();
-                            size = reader.ReadUInt64();
-                        }
-
-                        MasterFileData.Add(fileName, size);
+                        MasterFiles.Add(data);
                         break;
                     case "ONAM":
-                        reader.ReadTag();
+                        OverriddenRecords = new FormArray();
 
-                        if (OverriddenRecords == null)
-                            OverriddenRecords = new List<FormID>();
-
-                        int count = reader.ReadUInt16() / 4;
-
-                        for (int i = 0; i < count; i++ )
-                            OverriddenRecords.Add(reader.ReadUInt32());
-
+                        OverriddenRecords.ReadBinary(reader);
                         break;
                     case "SCRN":
-                        if (screenshotData == null)
-                            screenshotData = new SimpleSubrecord<byte[]>();
-
-                        screenshotData.ReadBinary(reader);
+                        ScreenshotData = reader.ReadSimpleSubrecord<byte[]>();
                         break;
                 }
             }
@@ -156,40 +71,69 @@ namespace ESPSharp
         public override void WriteData(ESPWriter writer)
         {
             if (PluginHeader != null) PluginHeader.WriteBinary(writer);
-            if (offsetData != null) offsetData.WriteBinary(writer);
-            if (deletionsData != null) deletionsData.WriteBinary(writer);
-            if (author != null) author.WriteBinary(writer);
-            if (description != null) description.WriteBinary(writer);
-            if (MasterFileData != null)
+            if (OffsetData != null) writer.WriteSimpleSubrecord<byte[]>(OffsetData, "OFST");
+            if (DeletionsData != null) writer.WriteSimpleSubrecord<byte[]>(DeletionsData, "DELE");
+            if (Author != null) writer.WriteSimpleSubrecord<string>(Author, "CNAM");
+            if (Description != null) writer.WriteSimpleSubrecord<string>(Description, "SNAM");
+            if (MasterFiles != null)
             {
-                foreach (var kvp in MasterFileData)
-                {
-                    writer.WriteTag("MAST");
-                    writer.Write((ushort)(kvp.Key.Length + 1));
-                    writer.Write(kvp.Key.ToCharArray());
-                    writer.Write((byte)0);
-
-                    writer.WriteTag("DATA");
-                    writer.Write((ushort)8);
-                    writer.Write(kvp.Value);
-                }
+                foreach (var data in MasterFiles)
+                    data.WriteBinary(writer);
             }
+            if (OverriddenRecords != null) OverriddenRecords.WriteBinary(writer);
+            if (ScreenshotData != null) writer.WriteSimpleSubrecord<byte[]>(ScreenshotData, "SCRN");
+        }
+
+        public override void WriteDataXML(XElement ele)
+        {
+            if (PluginHeader != null)
+            {
+                XElement subEle = new XElement("PluginHeader");
+                PluginHeader.WriteXML(subEle);
+                ele.Add(subEle);
+            }
+
+            if (OffsetData != null)
+                ele.AddSimpleSubrecord("OffsetData", "OFST", OffsetData.ToHex());
+
+            if (DeletionsData != null)
+                ele.AddSimpleSubrecord("DeletionsData", "DELE", DeletionsData.ToHex());
+
+            if (Author != null)
+                ele.AddSimpleSubrecord("Author", "CNAM", Author);
+
+            if (Description != null)
+                ele.AddSimpleSubrecord("Description", "SNAM", Description);
+
+            if (MasterFiles != null)
+            {
+                XElement subEle = new XElement("MasterFiles");
+
+                foreach (var data in MasterFiles)
+                    data.WriteXML(subEle);
+
+                ele.Add(subEle);
+            }
+
             if (OverriddenRecords != null)
-            {
-                writer.WriteTag("ONAM");
-                writer.Write((ushort)OverriddenRecords.Count * 4);
+                OverriddenRecords.WriteXML(ele);
 
-                foreach (var rec in OverriddenRecords)
-                    writer.Write(rec);
-            }
-            if (screenshotData != null) screenshotData.WriteBinary(writer);
+            if (ScreenshotData != null)
+                ele.AddSimpleSubrecord("ScreenshotData", "SCRN", ScreenshotData.ToHex());
         }
 
         public override void ReadDataXML(XElement ele)
         {
-            foreach (var subEle in ele.Elements().Where(e => e.Attribute("Tag") != null))
+            foreach (var subEle in ele.Elements())
             {
-                switch (subEle.Attribute("Tag").Value)
+                string switchString;
+
+                if (subEle.Attribute("Tag") != null) 
+                    switchString = subEle.Attribute("Tag").Value;
+                else 
+                    switchString = subEle.Name.ToString();
+
+                switch (switchString)
                 {
                     case "HEDR":
                         if (PluginHeader == null)
@@ -198,124 +142,44 @@ namespace ESPSharp
                         PluginHeader.ReadXML(subEle);
                         break;
                     case "OFST":
-                        if (offsetData == null)
-                            offsetData = new SimpleSubrecord<byte[]>();
-
-                        offsetData.ReadXML(subEle);
+                        OffsetData = subEle.ToBytes();
                         break;
                     case "DELE":
-                        if (deletionsData == null)
-                            deletionsData = new SimpleSubrecord<byte[]>();
-
-                        deletionsData.ReadXML(subEle);
+                        DeletionsData = subEle.ToBytes();
                         break;
                     case "CNAM":
-                        if (author == null)
-                            author = new SimpleSubrecord<string>();
-
-                        author.ReadXML(subEle);
+                        Author = subEle.Value;
                         break;
                     case "SNAM":
-                        if (description == null)
-                            description = new SimpleSubrecord<string>();
-
-                        description.ReadXML(subEle);
+                        Description = subEle.Value;
                         break;
-                    case "MAST":
-                        if (MasterFileData == null)
-                            MasterFileData = new Dictionary<string,ulong>();
+                    case "MasterFiles":
+                        if (MasterFiles == null)
+                            MasterFiles = new List<MasterFileData>();
 
-                        string fileName = subEle.Value;
-                        ulong fileSize = subEle.Element("FileSize").ToUInt64();
-
-                        MasterFileData[fileName] = fileSize;
+                        foreach (XElement e in subEle.Elements())
+                        {
+                            MasterFileData data = new MasterFileData();
+                            data.ReadXML(e);
+                            MasterFiles.Add(data);
+                        }
                         break;
                     case "ONAM":
                         if (OverriddenRecords == null)
-                            OverriddenRecords = new List<FormID>();
+                            OverriddenRecords = new FormArray();
 
-                        foreach (var subSubEle in subEle.Elements())
-                            OverriddenRecords.Add(subSubEle.ToFormID());
+                        OverriddenRecords.ReadXML(subEle);
                         break;
                     case "SCRN":
-                        if (screenshotData == null)
-                            screenshotData = new SimpleSubrecord<byte[]>();
-
-                        screenshotData.ReadXML(subEle);
+                        ScreenshotData = subEle.ToBytes();
                         break;
                 }
             }
         }
 
-        public override void WriteDataXML(XElement ele)
+        public override string ToString()
         {
-            if (PluginHeader != null) 
-            {
-                XElement subEle = new XElement("PluginHeader");
-                PluginHeader.WriteXML(subEle);
-                ele.Add(subEle);
-            }
-
-            if (offsetData != null)
-            {
-                XElement subEle = new XElement("OffsetData");
-                offsetData.WriteXML(subEle);
-                ele.Add(subEle);
-            }
-
-            if (deletionsData != null)
-            {
-                XElement subEle = new XElement("DeletionsData");
-                deletionsData.WriteXML(subEle);
-                ele.Add(subEle);
-            }
-
-            if (author != null)
-            {
-                XElement subEle = new XElement("Author");
-                author.WriteXML(subEle);
-                ele.Add(subEle);
-            }
-
-            if (description != null)
-            {
-                XElement subEle = new XElement("Description");
-                description.WriteXML(subEle);
-                ele.Add(subEle);
-            }
-
-            if (MasterFileData != null)
-            {
-                foreach (var kvp in MasterFileData)
-                {
-                    XElement subEle = new XElement("MasterFile");
-
-                    subEle.Add(
-                        new XAttribute("Tag", "MAST"),
-                        new XElement("FileName", kvp.Key),
-                        new XElement("FileSize", kvp.Value));
-
-                    ele.Add(subEle);
-                }
-            }
-
-            if (OverriddenRecords != null)
-            {
-                XElement subEle = new XElement("ParentOverrides");
-                subEle.Add(new XAttribute("Tag", "ONAM"));
-
-                foreach (var form in OverriddenRecords)
-                    subEle.Add(new XElement("Override", form));
-
-                ele.Add(subEle);
-            }
-
-            if (screenshotData != null)
-            {
-                XElement subEle = new XElement("ScreenshotData");
-                screenshotData.WriteXML(subEle);
-                ele.Add(subEle);
-            }
+            return "Header";
         }
     }
 }

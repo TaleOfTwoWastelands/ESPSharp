@@ -43,7 +43,11 @@ namespace ESPSharp
             if (compressionCorrupted)
                 root.Add(new XElement("CorruptedBytes"), corruptedBytes.ToBase64());
             else
-                WriteDataXML(root);
+            {
+                XElement ele = new XElement("Subrecords");
+                root.Add(ele);
+                WriteDataXML(ele);
+            }
 
             doc.Save(destinationFile);
         }
@@ -65,7 +69,7 @@ namespace ESPSharp
             if (outRecord.compressionCorrupted)
                 outRecord.corruptedBytes = root.Element("CorruptedBytes").ToBytes();
             else
-                outRecord.ReadDataXML(root);
+                outRecord.ReadDataXML(root.Element("Subrecords"));
 
             return outRecord;
         }
@@ -93,6 +97,7 @@ namespace ESPSharp
                     {
                         WriteData(subWriter);
                         stream.Position = 0;
+                        writer.Write((uint)stream.Length);
                         writer.Write(Zlib.Compress(stream));
                     }
                 }
@@ -184,6 +189,9 @@ namespace ESPSharp
                 case "TES4":
                     outRecord = new Header();
                     break;
+                case "GMST":
+                    outRecord = new GameSetting();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;
@@ -206,7 +214,10 @@ namespace ESPSharp
 
         public override string ToString()
         {
-            return FormID.ToString();
+            if (this is IEditorID)
+                return String.Format("{0} - {1}", (this as IEditorID).EditorID, FormID.ToString());
+            else
+                return FormID.ToString();
         }
     }
 }
