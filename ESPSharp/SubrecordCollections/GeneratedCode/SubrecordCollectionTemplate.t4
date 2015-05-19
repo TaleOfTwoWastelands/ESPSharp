@@ -1,0 +1,234 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Xml.Linq;
+using ESPSharp.Enums;
+using ESPSharp.Enums.Flags;
+using ESPSharp.Subrecords;
+using ESPSharp.SubrecordCollections;
+
+namespace ESPSharp.SubrecordCollections
+{
+	public partial class <#= template.ClassName #> : SubrecordCollection
+	{
+<# foreach (var field in template.Fields) { #>
+		<#= field.PropertyDeclaration #>
+<#}#>
+	
+		public override void ReadBinary(ESPReader reader)
+		{
+			while (reader.BaseStream.Position < reader.BaseStream.Length)
+			{
+				string subTag = reader.PeekTag();
+
+				switch (subTag)
+				{
+<# foreach (var field in template.Fields) { #>
+					case "<#= field.Tag #>":
+<# if (field.implementReadData) { #>
+						if (<#= field.Name #> == null)
+							<#= field.Name #> = new <#= field.TypeString #>();
+<# if (!field.Type.GetInterfaces().Contains(typeof(IEnumerable))){#>
+						else
+							return;
+<# } #>
+
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord))){ #>
+						<#= field.Name #>.ReadBinary(reader);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){#>
+						<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
+						temp.ReadBinary(reader);
+						<#= field.Name #>.Add(temp);
+<# } #>
+<# } else { #>
+						Read<#= field.Name #>(reader);
+<# } #>
+						break;
+<# } #>
+				default:
+					return;
+				}
+			}
+		}
+
+		public override void WriteBinary(ESPWriter writer)
+		{
+<# foreach (var field in template.Fields) { #>
+<# if (field.implementWriteData) { #>
+			if (<#= field.Name #> != null)
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord))){ #>
+				<#= field.Name #>.WriteBinary(writer);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){ #>
+				foreach (var item in <#= field.Name #>)
+					item.WriteBinary(writer);
+<# } #>
+<# } else { #>
+
+			Write<#= field.Name #>(writer);
+<# } #>
+<# } #>
+		}
+
+		public override void WriteXML(XElement ele)
+		{
+			XElement subEle;
+<# foreach (var field in template.Fields) { #>
+<# if (field.implementWriteXML) { #>
+			if (<#= field.Name #> != null)		
+			{		
+				ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord))) { #>
+				<#= field.Name #>.WriteXML(subEle);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
+				foreach (var entry in <#= field.Name #>)
+				{
+					XElement newEle = new XElement("<#= field.XMLSubName #>");
+					entry.WriteXML(newEle);
+					subEle.Add(newEle);
+				}
+<# } #>
+			}
+<# } else { #>
+
+			Write<#= field.Name #>XML(ele);
+<# } #>
+<# } #>
+		}
+
+		public override void ReadXML(XElement ele)
+		{
+			XElement subEle;
+
+<# foreach (var field in template.Fields) { #>
+<# if (field.implementReadXML) { #>
+			if (ele.TryPathTo("<#= field.XMLPath#>", false, out subEle))
+			{
+				if (<#= field.Name #> == null)
+					<#= field.Name #> = new <#= field.TypeString #>();
+					
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord))) { #>
+				<#= field.Name #>.ReadXML(subEle);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
+				foreach (XElement e in subEle.Elements())
+				{
+					<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
+					temp.ReadXML(e);
+					<#=  field.Name #>.Add(temp);
+				}
+<# } #>
+			}
+<# } else { #>
+
+			Read<#= field.Name #>XML(ele);
+<# } #>
+<# } #>
+		}
+
+<#foreach (var field in template.Fields.Where(f => !f.implementReadData)) { #>
+		partial void Read<#= field.Name #>(ESPReader reader);
+<# } #>
+<#foreach (var field in template.Fields.Where(f => !f.implementWriteData)) { #>
+		partial void Write<#= field.Name #>(ESPWriter writer);
+<# } #>
+<#foreach (var field in template.Fields.Where(f => !f.implementWriteXML)) { #>
+		partial void Write<#= field.Name #>XML(XElement ele);
+<# } #>
+<#foreach (var field in template.Fields.Where(f => !f.implementReadXML)) { #>
+		partial void Read<#= field.Name #>XML(XElement ele);
+<# } #>
+	}
+}
+<#+
+public class SubrecordCollectionTemplate
+{
+    public string ClassName;
+	public List<SubrecordCollectionField> Fields = new List<SubrecordCollectionField>();
+}
+
+public class SubrecordCollectionField
+{
+	public string Tag;
+	public Type Type;
+	public string Name;
+	public string XMLPath;
+	public string XMLSubName;
+
+	public bool isRequired = false;
+	public bool isReadOnly = false;
+	public bool implementReadData = true;
+	public bool implementWriteData = true;
+	public bool implementReadXML = true;
+	public bool implementWriteXML = true;
+
+	public SubrecordCollectionField()
+    {
+    }
+
+	public SubrecordCollectionField(string Tag, Type Type, string Name, string XMLPath)
+    {
+		this.Tag = Tag;
+		this.Type = Type;
+		this.Name = Name;
+		this.XMLPath = XMLPath;
+    }
+
+	public string TypeString
+    {
+        get 
+        {
+			return GetFriendlyName(Type);
+        }
+    }
+
+	public string Declaration
+    {
+		get
+        {
+			return string.Format("private {0} {1}", TypeString, ToPrivateCase(Name));
+        }
+    }
+
+	public string PropertyDeclaration
+    {
+		get
+        {
+			string declare = "public " + GetFriendlyName(Type) + " " + ToPropertyCase(Name);
+
+			if (isReadOnly)
+				declare += " { get; }";
+			else				
+				declare += " { get; set; }";
+
+			return declare;
+        }
+    }
+}
+
+public static string ToPrivateCase(string inString)
+{
+	return string.Format("{0}{1}", inString.Substring(0, 1).ToLowerInvariant(), inString.Substring(1));
+}
+
+public static string ToPropertyCase(string inString)
+{
+	return string.Format("{0}{1}", inString.Substring(0, 1).ToUpperInvariant(), inString.Substring(1));
+}
+
+public static string GetFriendlyName(Type inType)
+{
+	if (inType.IsConstructedGenericType)
+    {
+		string name = inType.Name.Substring(0, inType.Name.IndexOf('`'));
+		string args = string.Join(", ", inType.GenericTypeArguments.Select<Type, string>(t => t.Name));
+
+		return name + "<" + args + ">";
+    }
+	else if (inType == typeof(object))
+		return "dynamic";
+	else
+		return inType.Name;
+}
+#>

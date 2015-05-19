@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Linq;
 
-namespace ESPSharp
+namespace ESPSharp.Subrecords
 {
     public class PluginHeader : Subrecord
     {

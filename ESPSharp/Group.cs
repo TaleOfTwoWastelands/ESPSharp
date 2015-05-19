@@ -5,6 +5,8 @@ using System.Text;
 using System.IO;
 using System.Xml.Linq;
 using System.Diagnostics;
+using ESPSharp.Enums;
+using ESPSharp.Enums.Flags;
 
 namespace ESPSharp
 {

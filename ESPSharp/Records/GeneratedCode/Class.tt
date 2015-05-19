@@ -1,0 +1,94 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="ESPSharp" #>
+<#@ import namespace="ESPSharp.Enums" #>
+<#@ import namespace="ESPSharp.Enums.Flags" #>
+<#@ import namespace="ESPSharp.Subrecords" #>
+<#@ import namespace="ESPSharp.SubrecordCollections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Class";
+
+	//editorID
+	RecordField editorIDField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	editorIDField.isRequired = true;
+	template.Fields.Add(editorIDField);
+
+	//name
+	RecordField nameField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	nameField.isRequired = true;
+	template.Fields.Add(nameField);
+
+	//description
+	RecordField descField = 
+		new RecordField(
+			"DESC",
+			typeof(SimpleSubrecord<string>),
+			"Description",
+			"Description"
+			);
+	descField.isRequired = true;
+	template.Fields.Add(descField);
+
+	//large icon
+	RecordField lIconField = 
+		new RecordField(
+			"ICON",
+			typeof(SimpleSubrecord<string>),
+			"LargeIcon",
+			"LargeIcon"
+			);
+	template.Fields.Add(lIconField);
+
+	//small icon
+	RecordField sIconField = 
+		new RecordField(
+			"MICO",
+			typeof(SimpleSubrecord<string>),
+			"SmallIcon",
+			"SmallIcon"
+			);
+	template.Fields.Add(sIconField);
+
+	//class data
+	RecordField dataField = 
+		new RecordField(
+			"DATA",
+			typeof(ClassData),
+			"Data",
+			"Data"
+			);
+	dataField.isRequired = true;
+	template.Fields.Add(dataField);
+
+	//attributes
+	RecordField attributesField = 
+		new RecordField(
+			"ATTR",
+			typeof(Attributes),
+			"Attributes",
+			"Attributes"
+			);
+	attributesField.isRequired = true;
+	template.Fields.Add(attributesField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

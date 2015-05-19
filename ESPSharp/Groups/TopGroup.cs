@@ -2,6 +2,8 @@
 using System.IO;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using ESPSharp.Enums;
+using ESPSharp.Enums.Flags;
 
 namespace ESPSharp
 {

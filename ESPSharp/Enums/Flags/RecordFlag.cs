@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ESPSharp
+namespace ESPSharp.Enums.Flags
 {
-    [FlagsAttribute]
+    [Flags]
     public enum RecordFlag : uint
     {
         IsMasterFile        =   0x00000001,

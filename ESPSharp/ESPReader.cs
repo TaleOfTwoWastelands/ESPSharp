@@ -26,62 +26,30 @@ namespace ESPSharp
             return peek;
         }
 
-        public string ReadNullTermString(int length)
+        public T ReadEnum<T>()
         {
-            string outString = new string(ReadChars(length - 1));
-            ReadByte();
-            return outString;
-        }
+            Type enumType = Enum.GetUnderlyingType(typeof(T));
 
-        public T ReadSimpleSubrecord<T>()
-        {
-            string Tag = ReadTag();
-            int size = ReadUInt16();
-
-            string typeT = typeof(T).ToString();
-
-            switch (typeT)
+            switch (enumType.FullName)
             {
                 case "System.Byte":
-                    Debug.Assert(size == 1);
                     return (T)(object)ReadByte();
                 case "System.SByte":
-                    Debug.Assert(size == 1);
                     return (T)(object)ReadSByte();
-                case "System.Char":
-                    Debug.Assert(size == 1);
-                    return (T)(object)ReadChar();
                 case "System.UInt16":
-                    Debug.Assert(size == 2);
                     return (T)(object)ReadUInt16();
                 case "System.Int16":
-                    Debug.Assert(size == 2);
                     return (T)(object)ReadInt16();
                 case "System.UInt32":
-                    Debug.Assert(size == 4);
                     return (T)(object)ReadUInt32();
                 case "System.Int32":
-                    Debug.Assert(size == 4);
                     return (T)(object)ReadInt32();
-                case "System.Single":
-                    Debug.Assert(size == 4);
-                    return (T)(object)ReadSingle();
                 case "System.UInt64":
-                    Debug.Assert(size == 8);
                     return (T)(object)ReadUInt64();
                 case "System.Int64":
-                    Debug.Assert(size == 8);
                     return (T)(object)ReadInt64();
-                case "System.Byte[]":
-                    return (T)(object)ReadBytes(size);
-                case "System.Char[]":
-                    return (T)(object)ReadChars(size);
-                case "System.String":
-                    string outString = new String(ReadChars(size - 1));
-                    ReadByte();
-                    return (T)(object)outString;
                 default:
-                    throw new NotImplementedException(typeT + " is not yet implemented.");
+                    throw new NotImplementedException(enumType + " is not yet implemented.");
             }
         }
     }

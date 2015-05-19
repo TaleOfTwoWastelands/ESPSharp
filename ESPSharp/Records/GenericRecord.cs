@@ -5,8 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Linq;
+using ESPSharp.Enums;
+using ESPSharp.Enums.Flags;
+using ESPSharp.Subrecords;
 
-namespace ESPSharp
+namespace ESPSharp.Records
 {
     public class GenericRecord : Record
     {

@@ -1,0 +1,46 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="ESPSharp" #>
+<#@ import namespace="ESPSharp.Enums" #>
+<#@ import namespace="ESPSharp.Enums.Flags" #>
+<#@ import namespace="ESPSharp.Subrecords" #>
+<#@ import namespace="ESPSharp.SubrecordCollections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "GameSetting";
+
+	//editorID
+	RecordField editorIDField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	editorIDField.isRequired = true;
+	template.Fields.Add(editorIDField);
+
+	//setting value
+	RecordField valueField = 
+		new RecordField(
+			"DATA",
+			typeof(object),
+			"Value",
+			"Value"
+			);
+	valueField.isRequired = true;
+	valueField.implementReadData = false;
+	valueField.implementReadXML = false;
+	valueField.implementWriteData = false;
+	valueField.implementWriteXML = false;
+	template.Fields.Add(valueField);
+
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

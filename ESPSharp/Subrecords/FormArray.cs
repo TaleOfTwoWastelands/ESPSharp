@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace ESPSharp
+namespace ESPSharp.Subrecords
 {
     public class FormArray : Subrecord, IReferenceContainer
     {
@@ -28,7 +28,7 @@ namespace ESPSharp
         protected override void WriteDataXML(XElement ele)
         {
             foreach (var id in Forms)
-                ele.Add(new XElement("Form"), id);
+                ele.Add(new XElement("Form", id));
         }
 
         protected override void ReadDataXML(XElement ele)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ESPSharp
 {
@@ -37,6 +38,11 @@ namespace ESPSharp
             }
 
             return outString;
+        }
+
+        public static List<string> PathToStrings(string path)
+        {
+            return path.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).ToList<string>(); 
         }
     }
 

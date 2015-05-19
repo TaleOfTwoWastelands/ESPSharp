@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ESPSharp.Subrecords;
 
-namespace ESPSharp
+namespace ESPSharp.Enums.Flags
 {
-    public interface IEditorID
+    [Flags]
+    public enum TXSTFlags : ushort
     {
-        SimpleSubrecord<string> EditorID { get; set; }
+        NoSpecularMap = 0x0001
     }
 }

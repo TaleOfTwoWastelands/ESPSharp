@@ -42,7 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnumsAndFlags\GameSettingType.cs" />
+    <Compile Include="Enums\Flags\ActorValues.cs" />
+    <Compile Include="Enums\Flags\ClassDataFlag.cs" />
+    <Compile Include="Enums\Flags\ServicesFlag.cs" />
+    <Compile Include="Enums\Flags\TXSTFlags.cs" />
+    <Compile Include="Enums\GameSettingType.cs" />
+    <Compile Include="Enums\GlobalVarType.cs" />
+    <Compile Include="Enums\Skills.cs" />
     <Compile Include="ESPReader.cs" />
     <Compile Include="ESPWriter.cs" />
     <Compile Include="Groups\CellGroup.cs" />
@@ -53,39 +59,123 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Groups\ExteriorCellBlock.cs" />
     <Compile Include="Groups\ExteriorCellSubBlock.cs" />
-    <Compile Include="EnumsAndFlags\GroupType.cs" />
+    <Compile Include="Enums\GroupType.cs" />
     <Compile Include="Groups\InteriorCellBlock.cs" />
     <Compile Include="Groups\InteriorCellSubBlock.cs" />
-    <Compile Include="EnumsAndFlags\RecordFlag.cs" />
+    <Compile Include="Enums\Flags\RecordFlag.cs" />
     <Compile Include="FormID.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Interfaces\IEditorID.cs" />
     <Compile Include="Interfaces\IReferenceContainer.cs" />
-    <Compile Include="Records\Header.cs" />
     <Compile Include="ISubgroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Record.cs" />
     <Compile Include="Groups\TopGroup.cs" />
     <Compile Include="Groups\TopicGroup.cs" />
     <Compile Include="Groups\WorldGroup.cs" />
-    <Compile Include="Records\GenericRecord.cs" />
     <Compile Include="Records\GameSetting.cs" />
-    <Compile Include="Records\TextureSet.cs" />
+    <Compile Include="Records\GeneratedCode\Class.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Class.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\GameSetting.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameSetting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\GlobalVariable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GlobalVariable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\MenuIcon.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MenuIcon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GenericRecord.cs" />
+    <Compile Include="Records\GeneratedCode\Header.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Header.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\TextureSet.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TextureSet.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecord.cs" />
     <Compile Include="SubrecordCollection.cs" />
-    <Compile Include="SubrecordCollection\MasterFileData.cs" />
+    <Compile Include="SubrecordCollections\GeneratedCode\MasterFileData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MasterFileData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\Attributes.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Attributes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\ClassData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClassData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\DecalData.cs" />
     <Compile Include="Subrecords\FormArray.cs" />
     <Compile Include="Subrecords\ObjectBounds.cs" />
     <Compile Include="Subrecords\PluginHeader.cs" />
+    <Compile Include="Subrecords\SimpleSubrecord.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Zlib.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="Records\GeneratedCode\Class.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Class.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\GameSetting.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GameSetting.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\GlobalVariable.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GlobalVariable.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Header.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Header.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\MenuIcon.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MenuIcon.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\RecordTemplate.t4" />
+    <None Include="Records\GeneratedCode\TextureSet.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TextureSet.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\MasterFileData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MasterFileData.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\SubrecordCollectionTemplate.t4" />
+    <None Include="Subrecords\Attributes.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Attributes.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\ClassData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ClassData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\SubrecordTemplate.t4" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

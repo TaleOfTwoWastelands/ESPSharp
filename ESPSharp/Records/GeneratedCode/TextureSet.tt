@@ -1,0 +1,122 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="ESPSharp" #>
+<#@ import namespace="ESPSharp.Enums" #>
+<#@ import namespace="ESPSharp.Enums.Flags" #>
+<#@ import namespace="ESPSharp.Subrecords" #>
+<#@ import namespace="ESPSharp.SubrecordCollections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "TextureSet";
+
+	//editorID
+	RecordField editorIDField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	editorIDField.isRequired = true;
+	template.Fields.Add(editorIDField);
+
+	//objectBounds
+	RecordField objectBoundsField = 
+		new RecordField(
+			"OBND",
+			typeof(ObjectBounds),
+			"ObjectBounds",
+			"ObjectBounds"
+			);
+	objectBoundsField.isRequired = true;
+	template.Fields.Add(objectBoundsField);
+
+	//BaseImage and transparency
+	RecordField baseImageField = 
+		new RecordField(
+			"TX00",
+			typeof(SimpleSubrecord<string>),
+			"BaseImage_Transparency",
+			"BaseImage_Transparency"
+			);
+	template.Fields.Add(baseImageField);
+
+	//Normal map and Specular
+	RecordField normalField = 
+		new RecordField(
+			"TX01",
+			typeof(SimpleSubrecord<string>),
+			"NormalMap_Specular",
+			"NormalMap_Specular"
+			);
+	template.Fields.Add(normalField);
+
+	//Environment map mask
+	RecordField envMapField = 
+		new RecordField(
+			"TX02",
+			typeof(SimpleSubrecord<string>),
+			"EnvironmentMapMask",
+			"EnvironmentMapMask"
+			);
+	template.Fields.Add(envMapField);
+
+	//Glow map
+	RecordField glowMapField = 
+		new RecordField(
+			"TX03",
+			typeof(SimpleSubrecord<string>),
+			"GlowMap",
+			"GlowMap"
+			);
+	template.Fields.Add(glowMapField);
+
+	//Parallax map
+	RecordField parallaxMapField = 
+		new RecordField(
+			"TX04",
+			typeof(SimpleSubrecord<string>),
+			"ParallaxMap",
+			"ParallaxMap"
+			);
+	template.Fields.Add(parallaxMapField);
+
+	//Environment map
+	RecordField environmentMapField = 
+		new RecordField(
+			"TX05",
+			typeof(SimpleSubrecord<string>),
+			"EnvironmentMap",
+			"EnvironmentMap"
+			);
+	template.Fields.Add(environmentMapField);
+
+	//Decal data
+	RecordField decalField = 
+		new RecordField(
+			"DODT",
+			typeof(DecalData),
+			"DecalData",
+			"DecalData"
+			);
+	template.Fields.Add(decalField);
+
+	//Flags
+	RecordField flagsField = 
+		new RecordField(
+			"DNAM",
+			typeof(SimpleSubrecord<TXSTFlags>),
+			"TextureSetFlags",
+			"TextureSetFlags"
+			);
+	template.Fields.Add(flagsField);
+
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

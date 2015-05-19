@@ -7,7 +7,7 @@ using System.IO;
 using System.Xml.Linq;
 using System.Diagnostics;
 
-namespace ESPSharp
+namespace ESPSharp.Subrecords
 {
     public class UndecodedSubrecord : Subrecord
     {

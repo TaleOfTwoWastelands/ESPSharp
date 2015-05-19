@@ -1,4 +1,4 @@
-﻿namespace ESPSharp
+﻿namespace ESPSharp.Enums
 {
     public enum GroupType : uint
     {

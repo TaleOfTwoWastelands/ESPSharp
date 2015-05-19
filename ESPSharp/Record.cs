@@ -5,6 +5,9 @@ using System.Text;
 using System.IO;
 using System.Xml.Linq;
 using System.Diagnostics;
+using ESPSharp.Enums;
+using ESPSharp.Enums.Flags;
+using ESPSharp.Records;
 
 namespace ESPSharp
 {
@@ -195,6 +198,15 @@ namespace ESPSharp
                 case "TXST":
                     outRecord = new TextureSet();
                     break;
+                case "MICN":
+                    outRecord = new MenuIcon();
+                    break;
+                case "GLOB":
+                    outRecord = new GlobalVariable();
+                    break;
+                case "CLAS":
+                    outRecord = new Class();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;
@@ -218,7 +230,7 @@ namespace ESPSharp
         public override string ToString()
         {
             if (this is IEditorID)
-                return String.Format("{0} - {1}", (this as IEditorID).EditorID, FormID.ToString());
+                return String.Format("{0} - {1}", (this as IEditorID).EditorID.Value, FormID.ToString());
             else
                 return FormID.ToString();
         }

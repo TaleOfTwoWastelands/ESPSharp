@@ -88,12 +88,46 @@ namespace ESPSharp
         {
             return ele.Value.ToArray();
         }
+
         public static void AddSimpleSubrecord(this XElement ele, string name, string tag, object value)
         {
             ele.Add(
                 new XElement(name,
                     new XAttribute("Tag", tag),
                     value));
+        }
+
+        public static bool TryPathTo(this XElement ele, string path, bool createPath, out XElement outEle)
+        {
+            List<string> nodes = Utility.PathToStrings(path);
+            return ele.TryPathTo(nodes, createPath, out outEle);
+        }
+
+        public static bool TryPathTo(this XElement ele, List<string> nodes, bool createPath, out XElement outEle)
+        {
+            XElement curEle = ele;
+
+            foreach (var node in nodes)
+            {
+                XElement nextEle = curEle.Element(node);
+                if (nextEle != null)
+                    curEle = nextEle;
+                else if (createPath)
+                {
+                    nextEle = new XElement(node);
+                    curEle.Add(nextEle);
+                    curEle = nextEle;
+                }
+                else
+                {
+                    outEle = curEle;
+                    return false;
+                }
+            }
+
+            outEle = curEle;
+
+            return true;
         }
         #endregion
 

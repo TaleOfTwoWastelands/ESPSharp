@@ -5,105 +5,70 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Linq;
+using ESPSharp.Enums;
+using ESPSharp.Enums.Flags;
+using ESPSharp.Subrecords;
 
-namespace ESPSharp
+namespace ESPSharp.Records
 {
-    public class GameSetting : Record, IEditorID
+    public partial class GameSetting : Record, IEditorID
     {
-        public string EditorID { get; set; }
-        public dynamic Value { get; set; }
-
-        public override void ReadData(ESPReader reader, long dataEnd)
+        partial void ReadValue(ESPReader reader)
         {
-            while (reader.BaseStream.Position < dataEnd)
-            {
-                string subTag = reader.PeekTag();
-
-                switch (subTag)
+            if (Value == null)
+                switch (EditorID.Value.First())
                 {
-                    case "EDID":
-                        EditorID = reader.ReadSimpleSubrecord<string>();
-                        break;
-                    case "DATA":
-                        switch (EditorID.First())
-                        {
-                            case 's':
-                                Value = reader.ReadSimpleSubrecord<string>();
-                                break;
-                            case 'f':
-                                Value = reader.ReadSimpleSubrecord<float>();
-                                break;
-                            default:
-                                Value = reader.ReadSimpleSubrecord<int>();
-                                break;
-                        }
-                        break;
-                }
-            }
-        }
-
-        public override void WriteData(ESPWriter writer)
-        {
-            writer.WriteSimpleSubrecord<string>(EditorID, "EDID");
-
-            switch (EditorID.First())
-            {
-                case 's':
-                    writer.WriteSimpleSubrecord<string>(Value, "DATA");
-                    break;
-                case 'f':
-                    writer.WriteSimpleSubrecord<float>(Value, "DATA");
-                    break;
-                default:
-                    writer.WriteSimpleSubrecord<int>(Value, "DATA");
-                    break;
-            }
-        }
-
-        public override void WriteDataXML(XElement ele)
-        {
-            if (EditorID != null)
-                ele.AddSimpleSubrecord("EditorID", "EDID", EditorID);
-
-            if (Value != null)
-                switch (EditorID.First())
-                {
-                    case 's':
-                        ele.AddSimpleSubrecord("Value", "DATA", (string)Value);
-                        break;
                     case 'f':
-                        ele.AddSimpleSubrecord("Value", "DATA", ((float)Value).ToString());
+                        Value = new SimpleSubrecord<float>();
+                        break;
+                    case 's':
+                        Value = new SimpleSubrecord<string>();
                         break;
                     default:
-                        ele.AddSimpleSubrecord("Value", "DATA", ((int)Value).ToString());
+                        Value = new SimpleSubrecord<int>();
                         break;
                 }
+
+            Value.ReadBinary(reader);
         }
 
-        public override void ReadDataXML(XElement ele)
+        partial void WriteValue(ESPWriter writer)
         {
-            foreach (var subEle in ele.Elements())
+            if (Value == null)
+                Value.WriteBinary(writer);
+        }
+
+        partial void WriteValueXML(XElement ele)
+        {
+            XElement subEle;
+            if (Value != null)
             {
-                switch (subEle.Attribute("Tag").Value)
-                {
-                    case "EDID":
-                        EditorID = subEle.Value;
-                        break;
-                    case "DATA":
-                        switch (EditorID.First())
-                        {
-                            case 's':
-                                Value = subEle.Value;
-                                break;
-                            case 'f':
-                                Value = subEle.ToSingle();
-                                break;
-                            default:
-                                Value = subEle.ToInt32();
-                                break;
-                        }
-                        break;
-                }
+                ele.TryPathTo("Value", true, out subEle);
+                Value.WriteXML(subEle);
+            }
+        }
+
+        partial void ReadValueXML(XElement ele)
+        {
+            XElement subEle;
+
+            if (ele.TryPathTo("Value", false, out subEle))
+            {
+                if (Value == null)
+                    switch (EditorID.Value.First())
+                    {
+                        case 'f':
+                            Value = new SimpleSubrecord<float>();
+                            break;
+                        case 's':
+                            Value = new SimpleSubrecord<string>();
+                            break;
+                        default:
+                            Value = new SimpleSubrecord<int>();
+                            break;
+                    }
+
+                Value.ReadXML(subEle);
             }
         }
     }

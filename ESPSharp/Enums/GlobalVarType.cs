@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ESPSharp.Subrecords;
 
-namespace ESPSharp
+namespace ESPSharp.Enums
 {
-    public interface IEditorID
+    public enum GlobalVarType : byte
     {
-        SimpleSubrecord<string> EditorID { get; set; }
+        Short = 115,
+        Long = 108,
+        Float = 102
     }
 }

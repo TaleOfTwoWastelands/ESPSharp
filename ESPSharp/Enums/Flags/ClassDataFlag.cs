@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ESPSharp.Subrecords;
 
-namespace ESPSharp
+namespace ESPSharp.Enums.Flags
 {
-    public interface IEditorID
+    [Flags]
+    public enum ClassDataFlag : uint
     {
-        SimpleSubrecord<string> EditorID { get; set; }
+        Playable = 0x01,
+        Guard = 0x02
     }
 }

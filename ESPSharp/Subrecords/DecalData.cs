@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace ESPSharp
+namespace ESPSharp.Subrecords
 {
     public class DecalData : Subrecord
     {
