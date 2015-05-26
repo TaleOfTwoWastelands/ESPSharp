@@ -1,0 +1,84 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Faction";
+
+	RecordField tempField;
+
+	//editorID
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	//name
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	//relationships
+	tempField = 
+		new RecordField(
+			"XNAM",
+			typeof(List<Relationship>),
+			"Relationships",
+			"Relationships"
+			);
+	tempField.XMLSubName = "Relationship";
+	template.Fields.Add(tempField);
+
+	//Data
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(FactionData),
+			"Data",
+			"Data"
+			);
+	template.Fields.Add(tempField);
+
+	//Unused
+	tempField = 
+		new RecordField(
+			"CNAM",
+			typeof(SimpleSubrecord<float>),
+			"Unused",
+			"Unused"
+			);
+	template.Fields.Add(tempField);
+
+	//Ranks
+	tempField = 
+		new RecordField(
+			"RNAM",
+			typeof(List<FactionRank>),
+			"Ranks",
+			"Ranks"
+			);
+	tempField.XMLSubName = "Rank";
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"WMI1",
+			typeof(SimpleSubrecord<FormID>),
+			"Reputation",
+			"Reputation"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

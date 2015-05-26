@@ -1,0 +1,82 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="ESPSharp" #>
+<#@ import namespace="ESPSharp.Enums" #>
+<#@ import namespace="ESPSharp.Enums.Flags" #>
+<#@ import namespace="ESPSharp.Subrecords" #>
+<#@ import namespace="ESPSharp.SubrecordCollections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "Attributes";
+
+	//strength
+	SubrecordField strengthField = 
+		new SubrecordField(
+			typeof(byte),
+			"Strength",
+			"Strength"
+			);
+	template.Fields.Add(strengthField);
+
+	//Perception
+	SubrecordField perceptionField = 
+		new SubrecordField(
+			typeof(byte),
+			"Perception",
+			"Perception"
+			);
+	template.Fields.Add(perceptionField);
+
+	//Endurance
+	SubrecordField enduranceField = 
+		new SubrecordField(
+			typeof(byte),
+			"Endurance",
+			"Endurance"
+			);
+	template.Fields.Add(enduranceField);
+
+	//Charisma
+	SubrecordField charismaField = 
+		new SubrecordField(
+			typeof(byte),
+			"Charisma",
+			"Charisma"
+			);
+	template.Fields.Add(charismaField);
+
+	//Intelligence
+	SubrecordField intelligenceField = 
+		new SubrecordField(
+			typeof(byte),
+			"Intelligence",
+			"Intelligence"
+			);
+	template.Fields.Add(intelligenceField);
+
+	//Agility
+	SubrecordField agilityField = 
+		new SubrecordField(
+			typeof(byte),
+			"Agility",
+			"Agility"
+			);
+	template.Fields.Add(agilityField);
+
+	//Luck
+	SubrecordField luckField = 
+		new SubrecordField(
+			typeof(byte),
+			"Luck",
+			"Luck"
+			);
+	template.Fields.Add(luckField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

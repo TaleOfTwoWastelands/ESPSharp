@@ -1,0 +1,62 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="ESPSharp" #>
+<#@ import namespace="ESPSharp.Enums" #>
+<#@ import namespace="ESPSharp.Enums.Flags" #>
+<#@ import namespace="ESPSharp.Subrecords" #>
+<#@ import namespace="ESPSharp.SubrecordCollections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "FactionRank";
+
+	SubrecordCollectionField tempField;
+
+	//rank
+	tempField = 
+		new SubrecordCollectionField(
+			"RNAM",
+			typeof(SimpleSubrecord<int>),
+			"Rank",
+			"Rank"
+			);
+	template.Fields.Add(tempField);
+
+	//male name
+	tempField = 
+		new SubrecordCollectionField(
+			"MNAM",
+			typeof(SimpleSubrecord<string>),
+			"MaleTitle",
+			"Title/Male"
+			);
+	template.Fields.Add(tempField);
+
+	//female name
+	tempField = 
+		new SubrecordCollectionField(
+			"FNAM",
+			typeof(SimpleSubrecord<string>),
+			"FemaleTitle",
+			"Title/Female"
+			);
+	template.Fields.Add(tempField);
+
+	//insignia
+	tempField = 
+		new SubrecordCollectionField(
+			"INAM",
+			typeof(SimpleSubrecord<string>),
+			"Insignia",
+			"Insignia"
+			);
+	template.Fields.Add(tempField);
+
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>
