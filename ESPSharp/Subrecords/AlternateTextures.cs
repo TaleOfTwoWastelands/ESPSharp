@@ -34,7 +34,11 @@ namespace ESPSharp.Subrecords
         protected override void WriteDataXML(XElement ele)
         {
             foreach (var texture in Textures)
-                ele.Add("AlternateTexture", texture);
+            {
+                XElement subEle = new XElement("AlternateTexture");
+                texture.WriteXML(subEle);
+                ele.Add(subEle);
+            }
         }
 
         protected override void ReadDataXML(XElement ele)
@@ -42,7 +46,11 @@ namespace ESPSharp.Subrecords
             Textures = new List<AlternateTexture>();
 
             foreach (var subEle in ele.Elements())
-                Textures.Add(subEle.ToAlternateTexture());
+            {
+                AlternateTexture tex = new AlternateTexture();
+                tex.ReadXML(subEle);
+                Textures.Add(tex);
+            }
         }
     }
 }

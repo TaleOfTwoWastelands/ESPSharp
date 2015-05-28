@@ -7,6 +7,7 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
 
@@ -20,9 +21,20 @@ namespace ESPSharp.Subrecords
 	
 		protected override void ReadData(ESPReader reader)
 		{
-			Faction = reader.ReadFormID();
-			Modifier = reader.ReadInt32();
-			CombatReaction = reader.ReadEnum<RelationshipCombatReaction>();
+			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
+			using (ESPReader subReader = new ESPReader(stream))
+			{
+				try
+				{
+					Faction = subReader.ReadFormID();
+					Modifier = subReader.ReadInt32();
+					CombatReaction = subReader.ReadEnum<RelationshipCombatReaction>();
+				}
+				catch
+				{
+					return;
+				}
+			}
 		}
 
 		protected override void WriteData(ESPWriter writer)
@@ -37,7 +49,7 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("Faction", true, out subEle);
-			subEle.Value = Faction.ToString();
+			Faction.WriteXML(subEle);
 
 			ele.TryPathTo("Modifier", true, out subEle);
 			subEle.Value = Modifier.ToString();
@@ -51,7 +63,7 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("Faction", false, out subEle);
-			Faction = subEle.ToFormID();
+			Faction.ReadXML(subEle);
 
 			ele.TryPathTo("Modifier", false, out subEle);
 			Modifier = subEle.ToInt32();

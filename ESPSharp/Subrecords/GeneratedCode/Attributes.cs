@@ -7,6 +7,7 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
 
@@ -24,13 +25,24 @@ namespace ESPSharp.Subrecords
 	
 		protected override void ReadData(ESPReader reader)
 		{
-			Strength = reader.ReadByte();
-			Perception = reader.ReadByte();
-			Endurance = reader.ReadByte();
-			Charisma = reader.ReadByte();
-			Intelligence = reader.ReadByte();
-			Agility = reader.ReadByte();
-			Luck = reader.ReadByte();
+			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
+			using (ESPReader subReader = new ESPReader(stream))
+			{
+				try
+				{
+					Strength = subReader.ReadByte();
+					Perception = subReader.ReadByte();
+					Endurance = subReader.ReadByte();
+					Charisma = subReader.ReadByte();
+					Intelligence = subReader.ReadByte();
+					Agility = subReader.ReadByte();
+					Luck = subReader.ReadByte();
+				}
+				catch
+				{
+					return;
+				}
+			}
 		}
 
 		protected override void WriteData(ESPWriter writer)

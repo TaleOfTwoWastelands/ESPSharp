@@ -16,5 +16,18 @@ namespace ESPSharp
         {
             Write(Utility.DesanitizeTag(Tag).ToCharArray());
         }
+
+        public void Write(FormID id)
+        {
+            base.Write((uint)id);
+        }
+
+        public void Write(AlternateTexture tex)
+        {
+            Write((uint)tex.Name.Length);
+            Write(tex.Name.ToCharArray());
+            Write(tex.TextureSet);
+            Write(tex.Index);
+        }
     }
 }

@@ -63,7 +63,7 @@ namespace ESPSharp
             Record outRecord = Record.CreateRecord(root.Attribute("Tag").Value);
 
             outRecord.Flags = root.Element("Flags").ToEnum<RecordFlag>();
-            outRecord.FormID = root.Element("FormID").ToFormID();
+            outRecord.FormID.ReadXML(root.Element("FormID"));
             outRecord.FormVersion = root.Element("FormVersion").ToUInt16();
             outRecord.VersionControlInfo1 = root.Element("VersionControlInfo").Element("Info1").ToUInt32();
             outRecord.VersionControlInfo2 = root.Element("VersionControlInfo").Element("Info2").ToUInt16();
@@ -120,7 +120,7 @@ namespace ESPSharp
             Tag = reader.ReadTag();
             Size = reader.ReadUInt32();
             Flags = (RecordFlag)reader.ReadUInt32();
-            FormID = reader.ReadUInt32();
+            FormID = reader.ReadFormID();
             VersionControlInfo1 = reader.ReadUInt32();
             FormVersion = reader.ReadUInt16();
             VersionControlInfo2 = reader.ReadUInt16();
@@ -206,6 +206,15 @@ namespace ESPSharp
                     break;
                 case "CLAS":
                     outRecord = new Class();
+                    break;
+                case "FACT":
+                    outRecord = new Faction();
+                    break;
+                case "HDPT":
+                    outRecord = new HeadPart();
+                    break;
+                case "HAIR":
+                    outRecord = new Hair();
                     break;
                 default:
                     outRecord = new GenericRecord();

@@ -24,11 +24,6 @@ namespace ESPSharp
             return float.Parse(ele.Value);
         }
 
-        public static FormID ToFormID(this XElement ele)
-        {
-            return uint.Parse(ele.Value, System.Globalization.NumberStyles.HexNumber);
-        }
-
         public static ulong ToUInt64(this XElement ele)
         {
             return ulong.Parse(ele.Value);
@@ -133,11 +128,28 @@ namespace ESPSharp
 
         public static string ToBase64(this byte[] bytes)
         {
-            return Convert.ToBase64String(bytes);
+            if (bytes != null)
+                return Convert.ToBase64String(bytes);
+            else
+                return "";
         }
+
         public static string ToHex(this byte[] bytes)
         {
             return bytes.ToBase64();
+        }
+
+        public static MemoryStream CreateSubStream(this Stream origStream, long bytesToCopy)
+        {
+            MemoryStream outStream = new MemoryStream();
+
+            for (long i = 0; i < bytesToCopy; i+= (64 * 1024))
+            {
+                byte[] buffer = new byte[64 * 1024];
+                origStream.Read(buffer, 0, 64 * 1024);
+            }
+
+            return outStream;
         }
     }
 }

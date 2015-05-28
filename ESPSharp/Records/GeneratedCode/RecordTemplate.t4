@@ -1,4 +1,16 @@
-﻿using System;
+﻿<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="ESPSharp" #>
+<#@ import namespace="ESPSharp.Enums" #>
+<#@ import namespace="ESPSharp.Enums.Flags" #>
+<#@ import namespace="ESPSharp.Subrecords" #>
+<#@ import namespace="ESPSharp.SubrecordCollections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,9 +47,9 @@ namespace ESPSharp.Records
 <# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
 						<#= field.Name #>.ReadBinary(reader);
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){#>
-						<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
-						temp.ReadBinary(reader);
-						<#= field.Name #>.Add(temp);
+						<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp<#= field.Tag #> = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
+						temp<#= field.Tag #>.ReadBinary(reader);
+						<#= field.Name #>.Add(temp<#= field.Tag #>);
 <# } #>
 <# } else { #>
 						Read<#= field.Name #>(reader);
@@ -108,9 +120,9 @@ namespace ESPSharp.Records
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
 				foreach (XElement e in subEle.Elements())
 				{
-					<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
-					temp.ReadXML(e);
-					<#=  field.Name #>.Add(temp);
+					<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp<#= field.Tag #> = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
+					temp<#= field.Tag #>.ReadXML(e);
+					<#=  field.Name #>.Add(temp<#= field.Tag #>);
 				}
 <# } #>
 			}

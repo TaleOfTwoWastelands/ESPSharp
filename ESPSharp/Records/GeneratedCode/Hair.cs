@@ -12,12 +12,12 @@ using ESPSharp.SubrecordCollections;
 
 namespace ESPSharp.Records
 {
-	public partial class HeadPart : Record, IEditorID	{
+	public partial class Hair : Record, IEditorID	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public Model Model { get; set; }
-		public SimpleSubrecord<HeadPartFlags> HeadPartFlags { get; set; }
-		public List<SimpleSubrecord<FormID>> ExtraParts { get; set; }
+		public SimpleSubrecord<String> Texture { get; set; }
+		public SimpleSubrecord<HairFlags> HairFlags { get; set; }
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -45,19 +45,17 @@ namespace ESPSharp.Records
 
 						Model.ReadBinary(reader);
 						break;
-					case "DATA":
-						if (HeadPartFlags == null)
-							HeadPartFlags = new SimpleSubrecord<HeadPartFlags>();
+					case "ICON":
+						if (Texture == null)
+							Texture = new SimpleSubrecord<String>();
 
-						HeadPartFlags.ReadBinary(reader);
+						Texture.ReadBinary(reader);
 						break;
-					case "HNAM":
-						if (ExtraParts == null)
-							ExtraParts = new List<SimpleSubrecord<FormID>>();
+					case "DATA":
+						if (HairFlags == null)
+							HairFlags = new SimpleSubrecord<HairFlags>();
 
-						SimpleSubrecord<FormID> tempHNAM = new SimpleSubrecord<FormID>();
-						tempHNAM.ReadBinary(reader);
-						ExtraParts.Add(tempHNAM);
+						HairFlags.ReadBinary(reader);
 						break;
 				}
 			}
@@ -71,11 +69,10 @@ namespace ESPSharp.Records
 				Name.WriteBinary(writer);
 			if (Model != null)
 				Model.WriteBinary(writer);
-			if (HeadPartFlags != null)
-				HeadPartFlags.WriteBinary(writer);
-			if (ExtraParts != null)
-				foreach (var item in ExtraParts)
-					item.WriteBinary(writer);
+			if (Texture != null)
+				Texture.WriteBinary(writer);
+			if (HairFlags != null)
+				HairFlags.WriteBinary(writer);
 		}
 
 		public override void WriteDataXML(XElement ele)
@@ -96,20 +93,15 @@ namespace ESPSharp.Records
 				ele.TryPathTo("Model", true, out subEle);
 				Model.WriteXML(subEle);
 			}
-			if (HeadPartFlags != null)		
+			if (Texture != null)		
+			{		
+				ele.TryPathTo("Texture", true, out subEle);
+				Texture.WriteXML(subEle);
+			}
+			if (HairFlags != null)		
 			{		
 				ele.TryPathTo("Flags", true, out subEle);
-				HeadPartFlags.WriteXML(subEle);
-			}
-			if (ExtraParts != null)		
-			{		
-				ele.TryPathTo("ExtraParts", true, out subEle);
-				foreach (var entry in ExtraParts)
-				{
-					XElement newEle = new XElement("Part");
-					entry.WriteXML(newEle);
-					subEle.Add(newEle);
-				}
+				HairFlags.WriteXML(subEle);
 			}
 		}
 
@@ -138,24 +130,19 @@ namespace ESPSharp.Records
 					
 				Model.ReadXML(subEle);
 			}
+			if (ele.TryPathTo("Texture", false, out subEle))
+			{
+				if (Texture == null)
+					Texture = new SimpleSubrecord<String>();
+					
+				Texture.ReadXML(subEle);
+			}
 			if (ele.TryPathTo("Flags", false, out subEle))
 			{
-				if (HeadPartFlags == null)
-					HeadPartFlags = new SimpleSubrecord<HeadPartFlags>();
+				if (HairFlags == null)
+					HairFlags = new SimpleSubrecord<HairFlags>();
 					
-				HeadPartFlags.ReadXML(subEle);
-			}
-			if (ele.TryPathTo("ExtraParts", false, out subEle))
-			{
-				if (ExtraParts == null)
-					ExtraParts = new List<SimpleSubrecord<FormID>>();
-					
-				foreach (XElement e in subEle.Elements())
-				{
-					SimpleSubrecord<FormID> tempHNAM = new SimpleSubrecord<FormID>();
-					tempHNAM.ReadXML(e);
-					ExtraParts.Add(tempHNAM);
-				}
+				HairFlags.ReadXML(subEle);
 			}
 		}
 

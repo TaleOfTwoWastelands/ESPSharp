@@ -7,6 +7,7 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
 
@@ -26,15 +27,26 @@ namespace ESPSharp.Subrecords
 	
 		protected override void ReadData(ESPReader reader)
 		{
-			TagSkill1 = reader.ReadEnum<ActorValues>();
-			TagSkill2 = reader.ReadEnum<ActorValues>();
-			TagSkill3 = reader.ReadEnum<ActorValues>();
-			TagSkill4 = reader.ReadEnum<ActorValues>();
-			ClassDataFlags = reader.ReadEnum<ClassDataFlag>();
-			Services = reader.ReadEnum<ServicesFlag>();
-			TrainingSkill = reader.ReadEnum<Skills>();
-			MaxTrainingLevel = reader.ReadByte();
-			Unused = reader.ReadBytes(2);
+			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
+			using (ESPReader subReader = new ESPReader(stream))
+			{
+				try
+				{
+					TagSkill1 = subReader.ReadEnum<ActorValues>();
+					TagSkill2 = subReader.ReadEnum<ActorValues>();
+					TagSkill3 = subReader.ReadEnum<ActorValues>();
+					TagSkill4 = subReader.ReadEnum<ActorValues>();
+					ClassDataFlags = subReader.ReadEnum<ClassDataFlag>();
+					Services = subReader.ReadEnum<ServicesFlag>();
+					TrainingSkill = subReader.ReadEnum<Skills>();
+					MaxTrainingLevel = subReader.ReadByte();
+					Unused = subReader.ReadBytes(2);
+				}
+				catch
+				{
+					return;
+				}
+			}
 		}
 
 		protected override void WriteData(ESPWriter writer)

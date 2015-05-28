@@ -45,9 +45,9 @@ namespace ESPSharp.Records
 						if (Relationships == null)
 							Relationships = new List<Relationship>();
 
-						Relationship tempRelationship = new Relationship();
-						tempRelationship.ReadBinary(reader);
-						Relationships.Add(tempRelationship);
+						Relationship tempXNAM = new Relationship();
+						tempXNAM.ReadBinary(reader);
+						Relationships.Add(tempXNAM);
 						break;
 					case "DATA":
 						if (Data == null)
@@ -65,9 +65,9 @@ namespace ESPSharp.Records
 						if (Ranks == null)
 							Ranks = new List<FactionRank>();
 
-						FactionRank tempRank = new FactionRank();
-						tempRank.ReadBinary(reader);
-						Ranks.Add(tempRank);
+						FactionRank tempRNAM = new FactionRank();
+						tempRNAM.ReadBinary(reader);
+						Ranks.Add(tempRNAM);
 						break;
 					case "WMI1":
 						if (Reputation == null)
@@ -174,9 +174,9 @@ namespace ESPSharp.Records
 					
 				foreach (XElement e in subEle.Elements())
 				{
-					Relationship temp = new Relationship();
-					temp.ReadXML(e);
-					Relationships.Add(temp);
+					Relationship tempXNAM = new Relationship();
+					tempXNAM.ReadXML(e);
+					Relationships.Add(tempXNAM);
 				}
 			}
 			if (ele.TryPathTo("Data", false, out subEle))
@@ -200,9 +200,9 @@ namespace ESPSharp.Records
 					
 				foreach (XElement e in subEle.Elements())
 				{
-					FactionRank temp = new FactionRank();
-					temp.ReadXML(e);
-					Ranks.Add(temp);
+					FactionRank tempRNAM = new FactionRank();
+					tempRNAM.ReadXML(e);
+					Ranks.Add(tempRNAM);
 				}
 			}
 			if (ele.TryPathTo("Reputation", false, out subEle))

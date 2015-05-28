@@ -86,7 +86,7 @@ namespace ESPSharp
             foreach (var record in Records)
             {
                 record.WriteBinary(writer);
-                Group recordGroup = groups.FirstOrDefault(g => g is ISubgroup && (g as ISubgroup).GetRecordID() == record.FormID);
+                Group recordGroup = groups.FirstOrDefault(g => g is ISubgroup && ((uint)(g as ISubgroup).GetRecordID()) == ((uint)record.FormID));
 
                 if (recordGroup != null)
                 {

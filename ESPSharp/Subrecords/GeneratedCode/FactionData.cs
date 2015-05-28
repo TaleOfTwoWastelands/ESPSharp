@@ -7,6 +7,7 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
 
@@ -20,16 +21,30 @@ namespace ESPSharp.Subrecords
 	
 		protected override void ReadData(ESPReader reader)
 		{
-			Flags1 = reader.ReadEnum<FactionFlags1>();
-			Flags2 = reader.ReadEnum<FactionFlags2>();
-			Unused = reader.ReadBytes(2);
+			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
+			using (ESPReader subReader = new ESPReader(stream))
+			{
+				try
+				{
+					Flags1 = subReader.ReadEnum<FactionFlags1>();
+					Flags2 = subReader.ReadEnum<FactionFlags2>();
+					Unused = subReader.ReadBytes(2);
+				}
+				catch
+				{
+					return;
+				}
+			}
 		}
 
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((Byte)Flags1);
 			writer.Write((Byte)Flags2);
-			writer.Write(Unused);
+			if (Unused == null)
+				writer.Write(new byte[2]);
+			else
+				writer.Write(Unused);
 		}
 
 		protected override void WriteDataXML(XElement ele)

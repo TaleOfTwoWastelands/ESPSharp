@@ -22,7 +22,7 @@ namespace ESPSharp
 
         public override void ReadTypeData(ESPReader reader)
         {
-            Worldspace = reader.ReadUInt32();
+            Worldspace = reader.ReadFormID();
         }
 
         public override XElement WriteTypeDataXML()
@@ -32,7 +32,7 @@ namespace ESPSharp
 
         public override void ReadTypeDataXML(XElement element)
         {
-            Worldspace = element.Element("Worldspace").ToFormID();
+            Worldspace.ReadXML(element.Element("Worldspace"));
         }
 
         public override string ToString()

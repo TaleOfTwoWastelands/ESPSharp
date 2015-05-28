@@ -52,5 +52,21 @@ namespace ESPSharp
                     throw new NotImplementedException(enumType + " is not yet implemented.");
             }
         }
+
+        public FormID ReadFormID()
+        {
+            return (FormID)ReadUInt32();
+        }
+
+        public AlternateTexture ReadAlternateTexture()
+        {
+            AlternateTexture outTex;
+            int size = ReadInt32();
+            outTex.Name = new String(ReadChars(size));
+            outTex.TextureSet = ReadFormID();
+            outTex.Index = ReadInt32();
+
+            return outTex;
+        }
     }
 }

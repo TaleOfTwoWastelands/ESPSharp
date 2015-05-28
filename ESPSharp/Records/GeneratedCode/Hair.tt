@@ -2,11 +2,10 @@
 <#@ output extension=".cs" #>
 <#	
 	RecordTemplate template = new RecordTemplate();
-	template.ClassName = "Faction";
+	template.ClassName = "Hair";
 
 	RecordField tempField;
 
-	//editorID
 	tempField = 
 		new RecordField(
 			"EDID",
@@ -17,7 +16,6 @@
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
-	//name
 	tempField = 
 		new RecordField(
 			"FULL",
@@ -25,57 +23,37 @@
 			"Name",
 			"Name"
 			);
+	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
-	//relationships
 	tempField = 
 		new RecordField(
-			"XNAM",
-			typeof(List<Relationship>),
-			"Relationships",
-			"Relationships"
+			"MODL",
+			typeof(Model),
+			"Model",
+			"Model"
 			);
-	tempField.XMLSubName = "Relationship";
+	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
-	//Data
+	tempField = 
+		new RecordField(
+			"ICON",
+			typeof(SimpleSubrecord<string>),
+			"Texture",
+			"Texture"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
 	tempField = 
 		new RecordField(
 			"DATA",
-			typeof(FactionData),
-			"Data",
-			"Data"
+			typeof(SimpleSubrecord<HairFlags>),
+			"HairFlags",
+			"Flags"
 			);
-	template.Fields.Add(tempField);
-
-	//Unused
-	tempField = 
-		new RecordField(
-			"CNAM",
-			typeof(SimpleSubrecord<float>),
-			"Unused",
-			"Unused"
-			);
-	template.Fields.Add(tempField);
-
-	//Ranks
-	tempField = 
-		new RecordField(
-			"RNAM",
-			typeof(List<FactionRank>),
-			"Ranks",
-			"Ranks"
-			);
-	tempField.XMLSubName = "Rank";
-	template.Fields.Add(tempField);
-
-	tempField = 
-		new RecordField(
-			"WMI1",
-			typeof(SimpleSubrecord<FormID>),
-			"Reputation",
-			"Reputation"
-			);
+	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 #>
 <#@ include file="RecordTemplate.t4" once="true" #>

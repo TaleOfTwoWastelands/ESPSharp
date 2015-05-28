@@ -16,7 +16,7 @@ namespace ESPSharp.Subrecords
             Forms = new List<FormID>();
 
             for (int i = 0; i < size/4; i++)
-                Forms.Add(reader.ReadUInt32());
+                Forms.Add(reader.ReadFormID());
         }
 
         protected override void WriteData(ESPWriter writer)
@@ -36,7 +36,11 @@ namespace ESPSharp.Subrecords
             Forms = new List<FormID>();
 
             foreach (var subEle in ele.Elements("Form"))
-                Forms.Add(subEle.ToFormID());
+            {
+                FormID id = new FormID();
+                id.ReadXML(subEle);
+                Forms.Add(id);
+            }
         }
     }
 }

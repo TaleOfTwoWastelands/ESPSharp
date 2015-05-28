@@ -2,47 +2,43 @@
 <#@ output extension=".cs" #>
 <#	
 	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
-	template.ClassName = "FactionRank";
+	template.ClassName = "HeadData";
 
 	SubrecordCollectionField tempField;
 
-	//rank
 	tempField = 
 		new SubrecordCollectionField(
-			"RNAM",
-			typeof(SimpleSubrecord<int>),
-			"Rank",
-			"Rank"
+			"INDX",
+			typeof(SimpleSubrecord<uint>),
+			"Index",
+			"Index"
 			);
 	template.Fields.Add(tempField);
 
-	//male name
 	tempField = 
 		new SubrecordCollectionField(
-			"MNAM",
-			typeof(SimpleSubrecord<string>),
-			"MaleTitle",
-			"Title/Male"
+			"MODL",
+			typeof(Model),
+			"Model",
+			"Model"
 			);
 	template.Fields.Add(tempField);
 
-	//female name
 	tempField = 
 		new SubrecordCollectionField(
-			"FNAM",
+			"ICON",
 			typeof(SimpleSubrecord<string>),
-			"FemaleTitle",
-			"Title/Female"
+			"LargeIcon",
+			@"Icon\\Large"
 			);
 	template.Fields.Add(tempField);
 
-	//insignia
 	tempField = 
 		new SubrecordCollectionField(
-			"INAM",
+			"MICO",
 			typeof(SimpleSubrecord<string>),
-			"Insignia",
-			"Insignia"
+			"SmallIcon",
+			@"Icon\\Small"
 			);
 	template.Fields.Add(tempField);
 

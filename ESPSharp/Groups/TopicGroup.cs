@@ -22,7 +22,7 @@ namespace ESPSharp
 
         public override void ReadTypeData(ESPReader reader)
         {
-            Topic = reader.ReadUInt32();
+            Topic = reader.ReadFormID();
         }
 
         public override XElement WriteTypeDataXML()
@@ -32,7 +32,7 @@ namespace ESPSharp
 
         public override void ReadTypeDataXML(XElement element)
         {
-            Topic = element.Element("Topic").ToFormID();
+            Topic.ReadXML(element.Element("Topic"));
         }
 
         public override string ToString()

@@ -64,9 +64,9 @@ namespace ESPSharp.Records
 						if (MasterFiles == null)
 							MasterFiles = new List<MasterFileData>();
 
-						MasterFileData temp = new MasterFileData();
-						temp.ReadBinary(reader);
-						MasterFiles.Add(temp);
+						MasterFileData tempMAST = new MasterFileData();
+						tempMAST.ReadBinary(reader);
+						MasterFiles.Add(tempMAST);
 						break;
 					case "ONAM":
 						if (OverriddenRecords == null)
@@ -201,9 +201,9 @@ namespace ESPSharp.Records
 					
 				foreach (XElement e in subEle.Elements())
 				{
-					MasterFileData temp = new MasterFileData();
-					temp.ReadXML(e);
-					MasterFiles.Add(temp);
+					MasterFileData tempMAST = new MasterFileData();
+					tempMAST.ReadXML(e);
+					MasterFiles.Add(tempMAST);
 				}
 			}
 			if (ele.TryPathTo("OverriddenRecords", false, out subEle))

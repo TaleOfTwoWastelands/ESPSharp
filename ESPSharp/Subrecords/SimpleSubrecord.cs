@@ -76,6 +76,10 @@ namespace ESPSharp.Subrecords
                     reader.ReadByte();
                     Value = (T)(object)outString;
                     break;
+                case "ESPSharp.FormID":
+                    Debug.Assert(size == 4);
+                    Value = (T)(object)reader.ReadFormID();
+                    break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");
             }
@@ -134,12 +138,34 @@ namespace ESPSharp.Subrecords
                     writer.Write(((string)(object)Value).ToCharArray());
                     writer.Write((byte)0);
                     break;
+                case "ESPSharp.FormID":
+                    writer.Write((FormID)(object)Value);
+                    break;
+                default:
+                    throw new NotImplementedException(typeName + " is not yet implemented.");
             }
         }
 
         protected override void WriteDataXML(XElement ele)
         {
-            ele.Value = Value.ToString();
+            Type tType = typeof(T);
+            Type readType = tType;
+
+            if (tType.IsEnum)
+                readType = Enum.GetUnderlyingType(tType);
+
+            string typeName = readType.FullName;
+
+
+            switch (typeName)
+            {
+                case "System.Byte[]":
+                    ele.Value = ((byte[])(object)Value).ToHex();
+                    break;
+                default:
+                    ele.Value = Value.ToString();
+                    break;
+            }
         }
 
         protected override void ReadDataXML(XElement ele)
@@ -197,6 +223,11 @@ namespace ESPSharp.Subrecords
                 case "System.String":
                     string outString = ele.Value;
                     Value = (T)(object)outString;
+                    break;
+                case "ESPSharp.FormID":
+                    FormID id = new FormID();
+                    id.ReadXML(ele);
+                    Value = (T)(object)id;
                     break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");

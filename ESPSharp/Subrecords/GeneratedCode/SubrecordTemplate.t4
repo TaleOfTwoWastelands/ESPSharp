@@ -1,4 +1,17 @@
-﻿using System;
+﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="ESPSharp" #>
+<#@ import namespace="ESPSharp.Enums" #>
+<#@ import namespace="ESPSharp.Interfaces" #>
+<#@ import namespace="ESPSharp.Enums.Flags" #>
+<#@ import namespace="ESPSharp.Subrecords" #>
+<#@ import namespace="ESPSharp.SubrecordCollections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections" #>
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +20,7 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
 
@@ -20,15 +34,26 @@ namespace ESPSharp.Subrecords
 	
 		protected override void ReadData(ESPReader reader)
 		{
+			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
+			using (ESPReader subReader = new ESPReader(stream))
+			{
+				try
+				{
 <# foreach (var field in template.Fields) { #>
 <# if (field.Type.IsEnum) { #>
-			<#= field.Name #> = reader.ReadEnum<<#= GetFriendlyName(field.Type)#>>();
+					<#= field.Name #> = subReader.ReadEnum<<#= GetFriendlyName(field.Type)#>>();
 <# } else if (field.Type == typeof(byte[])){ #>
-			<#= field.Name #> = reader.ReadBytes(<#= field.byteCount #>);
+					<#= field.Name #> = subReader.ReadBytes(<#= field.byteCount #>);
 <# } else { #>
-			<#= field.Name #> = reader.Read<#= GetFriendlyName(field.Type)#>();
+					<#= field.Name #> = subReader.Read<#= GetFriendlyName(field.Type)#>();
 <# } #>
 <# } #>
+				}
+				catch
+				{
+					return;
+				}
+			}
 		}
 
 		protected override void WriteData(ESPWriter writer)
@@ -36,8 +61,13 @@ namespace ESPSharp.Subrecords
 <# foreach (var field in template.Fields) { #>
 <# if (field.Type.IsEnum) { #>
 			writer.Write((<#= GetFriendlyName(Enum.GetUnderlyingType(field.Type))#>)<#= field.Name #>);
+<# } else if (field.Type == typeof(byte[])){ #>
+			if (<#= field.Name #> == null)
+				writer.Write(new byte[<#= field.byteCount #>]);
+			else
+				writer.Write(<#= field.Name #>);
 <# } else { #>
-			writer.Write(<#= field.Name #>);
+			writer.Write(<#= field.Name #>);			
 <# } #>
 <# } #>
 		}
@@ -50,6 +80,8 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
 <# if (field.Type == typeof(byte[])){ #>
 			subEle.Value = <#= field.Name#>.ToHex();
+<# } else if (field.Type.GetInterfaces().Contains(typeof(ESPSharp.Interfaces.IESPToXML))){ #>
+			<#= field.Name#>.WriteXML(subEle);
 <# } else { #>
 			subEle.Value = <#= field.Name#>.ToString();
 <# } #>
@@ -66,6 +98,8 @@ namespace ESPSharp.Subrecords
 			<#= field.Name #> = subEle.ToEnum<<#= GetFriendlyName(field.Type)#>>();
 <# } else if (field.Type == typeof(byte[])){ #>
 			<#= field.Name #> = subEle.ToBytes();
+<# } else if (field.Type.GetInterfaces().Contains(typeof(ESPSharp.Interfaces.IESPToXML))){ #>
+			<#= field.Name#>.ReadXML(subEle);
 <# } else { #>
 			<#= field.Name #> = subEle.To<#= GetFriendlyName(field.Type)#>();
 <# } #>
