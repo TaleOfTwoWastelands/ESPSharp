@@ -19,7 +19,7 @@ namespace ESPSharp.Records
 		public FactionData Data { get; set; }
 		public SimpleSubrecord<Single> Unused { get; set; }
 		public List<FactionRank> Ranks { get; set; }
-		public SimpleSubrecord<FormID> Reputation { get; set; }
+		public RecordReference Reputation { get; set; }
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -71,7 +71,7 @@ namespace ESPSharp.Records
 						break;
 					case "WMI1":
 						if (Reputation == null)
-							Reputation = new SimpleSubrecord<FormID>();
+							Reputation = new RecordReference();
 
 						Reputation.ReadBinary(reader);
 						break;
@@ -208,7 +208,7 @@ namespace ESPSharp.Records
 			if (ele.TryPathTo("Reputation", false, out subEle))
 			{
 				if (Reputation == null)
-					Reputation = new SimpleSubrecord<FormID>();
+					Reputation = new RecordReference();
 					
 				Reputation.ReadXML(subEle);
 			}

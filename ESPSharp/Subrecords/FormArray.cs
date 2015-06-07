@@ -15,8 +15,8 @@ namespace ESPSharp.Subrecords
         {
             Forms = new List<FormID>();
 
-            for (int i = 0; i < size/4; i++)
-                Forms.Add(reader.ReadFormID());
+            for (int i = 0; i < size / 4; i++)
+                Forms.Add(reader.Read<FormID>());
         }
 
         protected override void WriteData(ESPWriter writer)

@@ -13,11 +13,31 @@ using ESPSharp.SubrecordCollections;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class FactionData : Subrecord
-	{
+	public partial class FactionData : Subrecord, ICloneable<FactionData>	{
 		public FactionFlags1 Flags1 { get; set; }
 		public FactionFlags2 Flags2 { get; set; }
 		public Byte[] Unused { get; set; }
+
+		public FactionData()
+		{
+			Flags1 = new FactionFlags1();
+			Flags2 = new FactionFlags2();
+			Unused = new byte[2];
+		}
+
+		public FactionData(FactionFlags1 Flags1, FactionFlags2 Flags2, Byte[] Unused)
+		{
+			this.Flags1 = Flags1;
+			this.Flags2 = Flags2;
+			this.Unused = Unused;
+		}
+
+		public FactionData(FactionData copyObject)
+		{
+			Flags1 = copyObject.Flags1;
+			Flags2 = copyObject.Flags2;
+			Unused = (byte[])copyObject.Unused.Clone();
+		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
@@ -65,14 +85,25 @@ namespace ESPSharp.Subrecords
 		{
 			XElement subEle;
 
-			ele.TryPathTo("Flags1", false, out subEle);
-			Flags1 = subEle.ToEnum<FactionFlags1>();
+			if (ele.TryPathTo("Flags1", false, out subEle))
+			{
+				Flags1 = subEle.ToEnum<FactionFlags1>();
+			}
 
-			ele.TryPathTo("Flags2", false, out subEle);
-			Flags2 = subEle.ToEnum<FactionFlags2>();
+			if (ele.TryPathTo("Flags2", false, out subEle))
+			{
+				Flags2 = subEle.ToEnum<FactionFlags2>();
+			}
 
-			ele.TryPathTo("Unused", false, out subEle);
-			Unused = subEle.ToBytes();
+			if (ele.TryPathTo("Unused", false, out subEle))
+			{
+				Unused = subEle.ToBytes();
+			}
+		}
+
+		public FactionData Clone()
+		{
+			return new FactionData(this);
 		}
 	}
 }

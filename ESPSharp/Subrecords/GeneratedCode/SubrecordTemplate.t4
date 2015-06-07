@@ -11,6 +11,18 @@
 <#@ import namespace="ESPSharp.SubrecordCollections" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Collections" #>
+<#
+	bool isReferenceContainer = false;
+
+	foreach (var field in template.Fields)
+    {
+		if (field.Type == typeof(FormID) || field.Type.GetInterface("IReferenceContainer") != null)
+        {
+			isReferenceContainer = true;
+			break;
+        }
+    }
+#>
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +38,44 @@ using ESPSharp.SubrecordCollections;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class <#= template.ClassName #> : Subrecord
+	public partial class <#= template.ClassName #> : Subrecord, ICloneable<<#= template.ClassName#>><# if (isReferenceContainer) { #>, IReferenceContainer<#}Write("\n");#>
 	{
 <# foreach (var field in template.Fields) { #>
 		<#= field.PropertyDeclaration #>
 <#}#>
+
+		public <#= template.ClassName #>()
+		{
+<# foreach (var field in template.Fields) { #>
+<# if (field.Type != typeof(byte[])) { #>
+			<#= field.Name #> = new <#= GetFriendlyName(field.Type)#>();
+<# } else { #>
+			<#= field.Name #> = new byte[<#= field.byteCount#>];
+<# } #>
+<# } #>
+		}
+
+		public <#= template.ClassName #>(<#= string.Join(", ", template.Fields.Select<SubrecordField, string>(s => string.Format("{0} {1}", GetFriendlyName(s.Type), s.Name)))#>)
+		{
+<# foreach (var field in template.Fields) { #>
+			this.<#= field.Name #> = <#= field.Name #>;
+<# } #>
+		}
+
+		public <#= template.ClassName #>(<#= template.ClassName #> copyObject)
+		{
+<# foreach (var field in template.Fields) { #>
+<# if (field.Type.IsValueType) { #>
+			<#= field.Name #> = copyObject.<#= field.Name #>;
+<# } else if (field.Type.GetInterface("ICloneable`1") != null){ #>
+			<#= field.Name #> = copyObject.<#= field.Name #>.Clone();
+<# } else if (field.Type == typeof(byte[])){ #>
+			<#= field.Name #> = (byte[])copyObject.<#= field.Name #>.Clone();
+<# } else { #>
+			<# throw new Exception(); #>
+<# } #>
+<# } #>
+		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
@@ -44,6 +89,8 @@ namespace ESPSharp.Subrecords
 					<#= field.Name #> = subReader.ReadEnum<<#= GetFriendlyName(field.Type)#>>();
 <# } else if (field.Type == typeof(byte[])){ #>
 					<#= field.Name #> = subReader.ReadBytes(<#= field.byteCount #>);
+<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
+					<#= field.Name#>.ReadBinary(subReader);
 <# } else { #>
 					<#= field.Name #> = subReader.Read<#= GetFriendlyName(field.Type)#>();
 <# } #>
@@ -66,6 +113,8 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[<#= field.byteCount #>]);
 			else
 				writer.Write(<#= field.Name #>);
+<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
+			<#= field.Name#>.WriteBinary(writer);
 <# } else { #>
 			writer.Write(<#= field.Name #>);			
 <# } #>
@@ -80,7 +129,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
 <# if (field.Type == typeof(byte[])){ #>
 			subEle.Value = <#= field.Name#>.ToHex();
-<# } else if (field.Type.GetInterfaces().Contains(typeof(ESPSharp.Interfaces.IESPToXML))){ #>
+<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
 			<#= field.Name#>.WriteXML(subEle);
 <# } else { #>
 			subEle.Value = <#= field.Name#>.ToString();
@@ -93,17 +142,24 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 <# foreach (var field in template.Fields) { #>
 
-			ele.TryPathTo("<#= field.XMLPath#>", false, out subEle);
+			if (ele.TryPathTo("<#= field.XMLPath#>", false, out subEle))
+			{
 <# if (field.Type.IsEnum) { #>
-			<#= field.Name #> = subEle.ToEnum<<#= GetFriendlyName(field.Type)#>>();
+				<#= field.Name #> = subEle.ToEnum<<#= GetFriendlyName(field.Type)#>>();
 <# } else if (field.Type == typeof(byte[])){ #>
-			<#= field.Name #> = subEle.ToBytes();
-<# } else if (field.Type.GetInterfaces().Contains(typeof(ESPSharp.Interfaces.IESPToXML))){ #>
-			<#= field.Name#>.ReadXML(subEle);
+				<#= field.Name #> = subEle.ToBytes();
+<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
+				<#= field.Name#>.ReadXML(subEle);
 <# } else { #>
-			<#= field.Name #> = subEle.To<#= GetFriendlyName(field.Type)#>();
+				<#= field.Name #> = subEle.To<#= GetFriendlyName(field.Type)#>();
 <# } #>
+			}
 <# } #>
+		}
+
+		public <#= template.ClassName #> Clone()
+		{
+			return new <#= template.ClassName #>(this);
 		}
 	}
 }

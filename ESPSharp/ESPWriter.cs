@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using ESPSharp.Interfaces;
 
 namespace ESPSharp
 {
@@ -17,17 +18,9 @@ namespace ESPSharp
             Write(Utility.DesanitizeTag(Tag).ToCharArray());
         }
 
-        public void Write(FormID id)
+        public void Write(IESPSerializable writeObject)
         {
-            base.Write((uint)id);
-        }
-
-        public void Write(AlternateTexture tex)
-        {
-            Write((uint)tex.Name.Length);
-            Write(tex.Name.ToCharArray());
-            Write(tex.TextureSet);
-            Write(tex.Index);
+            writeObject.WriteBinary(this);
         }
     }
 }

@@ -26,20 +26,20 @@ class Program
 
         Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
         startTime = DateTime.Now;
-        //Console.WriteLine("Writing XML...");
+        Console.WriteLine("Writing XML...");
 
-        //Directory.CreateDirectory(testFile);
-        //pluggy.WriteXML(testFile);
+        Directory.CreateDirectory(testFile);
+        pluggy.WriteXML(testFile);
 
-        //Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
-        //startTime = DateTime.Now;
-        //Console.WriteLine("Loading XML...");
+        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+        startTime = DateTime.Now;
+        Console.WriteLine("Loading XML...");
 
-        //pluggy = ElderScrollsPlugin.ReadXML(testFile);
+        pluggy = ElderScrollsPlugin.ReadXML(testFile);
 
 
-        //Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
-        //startTime = DateTime.Now;
+        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
+        startTime = DateTime.Now;
         Console.WriteLine("Writing binary...");
 
         using (FileStream stream = new FileStream("NEW" + testFile + ".esm", FileMode.Create, FileAccess.ReadWrite))

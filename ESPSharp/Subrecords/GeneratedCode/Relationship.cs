@@ -13,11 +13,32 @@ using ESPSharp.SubrecordCollections;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class Relationship : Subrecord
+	public partial class Relationship : Subrecord, ICloneable<Relationship>, IReferenceContainer
 	{
 		public FormID Faction { get; set; }
 		public Int32 Modifier { get; set; }
 		public RelationshipCombatReaction CombatReaction { get; set; }
+
+		public Relationship()
+		{
+			Faction = new FormID();
+			Modifier = new Int32();
+			CombatReaction = new RelationshipCombatReaction();
+		}
+
+		public Relationship(FormID Faction, Int32 Modifier, RelationshipCombatReaction CombatReaction)
+		{
+			this.Faction = Faction;
+			this.Modifier = Modifier;
+			this.CombatReaction = CombatReaction;
+		}
+
+		public Relationship(Relationship copyObject)
+		{
+			Faction = copyObject.Faction.Clone();
+			Modifier = copyObject.Modifier;
+			CombatReaction = copyObject.CombatReaction;
+		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
@@ -26,7 +47,7 @@ namespace ESPSharp.Subrecords
 			{
 				try
 				{
-					Faction = subReader.ReadFormID();
+					Faction.ReadBinary(subReader);
 					Modifier = subReader.ReadInt32();
 					CombatReaction = subReader.ReadEnum<RelationshipCombatReaction>();
 				}
@@ -39,8 +60,8 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Faction);
-			writer.Write(Modifier);
+			Faction.WriteBinary(writer);
+			writer.Write(Modifier);			
 			writer.Write((UInt32)CombatReaction);
 		}
 
@@ -62,14 +83,25 @@ namespace ESPSharp.Subrecords
 		{
 			XElement subEle;
 
-			ele.TryPathTo("Faction", false, out subEle);
-			Faction.ReadXML(subEle);
+			if (ele.TryPathTo("Faction", false, out subEle))
+			{
+				Faction.ReadXML(subEle);
+			}
 
-			ele.TryPathTo("Modifier", false, out subEle);
-			Modifier = subEle.ToInt32();
+			if (ele.TryPathTo("Modifier", false, out subEle))
+			{
+				Modifier = subEle.ToInt32();
+			}
 
-			ele.TryPathTo("CombatReaction", false, out subEle);
-			CombatReaction = subEle.ToEnum<RelationshipCombatReaction>();
+			if (ele.TryPathTo("CombatReaction", false, out subEle))
+			{
+				CombatReaction = subEle.ToEnum<RelationshipCombatReaction>();
+			}
+		}
+
+		public Relationship Clone()
+		{
+			return new Relationship(this);
 		}
 	}
 }

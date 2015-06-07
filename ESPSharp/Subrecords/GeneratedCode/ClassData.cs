@@ -13,8 +13,7 @@ using ESPSharp.SubrecordCollections;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ClassData : Subrecord
-	{
+	public partial class ClassData : Subrecord, ICloneable<ClassData>	{
 		public ActorValues TagSkill1 { get; set; }
 		public ActorValues TagSkill2 { get; set; }
 		public ActorValues TagSkill3 { get; set; }
@@ -24,6 +23,45 @@ namespace ESPSharp.Subrecords
 		public Skills TrainingSkill { get; set; }
 		public Byte MaxTrainingLevel { get; set; }
 		public Byte[] Unused { get; set; }
+
+		public ClassData()
+		{
+			TagSkill1 = new ActorValues();
+			TagSkill2 = new ActorValues();
+			TagSkill3 = new ActorValues();
+			TagSkill4 = new ActorValues();
+			ClassDataFlags = new ClassDataFlag();
+			Services = new ServicesFlag();
+			TrainingSkill = new Skills();
+			MaxTrainingLevel = new Byte();
+			Unused = new byte[2];
+		}
+
+		public ClassData(ActorValues TagSkill1, ActorValues TagSkill2, ActorValues TagSkill3, ActorValues TagSkill4, ClassDataFlag ClassDataFlags, ServicesFlag Services, Skills TrainingSkill, Byte MaxTrainingLevel, Byte[] Unused)
+		{
+			this.TagSkill1 = TagSkill1;
+			this.TagSkill2 = TagSkill2;
+			this.TagSkill3 = TagSkill3;
+			this.TagSkill4 = TagSkill4;
+			this.ClassDataFlags = ClassDataFlags;
+			this.Services = Services;
+			this.TrainingSkill = TrainingSkill;
+			this.MaxTrainingLevel = MaxTrainingLevel;
+			this.Unused = Unused;
+		}
+
+		public ClassData(ClassData copyObject)
+		{
+			TagSkill1 = copyObject.TagSkill1;
+			TagSkill2 = copyObject.TagSkill2;
+			TagSkill3 = copyObject.TagSkill3;
+			TagSkill4 = copyObject.TagSkill4;
+			ClassDataFlags = copyObject.ClassDataFlags;
+			Services = copyObject.Services;
+			TrainingSkill = copyObject.TrainingSkill;
+			MaxTrainingLevel = copyObject.MaxTrainingLevel;
+			Unused = (byte[])copyObject.Unused.Clone();
+		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
@@ -58,8 +96,11 @@ namespace ESPSharp.Subrecords
 			writer.Write((UInt32)ClassDataFlags);
 			writer.Write((UInt32)Services);
 			writer.Write((SByte)TrainingSkill);
-			writer.Write(MaxTrainingLevel);
-			writer.Write(Unused);
+			writer.Write(MaxTrainingLevel);			
+			if (Unused == null)
+				writer.Write(new byte[2]);
+			else
+				writer.Write(Unused);
 		}
 
 		protected override void WriteDataXML(XElement ele)
@@ -98,32 +139,55 @@ namespace ESPSharp.Subrecords
 		{
 			XElement subEle;
 
-			ele.TryPathTo("TagSkills/Skill1", false, out subEle);
-			TagSkill1 = subEle.ToEnum<ActorValues>();
+			if (ele.TryPathTo("TagSkills/Skill1", false, out subEle))
+			{
+				TagSkill1 = subEle.ToEnum<ActorValues>();
+			}
 
-			ele.TryPathTo("TagSkills/Skill2", false, out subEle);
-			TagSkill2 = subEle.ToEnum<ActorValues>();
+			if (ele.TryPathTo("TagSkills/Skill2", false, out subEle))
+			{
+				TagSkill2 = subEle.ToEnum<ActorValues>();
+			}
 
-			ele.TryPathTo("TagSkills/Skill3", false, out subEle);
-			TagSkill3 = subEle.ToEnum<ActorValues>();
+			if (ele.TryPathTo("TagSkills/Skill3", false, out subEle))
+			{
+				TagSkill3 = subEle.ToEnum<ActorValues>();
+			}
 
-			ele.TryPathTo("TagSkills/Skill4", false, out subEle);
-			TagSkill4 = subEle.ToEnum<ActorValues>();
+			if (ele.TryPathTo("TagSkills/Skill4", false, out subEle))
+			{
+				TagSkill4 = subEle.ToEnum<ActorValues>();
+			}
 
-			ele.TryPathTo("Flags", false, out subEle);
-			ClassDataFlags = subEle.ToEnum<ClassDataFlag>();
+			if (ele.TryPathTo("Flags", false, out subEle))
+			{
+				ClassDataFlags = subEle.ToEnum<ClassDataFlag>();
+			}
 
-			ele.TryPathTo("Services", false, out subEle);
-			Services = subEle.ToEnum<ServicesFlag>();
+			if (ele.TryPathTo("Services", false, out subEle))
+			{
+				Services = subEle.ToEnum<ServicesFlag>();
+			}
 
-			ele.TryPathTo("Training/Skill", false, out subEle);
-			TrainingSkill = subEle.ToEnum<Skills>();
+			if (ele.TryPathTo("Training/Skill", false, out subEle))
+			{
+				TrainingSkill = subEle.ToEnum<Skills>();
+			}
 
-			ele.TryPathTo("Training/MaxLevel", false, out subEle);
-			MaxTrainingLevel = subEle.ToByte();
+			if (ele.TryPathTo("Training/MaxLevel", false, out subEle))
+			{
+				MaxTrainingLevel = subEle.ToByte();
+			}
 
-			ele.TryPathTo("Unused", false, out subEle);
-			Unused = subEle.ToBytes();
+			if (ele.TryPathTo("Unused", false, out subEle))
+			{
+				Unused = subEle.ToBytes();
+			}
+		}
+
+		public ClassData Clone()
+		{
+			return new ClassData(this);
 		}
 	}
 }

@@ -13,8 +13,7 @@ using ESPSharp.SubrecordCollections;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class Attributes : Subrecord
-	{
+	public partial class Attributes : Subrecord, ICloneable<Attributes>	{
 		public Byte Strength { get; set; }
 		public Byte Perception { get; set; }
 		public Byte Endurance { get; set; }
@@ -22,6 +21,39 @@ namespace ESPSharp.Subrecords
 		public Byte Intelligence { get; set; }
 		public Byte Agility { get; set; }
 		public Byte Luck { get; set; }
+
+		public Attributes()
+		{
+			Strength = new Byte();
+			Perception = new Byte();
+			Endurance = new Byte();
+			Charisma = new Byte();
+			Intelligence = new Byte();
+			Agility = new Byte();
+			Luck = new Byte();
+		}
+
+		public Attributes(Byte Strength, Byte Perception, Byte Endurance, Byte Charisma, Byte Intelligence, Byte Agility, Byte Luck)
+		{
+			this.Strength = Strength;
+			this.Perception = Perception;
+			this.Endurance = Endurance;
+			this.Charisma = Charisma;
+			this.Intelligence = Intelligence;
+			this.Agility = Agility;
+			this.Luck = Luck;
+		}
+
+		public Attributes(Attributes copyObject)
+		{
+			Strength = copyObject.Strength;
+			Perception = copyObject.Perception;
+			Endurance = copyObject.Endurance;
+			Charisma = copyObject.Charisma;
+			Intelligence = copyObject.Intelligence;
+			Agility = copyObject.Agility;
+			Luck = copyObject.Luck;
+		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
@@ -47,13 +79,13 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Strength);
-			writer.Write(Perception);
-			writer.Write(Endurance);
-			writer.Write(Charisma);
-			writer.Write(Intelligence);
-			writer.Write(Agility);
-			writer.Write(Luck);
+			writer.Write(Strength);			
+			writer.Write(Perception);			
+			writer.Write(Endurance);			
+			writer.Write(Charisma);			
+			writer.Write(Intelligence);			
+			writer.Write(Agility);			
+			writer.Write(Luck);			
 		}
 
 		protected override void WriteDataXML(XElement ele)
@@ -86,26 +118,45 @@ namespace ESPSharp.Subrecords
 		{
 			XElement subEle;
 
-			ele.TryPathTo("Strength", false, out subEle);
-			Strength = subEle.ToByte();
+			if (ele.TryPathTo("Strength", false, out subEle))
+			{
+				Strength = subEle.ToByte();
+			}
 
-			ele.TryPathTo("Perception", false, out subEle);
-			Perception = subEle.ToByte();
+			if (ele.TryPathTo("Perception", false, out subEle))
+			{
+				Perception = subEle.ToByte();
+			}
 
-			ele.TryPathTo("Endurance", false, out subEle);
-			Endurance = subEle.ToByte();
+			if (ele.TryPathTo("Endurance", false, out subEle))
+			{
+				Endurance = subEle.ToByte();
+			}
 
-			ele.TryPathTo("Charisma", false, out subEle);
-			Charisma = subEle.ToByte();
+			if (ele.TryPathTo("Charisma", false, out subEle))
+			{
+				Charisma = subEle.ToByte();
+			}
 
-			ele.TryPathTo("Intelligence", false, out subEle);
-			Intelligence = subEle.ToByte();
+			if (ele.TryPathTo("Intelligence", false, out subEle))
+			{
+				Intelligence = subEle.ToByte();
+			}
 
-			ele.TryPathTo("Agility", false, out subEle);
-			Agility = subEle.ToByte();
+			if (ele.TryPathTo("Agility", false, out subEle))
+			{
+				Agility = subEle.ToByte();
+			}
 
-			ele.TryPathTo("Luck", false, out subEle);
-			Luck = subEle.ToByte();
+			if (ele.TryPathTo("Luck", false, out subEle))
+			{
+				Luck = subEle.ToByte();
+			}
+		}
+
+		public Attributes Clone()
+		{
+			return new Attributes(this);
 		}
 	}
 }

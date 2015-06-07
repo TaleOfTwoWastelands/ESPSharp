@@ -7,9 +7,11 @@ using System.Xml.Linq;
 
 namespace ESPSharp.Interfaces
 {
-    public interface IESPToXML
+    public interface IESPSerializable
     {
         void WriteXML(XElement ele);
         void ReadXML(XElement ele);
+        void WriteBinary(ESPWriter writer);
+        void ReadBinary(ESPReader reader);
     }
 }

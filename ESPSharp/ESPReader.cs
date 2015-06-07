@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
+using ESPSharp.Interfaces;
 
 namespace ESPSharp
 {
@@ -53,20 +54,51 @@ namespace ESPSharp
             }
         }
 
-        public FormID ReadFormID()
+        public T Read<T>() where T : new()
         {
-            return (FormID)ReadUInt32();
-        }
+            Type tType = typeof(T);
+            Type readType = tType;
 
-        public AlternateTexture ReadAlternateTexture()
-        {
-            AlternateTexture outTex;
-            int size = ReadInt32();
-            outTex.Name = new String(ReadChars(size));
-            outTex.TextureSet = ReadFormID();
-            outTex.Index = ReadInt32();
+            if (tType.IsEnum)
+            {
+                return ReadEnum<T>();
+            }
 
-            return outTex;
+            string typeName = readType.FullName;
+
+
+            switch (typeName)
+            {
+                case "System.Byte":
+                    return (T)(object)ReadByte();
+                case "System.SByte":
+                    return (T)(object)ReadSByte();
+                case "System.Char":
+                    return (T)(object)ReadChar();
+                case "System.UInt16":
+                    return (T)(object)ReadUInt16();
+                case "System.Int16":
+                    return (T)(object)ReadInt16();
+                case "System.UInt32":
+                    return (T)(object)ReadUInt32();
+                case "System.Int32":
+                    return (T)(object)ReadInt32();
+                case "System.Single":
+                    return (T)(object)ReadSingle();
+                case "System.UInt64":
+                    return (T)(object)ReadUInt64();
+                case "System.Int64":
+                    return (T)(object)ReadInt64();
+            }
+
+            if (typeof(T).GetInterfaces().Any(i => i == typeof(IESPSerializable)))
+            {
+                    IESPSerializable outT = new T() as IESPSerializable;
+                    outT.ReadBinary(this);
+                    return (T)(object)outT;
+            }
+            
+            throw new NotImplementedException(typeName + " is not yet implemented.");
         }
     }
 }

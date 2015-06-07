@@ -43,7 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes\AlternateTexture.cs" />
+    <Compile Include="DataTypes\Color.cs" />
     <Compile Include="DataTypes\FormID.cs" />
+    <Compile Include="Enums\Flags\DecalDataFlags.cs" />
+    <Compile Include="Interfaces\ICloneable.cs" />
     <Compile Include="Enums\ActorValues.cs" />
     <Compile Include="Enums\DataSource.cs" />
     <Compile Include="Enums\Flags\ClassDataFlag.cs" />
@@ -75,7 +78,7 @@
     <Compile Include="Enums\Flags\RecordFlag.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Interfaces\IEditorID.cs" />
-    <Compile Include="Interfaces\IESPToXML.cs" />
+    <Compile Include="Interfaces\IESPSerializable.cs" />
     <Compile Include="Interfaces\IReferenceContainer.cs" />
     <Compile Include="ISubgroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,11 +127,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MenuIcon.tt</DependentUpon>
     </Compile>
-    <Compile Include="Records\GeneratedCode\Race.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Race.tt</DependentUpon>
-    </Compile>
     <Compile Include="Records\GenericRecord.cs" />
     <Compile Include="Records\GeneratedCode\Header.cs">
       <AutoGen>True</AutoGen>
@@ -162,7 +160,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Subrecords\DecalData.cs" />
     <Compile Include="Subrecords\FormArray.cs" />
     <Compile Include="Subrecords\AlternateTextures.cs" />
     <Compile Include="Subrecords\GeneratedCode\Attributes.cs">
@@ -175,10 +172,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClassData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\DecalData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DecalData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\FactionData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FactionData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\PluginHeader.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PluginHeader.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\Relationship.cs">
       <AutoGen>True</AutoGen>
@@ -186,7 +193,7 @@
       <DependentUpon>Relationship.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\ObjectBounds.cs" />
-    <Compile Include="Subrecords\PluginHeader.cs" />
+    <Compile Include="Subrecords\RecordReference.cs" />
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="Utility.cs" />
@@ -230,10 +237,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MenuIcon.cs</LastGenOutput>
     </None>
-    <None Include="Records\GeneratedCode\Race.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Race.cs</LastGenOutput>
-    </None>
     <None Include="Records\GeneratedCode\RecordTemplate.t4" />
     <None Include="Records\GeneratedCode\TextureSet.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -264,9 +267,17 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ClassData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\DecalData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DecalData.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\FactionData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FactionData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\PluginHeader.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PluginHeader.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\Relationship.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

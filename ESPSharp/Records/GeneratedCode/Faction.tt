@@ -72,7 +72,7 @@
 	tempField = 
 		new RecordField(
 			"WMI1",
-			typeof(SimpleSubrecord<FormID>),
+			typeof(RecordReference),
 			"Reputation",
 			"Reputation"
 			);

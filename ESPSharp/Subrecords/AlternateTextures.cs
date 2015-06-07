@@ -21,7 +21,7 @@ namespace ESPSharp.Subrecords
             Textures = new List<AlternateTexture>();
             uint Count = reader.ReadUInt32();
             for (int i = 0; i < Count; i++)
-                Textures.Add(reader.ReadAlternateTexture());
+                Textures.Add(reader.Read<AlternateTexture>());
         }
 
         protected override void WriteData(ESPWriter writer)

@@ -76,10 +76,6 @@ namespace ESPSharp.Subrecords
                     reader.ReadByte();
                     Value = (T)(object)outString;
                     break;
-                case "ESPSharp.FormID":
-                    Debug.Assert(size == 4);
-                    Value = (T)(object)reader.ReadFormID();
-                    break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");
             }
@@ -137,9 +133,6 @@ namespace ESPSharp.Subrecords
                 case "System.String":
                     writer.Write(((string)(object)Value).ToCharArray());
                     writer.Write((byte)0);
-                    break;
-                case "ESPSharp.FormID":
-                    writer.Write((FormID)(object)Value);
                     break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");
@@ -223,11 +216,6 @@ namespace ESPSharp.Subrecords
                 case "System.String":
                     string outString = ele.Value;
                     Value = (T)(object)outString;
-                    break;
-                case "ESPSharp.FormID":
-                    FormID id = new FormID();
-                    id.ReadXML(ele);
-                    Value = (T)(object)id;
                     break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");

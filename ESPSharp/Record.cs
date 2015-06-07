@@ -24,6 +24,11 @@ namespace ESPSharp
         protected bool compressionCorrupted = false;
         protected byte[] corruptedBytes;
 
+        public Record()
+        {
+            FormID = new FormID();
+        }
+
         public void WriteXML(string destinationFile)
         {
             XDocument doc = new XDocument();
@@ -120,7 +125,7 @@ namespace ESPSharp
             Tag = reader.ReadTag();
             Size = reader.ReadUInt32();
             Flags = (RecordFlag)reader.ReadUInt32();
-            FormID = reader.ReadFormID();
+            FormID = reader.Read<FormID>();
             VersionControlInfo1 = reader.ReadUInt32();
             FormVersion = reader.ReadUInt16();
             VersionControlInfo2 = reader.ReadUInt16();

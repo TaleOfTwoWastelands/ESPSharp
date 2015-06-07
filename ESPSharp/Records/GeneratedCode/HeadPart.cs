@@ -17,7 +17,7 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<String> Name { get; set; }
 		public Model Model { get; set; }
 		public SimpleSubrecord<HeadPartFlags> HeadPartFlags { get; set; }
-		public List<SimpleSubrecord<FormID>> ExtraParts { get; set; }
+		public List<RecordReference> ExtraParts { get; set; }
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -53,9 +53,9 @@ namespace ESPSharp.Records
 						break;
 					case "HNAM":
 						if (ExtraParts == null)
-							ExtraParts = new List<SimpleSubrecord<FormID>>();
+							ExtraParts = new List<RecordReference>();
 
-						SimpleSubrecord<FormID> tempHNAM = new SimpleSubrecord<FormID>();
+						RecordReference tempHNAM = new RecordReference();
 						tempHNAM.ReadBinary(reader);
 						ExtraParts.Add(tempHNAM);
 						break;
@@ -148,11 +148,11 @@ namespace ESPSharp.Records
 			if (ele.TryPathTo("ExtraParts", false, out subEle))
 			{
 				if (ExtraParts == null)
-					ExtraParts = new List<SimpleSubrecord<FormID>>();
+					ExtraParts = new List<RecordReference>();
 					
 				foreach (XElement e in subEle.Elements())
 				{
-					SimpleSubrecord<FormID> tempHNAM = new SimpleSubrecord<FormID>();
+					RecordReference tempHNAM = new RecordReference();
 					tempHNAM.ReadXML(e);
 					ExtraParts.Add(tempHNAM);
 				}

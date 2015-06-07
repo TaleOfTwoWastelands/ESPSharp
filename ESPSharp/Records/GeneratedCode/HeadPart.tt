@@ -48,7 +48,7 @@
 	tempField = 
 		new RecordField(
 			"HNAM",
-			typeof(List<SimpleSubrecord<FormID>>),
+			typeof(List<RecordReference>),
 			"ExtraParts",
 			"ExtraParts"
 			);
