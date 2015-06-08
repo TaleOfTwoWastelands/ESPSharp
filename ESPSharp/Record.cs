@@ -58,6 +58,8 @@ namespace ESPSharp
                 WriteDataXML(ele);
             }
 
+            XMLPostProcessing(root, destinationFile);
+
             doc.Save(destinationFile);
         }
 
@@ -78,7 +80,10 @@ namespace ESPSharp
             if (outRecord.compressionCorrupted)
                 outRecord.corruptedBytes = root.Element("CorruptedBytes").ToBytes();
             else
+            {
+                outRecord.XMLPreProcessing(root, sourceFile);
                 outRecord.ReadDataXML(root.Element("Subrecords"));
+            }
 
             return outRecord;
         }
@@ -189,6 +194,9 @@ namespace ESPSharp
 
         public abstract void ReadDataXML(XElement ele);
 
+        protected virtual void XMLPreProcessing(XElement root, string sourceFile) { }
+        protected virtual void XMLPostProcessing(XElement root, string destinationFile) { }
+
         public static Record CreateRecord(string Tag)
         {
             Record outRecord;
@@ -230,6 +238,12 @@ namespace ESPSharp
                     break;
                 case "ASPC":
                     outRecord = new AcousticSpace();
+                    break;
+                case "MGEF":
+                    outRecord = new MagicEffect();
+                    break;
+                case "SCPT":
+                    outRecord = new Script();
                     break;
                 default:
                     outRecord = new GenericRecord();

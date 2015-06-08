@@ -62,7 +62,7 @@ namespace ESPSharp
             foreach (var folder in Directory.EnumerateDirectories(sourceFolder, "*.*", SearchOption.TopDirectoryOnly))
                 outGroup.Subgroups.Add(Group.ReadXML(folder));
 
-            foreach (var file in Directory.EnumerateFiles(sourceFolder, "*.*", SearchOption.TopDirectoryOnly).Where(f => Path.GetFileName(f) != "GroupHeader.metadata"))
+            foreach (var file in Directory.EnumerateFiles(sourceFolder, "*.xml", SearchOption.TopDirectoryOnly).Where(f => Path.GetFileName(f) != "GroupHeader.metadata"))
                 outGroup.Records.Add(Record.ReadXML(file));
 
             return outGroup;

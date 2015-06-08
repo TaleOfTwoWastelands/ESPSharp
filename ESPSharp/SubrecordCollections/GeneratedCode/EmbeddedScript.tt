@@ -1,0 +1,70 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "EmbeddedScript";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"SCHR",
+			typeof(ScriptData),
+			"Data",
+			"Data"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"SCDA",
+			typeof(SimpleSubrecord<byte[]>),
+			"CompiledScript",
+			"CompiledScript"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"SCTX",
+			typeof(SimpleSubrecord<char[]>),
+			"ScriptSource",
+			"ScriptSource"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"SLSD",
+			typeof(List<LocalVariable>),
+			"LocalVariables",
+			"LocalVariables"
+			);
+	tempField.XMLSubName = "Variable";
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"SCRV",
+			typeof(List<SimpleSubrecord<uint>>),
+			"LocalReferences",
+			"LocalReferences"
+			);
+	tempField.XMLSubName = "Reference";
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"SCRO",
+			typeof(List<RecordReference>),
+			"GlobalReferences",
+			"GlobalReferences"
+			);
+	tempField.XMLSubName = "Reference";
+	template.Fields.Add(tempField);
+
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

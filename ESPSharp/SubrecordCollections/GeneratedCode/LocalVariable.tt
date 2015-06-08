@@ -1,0 +1,29 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "LocalVariable";
+
+	//file name
+	SubrecordCollectionField fileNameField = 
+		new SubrecordCollectionField(
+			"SLSD",
+			typeof(LocalVariableData),
+			"Data",
+			"Data"
+			);
+	fileNameField.isRequired = true;
+	template.Fields.Add(fileNameField);
+
+	//file size
+	SubrecordCollectionField fileSizeField = 
+		new SubrecordCollectionField(
+			"SCVR",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(fileSizeField);
+
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

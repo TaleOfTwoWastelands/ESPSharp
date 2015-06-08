@@ -156,6 +156,9 @@ namespace ESPSharp.Subrecords
                 case "System.Byte[]":
                     ele.Value = ((byte[])(object)Value).ToHex();
                     break;
+                case "System.Char[]":
+                    ele.Value = new String(((char[])(object)Value));
+                    break;
                 default:
                     ele.Value = Value.ToString();
                     break;

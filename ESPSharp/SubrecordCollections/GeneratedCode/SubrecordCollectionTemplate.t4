@@ -105,15 +105,15 @@ namespace ESPSharp.SubrecordCollections
 <# } #>
 <# if (!field.isRequired) { #>
 						if (<#= field.Name #> == null)
-							<#= field.Name #> = new <#= field.TypeString #>();
+							<#= field.Name #> = new <#= GetFriendlyName(field.Type) #>();
 
 <# } #>
 <# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
 						<#= field.Name #>.ReadBinary(reader);
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){#>
-						<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
-						temp.ReadBinary(reader);
-						<#= field.Name #>.Add(temp);
+						<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp<#= field.Tag #> = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
+						temp<#= field.Tag #>.ReadBinary(reader);
+						<#= field.Name #>.Add(temp<#= field.Tag #>);
 <# } #>
 <# } else { #>
 						Read<#= field.Name #>(reader);
@@ -178,6 +178,7 @@ namespace ESPSharp.SubrecordCollections
 <# } else { #>
 
 			Write<#= field.Name #>XML(ele);
+
 <# } #>
 <# } #>
 		}
@@ -212,6 +213,7 @@ namespace ESPSharp.SubrecordCollections
 <# } else { #>
 
 			Read<#= field.Name #>XML(ele);
+
 <# } #>
 <# } #>
 		}
@@ -317,7 +319,7 @@ public static string GetFriendlyName(Type inType)
 	if (inType.IsConstructedGenericType)
     {
 		string name = inType.Name.Substring(0, inType.Name.IndexOf('`'));
-		string args = string.Join(", ", inType.GenericTypeArguments.Select<Type, string>(t => t.Name));
+		string args = string.Join(", ", inType.GenericTypeArguments.Select<Type, string>(t => GetFriendlyName(t)));
 
 		return name + "<" + args + ">";
     }

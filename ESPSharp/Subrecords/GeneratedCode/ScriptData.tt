@@ -1,0 +1,56 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "ScriptData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused",
+			"Unused"
+			);
+	tempField.byteCount = 4;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"ReferenceCount",
+			"ReferenceCount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"CompiledSize",
+			"CompiledSize"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"VariableCount",
+			"VariableCount"
+			);
+	template.Fields.Add(tempField);
+	tempField = 
+		new SubrecordField(
+			typeof(ScriptType),
+			"Type",
+			"Type"
+			);
+	template.Fields.Add(tempField);
+	tempField = 
+		new SubrecordField(
+			typeof(ScriptFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>
