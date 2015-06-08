@@ -152,6 +152,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MenuIcon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Race.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Race.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GenericRecord.cs" />
     <Compile Include="Records\GeneratedCode\TextureSet.cs">
       <AutoGen>True</AutoGen>
@@ -160,15 +165,30 @@
     </Compile>
     <Compile Include="Subrecord.cs" />
     <Compile Include="SubrecordCollection.cs" />
+    <Compile Include="SubrecordCollections\GeneratedCode\BodyModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BodyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\FaceGenData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FaceGenData.tt</DependentUpon>
+    </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\FactionRank.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FactionRank.tt</DependentUpon>
     </Compile>
-    <Compile Include="SubrecordCollections\GeneratedCode\HeadData.cs">
+    <Compile Include="SubrecordCollections\GeneratedCode\GenderHeadData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HeadData.tt</DependentUpon>
+      <DependentUpon>GenderHeadData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\GenderBodyData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenderBodyData.tt</DependentUpon>
     </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\Icon.cs">
       <AutoGen>True</AutoGen>
@@ -184,6 +204,33 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\HeadModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HeadModel.tt</DependentUpon>
+    </Compile>
+    <None Include="Records\GeneratedCode\Race.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Race.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\FaceGenData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FaceGenData.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\RaceBodyData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RaceBodyData.cs</LastGenOutput>
+    </None>
+    <Compile Include="SubrecordCollections\GeneratedCode\RaceBodyData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RaceBodyData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\RaceHeadData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RaceHeadData.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\FormArray.cs" />
     <Compile Include="Subrecords\AlternateTextures.cs" />
@@ -248,6 +295,7 @@
       <DependentUpon>Relationship.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
+    <Compile Include="Subrecords\SubMarker.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Zlib.cs" />
@@ -308,13 +356,25 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TextureSet.cs</LastGenOutput>
     </None>
+    <None Include="SubrecordCollections\GeneratedCode\BodyModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BodyModel.cs</LastGenOutput>
+    </None>
     <None Include="SubrecordCollections\GeneratedCode\FactionRank.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FactionRank.cs</LastGenOutput>
     </None>
-    <None Include="SubrecordCollections\GeneratedCode\HeadData.tt">
+    <None Include="SubrecordCollections\GeneratedCode\GenderHeadData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HeadData.cs</LastGenOutput>
+      <LastGenOutput>GenderHeadData.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\GenderBodyData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GenderBodyData.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\RaceHeadData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RaceHeadData.cs</LastGenOutput>
     </None>
     <None Include="SubrecordCollections\GeneratedCode\Icon.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -327,6 +387,10 @@
     <None Include="SubrecordCollections\GeneratedCode\Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\HeadModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HeadModel.cs</LastGenOutput>
     </None>
     <None Include="SubrecordCollections\GeneratedCode\SubrecordCollectionTemplate.t4" />
     <None Include="Subrecords\GeneratedCode\Attributes.tt">

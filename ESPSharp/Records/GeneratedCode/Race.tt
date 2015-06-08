@@ -1,0 +1,206 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Race";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DESC",
+			typeof(SimpleSubrecord<string>),
+			"Description",
+			"Description"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XNAM",
+			typeof(List<Relationship>),
+			"Relationships",
+			"Relationships"
+			);
+	tempField.XMLSubName = "Relationship";
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(RaceData),
+			"Data",
+			"Data"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ONAM",
+			typeof(RecordReference),
+			"OlderRace",
+			"Race/Older"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"YNAM",
+			typeof(RecordReference),
+			"YoungerRace",
+			"Race/Younger"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM2",
+			typeof(SubMarker),
+			"UnknownMarker",
+			"UnknownMarker"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"VTCK",
+			typeof(RaceDefaultVoices),
+			"DefaultVoices",
+			"Defaults/Voices"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DNAM",
+			typeof(RaceDefaultHairStyles),
+			"DefaultHairStyles",
+			"Defaults/HairStyles"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CNAM",
+			typeof(RaceDefaultHairColors),
+			"DefaultHairColors",
+			"Defaults/HairColors"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PNAM",
+			typeof(SimpleSubrecord<float>),
+			"FaceGenMainClamp",
+			"FaceGen/Clamps/Main"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"UNAM",
+			typeof(SimpleSubrecord<float>),
+			"FaceGenFaceClamp",
+			"FaceGen/Clamps/Face"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ATTR",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown",
+			"Unknown"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM0",
+			typeof(RaceHeadData),
+			"HeadData",
+			"HeadData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM1",
+			typeof(RaceBodyData),
+			"BodyData",
+			"BodyData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"HNAM",
+			typeof(FormArray),
+			"Hairs",
+			"Hairs"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ENAM",
+			typeof(FormArray),
+			"Eyes",
+			"Eyes"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MNAM",
+			typeof(FaceGenData),
+			"MaleFaceGenData",
+			"FaceGen/Male"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FNAM",
+			typeof(FaceGenData),
+			"FemaleFaceGenData",
+			"FaceGen/Female"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

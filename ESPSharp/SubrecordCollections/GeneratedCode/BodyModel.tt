@@ -1,0 +1,39 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "BodyModel";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"INDX",
+			typeof(SimpleSubrecord<BodyPartIndex>),
+			"Index",
+			"Index"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"ICON",
+			typeof(Icon),
+			"Icon",
+			"Icon"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"MODL",
+			typeof(Model),
+			"Model",
+			"Model"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

@@ -222,6 +222,9 @@ namespace ESPSharp
                 case "HAIR":
                     outRecord = new Hair();
                     break;
+                case "RACE":
+                    outRecord = new Race();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;

@@ -14,26 +14,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class HeadData : SubrecordCollection, ICloneable<HeadData>, IReferenceContainer
+	public partial class HeadModel : SubrecordCollection, ICloneable<HeadModel>, IReferenceContainer
 	{
 		public SimpleSubrecord<HeadPartIndex> Index { get; set; }
 		public Model Model { get; set; }
 		public Icon Icon { get; set; }
 
-		public HeadData()
+		public HeadModel()
 		{
 			Index = new SimpleSubrecord<HeadPartIndex>();
 			Model = new Model();
 		}
 
-		public HeadData(SimpleSubrecord<HeadPartIndex> Index, Model Model, Icon Icon)
+		public HeadModel(SimpleSubrecord<HeadPartIndex> Index, Model Model, Icon Icon)
 		{
 			this.Index = Index;
 			this.Model = Model;
 			this.Icon = Icon;
 		}
 
-		public HeadData(HeadData copyObject)
+		public HeadModel(HeadModel copyObject)
 		{
 			Index = copyObject.Index.Clone();
 			Model = copyObject.Model.Clone();
@@ -43,6 +43,7 @@ namespace ESPSharp.SubrecordCollections
 		public override void ReadBinary(ESPReader reader)
 		{
 			List<string> readTags = new List<string>();
+
 			while (reader.BaseStream.Position < reader.BaseStream.Length)
 			{
 				string subTag = reader.PeekTag();
@@ -88,6 +89,7 @@ namespace ESPSharp.SubrecordCollections
 		public override void WriteXML(XElement ele)
 		{
 			XElement subEle;
+
 			if (Index != null)		
 			{		
 				ele.TryPathTo("Index", true, out subEle);
@@ -96,17 +98,19 @@ namespace ESPSharp.SubrecordCollections
 			if (Model != null)		
 			{		
 				ele.TryPathTo("Model", true, out subEle);
+				Model.WriteXML(subEle);
 			}
 			if (Icon != null)		
 			{		
 				ele.TryPathTo("Icon", true, out subEle);
+				Icon.WriteXML(subEle);
 			}
 		}
 
 		public override void ReadXML(XElement ele)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Index", false, out subEle))
 			{
 				if (Index == null)
@@ -119,18 +123,20 @@ namespace ESPSharp.SubrecordCollections
 				if (Model == null)
 					Model = new Model();
 					
+				Model.ReadXML(subEle);
 			}
 			if (ele.TryPathTo("Icon", false, out subEle))
 			{
 				if (Icon == null)
 					Icon = new Icon();
 					
+				Icon.ReadXML(subEle);
 			}
 		}
 
-		public HeadData Clone()
+		public HeadModel Clone()
 		{
-			return new HeadData(this);
+			return new HeadModel(this);
 		}
 
 	}

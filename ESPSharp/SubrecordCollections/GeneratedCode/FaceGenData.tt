@@ -1,0 +1,50 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "FaceGenData";
+	template.startsWithMarker = true;
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"FGGS",
+			typeof(SimpleSubrecord<byte[]>),
+			"GeometrySymmetric",
+			"Geometry/Symmetric"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"FGGA",
+			typeof(SimpleSubrecord<byte[]>),
+			"GeometryAsymmetric",
+			"Geometry/Asymmetric"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"FGTS",
+			typeof(SimpleSubrecord<byte[]>),
+			"TextureSymmetric",
+			"Texture/Symmetric"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"SNAM",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown",
+			"Unknown"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

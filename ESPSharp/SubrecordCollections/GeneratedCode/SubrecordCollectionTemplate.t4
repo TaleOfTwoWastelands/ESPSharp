@@ -40,12 +40,18 @@ namespace ESPSharp.SubrecordCollections
 {
 	public partial class <#= template.ClassName #> : SubrecordCollection, ICloneable<<#= template.ClassName#>><# if (isReferenceContainer) { #>, IReferenceContainer<#}Write("\n");#>
 	{
+<# if (template.startsWithMarker) { #>
+		public SubMarker Marker { get; set; }
+<# } #>
 <# foreach (var field in template.Fields) { #>
 		<#= field.PropertyDeclaration #>
 <#}#>
 
 		public <#= template.ClassName #>()
 		{
+<# if (template.startsWithMarker) { #>
+			Marker = new SubMarker();
+<# } #>
 <# foreach (var field in template.Fields.Where(f => f.isRequired)) { #>
 			<#= field.Name #> = new <#= GetFriendlyName(field.Type)#>();
 <#}#>
@@ -63,6 +69,12 @@ namespace ESPSharp.SubrecordCollections
 <# foreach (var field in template.Fields) { #>
 <# if (field.Type.GetInterface("ICloneable`1") != null){ #>
 			<#= field.Name #> = copyObject.<#= field.Name #>.Clone();
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){#>
+			<#= field.Name #> = new <#= GetFriendlyName(field.Type)#>();
+			foreach (var item in copyObject.<#= field.Name #>)
+			{
+				<#= field.Name #>.Add(item.Clone());
+			}
 <# } else { #>
 			<# throw new Exception(field.Name); #>
 <# } #>
@@ -72,6 +84,12 @@ namespace ESPSharp.SubrecordCollections
 		public override void ReadBinary(ESPReader reader)
 		{
 			List<string> readTags = new List<string>();
+
+<# if (template.startsWithMarker) { #>
+			readTags.Add(reader.PeekTag());
+			Marker.ReadBinary(reader);
+
+<# } #>
 			while (reader.BaseStream.Position < reader.BaseStream.Length)
 			{
 				string subTag = reader.PeekTag();
@@ -112,6 +130,10 @@ namespace ESPSharp.SubrecordCollections
 
 		public override void WriteBinary(ESPWriter writer)
 		{
+<# if (template.startsWithMarker) { #>
+			Marker.WriteBinary(writer);
+
+<# } #>
 <# foreach (var field in template.Fields) { #>
 <# if (field.implementWriteData) { #>
 			if (<#= field.Name #> != null)
@@ -131,12 +153,18 @@ namespace ESPSharp.SubrecordCollections
 		public override void WriteXML(XElement ele)
 		{
 			XElement subEle;
+
+<# if (template.startsWithMarker) { #>
+			ele.TryPathTo("Marker", true, out subEle);
+			Marker.WriteXML(subEle);
+
+<# } #>
 <# foreach (var field in template.Fields) { #>
 <# if (field.implementWriteXML) { #>
 			if (<#= field.Name #> != null)		
 			{		
 				ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
-<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord))) { #>
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
 				<#= field.Name #>.WriteXML(subEle);
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
 				foreach (var entry in <#= field.Name #>)
@@ -157,7 +185,12 @@ namespace ESPSharp.SubrecordCollections
 		public override void ReadXML(XElement ele)
 		{
 			XElement subEle;
+			
+<# if (template.startsWithMarker) { #>
+			if (ele.TryPathTo("Marker", false, out subEle))
+				Marker.ReadXML(subEle);
 
+<# } #>
 <# foreach (var field in template.Fields) { #>
 <# if (field.implementReadXML) { #>
 			if (ele.TryPathTo("<#= field.XMLPath#>", false, out subEle))
@@ -165,7 +198,7 @@ namespace ESPSharp.SubrecordCollections
 				if (<#= field.Name #> == null)
 					<#= field.Name #> = new <#= field.TypeString #>();
 					
-<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord))) { #>
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
 				<#= field.Name #>.ReadXML(subEle);
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
 				foreach (XElement e in subEle.Elements())
@@ -207,6 +240,7 @@ public class SubrecordCollectionTemplate
 {
     public string ClassName;
 	public List<SubrecordCollectionField> Fields = new List<SubrecordCollectionField>();
+	public bool startsWithMarker = false;
 }
 
 public class SubrecordCollectionField

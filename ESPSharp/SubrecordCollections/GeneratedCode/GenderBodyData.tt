@@ -1,0 +1,20 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "GenderBodyData";
+	template.startsWithMarker = true;
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"INDX",
+			typeof(List<BodyModel>),
+			"BodyModels",
+			"BodyModels"
+			);
+	tempField.XMLSubName = "BodyModel";
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

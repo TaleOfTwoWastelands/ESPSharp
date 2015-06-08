@@ -47,6 +47,7 @@ namespace ESPSharp.SubrecordCollections
 		public override void ReadBinary(ESPReader reader)
 		{
 			List<string> readTags = new List<string>();
+
 			while (reader.BaseStream.Position < reader.BaseStream.Length)
 			{
 				string subTag = reader.PeekTag();
@@ -118,6 +119,7 @@ namespace ESPSharp.SubrecordCollections
 		public override void WriteXML(XElement ele)
 		{
 			XElement subEle;
+
 			if (FileName != null)		
 			{		
 				ele.TryPathTo("FileName", true, out subEle);
@@ -148,7 +150,7 @@ namespace ESPSharp.SubrecordCollections
 		public override void ReadXML(XElement ele)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("FileName", false, out subEle))
 			{
 				if (FileName == null)

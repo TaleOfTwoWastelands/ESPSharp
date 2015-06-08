@@ -2,38 +2,29 @@
 <#@ output extension=".cs" #>
 <#	
 	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
-	template.ClassName = "HeadData";
+	template.ClassName = "RaceBodyData";
+	template.startsWithMarker = true;
 
 	SubrecordCollectionField tempField;
 
 	tempField = 
 		new SubrecordCollectionField(
-			"INDX",
-			typeof(SimpleSubrecord<HeadPartIndex>),
-			"Index",
-			"Index"
+			"MNAM",
+			typeof(GenderBodyData),
+			"Male",
+			"Male"
 			);
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordCollectionField(
-			"MODL",
-			typeof(Model),
-			"Model",
-			"Model"
+			"FNAM",
+			typeof(GenderBodyData),
+			"Female",
+			"Female"
 			);
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
-
-	tempField = 
-		new SubrecordCollectionField(
-			"ICON",
-			typeof(Icon),
-			"Icon",
-			"Icon"
-			);
-	template.Fields.Add(tempField);
-
 #>
 <#@ include file="SubrecordCollectionTemplate.t4" once="true" #>
