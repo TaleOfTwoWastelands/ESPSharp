@@ -1,0 +1,20 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	DataTypeTemplate template = new DataTypeTemplate();
+	template.ClassName = "FormID";
+	template.implementReadXML = false;
+	template.implementWriteXML = false;
+
+	DataTypeField tempField;
+
+	tempField = 
+		new DataTypeField(
+			typeof(uint),
+			"RawValue",
+			""
+			);
+	tempField.isReadOnly = true;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

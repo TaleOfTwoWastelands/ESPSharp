@@ -29,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\Visual Studio 2013\Projects\ESPSharpOLD\ESPSharp\ESPSharp\bin\Debug\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -43,9 +44,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes\AlternateTexture.cs" />
-    <Compile Include="DataTypes\Color.cs" />
     <Compile Include="DataTypes\FormID.cs" />
+    <Compile Include="DataTypes\GeneratedCode\AlternateTexture.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlternateTexture.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypes\GeneratedCode\Color.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Color.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypes\GeneratedCode\FormID.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FormID.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enums\ActorValuesByte.cs" />
+    <Compile Include="Enums\BodyPartIndex.cs" />
     <Compile Include="Enums\Flags\DecalDataFlags.cs" />
+    <Compile Include="Enums\Flags\RaceFlags.cs" />
+    <Compile Include="Enums\HairColor.cs" />
+    <Compile Include="Enums\HeadPartIndex.cs" />
     <Compile Include="Interfaces\ICloneable.cs" />
     <Compile Include="Enums\ActorValues.cs" />
     <Compile Include="Enums\DataSource.cs" />
@@ -117,6 +137,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Hair.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Header.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Header.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\HeadPart.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -128,11 +153,6 @@
       <DependentUpon>MenuIcon.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GenericRecord.cs" />
-    <Compile Include="Records\GeneratedCode\Header.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Header.tt</DependentUpon>
-    </Compile>
     <Compile Include="Records\GeneratedCode\TextureSet.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -149,6 +169,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HeadData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\Icon.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\MasterFileData.cs">
       <AutoGen>True</AutoGen>
@@ -182,18 +207,46 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FactionData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\ObjectBounds.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjectBounds.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\PluginHeader.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PluginHeader.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\RaceData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RaceData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\RaceDefaultHairColors.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RaceDefaultHairColors.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\RaceDefaultHairStyles.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RaceDefaultHairStyles.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\RaceDefaultVoices.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RaceDefaultVoices.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\RecordReference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RecordReference.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\Relationship.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Relationship.tt</DependentUpon>
     </Compile>
-    <Compile Include="Subrecords\ObjectBounds.cs" />
-    <Compile Include="Subrecords\RecordReference.cs" />
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="Utility.cs" />
@@ -201,6 +254,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="DataTypes\GeneratedCode\AlternateTexture.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AlternateTexture.cs</LastGenOutput>
+    </None>
+    <None Include="DataTypes\GeneratedCode\Color.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Color.cs</LastGenOutput>
+    </None>
+    <None Include="DataTypes\GeneratedCode\DataTypeTemplate.t4" />
+    <None Include="DataTypes\GeneratedCode\FormID.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FormID.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Class.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Class.cs</LastGenOutput>
@@ -250,6 +316,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>HeadData.cs</LastGenOutput>
     </None>
+    <None Include="SubrecordCollections\GeneratedCode\Icon.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Icon.cs</LastGenOutput>
+    </None>
     <None Include="SubrecordCollections\GeneratedCode\MasterFileData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MasterFileData.cs</LastGenOutput>
@@ -275,9 +345,33 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FactionData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\ObjectBounds.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ObjectBounds.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\PluginHeader.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PluginHeader.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\RaceData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RaceData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\RaceDefaultHairColors.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RaceDefaultHairColors.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\RaceDefaultHairStyles.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RaceDefaultHairStyles.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\RaceDefaultVoices.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RaceDefaultVoices.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\RecordReference.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RecordReference.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\Relationship.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

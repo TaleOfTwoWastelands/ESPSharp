@@ -9,10 +9,11 @@
 	tempField = 
 		new SubrecordCollectionField(
 			"INDX",
-			typeof(SimpleSubrecord<uint>),
+			typeof(SimpleSubrecord<HeadPartIndex>),
 			"Index",
 			"Index"
 			);
+	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
 	tempField = 
@@ -22,23 +23,15 @@
 			"Model",
 			"Model"
 			);
+	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordCollectionField(
 			"ICON",
-			typeof(SimpleSubrecord<string>),
-			"LargeIcon",
-			@"Icon\\Large"
-			);
-	template.Fields.Add(tempField);
-
-	tempField = 
-		new SubrecordCollectionField(
-			"MICO",
-			typeof(SimpleSubrecord<string>),
-			"SmallIcon",
-			@"Icon\\Small"
+			typeof(Icon),
+			"Icon",
+			"Icon"
 			);
 	template.Fields.Add(tempField);
 

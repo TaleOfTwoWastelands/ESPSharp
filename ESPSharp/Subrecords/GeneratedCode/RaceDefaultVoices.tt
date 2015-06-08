@@ -1,0 +1,25 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "RaceDefaultVoices";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"MaleVoice",
+			"Male"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"FemaleVoice",
+			"Female"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

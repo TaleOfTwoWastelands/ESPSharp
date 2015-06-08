@@ -10,10 +10,12 @@ using ESPSharp.Enums.Flags;
 using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DecalData : Subrecord, ICloneable<DecalData>	{
+	public partial class DecalData : Subrecord, ICloneable<DecalData>
+	{
 		public Single MinWidth { get; set; }
 		public Single MaxWidth { get; set; }
 		public Single MinHeight { get; set; }
@@ -67,7 +69,7 @@ namespace ESPSharp.Subrecords
 			ParallaxScale = copyObject.ParallaxScale;
 			ParallaxPasses = copyObject.ParallaxPasses;
 			DecalFlags = copyObject.DecalFlags;
-			Unused = (byte[])copyObject.Unused.Clone();
+			Unused = (Byte[])copyObject.Unused.Clone();
 			Color = copyObject.Color.Clone();
 		}
 	

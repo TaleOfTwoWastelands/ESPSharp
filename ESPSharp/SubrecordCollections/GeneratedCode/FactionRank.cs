@@ -7,20 +7,44 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class FactionRank : SubrecordCollection
+	public partial class FactionRank : SubrecordCollection, ICloneable<FactionRank>
 	{
 		public SimpleSubrecord<Int32> Rank { get; set; }
 		public SimpleSubrecord<String> MaleTitle { get; set; }
 		public SimpleSubrecord<String> FemaleTitle { get; set; }
 		public SimpleSubrecord<String> Insignia { get; set; }
+
+		public FactionRank()
+		{
+			Rank = new SimpleSubrecord<Int32>();
+		}
+
+		public FactionRank(SimpleSubrecord<Int32> Rank, SimpleSubrecord<String> MaleTitle, SimpleSubrecord<String> FemaleTitle, SimpleSubrecord<String> Insignia)
+		{
+			this.Rank = Rank;
+			this.MaleTitle = MaleTitle;
+			this.FemaleTitle = FemaleTitle;
+			this.Insignia = Insignia;
+		}
+
+		public FactionRank(FactionRank copyObject)
+		{
+			Rank = copyObject.Rank.Clone();
+			MaleTitle = copyObject.MaleTitle.Clone();
+			FemaleTitle = copyObject.FemaleTitle.Clone();
+			Insignia = copyObject.Insignia.Clone();
+		}
 	
 		public override void ReadBinary(ESPReader reader)
 		{
+			List<string> readTags = new List<string>();
 			while (reader.BaseStream.Position < reader.BaseStream.Length)
 			{
 				string subTag = reader.PeekTag();
@@ -28,40 +52,39 @@ namespace ESPSharp.SubrecordCollections
 				switch (subTag)
 				{
 					case "RNAM":
-						if (Rank == null)
-							Rank = new SimpleSubrecord<Int32>();
-						else
+						if (readTags.Contains("RNAM"))
 							return;
-
 						Rank.ReadBinary(reader);
 						break;
 					case "MNAM":
+						if (readTags.Contains("MNAM"))
+							return;
 						if (MaleTitle == null)
 							MaleTitle = new SimpleSubrecord<String>();
-						else
-							return;
 
 						MaleTitle.ReadBinary(reader);
 						break;
 					case "FNAM":
+						if (readTags.Contains("FNAM"))
+							return;
 						if (FemaleTitle == null)
 							FemaleTitle = new SimpleSubrecord<String>();
-						else
-							return;
 
 						FemaleTitle.ReadBinary(reader);
 						break;
 					case "INAM":
+						if (readTags.Contains("INAM"))
+							return;
 						if (Insignia == null)
 							Insignia = new SimpleSubrecord<String>();
-						else
-							return;
 
 						Insignia.ReadBinary(reader);
 						break;
 				default:
 					return;
 				}
+				
+				readTags.Add(subTag);
 			}
 		}
 
@@ -134,6 +157,11 @@ namespace ESPSharp.SubrecordCollections
 					
 				Insignia.ReadXML(subEle);
 			}
+		}
+
+		public FactionRank Clone()
+		{
+			return new FactionRank(this);
 		}
 
 	}

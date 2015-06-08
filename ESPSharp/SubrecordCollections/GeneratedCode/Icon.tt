@@ -1,0 +1,29 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "Icon";
+
+	//file name
+	SubrecordCollectionField fileNameField = 
+		new SubrecordCollectionField(
+			"ICON",
+			typeof(SimpleSubrecord<string>),
+			"LargeIcon",
+			"LargeIcon"
+			);
+	fileNameField.isRequired = true;
+	template.Fields.Add(fileNameField);
+
+	//file size
+	SubrecordCollectionField fileSizeField = 
+		new SubrecordCollectionField(
+			"MICO",
+			typeof(SimpleSubrecord<string>),
+			"SmallIcon",
+			"SmallIcon"
+			);
+	template.Fields.Add(fileSizeField);
+
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

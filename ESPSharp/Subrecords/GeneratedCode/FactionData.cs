@@ -10,10 +10,12 @@ using ESPSharp.Enums.Flags;
 using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class FactionData : Subrecord, ICloneable<FactionData>	{
+	public partial class FactionData : Subrecord, ICloneable<FactionData>
+	{
 		public FactionFlags1 Flags1 { get; set; }
 		public FactionFlags2 Flags2 { get; set; }
 		public Byte[] Unused { get; set; }
@@ -36,7 +38,7 @@ namespace ESPSharp.Subrecords
 		{
 			Flags1 = copyObject.Flags1;
 			Flags2 = copyObject.Flags2;
-			Unused = (byte[])copyObject.Unused.Clone();
+			Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)

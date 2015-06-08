@@ -10,10 +10,12 @@ using ESPSharp.Enums.Flags;
 using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class Attributes : Subrecord, ICloneable<Attributes>	{
+	public partial class Attributes : Subrecord, ICloneable<Attributes>
+	{
 		public Byte Strength { get; set; }
 		public Byte Perception { get; set; }
 		public Byte Endurance { get; set; }

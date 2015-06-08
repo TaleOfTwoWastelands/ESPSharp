@@ -7,8 +7,10 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
@@ -16,8 +18,7 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<String> Description { get; set; }
-		public SimpleSubrecord<String> LargeIcon { get; set; }
-		public SimpleSubrecord<String> SmallIcon { get; set; }
+		public Icon Icon { get; set; }
 		public ClassData Data { get; set; }
 		public Attributes Attributes { get; set; }
 	
@@ -48,16 +49,10 @@ namespace ESPSharp.Records
 						Description.ReadBinary(reader);
 						break;
 					case "ICON":
-						if (LargeIcon == null)
-							LargeIcon = new SimpleSubrecord<String>();
+						if (Icon == null)
+							Icon = new Icon();
 
-						LargeIcon.ReadBinary(reader);
-						break;
-					case "MICO":
-						if (SmallIcon == null)
-							SmallIcon = new SimpleSubrecord<String>();
-
-						SmallIcon.ReadBinary(reader);
+						Icon.ReadBinary(reader);
 						break;
 					case "DATA":
 						if (Data == null)
@@ -83,10 +78,8 @@ namespace ESPSharp.Records
 				Name.WriteBinary(writer);
 			if (Description != null)
 				Description.WriteBinary(writer);
-			if (LargeIcon != null)
-				LargeIcon.WriteBinary(writer);
-			if (SmallIcon != null)
-				SmallIcon.WriteBinary(writer);
+			if (Icon != null)
+				Icon.WriteBinary(writer);
 			if (Data != null)
 				Data.WriteBinary(writer);
 			if (Attributes != null)
@@ -111,15 +104,10 @@ namespace ESPSharp.Records
 				ele.TryPathTo("Description", true, out subEle);
 				Description.WriteXML(subEle);
 			}
-			if (LargeIcon != null)		
+			if (Icon != null)		
 			{		
-				ele.TryPathTo("LargeIcon", true, out subEle);
-				LargeIcon.WriteXML(subEle);
-			}
-			if (SmallIcon != null)		
-			{		
-				ele.TryPathTo("SmallIcon", true, out subEle);
-				SmallIcon.WriteXML(subEle);
+				ele.TryPathTo("Icon", true, out subEle);
+				Icon.WriteXML(subEle);
 			}
 			if (Data != null)		
 			{		
@@ -158,19 +146,12 @@ namespace ESPSharp.Records
 					
 				Description.ReadXML(subEle);
 			}
-			if (ele.TryPathTo("LargeIcon", false, out subEle))
+			if (ele.TryPathTo("Icon", false, out subEle))
 			{
-				if (LargeIcon == null)
-					LargeIcon = new SimpleSubrecord<String>();
+				if (Icon == null)
+					Icon = new Icon();
 					
-				LargeIcon.ReadXML(subEle);
-			}
-			if (ele.TryPathTo("SmallIcon", false, out subEle))
-			{
-				if (SmallIcon == null)
-					SmallIcon = new SimpleSubrecord<String>();
-					
-				SmallIcon.ReadXML(subEle);
+				Icon.ReadXML(subEle);
 			}
 			if (ele.TryPathTo("Data", false, out subEle))
 			{

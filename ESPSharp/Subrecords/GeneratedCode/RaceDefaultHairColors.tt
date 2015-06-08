@@ -1,0 +1,25 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "RaceDefaultHairColors";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(HairColor),
+			"MaleColor",
+			"Male"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(HairColor),
+			"FemaleColor",
+			"Female"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

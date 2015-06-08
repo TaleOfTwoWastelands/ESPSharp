@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Linq;
 using System.Diagnostics;
+using ESPSharp.Interfaces;
 
 namespace ESPSharp.Subrecords
 {
-    public class UndecodedSubrecord : Subrecord
+    public class UndecodedSubrecord : Subrecord, ICloneable<UndecodedSubrecord>
     {
         public byte[] Data { get; set; }
 
@@ -41,12 +42,17 @@ namespace ESPSharp.Subrecords
 
         protected override void WriteDataXML(XElement ele)
         {
-            ele.Value = Data.ToBase64();
+            ele.Value = Data.ToHex();
         }
 
         protected override void ReadDataXML(XElement ele)
         {
             Data = ele.ToBytes();
+        }
+
+        public UndecodedSubrecord Clone()
+        {
+            throw new NotImplementedException();
         }
     }
 }

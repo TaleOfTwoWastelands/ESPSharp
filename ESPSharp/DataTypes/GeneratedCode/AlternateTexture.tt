@@ -1,0 +1,35 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	DataTypeTemplate template = new DataTypeTemplate();
+	template.ClassName = "AlternateTexture";
+	template.implementReadData = false;
+	template.implementWriteData = false;
+
+	DataTypeField tempField;
+
+	tempField = 
+		new DataTypeField(
+			typeof(string),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(FormID),
+			"TextureSet",
+			"TextureSet"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(int),
+			"Index",
+			"Index"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

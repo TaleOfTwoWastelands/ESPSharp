@@ -34,7 +34,7 @@ namespace ESPSharp.Records
 
         partial void WriteValue(ESPWriter writer)
         {
-            if (Value == null)
+            if (Value != null)
                 Value.WriteBinary(writer);
         }
 

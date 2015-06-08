@@ -1,0 +1,17 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "RecordReference";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"Reference",
+			"Reference"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

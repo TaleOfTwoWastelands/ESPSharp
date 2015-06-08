@@ -7,20 +7,42 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class HeadData : SubrecordCollection
+	public partial class HeadData : SubrecordCollection, ICloneable<HeadData>, IReferenceContainer
 	{
-		public SimpleSubrecord<UInt32> Index { get; set; }
+		public SimpleSubrecord<HeadPartIndex> Index { get; set; }
 		public Model Model { get; set; }
-		public SimpleSubrecord<String> LargeIcon { get; set; }
-		public SimpleSubrecord<String> SmallIcon { get; set; }
+		public Icon Icon { get; set; }
+
+		public HeadData()
+		{
+			Index = new SimpleSubrecord<HeadPartIndex>();
+			Model = new Model();
+		}
+
+		public HeadData(SimpleSubrecord<HeadPartIndex> Index, Model Model, Icon Icon)
+		{
+			this.Index = Index;
+			this.Model = Model;
+			this.Icon = Icon;
+		}
+
+		public HeadData(HeadData copyObject)
+		{
+			Index = copyObject.Index.Clone();
+			Model = copyObject.Model.Clone();
+			Icon = copyObject.Icon.Clone();
+		}
 	
 		public override void ReadBinary(ESPReader reader)
 		{
+			List<string> readTags = new List<string>();
 			while (reader.BaseStream.Position < reader.BaseStream.Length)
 			{
 				string subTag = reader.PeekTag();
@@ -28,39 +50,28 @@ namespace ESPSharp.SubrecordCollections
 				switch (subTag)
 				{
 					case "INDX":
-						if (Index == null)
-							Index = new SimpleSubrecord<UInt32>();
-						else
+						if (readTags.Contains("INDX"))
 							return;
-
 						Index.ReadBinary(reader);
 						break;
 					case "MODL":
-						if (Model == null)
-							Model = new Model();
-						else
+						if (readTags.Contains("MODL"))
 							return;
-
+						Model.ReadBinary(reader);
 						break;
 					case "ICON":
-						if (LargeIcon == null)
-							LargeIcon = new SimpleSubrecord<String>();
-						else
+						if (readTags.Contains("ICON"))
 							return;
+						if (Icon == null)
+							Icon = new Icon();
 
-						LargeIcon.ReadBinary(reader);
-						break;
-					case "MICO":
-						if (SmallIcon == null)
-							SmallIcon = new SimpleSubrecord<String>();
-						else
-							return;
-
-						SmallIcon.ReadBinary(reader);
+						Icon.ReadBinary(reader);
 						break;
 				default:
 					return;
 				}
+				
+				readTags.Add(subTag);
 			}
 		}
 
@@ -69,10 +80,9 @@ namespace ESPSharp.SubrecordCollections
 			if (Index != null)
 				Index.WriteBinary(writer);
 			if (Model != null)
-			if (LargeIcon != null)
-				LargeIcon.WriteBinary(writer);
-			if (SmallIcon != null)
-				SmallIcon.WriteBinary(writer);
+				Model.WriteBinary(writer);
+			if (Icon != null)
+				Icon.WriteBinary(writer);
 		}
 
 		public override void WriteXML(XElement ele)
@@ -87,15 +97,9 @@ namespace ESPSharp.SubrecordCollections
 			{		
 				ele.TryPathTo("Model", true, out subEle);
 			}
-			if (LargeIcon != null)		
+			if (Icon != null)		
 			{		
-				ele.TryPathTo("Icon\\Large", true, out subEle);
-				LargeIcon.WriteXML(subEle);
-			}
-			if (SmallIcon != null)		
-			{		
-				ele.TryPathTo("Icon\\Small", true, out subEle);
-				SmallIcon.WriteXML(subEle);
+				ele.TryPathTo("Icon", true, out subEle);
 			}
 		}
 
@@ -106,7 +110,7 @@ namespace ESPSharp.SubrecordCollections
 			if (ele.TryPathTo("Index", false, out subEle))
 			{
 				if (Index == null)
-					Index = new SimpleSubrecord<UInt32>();
+					Index = new SimpleSubrecord<HeadPartIndex>();
 					
 				Index.ReadXML(subEle);
 			}
@@ -116,20 +120,17 @@ namespace ESPSharp.SubrecordCollections
 					Model = new Model();
 					
 			}
-			if (ele.TryPathTo("Icon\\Large", false, out subEle))
+			if (ele.TryPathTo("Icon", false, out subEle))
 			{
-				if (LargeIcon == null)
-					LargeIcon = new SimpleSubrecord<String>();
+				if (Icon == null)
+					Icon = new Icon();
 					
-				LargeIcon.ReadXML(subEle);
 			}
-			if (ele.TryPathTo("Icon\\Small", false, out subEle))
-			{
-				if (SmallIcon == null)
-					SmallIcon = new SimpleSubrecord<String>();
-					
-				SmallIcon.ReadXML(subEle);
-			}
+		}
+
+		public HeadData Clone()
+		{
+			return new HeadData(this);
 		}
 
 	}

@@ -3,36 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ESPSharp.Interfaces;
+using System.IO;
 using System.Xml.Linq;
-using ESPSharp;
+using ESPSharp.Enums;
+using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
+using ESPSharp.Subrecords;
+using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
-namespace ESPSharp
+namespace ESPSharp.DataTypes
 {
-    public class FormID : IESPSerializable, ICloneable<FormID>
+    public partial class FormID
     {
-        uint rawVal;
-
-        public FormID()
-        {
-            rawVal = 0;
-        }
-
-        public FormID(uint inID)
-        {
-            rawVal = inID;
-        }
-
-        public FormID(FormID toCopy)
-        {
-            rawVal = (uint)toCopy;
-        }
-
-        public FormID Clone()
-        {
-            return new FormID(this);
-        }
-
         public static explicit operator FormID(uint val)
         {
             return new FormID(val);
@@ -40,32 +23,22 @@ namespace ESPSharp
 
         public static explicit operator uint(FormID val)
         {
-            return val.rawVal;
+            return val.RawValue;
         }
 
         public override string ToString()
         {
-            return rawVal.ToString("X8");
+            return RawValue.ToString("X8");
         }
 
-        public void WriteXML(XElement ele)
+        partial void WriteDataXML(XElement ele)
         {
             ele.Value = ToString();
         }
 
-        public void ReadXML(XElement ele)
+        partial void ReadDataXML(XElement ele)
         {
-            rawVal = uint.Parse(ele.Value, System.Globalization.NumberStyles.HexNumber);
-        }
-
-        public void WriteBinary(ESPWriter writer)
-        {
-            writer.Write(rawVal);
-        }
-
-        public void ReadBinary(ESPReader reader)
-        {
-            rawVal = reader.ReadUInt32();
+            RawValue = uint.Parse(ele.Value, System.Globalization.NumberStyles.HexNumber);
         }
     }
 }

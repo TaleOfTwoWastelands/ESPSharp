@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp
 {

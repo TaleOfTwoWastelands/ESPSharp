@@ -5,14 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Linq;
+using ESPSharp.DataTypes;
 using ESPSharp.Enums;
+using ESPSharp.Interfaces;
 using ESPSharp.Enums.Flags;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
 
 namespace ESPSharp.Subrecords
 {
-    public partial class AlternateTextures : Subrecord
+    public partial class AlternateTextures : Subrecord, IReferenceContainer, ICloneable<AlternateTextures>
     {
         public List<AlternateTexture> Textures { get; set; }
 
@@ -51,6 +53,11 @@ namespace ESPSharp.Subrecords
                 tex.ReadXML(subEle);
                 Textures.Add(tex);
             }
+        }
+
+        public AlternateTextures Clone()
+        {
+            throw new NotImplementedException();
         }
     }
 }

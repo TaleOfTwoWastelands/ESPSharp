@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Diagnostics;
+using ESPSharp.Interfaces;
 
 namespace ESPSharp.Subrecords
 {
-    public class SimpleSubrecord<T> : Subrecord
+    public class SimpleSubrecord<T> : Subrecord, ICloneable<SimpleSubrecord<T>>
     {
         public T Value { get; set; }
 
@@ -220,6 +221,11 @@ namespace ESPSharp.Subrecords
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");
             }
+        }
+
+        public SimpleSubrecord<T> Clone()
+        {
+            throw new NotImplementedException();
         }
     }
 }

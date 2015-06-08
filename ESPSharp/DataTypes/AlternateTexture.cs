@@ -3,71 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ESPSharp.Interfaces;
+using System.IO;
 using System.Xml.Linq;
+using ESPSharp.Enums;
+using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
+using ESPSharp.Subrecords;
+using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
-namespace ESPSharp
+namespace ESPSharp.DataTypes
 {
-    public class AlternateTexture : IESPSerializable, ICloneable<AlternateTexture>
+    public partial class AlternateTexture : IESPSerializable, ICloneable<AlternateTexture>, IReferenceContainer
     {
-        public string Name;
-        public FormID TextureSet;
-        public int Index;
-
-        public AlternateTexture()
+        partial void ReadData(ESPReader reader)
         {
-            TextureSet = new FormID();
-        }
-
-        public AlternateTexture(string Name, FormID TextureSet, int Index)
-        {
-            this.Name = Name;
-            this.TextureSet = TextureSet.Clone();
-            this.Index = Index;
-        }
-
-        public AlternateTexture(AlternateTexture toCopy)
-        {
-            Name = toCopy.Name;
-            TextureSet = toCopy.TextureSet.Clone();
-            Index = toCopy.Index;
-        }
-
-        public void WriteXML(XElement ele)
-        {
-            ele.Add(
-                new XElement("Name", Name),
-                new XElement("TextureSet", TextureSet),
-                new XElement("Index", Index)
-                );
-        }
-
-        public void ReadXML(XElement ele)
-        {
-            Name = ele.Element("Name").Value;
-            TextureSet.ReadXML(ele.Element("TextureSet"));
-            Index = ele.Element("Index").ToInt32();
-        }
-
-        public void WriteBinary(ESPWriter writer)
-        {
-            writer.Write((uint)Name.Length);
-            writer.Write(Name.ToCharArray());
-            writer.Write(TextureSet);
-            writer.Write(Index);
-        }
-
-        public void ReadBinary(ESPReader reader)
-        {
-            int size = reader.ReadInt32();
-            Name = new String(reader.ReadChars(size));
-            TextureSet = reader.Read<FormID>();
+            int length = reader.ReadInt32();
+            Name = new String(reader.ReadChars(length));
+            TextureSet.ReadBinary(reader);
             Index = reader.ReadInt32();
         }
 
-        public AlternateTexture Clone()
+        partial void WriteData(ESPWriter writer)
         {
-            return new AlternateTexture(this);
+            writer.Write(Name.Length);
+            writer.Write(Name.ToCharArray());
+            TextureSet.WriteBinary(writer);
+            writer.Write(Index);
         }
     }
 }

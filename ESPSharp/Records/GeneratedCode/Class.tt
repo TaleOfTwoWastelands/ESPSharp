@@ -37,25 +37,15 @@
 	descField.isRequired = true;
 	template.Fields.Add(descField);
 
-	//large icon
-	RecordField lIconField = 
+	//icon
+	RecordField iconField = 
 		new RecordField(
 			"ICON",
-			typeof(SimpleSubrecord<string>),
-			"LargeIcon",
-			"LargeIcon"
+			typeof(Icon),
+			"Icon",
+			"Icon"
 			);
-	template.Fields.Add(lIconField);
-
-	//small icon
-	RecordField sIconField = 
-		new RecordField(
-			"MICO",
-			typeof(SimpleSubrecord<string>),
-			"SmallIcon",
-			"SmallIcon"
-			);
-	template.Fields.Add(sIconField);
+	template.Fields.Add(iconField);
 
 	//class data
 	RecordField dataField = 

@@ -10,6 +10,18 @@
 <#@ import namespace="ESPSharp.SubrecordCollections" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Collections" #>
+<#
+	bool isReferenceContainer = false;
+
+	foreach (var field in template.Fields)
+    {
+		if (field.Type.GetInterface("IReferenceContainer") != null)
+        {
+			isReferenceContainer = true;
+			break;
+        }
+    }
+#>
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +31,47 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class <#= template.ClassName #> : SubrecordCollection
+	public partial class <#= template.ClassName #> : SubrecordCollection, ICloneable<<#= template.ClassName#>><# if (isReferenceContainer) { #>, IReferenceContainer<#}Write("\n");#>
 	{
 <# foreach (var field in template.Fields) { #>
 		<#= field.PropertyDeclaration #>
 <#}#>
+
+		public <#= template.ClassName #>()
+		{
+<# foreach (var field in template.Fields.Where(f => f.isRequired)) { #>
+			<#= field.Name #> = new <#= GetFriendlyName(field.Type)#>();
+<#}#>
+		}
+
+		public <#= template.ClassName #>(<#= string.Join(", ", template.Fields.Select<SubrecordCollectionField, string>(s => string.Format("{0} {1}", GetFriendlyName(s.Type), s.Name)))#>)
+		{
+<# foreach (var field in template.Fields) { #>
+			this.<#= field.Name #> = <#= field.Name #>;
+<# } #>
+		}
+
+		public <#= template.ClassName #>(<#= template.ClassName #> copyObject)
+		{
+<# foreach (var field in template.Fields) { #>
+<# if (field.Type.GetInterface("ICloneable`1") != null){ #>
+			<#= field.Name #> = copyObject.<#= field.Name #>.Clone();
+<# } else { #>
+			<# throw new Exception(field.Name); #>
+<# } #>
+<# } #>
+		}
 	
 		public override void ReadBinary(ESPReader reader)
 		{
+			List<string> readTags = new List<string>();
 			while (reader.BaseStream.Position < reader.BaseStream.Length)
 			{
 				string subTag = reader.PeekTag();
@@ -41,14 +81,16 @@ namespace ESPSharp.SubrecordCollections
 <# foreach (var field in template.Fields) { #>
 					case "<#= field.Tag #>":
 <# if (field.implementReadData) { #>
-						if (<#= field.Name #> == null)
-							<#= field.Name #> = new <#= field.TypeString #>();
 <# if (!field.Type.GetInterfaces().Contains(typeof(IEnumerable))){#>
-						else
+						if (readTags.Contains("<#= field.Tag #>"))
 							return;
 <# } #>
+<# if (!field.isRequired) { #>
+						if (<#= field.Name #> == null)
+							<#= field.Name #> = new <#= field.TypeString #>();
 
-<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord))){ #>
+<# } #>
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
 						<#= field.Name #>.ReadBinary(reader);
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){#>
 						<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
@@ -63,6 +105,8 @@ namespace ESPSharp.SubrecordCollections
 				default:
 					return;
 				}
+				
+				readTags.Add(subTag);
 			}
 		}
 
@@ -71,7 +115,7 @@ namespace ESPSharp.SubrecordCollections
 <# foreach (var field in template.Fields) { #>
 <# if (field.implementWriteData) { #>
 			if (<#= field.Name #> != null)
-<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord))){ #>
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
 				<#= field.Name #>.WriteBinary(writer);
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){ #>
 				foreach (var item in <#= field.Name #>)
@@ -137,6 +181,11 @@ namespace ESPSharp.SubrecordCollections
 			Read<#= field.Name #>XML(ele);
 <# } #>
 <# } #>
+		}
+
+		public <#= template.ClassName #> Clone()
+		{
+			return new <#= template.ClassName #>(this);
 		}
 
 <#foreach (var field in template.Fields.Where(f => !f.implementReadData)) { #>

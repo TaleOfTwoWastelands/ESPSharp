@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using ESPSharp.DataTypes;
+using ESPSharp.Interfaces;
 
 namespace ESPSharp.Subrecords
 {
-    public class FormArray : Subrecord, IReferenceContainer
+    public class FormArray : Subrecord, IReferenceContainer, ICloneable<FormArray>
     {
         List<FormID> Forms { get; set; }
 
@@ -41,6 +43,11 @@ namespace ESPSharp.Subrecords
                 id.ReadXML(subEle);
                 Forms.Add(id);
             }
+        }
+
+        FormArray ICloneable<FormArray>.Clone()
+        {
+            throw new NotImplementedException();
         }
     }
 }

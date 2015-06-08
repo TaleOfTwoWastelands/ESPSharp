@@ -1,0 +1,170 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "RaceData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(ActorValuesByte),
+			"SkillBonus1",
+			"SkillBonuses/Bonus1/Skill"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SkillBonus1Amount",
+			"SkillBonuses/Bonus1/Amount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ActorValuesByte),
+			"SkillBonus2",
+			"SkillBonuses/Bonus2/Skill"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SkillBonus2Amount",
+			"SkillBonuses/Bonus2/Amount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ActorValuesByte),
+			"SkillBonus3",
+			"SkillBonuses/Bonus3/Skill"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SkillBonus3Amount",
+			"SkillBonuses/Bonus3/Amount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ActorValuesByte),
+			"SkillBonus4",
+			"SkillBonuses/Bonus4/Skill"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SkillBonus4Amount",
+			"SkillBonuses/Bonus4/Amount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ActorValuesByte),
+			"SkillBonus5",
+			"SkillBonuses/Bonus5/Skill"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SkillBonus5Amount",
+			"SkillBonuses/Bonus5/Amount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ActorValuesByte),
+			"SkillBonus6",
+			"SkillBonuses/Bonus6/Skill"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SkillBonus6Amount",
+			"SkillBonuses/Bonus6/Amount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ActorValuesByte),
+			"SkillBonus7",
+			"SkillBonuses/Bonus7/Skill"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SkillBonus7Amount",
+			"SkillBonuses/Bonus7/Amount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused",
+			"Unused"
+			);
+	tempField.byteCount = 2;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MaleHeight",
+			"Height/Male"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FemaleHeight",
+			"Height/Female"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MaleWeight",
+			"Weight/Male"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FemaleWeight",
+			"Weight/Female"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(RaceFlags),
+			"RaceFlags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

@@ -1,0 +1,41 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	DataTypeTemplate template = new DataTypeTemplate();
+	template.ClassName = "Color";
+
+	DataTypeField tempField;
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte),
+			"Red",
+			"Red"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte),
+			"Green",
+			"Green"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte),
+			"Blue",
+			"Blue"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte),
+			"Alpha_Unused",
+			"Alpha_Unused"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

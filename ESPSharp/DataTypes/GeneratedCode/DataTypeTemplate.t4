@@ -1,0 +1,278 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="ESPSharp" #>
+<#@ import namespace="ESPSharp.DataTypes" #>
+<#@ import namespace="ESPSharp.Enums" #>
+<#@ import namespace="ESPSharp.Interfaces" #>
+<#@ import namespace="ESPSharp.Enums.Flags" #>
+<#@ import namespace="ESPSharp.Subrecords" #>
+<#@ import namespace="ESPSharp.SubrecordCollections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections" #>
+<#
+	bool isReferenceContainer = false;
+
+	foreach (var field in template.Fields)
+    {
+		if (field.Type == typeof(FormID) || field.Type.GetInterface("IReferenceContainer") != null)
+        {
+			isReferenceContainer = true;
+			break;
+        }
+    }
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Xml.Linq;
+using ESPSharp.Enums;
+using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
+using ESPSharp.Subrecords;
+using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
+
+namespace ESPSharp.DataTypes
+{
+	public partial class <#= template.ClassName #> : IESPSerializable, ICloneable<<#= template.ClassName#>><# if (isReferenceContainer) { #>, IReferenceContainer<#}Write("\n");#>
+	{
+<# foreach (var field in template.Fields) { #>
+		<#= field.PropertyDeclaration #>
+<#}#>
+
+		public <#= template.ClassName #>()
+		{
+<# foreach (var field in template.Fields) { #>
+<# if (field.Type == typeof(string)) { #>
+			<#= field.Name #> = "";
+<# } else if (field.Type != typeof(byte[])) { #>
+			<#= field.Name #> = new <#= GetFriendlyName(field.Type)#>();
+<# } else { #>
+			<#= field.Name #> = new byte[<#= field.byteCount#>];
+<# } #>
+<# } #>
+		}
+
+		public <#= template.ClassName #>(<#= string.Join(", ", template.Fields.Select<DataTypeField, string>(s => string.Format("{0} {1}", GetFriendlyName(s.Type), s.Name)))#>)
+		{
+<# foreach (var field in template.Fields) { #>
+			this.<#= field.Name #> = <#= field.Name #>;
+<# } #>
+		}
+
+		public <#= template.ClassName #>(<#= template.ClassName #> copyObject)
+		{
+<# foreach (var field in template.Fields) { #>
+<# if (field.Type.IsValueType) { #>
+			<#= field.Name #> = copyObject.<#= field.Name #>;
+<# } else if (field.Type.GetInterface("ICloneable`1") != null){ #>
+			<#= field.Name #> = copyObject.<#= field.Name #>.Clone();
+<# } else if (field.Type.GetInterface("ICloneable") != null){ #>
+			<#= field.Name #> = (<#= GetFriendlyName(field.Type)#>)copyObject.<#= field.Name #>.Clone();
+<# } else { #>
+			<# throw new Exception(field.Name); #>
+<# } #>
+<# } #>
+		}
+	
+		public void ReadBinary(ESPReader reader)
+		{
+			try
+			{
+<# if (template.implementReadData) { #>
+<# foreach (var field in template.Fields) { #>
+<# if (field.Type.IsEnum) { #>
+				<#= field.Name #> = reader.ReadEnum<<#= GetFriendlyName(field.Type)#>>();
+<# } else if (field.Type == typeof(byte[])){ #>
+				<#= field.Name #> = reader.ReadBytes(<#= field.byteCount #>);
+<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
+				<#= field.Name#>.ReadBinary(reader);
+<# } else { #>
+				<#= field.Name #> = reader.Read<#= GetFriendlyName(field.Type)#>();
+<# } #>
+<# } } else { #>
+				ReadData(reader);
+<# } #>
+			}
+			catch
+			{
+				return;
+			}
+		}
+
+		public void WriteBinary(ESPWriter writer)
+		{
+<# if (template.implementWriteData) { #>
+<# foreach (var field in template.Fields) { #>
+<# if (field.Type.IsEnum) { #>
+			writer.Write((<#= GetFriendlyName(Enum.GetUnderlyingType(field.Type))#>)<#= field.Name #>);
+<# } else if (field.Type == typeof(byte[])){ #>
+			if (<#= field.Name #> == null)
+				writer.Write(new byte[<#= field.byteCount #>]);
+			else
+				writer.Write(<#= field.Name #>);
+<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
+			<#= field.Name#>.WriteBinary(writer);
+<# } else { #>
+			writer.Write(<#= field.Name #>);			
+<# } #>
+<# } } else { #>
+			WriteData(writer);
+<# } #>
+		}
+
+		public void WriteXML(XElement ele)
+		{
+<# if (template.implementWriteXML) { #>
+			XElement subEle;
+<# foreach (var field in template.Fields) { #>
+
+			ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
+<# if (field.Type == typeof(byte[])){ #>
+			subEle.Value = <#= field.Name#>.ToHex();
+<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
+			<#= field.Name#>.WriteXML(subEle);
+<# } else { #>
+			subEle.Value = <#= field.Name#>.ToString();
+<# } #>
+<# } } else { #>
+			WriteDataXML(ele);
+<# } #>
+		}
+
+		public void ReadXML(XElement ele)
+		{
+<# if (template.implementReadXML) { #>
+			XElement subEle;
+<# foreach (var field in template.Fields) { #>
+
+			if (ele.TryPathTo("<#= field.XMLPath#>", false, out subEle))
+			{
+<# if (field.Type.IsEnum) { #>
+				<#= field.Name #> = subEle.ToEnum<<#= GetFriendlyName(field.Type)#>>();
+<# } else if (field.Type == typeof(byte[])){ #>
+				<#= field.Name #> = subEle.ToBytes();
+<# } else if (field.Type == typeof(string)){ #>
+				<#= field.Name #> = subEle.Value;
+<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
+				<#= field.Name#>.ReadXML(subEle);
+<# } else { #>
+				<#= field.Name #> = subEle.To<#= GetFriendlyName(field.Type)#>();
+<# } #>
+			}
+<# } } else { #>
+			ReadDataXML(ele);
+<# } #>
+		}
+<# if (!template.implementReadXML) { #>
+
+		partial void ReadDataXML(XElement ele);
+<# } #>
+<# if (!template.implementWriteXML) { #>
+
+		partial void WriteDataXML(XElement ele);
+<# } #>
+<# if (!template.implementReadData) { #>
+
+		partial void ReadData(ESPReader reader);
+<# } #>
+<# if (!template.implementWriteData) { #>
+
+		partial void WriteData(ESPWriter writer);
+<# } #>
+
+		public <#= template.ClassName #> Clone()
+		{
+			return new <#= template.ClassName #>(this);
+		}
+	}
+}
+<#+
+public class DataTypeTemplate
+{
+    public string ClassName;
+	public List<DataTypeField> Fields = new List<DataTypeField>();
+	
+	public bool implementReadData = true;
+	public bool implementWriteData = true;
+	public bool implementReadXML = true;
+	public bool implementWriteXML = true;
+}
+
+public class DataTypeField
+{
+	public Type Type;
+	public string Name;
+	public string XMLPath;
+	public string XMLSubName;
+
+	public bool isReadOnly = false;
+
+	public uint byteCount = 0;
+
+	public DataTypeField()
+    {
+    }
+
+	public DataTypeField(Type Type, string Name, string XMLPath)
+    {
+		this.Type = Type;
+		this.Name = Name;
+		this.XMLPath = XMLPath;
+    }
+
+	public string TypeString
+    {
+        get 
+        {
+			return GetFriendlyName(Type);
+        }
+    }
+
+	public string PropertyDeclaration
+    {
+		get
+        {
+			string declare = "public " + GetFriendlyName(Type) + " " + Name;
+
+			if (isReadOnly)
+				declare += " { get; protected set; }";
+			else				
+				declare += " { get; set; }";
+
+			return declare;
+        }
+    }
+}
+
+public static string ToPrivateCase(string inString)
+{
+	return string.Format("{0}{1}", inString.Substring(0, 1).ToLowerInvariant(), inString.Substring(1));
+}
+
+public static string ToPropertyCase(string inString)
+{
+	return string.Format("{0}{1}", inString.Substring(0, 1).ToUpperInvariant(), inString.Substring(1));
+}
+
+public static string GetFriendlyName(Type inType)
+{
+	if (inType.IsConstructedGenericType)
+    {
+		string name = inType.Name.Substring(0, inType.Name.IndexOf('`'));
+		string args = string.Join(", ", inType.GenericTypeArguments.Select<Type, string>(t => t.Name));
+
+		return name + "<" + args + ">";
+    }
+	else if (inType == typeof(object))
+		return "dynamic";
+	else
+		return inType.Name;
+}
+#>

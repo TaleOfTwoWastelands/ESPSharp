@@ -7,21 +7,46 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class Model : SubrecordCollection
+	public partial class Model : SubrecordCollection, ICloneable<Model>, IReferenceContainer
 	{
 		public SimpleSubrecord<String> FileName { get; set; }
 		public SimpleSubrecord<Byte[]> Unknown { get; set; }
 		public SimpleSubrecord<Byte[]> TextureFileHash { get; set; }
 		public AlternateTextures AlternateTextures { get; set; }
 		public SimpleSubrecord<FaceGenModelFlags> FaceGenModelFlags { get; set; }
+
+		public Model()
+		{
+		}
+
+		public Model(SimpleSubrecord<String> FileName, SimpleSubrecord<Byte[]> Unknown, SimpleSubrecord<Byte[]> TextureFileHash, AlternateTextures AlternateTextures, SimpleSubrecord<FaceGenModelFlags> FaceGenModelFlags)
+		{
+			this.FileName = FileName;
+			this.Unknown = Unknown;
+			this.TextureFileHash = TextureFileHash;
+			this.AlternateTextures = AlternateTextures;
+			this.FaceGenModelFlags = FaceGenModelFlags;
+		}
+
+		public Model(Model copyObject)
+		{
+			FileName = copyObject.FileName.Clone();
+			Unknown = copyObject.Unknown.Clone();
+			TextureFileHash = copyObject.TextureFileHash.Clone();
+			AlternateTextures = copyObject.AlternateTextures.Clone();
+			FaceGenModelFlags = copyObject.FaceGenModelFlags.Clone();
+		}
 	
 		public override void ReadBinary(ESPReader reader)
 		{
+			List<string> readTags = new List<string>();
 			while (reader.BaseStream.Position < reader.BaseStream.Length)
 			{
 				string subTag = reader.PeekTag();
@@ -29,48 +54,50 @@ namespace ESPSharp.SubrecordCollections
 				switch (subTag)
 				{
 					case "MODL":
+						if (readTags.Contains("MODL"))
+							return;
 						if (FileName == null)
 							FileName = new SimpleSubrecord<String>();
-						else
-							return;
 
 						FileName.ReadBinary(reader);
 						break;
 					case "MODB":
+						if (readTags.Contains("MODB"))
+							return;
 						if (Unknown == null)
 							Unknown = new SimpleSubrecord<Byte[]>();
-						else
-							return;
 
 						Unknown.ReadBinary(reader);
 						break;
 					case "MODT":
+						if (readTags.Contains("MODT"))
+							return;
 						if (TextureFileHash == null)
 							TextureFileHash = new SimpleSubrecord<Byte[]>();
-						else
-							return;
 
 						TextureFileHash.ReadBinary(reader);
 						break;
 					case "MODS":
+						if (readTags.Contains("MODS"))
+							return;
 						if (AlternateTextures == null)
 							AlternateTextures = new AlternateTextures();
-						else
-							return;
 
 						AlternateTextures.ReadBinary(reader);
 						break;
 					case "MODD":
+						if (readTags.Contains("MODD"))
+							return;
 						if (FaceGenModelFlags == null)
 							FaceGenModelFlags = new SimpleSubrecord<FaceGenModelFlags>();
-						else
-							return;
 
 						FaceGenModelFlags.ReadBinary(reader);
 						break;
 				default:
 					return;
 				}
+				
+				readTags.Add(subTag);
 			}
 		}
 
@@ -157,6 +184,11 @@ namespace ESPSharp.SubrecordCollections
 					
 				FaceGenModelFlags.ReadXML(subEle);
 			}
+		}
+
+		public Model Clone()
+		{
+			return new Model(this);
 		}
 
 	}

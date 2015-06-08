@@ -7,18 +7,39 @@ using System.IO;
 using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class MasterFileData : SubrecordCollection
+	public partial class MasterFileData : SubrecordCollection, ICloneable<MasterFileData>
 	{
 		public SimpleSubrecord<String> FileName { get; set; }
 		public SimpleSubrecord<UInt64> FileSize { get; set; }
+
+		public MasterFileData()
+		{
+			FileName = new SimpleSubrecord<String>();
+			FileSize = new SimpleSubrecord<UInt64>();
+		}
+
+		public MasterFileData(SimpleSubrecord<String> FileName, SimpleSubrecord<UInt64> FileSize)
+		{
+			this.FileName = FileName;
+			this.FileSize = FileSize;
+		}
+
+		public MasterFileData(MasterFileData copyObject)
+		{
+			FileName = copyObject.FileName.Clone();
+			FileSize = copyObject.FileSize.Clone();
+		}
 	
 		public override void ReadBinary(ESPReader reader)
 		{
+			List<string> readTags = new List<string>();
 			while (reader.BaseStream.Position < reader.BaseStream.Length)
 			{
 				string subTag = reader.PeekTag();
@@ -26,24 +47,20 @@ namespace ESPSharp.SubrecordCollections
 				switch (subTag)
 				{
 					case "MAST":
-						if (FileName == null)
-							FileName = new SimpleSubrecord<String>();
-						else
+						if (readTags.Contains("MAST"))
 							return;
-
 						FileName.ReadBinary(reader);
 						break;
 					case "DATA":
-						if (FileSize == null)
-							FileSize = new SimpleSubrecord<UInt64>();
-						else
+						if (readTags.Contains("DATA"))
 							return;
-
 						FileSize.ReadBinary(reader);
 						break;
 				default:
 					return;
 				}
+				
+				readTags.Add(subTag);
 			}
 		}
 
@@ -88,6 +105,11 @@ namespace ESPSharp.SubrecordCollections
 					
 				FileSize.ReadXML(subEle);
 			}
+		}
+
+		public MasterFileData Clone()
+		{
+			return new MasterFileData(this);
 		}
 
 	}

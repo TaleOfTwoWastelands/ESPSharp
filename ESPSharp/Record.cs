@@ -8,6 +8,7 @@ using System.Diagnostics;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
 using ESPSharp.Records;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp
 {

@@ -10,6 +10,7 @@ using ESPSharp.Enums.Flags;
 using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {

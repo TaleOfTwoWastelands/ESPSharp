@@ -10,7 +10,7 @@
 		new SubrecordField(
 			typeof(float),
 			"MinWidth",
-			@"Width/Min"
+			"Width/Min"
 			);
 	template.Fields.Add(tempField);
 
@@ -18,7 +18,7 @@
 		new SubrecordField(
 			typeof(float),
 			"MaxWidth",
-			@"Width/Max"
+			"Width/Max"
 			);
 	template.Fields.Add(tempField);
 
@@ -26,7 +26,7 @@
 		new SubrecordField(
 			typeof(float),
 			"MinHeight",
-			@"Height/Min"
+			"Height/Min"
 			);
 	template.Fields.Add(tempField);
 
@@ -34,7 +34,7 @@
 		new SubrecordField(
 			typeof(float),
 			"MaxHeight",
-			@"Height/Max"
+			"Height/Max"
 			);
 	template.Fields.Add(tempField);
 
@@ -42,7 +42,7 @@
 		new SubrecordField(
 			typeof(float),
 			"Depth",
-			@"Depth"
+			"Depth"
 			);
 	template.Fields.Add(tempField);
 
@@ -50,7 +50,7 @@
 		new SubrecordField(
 			typeof(float),
 			"Shininess",
-			@"Shininess"
+			"Shininess"
 			);
 	template.Fields.Add(tempField);
 
@@ -58,7 +58,7 @@
 		new SubrecordField(
 			typeof(float),
 			"ParallaxScale",
-			@"Parallax/Scale"
+			"Parallax/Scale"
 			);
 	template.Fields.Add(tempField);
 
@@ -66,7 +66,7 @@
 		new SubrecordField(
 			typeof(byte),
 			"ParallaxPasses",
-			@"Parallax/Passes"
+			"Parallax/Passes"
 			);
 	template.Fields.Add(tempField);
 
@@ -74,7 +74,7 @@
 		new SubrecordField(
 			typeof(DecalDataFlags),
 			"DecalFlags",
-			@"Flags"
+			"Flags"
 			);
 	template.Fields.Add(tempField);
 
@@ -82,7 +82,7 @@
 		new SubrecordField(
 			typeof(byte[]),
 			"Unused",
-			@"Unused"
+			"Unused"
 			);
 	tempField.byteCount = 2;
 	template.Fields.Add(tempField);
@@ -91,7 +91,7 @@
 		new SubrecordField(
 			typeof(Color),
 			"Color",
-			@"Color"
+			"Color"
 			);
 	template.Fields.Add(tempField);
 #>

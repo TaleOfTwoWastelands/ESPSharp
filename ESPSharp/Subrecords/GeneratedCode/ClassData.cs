@@ -10,10 +10,12 @@ using ESPSharp.Enums.Flags;
 using ESPSharp.Interfaces;
 using ESPSharp.Subrecords;
 using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ClassData : Subrecord, ICloneable<ClassData>	{
+	public partial class ClassData : Subrecord, ICloneable<ClassData>
+	{
 		public ActorValues TagSkill1 { get; set; }
 		public ActorValues TagSkill2 { get; set; }
 		public ActorValues TagSkill3 { get; set; }
@@ -60,7 +62,7 @@ namespace ESPSharp.Subrecords
 			Services = copyObject.Services;
 			TrainingSkill = copyObject.TrainingSkill;
 			MaxTrainingLevel = copyObject.MaxTrainingLevel;
-			Unused = (byte[])copyObject.Unused.Clone();
+			Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
