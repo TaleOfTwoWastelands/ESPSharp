@@ -91,11 +91,15 @@ namespace ESPSharp.Records
 <# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
 				<#= field.Name #>.WriteXML(subEle);
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
+				List<string> xmlNames = new List<string>{"<#= string.Join("\", \"", field.XMLSubNames) #>"};
+				int i = 0;
 				foreach (var entry in <#= field.Name #>)
 				{
-					XElement newEle = new XElement("<#= field.XMLSubName #>");
+					i = i % xmlNames.Count();
+					XElement newEle = new XElement(xmlNames[i]);
 					entry.WriteXML(newEle);
 					subEle.Add(newEle);
+					i++;
 				}
 <# } #>
 			}
@@ -162,7 +166,7 @@ public class RecordField
 	public Type Type;
 	public string Name;
 	public string XMLPath;
-	public string XMLSubName;
+	public List<string> XMLSubNames;
 
 	public bool isRequired = false;
 	public bool isReadOnly = false;

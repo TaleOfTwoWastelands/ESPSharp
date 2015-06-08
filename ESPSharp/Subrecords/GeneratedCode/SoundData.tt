@@ -1,0 +1,138 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "SoundData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"MinAttenuationDistance",
+			"Attenuation/Distance/Min"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"MaxAttenuationDistance",
+			"Attenuation/Distance/Max"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(sbyte),
+			"FrequencyAdjustmentPercentage",
+			"FrequencyAdjustmentPercentage"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"Unused",
+			"Unused"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(SoundDataFlags),
+			"SoundDataFlags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(short),
+			"StaticAttenuationcdB",
+			"Attenuation/StaticAttenuationcdB"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"StopTime",
+			"Time/Stop"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"StartTime",
+			"Time/Start"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(short),
+			"AttenuationCurvePoint1",
+			"Attenuation/Curve/Point1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(short),
+			"AttenuationCurvePoint2",
+			"Attenuation/Curve/Point2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(short),
+			"AttenuationCurvePoint3",
+			"Attenuation/Curve/Point3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(short),
+			"AttenuationCurvePoint4",
+			"Attenuation/Curve/Point4"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(short),
+			"AttenuationCurvePoint5",
+			"Attenuation/Curve/Point5"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(short),
+			"ReverbAttenuationControl",
+			"Attenuation/ReverbAttenuationControl"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(int),
+			"Priority",
+			"Priority"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unknown",
+			"Unknown"
+			);
+	tempField.byteCount = 8;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

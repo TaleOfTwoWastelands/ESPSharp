@@ -106,11 +106,15 @@ namespace ESPSharp.Records
 			if (ExtraParts != null)		
 			{		
 				ele.TryPathTo("ExtraParts", true, out subEle);
+				List<string> xmlNames = new List<string>{"Part"};
+				int i = 0;
 				foreach (var entry in ExtraParts)
 				{
-					XElement newEle = new XElement("Part");
+					i = i % xmlNames.Count();
+					XElement newEle = new XElement(xmlNames[i]);
 					entry.WriteXML(newEle);
 					subEle.Add(newEle);
+					i++;
 				}
 			}
 		}

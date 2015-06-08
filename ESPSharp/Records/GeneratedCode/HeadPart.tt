@@ -52,7 +52,7 @@
 			"ExtraParts",
 			"ExtraParts"
 			);
-	tempField.XMLSubName = "Part";
+	tempField.XMLSubNames = new List<string> {"Part"};
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 #>

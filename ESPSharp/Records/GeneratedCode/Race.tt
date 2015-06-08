@@ -42,7 +42,7 @@
 			"Relationships",
 			"Relationships"
 			);
-	tempField.XMLSubName = "Relationship";
+	tempField.XMLSubNames = new List<string> {"Relationship"};
 	template.Fields.Add(tempField);
 
 	tempField = 

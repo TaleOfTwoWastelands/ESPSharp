@@ -64,7 +64,7 @@
 			"MasterFiles",
 			"MasterFiles"
 			);
-	mastersField.XMLSubName = "MasterFile";
+	mastersField.XMLSubNames = new List<string> {"MasterFile"};
 	template.Fields.Add(mastersField);
 
 	//overrides

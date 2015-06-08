@@ -2,11 +2,10 @@
 <#@ output extension=".cs" #>
 <#	
 	RecordTemplate template = new RecordTemplate();
-	template.ClassName = "Faction";
+	template.ClassName = "Sound";
 
 	RecordField tempField;
 
-	//editorID
 	tempField = 
 		new RecordField(
 			"EDID",
@@ -17,64 +16,76 @@
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
-	//name
 	tempField = 
 		new RecordField(
-			"FULL",
+			"OBND",
+			typeof(ObjectBounds),
+			"ObjectBounds",
+			"ObjectBounds"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FNAM",
 			typeof(SimpleSubrecord<string>),
-			"Name",
-			"Name"
+			"Filename",
+			"Filename"
 			);
 	template.Fields.Add(tempField);
 
-	//relationships
-	tempField = 
-		new RecordField(
-			"XNAM",
-			typeof(List<Relationship>),
-			"Relationships",
-			"Relationships"
-			);
-	tempField.XMLSubNames = new List<string> {"Relationship"};
-	template.Fields.Add(tempField);
-
-	//Data
-	tempField = 
-		new RecordField(
-			"DATA",
-			typeof(FactionData),
-			"Data",
-			"Data"
-			);
-	template.Fields.Add(tempField);
-
-	//Unused
-	tempField = 
-		new RecordField(
-			"CNAM",
-			typeof(SimpleSubrecord<float>),
-			"Unused",
-			"Unused"
-			);
-	template.Fields.Add(tempField);
-
-	//Ranks
 	tempField = 
 		new RecordField(
 			"RNAM",
-			typeof(List<FactionRank>),
-			"Ranks",
-			"Ranks"
+			typeof(SimpleSubrecord<byte>),
+			"RandomChance",
+			"RandomChance"
 			);
-	tempField.XMLSubNames = new List<string> {"Rank"};
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new RecordField(
-			"WMI1",
-			typeof(RecordReference),
-			"Reputation",
-			"Reputation"
+			"SNDD",
+			typeof(SoundData),
+			"SoundData",
+			"SoundData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SNDX",
+			typeof(SoundDataShort),
+			"SoundDataShort",
+			"SoundDataShort"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ANAM",
+			typeof(SoundAttenuation),
+			"AttenuationCurve",
+			"AttenuationCurve"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"GNAM",
+			typeof(SimpleSubrecord<short>),
+			"ReverbAttenuationControl",
+			"ReverbAttenuationControl"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"HNAM",
+			typeof(SimpleSubrecord<int>),
+			"SoundPriority",
+			"SoundPriority"
 			);
 	template.Fields.Add(tempField);
 #>

@@ -62,10 +62,13 @@
     </Compile>
     <Compile Include="Enums\ActorValuesByte.cs" />
     <Compile Include="Enums\BodyPartIndex.cs" />
+    <Compile Include="Enums\EnvironmentType.cs" />
     <Compile Include="Enums\Flags\DecalDataFlags.cs" />
     <Compile Include="Enums\Flags\RaceFlags.cs" />
+    <Compile Include="Enums\Flags\SoundDataFlags.cs" />
     <Compile Include="Enums\HairColor.cs" />
     <Compile Include="Enums\HeadPartIndex.cs" />
+    <Compile Include="Enums\IsInterior.cs" />
     <Compile Include="Interfaces\ICloneable.cs" />
     <Compile Include="Enums\ActorValues.cs" />
     <Compile Include="Enums\DataSource.cs" />
@@ -107,6 +110,11 @@
     <Compile Include="Groups\TopicGroup.cs" />
     <Compile Include="Groups\WorldGroup.cs" />
     <Compile Include="Records\GameSetting.cs" />
+    <Compile Include="Records\GeneratedCode\AcousticSpace.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AcousticSpace.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\Class.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -156,6 +164,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Race.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\Sound.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sound.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GenericRecord.cs" />
     <Compile Include="Records\GeneratedCode\TextureSet.cs">
@@ -210,9 +223,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HeadModel.tt</DependentUpon>
     </Compile>
+    <None Include="Records\GeneratedCode\AcousticSpace.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AcousticSpace.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Race.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Race.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Sound.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Sound.cs</LastGenOutput>
     </None>
     <None Include="SubrecordCollections\GeneratedCode\FaceGenData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -293,6 +314,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Relationship.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\SoundAttenuation.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SoundAttenuation.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\SoundData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SoundData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\SoundDataShort.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SoundDataShort.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
     <Compile Include="Subrecords\SubMarker.cs" />
@@ -440,6 +476,18 @@
     <None Include="Subrecords\GeneratedCode\Relationship.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Relationship.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\SoundAttenuation.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SoundAttenuation.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\SoundData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SoundData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\SoundDataShort.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SoundDataShort.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\SubrecordTemplate.t4" />
   </ItemGroup>

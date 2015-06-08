@@ -225,6 +225,12 @@ namespace ESPSharp
                 case "RACE":
                     outRecord = new Race();
                     break;
+                case "SOUN":
+                    outRecord = new Sound();
+                    break;
+                case "ASPC":
+                    outRecord = new AcousticSpace();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;

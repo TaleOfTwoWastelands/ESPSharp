@@ -22,7 +22,7 @@ namespace ESPSharp
             {"EYES", "Eyes"},
             {"RACE", "Races"},
             {"SOUN", "Sounds"},
-            {"ASPC", "Audio Spaces"},
+            {"ASPC", "Acoustic Spaces"},
             {"MGEF", "Magic Effects"},
             {"SCPT", "Scripts"},
             {"LTEX", "Landscape Textures"},

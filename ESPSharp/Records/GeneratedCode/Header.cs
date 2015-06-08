@@ -138,11 +138,15 @@ namespace ESPSharp.Records
 			if (MasterFiles != null)		
 			{		
 				ele.TryPathTo("MasterFiles", true, out subEle);
+				List<string> xmlNames = new List<string>{"MasterFile"};
+				int i = 0;
 				foreach (var entry in MasterFiles)
 				{
-					XElement newEle = new XElement("MasterFile");
+					i = i % xmlNames.Count();
+					XElement newEle = new XElement(xmlNames[i]);
 					entry.WriteXML(newEle);
 					subEle.Add(newEle);
+					i++;
 				}
 			}
 			if (OverriddenRecords != null)		

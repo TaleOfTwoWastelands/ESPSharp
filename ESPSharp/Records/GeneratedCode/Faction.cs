@@ -117,11 +117,15 @@ namespace ESPSharp.Records
 			if (Relationships != null)		
 			{		
 				ele.TryPathTo("Relationships", true, out subEle);
+				List<string> xmlNames = new List<string>{"Relationship"};
+				int i = 0;
 				foreach (var entry in Relationships)
 				{
-					XElement newEle = new XElement("Relationship");
+					i = i % xmlNames.Count();
+					XElement newEle = new XElement(xmlNames[i]);
 					entry.WriteXML(newEle);
 					subEle.Add(newEle);
+					i++;
 				}
 			}
 			if (Data != null)		
@@ -137,11 +141,15 @@ namespace ESPSharp.Records
 			if (Ranks != null)		
 			{		
 				ele.TryPathTo("Ranks", true, out subEle);
+				List<string> xmlNames = new List<string>{"Rank"};
+				int i = 0;
 				foreach (var entry in Ranks)
 				{
-					XElement newEle = new XElement("Rank");
+					i = i % xmlNames.Count();
+					XElement newEle = new XElement(xmlNames[i]);
 					entry.WriteXML(newEle);
 					subEle.Add(newEle);
+					i++;
 				}
 			}
 			if (Reputation != null)		
