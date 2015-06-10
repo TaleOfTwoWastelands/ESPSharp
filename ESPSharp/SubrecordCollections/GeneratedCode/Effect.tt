@@ -1,0 +1,39 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "Effect";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"EFID",
+			typeof(RecordReference),
+			"BaseEffect",
+			"BaseEffect"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"EFIT",
+			typeof(EffectData),
+			"EffectData",
+			"EffectData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"CTDA",
+			typeof(List<Condition>),
+			"Conditions",
+			"Conditions"
+			);
+	tempField.XMLSubName = "Condition";
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

@@ -1,0 +1,33 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "HavokData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(MaterialType),
+			"MaterialType",
+			"MaterialType"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"Friction",
+			"Friction"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"Restitution",
+			"Restitution"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

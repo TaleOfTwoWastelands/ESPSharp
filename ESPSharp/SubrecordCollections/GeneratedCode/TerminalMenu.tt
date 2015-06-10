@@ -2,67 +2,75 @@
 <#@ output extension=".cs" #>
 <#	
 	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
-	template.ClassName = "EmbeddedScript";
+	template.ClassName = "TerminalMenu";
 
 	SubrecordCollectionField tempField;
 
 	tempField = 
 		new SubrecordCollectionField(
-			"SCHR",
-			typeof(ScriptData),
-			"Data",
-			"Data"
+			"ITXT",
+			typeof(SimpleSubrecord<string>),
+			"ItemText",
+			"ItemText"
 			);
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordCollectionField(
-			"SCDA",
-			typeof(SimpleSubrecord<byte[]>),
-			"CompiledScript",
-			"CompiledScript"
+			"RNAM",
+			typeof(SimpleSubrecord<string>),
+			"ResultText",
+			"ResultText"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"ANAM",
+			typeof(SimpleSubrecord<TerminalMenuFlags>),
+			"Flags",
+			"Flags"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"INAM",
+			typeof(RecordReference),
+			"DisplayNote",
+			"DisplayNote"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordCollectionField(
-			"SCTX",
-			typeof(SimpleSubrecord<char[]>),
-			"ScriptSource",
-			"ScriptSource"
+			"TNAM",
+			typeof(RecordReference),
+			"SubMenu",
+			"SubMenu"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordCollectionField(
-			"SLSD",
-			typeof(List<LocalVariable>),
-			"LocalVariables",
-			"LocalVariables"
+			"SCHR",
+			typeof(EmbeddedScript),
+			"Script",
+			"Script"
 			);
-	tempField.XMLSubName = "Variable";
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordCollectionField(
-			"SCRV",
-			typeof(List<SimpleSubrecord<uint>>),
-			"LocalReferences",
-			"LocalReferences"
+			"CTDA",
+			typeof(List<Condition>),
+			"Conditions",
+			"Conditions"
 			);
-	tempField.XMLSubName = "Reference";
 	template.Fields.Add(tempField);
-
-	tempField = 
-		new SubrecordCollectionField(
-			"SCRO",
-			typeof(List<RecordReference>),
-			"GlobalReferences",
-			"GlobalReferences"
-			);
-	tempField.XMLSubName = "Reference";
-	template.Fields.Add(tempField);
-
+	tempField.XMLSubName = "Condition";
 #>
 <#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

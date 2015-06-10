@@ -245,6 +245,24 @@ namespace ESPSharp
                 case "SCPT":
                     outRecord = new Script();
                     break;
+                case "LTEX":
+                    outRecord = new LandscapeTexture();
+                    break;
+                case "ENCH":
+                    outRecord = new ObjectEffect();
+                    break;
+                case "SPEL":
+                    outRecord = new ActorEffect();
+                    break;
+                case "ACTI":
+                    outRecord = new ESPSharp.Records.Activator();
+                    break;
+                case "TACT":
+                    outRecord = new TalkingActivator();
+                    break;
+                case "TERM":
+                    outRecord = new Terminal();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;

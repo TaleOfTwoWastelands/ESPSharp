@@ -1,0 +1,42 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "DestructableHeader";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(int),
+			"Health",
+			"Health"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"Count",
+			"Count"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(DestructableFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unknown",
+			"Unknown"
+			);
+	template.Fields.Add(tempField);
+	tempField.byteCount = 2;
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

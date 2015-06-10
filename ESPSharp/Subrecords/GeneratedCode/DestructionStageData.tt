@@ -1,0 +1,73 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "DestructionStageData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"HealthPercentage",
+			"HealthPercentage"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"Index",
+			"Index"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"Stage",
+			"Stage"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(DestructionStageFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(int),
+			"SelfDamagePerSecond",
+			"SelfDamagePerSecond"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"Explosion",
+			"Explosion"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"Debris",
+			"Debris"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(int),
+			"DebrisCount",
+			"DebrisCount"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

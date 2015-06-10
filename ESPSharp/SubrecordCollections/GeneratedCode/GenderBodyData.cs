@@ -55,9 +55,9 @@ namespace ESPSharp.SubrecordCollections
 						if (BodyModels == null)
 							BodyModels = new List<BodyModel>();
 
-						BodyModel temp = new BodyModel();
-						temp.ReadBinary(reader);
-						BodyModels.Add(temp);
+						BodyModel tempINDX = new BodyModel();
+						tempINDX.ReadBinary(reader);
+						BodyModels.Add(tempINDX);
 						break;
 				default:
 					return;

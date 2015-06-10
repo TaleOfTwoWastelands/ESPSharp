@@ -1,0 +1,69 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "LandscapeTexture";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ICON",
+			typeof(Icon),
+			"Icon",
+			"Icon"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TNAM",
+			typeof(RecordReference),
+			"TextureSet",
+			"TextureSet"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"HNAM",
+			typeof(HavokData),
+			"HavokData",
+			"HavokData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SNAM",
+			typeof(SimpleSubrecord<byte>),
+			"TextureSpecularExponent",
+			"TextureSpecularExponent"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"GNAM",
+			typeof(List<RecordReference>),
+			"Grasses",
+			"Grasses"
+			);
+	tempField.XMLSubNames = new List<string> {"Grass"};
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

@@ -26,8 +26,6 @@ namespace ESPSharp.SubrecordCollections
 		public EmbeddedScript()
 		{
 			Data = new ScriptData();
-			CompiledScript = new SimpleSubrecord<Byte[]>();
-			ScriptSource = new SimpleSubrecord<Char[]>();
 		}
 
 		public EmbeddedScript(ScriptData Data, SimpleSubrecord<Byte[]> CompiledScript, SimpleSubrecord<Char[]> ScriptSource, List<LocalVariable> LocalVariables, List<SimpleSubrecord<UInt32>> LocalReferences, List<RecordReference> GlobalReferences)
@@ -80,11 +78,17 @@ namespace ESPSharp.SubrecordCollections
 					case "SCDA":
 						if (readTags.Contains("SCDA"))
 							return;
+						if (CompiledScript == null)
+							CompiledScript = new SimpleSubrecord<Byte[]>();
+
 						CompiledScript.ReadBinary(reader);
 						break;
 					case "SCTX":
 						if (readTags.Contains("SCTX"))
 							return;
+						if (ScriptSource == null)
+							ScriptSource = new SimpleSubrecord<Char[]>();
+
 						ScriptSource.ReadBinary(reader);
 						break;
 					case "SLSD":

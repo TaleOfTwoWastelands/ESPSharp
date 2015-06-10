@@ -1,0 +1,46 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "DestructionStage";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"DSTD",
+			typeof(DestructionStageData),
+			"StageData",
+			"StageData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"DMDL",
+			typeof(SimpleSubrecord<string>),
+			"ModelFilename",
+			"ModelFilename"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"DMDT",
+			typeof(SimpleSubrecord<byte[]>),
+			"ModelTextureHash",
+			"ModelTextureHash"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"DSTF",
+			typeof(SubMarker),
+			"EndMarker",
+			"EndMarker"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

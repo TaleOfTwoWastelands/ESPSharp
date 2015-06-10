@@ -55,9 +55,9 @@ namespace ESPSharp.SubrecordCollections
 						if (HeadModels == null)
 							HeadModels = new List<HeadModel>();
 
-						HeadModel temp = new HeadModel();
-						temp.ReadBinary(reader);
-						HeadModels.Add(temp);
+						HeadModel tempINDX = new HeadModel();
+						tempINDX.ReadBinary(reader);
+						HeadModels.Add(tempINDX);
 						break;
 				default:
 					return;

@@ -1,0 +1,42 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "TerminalData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(HackingDifficulty),
+			"HackingDifficulty",
+			"HackingDifficulty"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TerminalFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TerminalServerType),
+			"ServerType",
+			"ServerType"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused",
+			"Unused"
+			);
+	template.Fields.Add(tempField);
+	tempField.byteCount = 1;
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

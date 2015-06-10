@@ -75,7 +75,7 @@ namespace ESPSharp.Subrecords
                 case "System.String":
                     string outString = new String(reader.ReadChars(size - 1));
                     reader.ReadByte();
-                    Value = (T)(object)outString;
+                    Value = (T)(object)(outString.Replace("\0", ""));
                     break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");

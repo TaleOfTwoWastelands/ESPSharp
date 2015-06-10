@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes\AlternateTexture.cs" />
+    <Compile Include="DataTypes\Comparison.cs" />
     <Compile Include="DataTypes\FormID.cs" />
+    <Compile Include="DataTypes\Function.cs" />
     <Compile Include="DataTypes\GeneratedCode\AlternateTexture.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -60,21 +62,52 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FormID.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataTypes\TypeStringArgData.cs" />
     <Compile Include="Enums\ActorValuesByte.cs" />
+    <Compile Include="Enums\Alignment.cs" />
+    <Compile Include="Enums\Axis.cs" />
+    <Compile Include="Enums\BodyLocation.cs" />
     <Compile Include="Enums\BodyPartIndex.cs" />
+    <Compile Include="Enums\ConditionComparisonType.cs" />
+    <Compile Include="Enums\CreatureType.cs" />
+    <Compile Include="Enums\CriticalStage.cs" />
+    <Compile Include="Enums\EffectType.cs" />
+    <Compile Include="Enums\EnchantType.cs" />
     <Compile Include="Enums\EnvironmentType.cs" />
+    <Compile Include="Enums\EquipmentType.cs" />
+    <Compile Include="Enums\Flags\ConditionTypeFlags.cs" />
     <Compile Include="Enums\Flags\DecalDataFlags.cs" />
+    <Compile Include="Enums\Flags\DestructableFlags.cs" />
+    <Compile Include="Enums\Flags\DestructionStageFlags.cs" />
+    <Compile Include="Enums\Flags\EnchantFlags.cs" />
     <Compile Include="Enums\Flags\LocalVariableFlag.cs" />
     <Compile Include="Enums\Flags\MagicEffectFlags.cs" />
     <Compile Include="Enums\Flags\RaceFlags.cs" />
     <Compile Include="Enums\Flags\ScriptFlags.cs" />
     <Compile Include="Enums\Flags\SoundDataFlags.cs" />
+    <Compile Include="Enums\Flags\SpellFlags.cs" />
+    <Compile Include="Enums\Flags\TerminalFlags.cs" />
+    <Compile Include="Enums\Flags\TerminalMenuFlags.cs" />
+    <Compile Include="Enums\FormType.cs" />
+    <Compile Include="Enums\FunctionTarget.cs" />
+    <Compile Include="Enums\FunctionType.cs" />
+    <Compile Include="Enums\Gender.cs" />
+    <Compile Include="Enums\HackingDifficulty.cs" />
     <Compile Include="Enums\HairColor.cs" />
     <Compile Include="Enums\HeadPartIndex.cs" />
     <Compile Include="Enums\IsInterior.cs" />
     <Compile Include="Enums\MagicEffectArchetype.cs" />
     <Compile Include="Enums\MagicSchool.cs" />
+    <Compile Include="Enums\MaterialType.cs" />
+    <Compile Include="Enums\MenuMode.cs" />
+    <Compile Include="Enums\MiscStat.cs" />
+    <Compile Include="Enums\PlayerAction.cs" />
     <Compile Include="Enums\ScriptType.cs" />
+    <Compile Include="Enums\SpellType.cs" />
+    <Compile Include="Enums\TerminalServerType.cs" />
+    <Compile Include="Enums\VATSAction.cs" />
+    <Compile Include="Enums\VATSValue.cs" />
+    <Compile Include="Enums\WeaponCategory.cs" />
     <Compile Include="Interfaces\ICloneable.cs" />
     <Compile Include="Enums\ActorValues.cs" />
     <Compile Include="Enums\DataSource.cs" />
@@ -121,6 +154,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AcousticSpace.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Activator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Activator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\ActorEffect.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ActorEffect.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\Class.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,6 +204,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HeadPart.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\LandscapeTexture.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LandscapeTexture.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\MagicEffect.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -170,6 +218,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MenuIcon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\ObjectEffect.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjectEffect.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\Race.cs">
       <AutoGen>True</AutoGen>
@@ -186,6 +239,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Sound.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\TalkingActivator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TalkingActivator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\Terminal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Terminal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GenericRecord.cs" />
     <Compile Include="Records\GeneratedCode\TextureSet.cs">
       <AutoGen>True</AutoGen>
@@ -193,12 +256,28 @@
       <DependentUpon>TextureSet.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\Script.cs" />
+    <Compile Include="Records\Terminal.cs" />
     <Compile Include="Subrecord.cs" />
     <Compile Include="SubrecordCollection.cs" />
     <Compile Include="SubrecordCollections\GeneratedCode\BodyModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BodyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\Destructable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Destructable.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\DestructionStage.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DestructionStage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\Effect.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Effect.tt</DependentUpon>
     </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\EmbeddedScript.cs">
       <AutoGen>True</AutoGen>
@@ -254,9 +333,25 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AcousticSpace.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Activator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Activator.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\ActorEffect.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ActorEffect.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\LandscapeTexture.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LandscapeTexture.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\MagicEffect.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MagicEffect.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\ObjectEffect.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ObjectEffect.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\Race.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -269,6 +364,26 @@
     <None Include="Records\GeneratedCode\Sound.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Sound.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\TalkingActivator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TalkingActivator.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Terminal.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Terminal.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\Destructable.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Destructable.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\DestructionStage.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DestructionStage.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\Effect.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Effect.cs</LastGenOutput>
     </None>
     <None Include="SubrecordCollections\GeneratedCode\EmbeddedScript.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -296,6 +411,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RaceHeadData.tt</DependentUpon>
     </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\TerminalMenu.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TerminalMenu.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\FormArray.cs" />
     <Compile Include="Subrecords\AlternateTextures.cs" />
     <Compile Include="Subrecords\GeneratedCode\Attributes.cs">
@@ -308,15 +428,45 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClassData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\Condition.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Condition.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\DecalData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DecalData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\DestructableHeader.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DestructableHeader.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\DestructionStageData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DestructionStageData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\EffectData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EffectData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\EnchantData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnchantData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\FactionData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FactionData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\HavokData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HavokData.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\LocalVariableData.cs">
       <AutoGen>True</AutoGen>
@@ -388,11 +538,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SoundDataShort.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\SpellData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpellData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\TerminalData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TerminalData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
     <Compile Include="Subrecords\SubMarker.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Zlib.cs" />
+    <None Include="SubrecordCollections\GeneratedCode\TerminalMenu.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TerminalMenu.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\TerminalData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TerminalData.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -495,13 +663,37 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ClassData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\Condition.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Condition.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\DecalData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DecalData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\DestructableHeader.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DestructableHeader.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\DestructionStageData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DestructionStageData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\EffectData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EffectData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\EnchantData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EnchantData.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\FactionData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FactionData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\HavokData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HavokData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\LocalVariableData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -558,6 +750,10 @@
     <None Include="Subrecords\GeneratedCode\SoundDataShort.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SoundDataShort.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\SpellData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SpellData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\SubrecordTemplate.t4" />
   </ItemGroup>
