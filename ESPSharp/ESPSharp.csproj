@@ -65,6 +65,7 @@
     <Compile Include="DataTypes\TypeStringArgData.cs" />
     <Compile Include="Enums\ActorValuesByte.cs" />
     <Compile Include="Enums\Alignment.cs" />
+    <Compile Include="Enums\AnimationSoundType.cs" />
     <Compile Include="Enums\Axis.cs" />
     <Compile Include="Enums\BodyLocation.cs" />
     <Compile Include="Enums\BodyPartIndex.cs" />
@@ -75,7 +76,12 @@
     <Compile Include="Enums\EnchantType.cs" />
     <Compile Include="Enums\EnvironmentType.cs" />
     <Compile Include="Enums\EquipmentType.cs" />
+    <Compile Include="Enums\Flags\ArmorFlags.cs" />
+    <Compile Include="Enums\Flags\BipedDataFlags.cs" />
+    <Compile Include="Enums\Flags\BodySlotFlags.cs" />
+    <Compile Include="Enums\Flags\BookFlags.cs" />
     <Compile Include="Enums\Flags\ConditionTypeFlags.cs" />
+    <Compile Include="Enums\Flags\ContainerFlags.cs" />
     <Compile Include="Enums\Flags\DecalDataFlags.cs" />
     <Compile Include="Enums\Flags\DestructableFlags.cs" />
     <Compile Include="Enums\Flags\DestructionStageFlags.cs" />
@@ -101,6 +107,7 @@
     <Compile Include="Enums\MaterialType.cs" />
     <Compile Include="Enums\MenuMode.cs" />
     <Compile Include="Enums\MiscStat.cs" />
+    <Compile Include="Enums\NoYes.cs" />
     <Compile Include="Enums\PlayerAction.cs" />
     <Compile Include="Enums\ScriptType.cs" />
     <Compile Include="Enums\SpellType.cs" />
@@ -163,6 +170,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ActorEffect.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\Armor.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Armor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\Book.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Book.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\Class.cs">
       <AutoGen>True</AutoGen>
@@ -257,6 +274,7 @@
     </Compile>
     <Compile Include="Records\Script.cs" />
     <Compile Include="Records\Terminal.cs" />
+    <Compile Include="RecordView.cs" />
     <Compile Include="Subrecord.cs" />
     <Compile Include="SubrecordCollection.cs" />
     <Compile Include="SubrecordCollections\GeneratedCode\BodyModel.cs">
@@ -341,6 +359,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ActorEffect.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Armor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Armor.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Book.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Book.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\LandscapeTexture.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LandscapeTexture.cs</LastGenOutput>
@@ -418,10 +444,35 @@
     </Compile>
     <Compile Include="Subrecords\FormArray.cs" />
     <Compile Include="Subrecords\AlternateTextures.cs" />
+    <Compile Include="Subrecords\GeneratedCode\AnimationSound.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AnimationSound.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\ArmorData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArmorData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\ArmorExtraData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArmorExtraData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\Attributes.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Attributes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\BipedData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BipedData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\BookData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BookData.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\ClassData.cs">
       <AutoGen>True</AutoGen>
@@ -552,10 +603,31 @@
     <Compile Include="Subrecords\SubMarker.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="Utility.cs" />
+    <Compile Include="GroupView.cs" />
     <Compile Include="Zlib.cs" />
     <None Include="SubrecordCollections\GeneratedCode\TerminalMenu.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TerminalMenu.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\AnimationSound.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AnimationSound.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\ArmorData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ArmorData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\ArmorExtraData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ArmorExtraData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\BipedData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BipedData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\BookData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BookData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\TerminalData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

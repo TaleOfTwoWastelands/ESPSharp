@@ -263,6 +263,12 @@ namespace ESPSharp
                 case "TERM":
                     outRecord = new Terminal();
                     break;
+                case "ARMO":
+                    outRecord = new Armor();
+                    break;
+                case "BOOK":
+                    outRecord = new Book();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;

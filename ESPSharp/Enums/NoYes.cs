@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ESPSharp.Enums
 {
-    public enum DataSource : byte
+    public enum NoYes : uint
     {
-        XML,
-        Binary,
-        Memory
+        No,
+        Yes
     }
 }

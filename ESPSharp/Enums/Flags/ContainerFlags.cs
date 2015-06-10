@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESPSharp.Enums
+namespace ESPSharp.Enums.Flags
 {
-    public enum DataSource : byte
+    [Flags]
+    public enum ContainerFlags : byte
     {
-        XML,
-        Binary,
-        Memory
+        Respawns = 0x02
     }
 }
