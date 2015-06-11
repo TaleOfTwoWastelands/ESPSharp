@@ -18,19 +18,22 @@ namespace ESPSharp.Subrecords
 	{
 		public FormID Sound { get; set; }
 		public Byte Chance { get; set; }
+		public Byte[] Unused { get; set; }
 		public AnimationSoundType Type { get; set; }
 
 		public AnimationSound()
 		{
 			Sound = new FormID();
 			Chance = new Byte();
+			Unused = new byte[3];
 			Type = new AnimationSoundType();
 		}
 
-		public AnimationSound(FormID Sound, Byte Chance, AnimationSoundType Type)
+		public AnimationSound(FormID Sound, Byte Chance, Byte[] Unused, AnimationSoundType Type)
 		{
 			this.Sound = Sound;
 			this.Chance = Chance;
+			this.Unused = Unused;
 			this.Type = Type;
 		}
 
@@ -38,6 +41,7 @@ namespace ESPSharp.Subrecords
 		{
 			Sound = copyObject.Sound.Clone();
 			Chance = copyObject.Chance;
+			Unused = (Byte[])copyObject.Unused.Clone();
 			Type = copyObject.Type;
 		}
 	
@@ -50,6 +54,7 @@ namespace ESPSharp.Subrecords
 				{
 					Sound.ReadBinary(subReader);
 					Chance = subReader.ReadByte();
+					Unused = subReader.ReadBytes(3);
 					Type = subReader.ReadEnum<AnimationSoundType>();
 				}
 				catch
@@ -63,7 +68,11 @@ namespace ESPSharp.Subrecords
 		{
 			Sound.WriteBinary(writer);
 			writer.Write(Chance);			
-			writer.Write((Int32)Type);
+			if (Unused == null)
+				writer.Write(new byte[3]);
+			else
+				writer.Write(Unused);
+			writer.Write((UInt32)Type);
 		}
 
 		protected override void WriteDataXML(XElement ele)
@@ -75,6 +84,9 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Chance", true, out subEle);
 			subEle.Value = Chance.ToString();
+
+			ele.TryPathTo("Unused", true, out subEle);
+			subEle.Value = Unused.ToHex();
 
 			ele.TryPathTo("Type", true, out subEle);
 			subEle.Value = Type.ToString();
@@ -92,6 +104,11 @@ namespace ESPSharp.Subrecords
 			if (ele.TryPathTo("Chance", false, out subEle))
 			{
 				Chance = subEle.ToByte();
+			}
+
+			if (ele.TryPathTo("Unused", false, out subEle))
+			{
+				Unused = subEle.ToBytes();
 			}
 
 			if (ele.TryPathTo("Type", false, out subEle))

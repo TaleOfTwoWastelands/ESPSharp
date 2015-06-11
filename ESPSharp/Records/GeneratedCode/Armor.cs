@@ -42,7 +42,7 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<String> RagdollConstraintTemplate { get; set; }
 		public RecordReference RepairList { get; set; }
 		public RecordReference BipedModelList { get; set; }
-		public EquipmentType EquipmentType { get; set; }
+		public SimpleSubrecord<EquipmentType> EquipmentType { get; set; }
 		public RecordReference PickupSound { get; set; }
 		public RecordReference DropSound { get; set; }
 		public ArmorData Data { get; set; }
@@ -223,8 +223,9 @@ namespace ESPSharp.Records
 						break;
 					case "ETYP":
 						if (EquipmentType == null)
-							EquipmentType = new EquipmentType();
+							EquipmentType = new SimpleSubrecord<EquipmentType>();
 
+						EquipmentType.ReadBinary(reader);
 						break;
 					case "YNAM":
 						if (PickupSound == null)
@@ -331,6 +332,7 @@ namespace ESPSharp.Records
 			if (BipedModelList != null)
 				BipedModelList.WriteBinary(writer);
 			if (EquipmentType != null)
+				EquipmentType.WriteBinary(writer);
 			if (PickupSound != null)
 				PickupSound.WriteBinary(writer);
 			if (DropSound != null)
@@ -489,6 +491,7 @@ namespace ESPSharp.Records
 			if (EquipmentType != null)		
 			{		
 				ele.TryPathTo("EquipmentType", true, out subEle);
+				EquipmentType.WriteXML(subEle);
 			}
 			if (PickupSound != null)		
 			{		
@@ -732,8 +735,9 @@ namespace ESPSharp.Records
 			if (ele.TryPathTo("EquipmentType", false, out subEle))
 			{
 				if (EquipmentType == null)
-					EquipmentType = new EquipmentType();
+					EquipmentType = new SimpleSubrecord<EquipmentType>();
 					
+				EquipmentType.ReadXML(subEle);
 			}
 			if (ele.TryPathTo("PickupSound", false, out subEle))
 			{

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ESPSharp.Enums
 {
-    public enum AnimationSoundType
+    public enum AnimationSoundType : uint
     {
         Walk = 17,
         Sneak = 18,

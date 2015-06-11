@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Xml.Linq;
 using System.Diagnostics;
 using ESPSharp.Enums;
@@ -17,10 +18,18 @@ namespace ESPSharp
         public ushort DateStamp { get; protected set; }
         public byte[] Unknown { get; protected set; }
 
-        public List<Record> Records = new List<Record>();
-        public List<Group> Subgroups = new List<Group>();
+        public HashSet<RecordView> ChildRecordViews = new HashSet<RecordView>();
+        public HashSet<RecordView> AllRecordViews = new HashSet<RecordView>();
+        public List<Group> Children = new List<Group>();
+        public List<Group> AllSubgroups = new List<Group>();
 
         protected GroupType type;
+
+        public delegate void GroupAddedHandler(Group group);
+        public event GroupAddedHandler GroupAdded;
+
+        public delegate void RecordViewAddedHandler(RecordView record);
+        public event RecordViewAddedHandler RecordViewAdded;
 
         public void WriteXML(string destinationFolder)
         {
@@ -37,35 +46,65 @@ namespace ESPSharp
 
             header.Save(Path.Combine(destinationFolder, "GroupHeader.metadata"));
 
-            foreach (var group in Subgroups)
+            foreach (var group in Children)
             {
                 string newDir = Path.Combine(destinationFolder, group.ToString());
                 Directory.CreateDirectory(newDir);
                 group.WriteXML(newDir);
             }
 
-            foreach (var record in Records)
-                record.WriteXML(Path.Combine(destinationFolder, record.ToString() + ".xml"));
+            foreach (var view in ChildRecordViews)
+                view.Record.WriteXML(Path.Combine(destinationFolder, view.Record.ToString() + ".xml"));
         }
 
-        public static Group ReadXML(string sourceFolder)
+        public void ReadXML(string sourceFolder)
         {
             XDocument doc = XDocument.Load(Path.Combine(sourceFolder, "GroupHeader.metadata"));
             XElement headerRoot = (XElement)doc.FirstNode;
-            Group outGroup = Group.CreateGroup(headerRoot.Element("Type").ToEnum<GroupType>());
 
-            outGroup.Tag = "GRUP";
-            outGroup.ReadTypeDataXML(headerRoot);
-            outGroup.DateStamp = headerRoot.Element("DateStamp").ToUInt16();
-            outGroup.Unknown = headerRoot.Element("Unknown").ToBytes();
+            Tag = "GRUP";
+            ReadTypeDataXML(headerRoot);
+            DateStamp = headerRoot.Element("DateStamp").ToUInt16();
+            Unknown = headerRoot.Element("Unknown").ToBytes();
 
             foreach (var folder in Directory.EnumerateDirectories(sourceFolder, "*.*", SearchOption.TopDirectoryOnly))
-                outGroup.Subgroups.Add(Group.ReadXML(folder));
+            {
+                Group newGroup = Group.CreateGroup(folder);
+
+                if (GroupAdded != null)
+                    GroupAdded(newGroup);
+
+                newGroup.GroupAdded += (g) =>
+                {
+                    AllSubgroups.Add(g);
+
+                    if (GroupAdded != null)
+                        GroupAdded(g);
+                };
+
+                newGroup.RecordViewAdded += (r) =>
+                {
+                    AllRecordViews.Add(r);
+
+                    if (RecordViewAdded != null)
+                        RecordViewAdded(r);
+                };
+
+                Children.Add(newGroup);
+                AllSubgroups.Add(newGroup);
+
+                newGroup.ReadXML(folder);
+            }
 
             foreach (var file in Directory.EnumerateFiles(sourceFolder, "*.xml", SearchOption.TopDirectoryOnly).Where(f => Path.GetFileName(f) != "GroupHeader.metadata"))
-                outGroup.Records.Add(Record.ReadXML(file));
+            {
+                RecordView newView = new RecordView(file);
+                ChildRecordViews.Add(newView);
+                AllRecordViews.Add(newView);
 
-            return outGroup;
+                if (RecordViewAdded != null)
+                    RecordViewAdded(newView);
+            }
         }
 
         public void WriteBinary(ESPWriter writer)
@@ -81,12 +120,12 @@ namespace ESPSharp
 
             long dataStart = writer.BaseStream.Position;
 
-            List<Group> groups = new List<Group>(Subgroups);
+            List<Group> groups = new List<Group>(Children);
 
-            foreach (var record in Records)
+            foreach (var view in ChildRecordViews)
             {
-                record.WriteBinary(writer);
-                Group recordGroup = groups.FirstOrDefault(g => g is ISubgroup && ((uint)(g as ISubgroup).GetRecordID()) == ((uint)record.FormID));
+                view.Record.WriteBinary(writer);
+                Group recordGroup = groups.FirstOrDefault(g => g is ISubgroup && ((uint)(g as ISubgroup).GetRecordID()) == ((uint)view.Record.FormID));
 
                 if (recordGroup != null)
                 {
@@ -105,7 +144,7 @@ namespace ESPSharp
             writer.BaseStream.Seek(dataEnd, SeekOrigin.Begin);
         }
 
-        public void ReadBinary(ESPReader reader)
+        public void ReadBinary(ESPReader reader, MemoryMappedFile source)
         {
             Tag = reader.ReadTag();
             Size = reader.ReadUInt32() - 24;
@@ -121,14 +160,39 @@ namespace ESPSharp
                 if (reader.PeekTag() == "GRUP")
                 {
                     Group newGroup = Group.CreateGroup(reader);
-                    newGroup.ReadBinary(reader);
-                    Subgroups.Add(newGroup);
+
+                    if (GroupAdded != null)
+                        GroupAdded(newGroup);
+
+                    newGroup.GroupAdded += (g) =>
+                    {
+                        AllSubgroups.Add(g);
+
+                        if (GroupAdded != null)
+                            GroupAdded(g);
+                    };
+
+                    newGroup.RecordViewAdded += (r) =>
+                    {
+                        AllRecordViews.Add(r);
+
+                        if (RecordViewAdded != null)
+                            RecordViewAdded(r);
+                    };
+
+                    Children.Add(newGroup);
+                    AllSubgroups.Add(newGroup);
+
+                    newGroup.ReadBinary(reader, source);
                 }
                 else
                 {
-                    Record newRecord = Record.CreateRecord(reader);
-                    newRecord.ReadBinary(reader);
-                    Records.Add(newRecord);
+                    RecordView newView = new RecordView(reader, source);
+                    ChildRecordViews.Add(newView);
+                    AllRecordViews.Add(newView);
+
+                    if (RecordViewAdded != null)
+                        RecordViewAdded(newView);
                 }
             }
         }
@@ -192,6 +256,15 @@ namespace ESPSharp
             Group outGroup = Group.CreateGroup((GroupType)reader.ReadUInt32());
 
             reader.BaseStream.Seek(-16, SeekOrigin.Current);
+
+            return outGroup;
+        }
+
+        public static Group CreateGroup(string sourceFolder)
+        {
+            XDocument doc = XDocument.Load(Path.Combine(sourceFolder, "GroupHeader.metadata"));
+            XElement headerRoot = (XElement)doc.FirstNode;
+            Group outGroup = Group.CreateGroup(headerRoot.Element("Type").ToEnum<GroupType>());
 
             return outGroup;
         }

@@ -24,6 +24,15 @@
 
 	tempField = 
 		new SubrecordField(
+			typeof(byte[]),
+			"Unused",
+			"Unused"
+			);
+	tempField.byteCount = 3;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
 			typeof(AnimationSoundType),
 			"Type",
 			"Type"
