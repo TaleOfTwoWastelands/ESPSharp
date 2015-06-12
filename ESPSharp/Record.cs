@@ -109,7 +109,7 @@ namespace ESPSharp
                 else
                 {
                     using (MemoryStream stream = new MemoryStream())
-                    using (ESPWriter subWriter = new ESPWriter(stream))
+                    using (ESPWriter subWriter = new ESPWriter(stream, writer.Master))
                     {
                         WriteData(subWriter);
                         stream.Position = 0;
@@ -147,7 +147,7 @@ namespace ESPSharp
                     corruptedBytes = outBytes;
                 else
                     using (MemoryStream stream = new MemoryStream(outBytes))
-                    using (ESPReader subReader = new ESPReader(stream))
+                    using (ESPReader subReader = new ESPReader(stream, reader.Master))
                         ReadData(subReader, stream.Length);
             }
             else

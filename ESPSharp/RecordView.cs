@@ -52,7 +52,7 @@ namespace ESPSharp
                     case DataSource.Binary:
 
                         using (MemoryMappedViewStream stream = file.CreateViewStream(Offset, Size, MemoryMappedFileAccess.Read))
-                        using (ESPReader reader = new ESPReader(stream))
+                        using (ESPReader reader = new ESPReader(stream, master))
                         {
                             outRecord = Record.CreateRecord(reader);
                             outRecord.ReadBinary(reader);

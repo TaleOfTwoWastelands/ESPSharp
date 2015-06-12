@@ -11,8 +11,12 @@ namespace ESPSharp
 {
     public class ESPReader : BinaryReader
     {
-        public ESPReader(Stream stream)
-            : base(stream, Utility.WesternEncoding) { }
+        public ElderScrollsPlugin Master { get; set; }
+        public ESPReader(Stream stream, ElderScrollsPlugin master)
+            : base(stream, Utility.WesternEncoding) 
+        {
+            Master = master;
+        }
 
         public string ReadTag()
         {

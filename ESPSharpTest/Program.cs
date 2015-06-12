@@ -44,7 +44,7 @@ class Program
         Console.WriteLine("Writing binary...");
 
         using (FileStream stream = new FileStream("NEW" + testFile, FileMode.Create, FileAccess.ReadWrite))
-        using (ESPWriter writer = new ESPWriter(stream))
+        using (ESPWriter writer = new ESPWriter(stream, pluggy))
         {
             pluggy.WriteBinary(writer);
         }

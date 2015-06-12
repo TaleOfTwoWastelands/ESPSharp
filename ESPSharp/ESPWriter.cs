@@ -10,8 +10,12 @@ namespace ESPSharp
 {
     public class ESPWriter : BinaryWriter
     {
-        public ESPWriter(Stream stream)
-            :base(stream, Utility.WesternEncoding){}
+        public ElderScrollsPlugin Master { get; set; }
+        public ESPWriter(Stream stream, ElderScrollsPlugin master)
+            :base(stream, Utility.WesternEncoding)
+        {
+            Master = master;
+        }
 
         public void WriteTag(string Tag)
         {

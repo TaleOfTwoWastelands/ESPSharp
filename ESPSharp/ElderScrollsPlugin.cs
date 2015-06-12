@@ -128,7 +128,7 @@ namespace ESPSharp
             mmf = MemoryMappedFile.CreateFromFile(file, FileMode.Open, Path.GetFileNameWithoutExtension(file), fi.Length, MemoryMappedFileAccess.Read);
 
             using (MemoryMappedViewStream stream = mmf.CreateViewStream(0, fi.Length, MemoryMappedFileAccess.Read))
-            using (ESPReader reader = new ESPReader(stream))
+            using (ESPReader reader = new ESPReader(stream, this))
             {
                 Header = new RecordView(reader, mmf);
 
