@@ -91,6 +91,7 @@ namespace ESPSharp.Subrecords
 				try
 				{
 <# foreach (var field in template.Fields) { #>
+<# if (field.implementReadData) { #>
 <# if (field.Type.IsEnum) { #>
 					<#= field.Name #> = subReader.ReadEnum<<#= GetFriendlyName(field.Type)#>>();
 <# } else if (field.Type == typeof(byte[])){ #>
@@ -99,6 +100,9 @@ namespace ESPSharp.Subrecords
 					<#= field.Name#>.ReadBinary(subReader);
 <# } else { #>
 					<#= field.Name #> = subReader.Read<#= GetFriendlyName(field.Type)#>();
+<# } #>
+<# } else {#>
+					Read<#= field.Name #>Binary(subReader);
 <# } #>
 <# } #>
 				}
@@ -112,6 +116,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 <# foreach (var field in template.Fields) { #>
+<# if (field.implementWriteData) { #>
 <# if (field.Type.IsEnum) { #>
 			writer.Write((<#= GetFriendlyName(Enum.GetUnderlyingType(field.Type))#>)<#= field.Name #>);
 <# } else if (field.Type == typeof(byte[])){ #>
@@ -124,6 +129,9 @@ namespace ESPSharp.Subrecords
 <# } else { #>
 			writer.Write(<#= field.Name #>);			
 <# } #>
+<# } else {#>
+			Write<#= field.Name #>Binary(writer);
+<# } #>
 <# } #>
 		}
 
@@ -131,6 +139,7 @@ namespace ESPSharp.Subrecords
 		{
 			XElement subEle;
 <# foreach (var field in template.Fields) { #>
+<# if (field.implementWriteXML) { #>
 
 			ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
 <# if (field.Type == typeof(byte[])){ #>
@@ -140,6 +149,9 @@ namespace ESPSharp.Subrecords
 <# } else { #>
 			subEle.Value = <#= field.Name#>.ToString();
 <# } #>
+<# } else {#>
+			Write<#= field.Name #>XML(ele, master);
+<# } #>
 <# } #>
 		}
 
@@ -147,6 +159,7 @@ namespace ESPSharp.Subrecords
 		{
 			XElement subEle;
 <# foreach (var field in template.Fields) { #>
+<# if (field.implementReadXML) { #>
 
 			if (ele.TryPathTo("<#= field.XMLPath#>", false, out subEle))
 			{
@@ -160,6 +173,9 @@ namespace ESPSharp.Subrecords
 				<#= field.Name #> = subEle.To<#= GetFriendlyName(field.Type)#>();
 <# } #>
 			}
+<# } else {#>
+			Read<#= field.Name #>XML(ele, master);
+<# } #>
 <# } #>
 		}
 
@@ -167,6 +183,23 @@ namespace ESPSharp.Subrecords
 		{
 			return new <#= template.ClassName #>(this);
 		}
+<# foreach (var field in template.Fields.Where(f => f.implementReadData == false)) {#>
+
+		partial void Read<#= field.Name #>Binary(ESPReader reader);
+<# } #>
+<# foreach (var field in template.Fields.Where(f => f.implementWriteData == false)) {#>
+
+		partial void Write<#= field.Name #>Binary(ESPWriter writer);
+<# } #>
+<# foreach (var field in template.Fields.Where(f => f.implementReadXML == false)) {#>
+
+		partial void Read<#= field.Name #>XML(XElement ele, ElderScrollsPlugin master);
+<# } #>
+<# foreach (var field in template.Fields.Where(f => f.implementWriteXML == false)) {#>
+
+		partial void Write<#= field.Name #>XML(XElement ele, ElderScrollsPlugin master);
+<# } #>
+
 	}
 }
 <#+

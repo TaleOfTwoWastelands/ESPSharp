@@ -86,9 +86,14 @@
     <Compile Include="Enums\Flags\DecalDataFlags.cs" />
     <Compile Include="Enums\Flags\DestructableFlags.cs" />
     <Compile Include="Enums\Flags\DestructionStageFlags.cs" />
+    <Compile Include="Enums\Flags\DoorFlags.cs" />
     <Compile Include="Enums\Flags\EnchantFlags.cs" />
+    <Compile Include="Enums\Flags\GrassFlags.cs" />
+    <Compile Include="Enums\Flags\IngredientFlags.cs" />
+    <Compile Include="Enums\Flags\LightFlags.cs" />
     <Compile Include="Enums\Flags\LocalVariableFlag.cs" />
     <Compile Include="Enums\Flags\MagicEffectFlags.cs" />
+    <Compile Include="Enums\Flags\PlaceableWaterFlags.cs" />
     <Compile Include="Enums\Flags\RaceFlags.cs" />
     <Compile Include="Enums\Flags\ScriptFlags.cs" />
     <Compile Include="Enums\Flags\SoundDataFlags.cs" />
@@ -109,10 +114,12 @@
     <Compile Include="Enums\MenuMode.cs" />
     <Compile Include="Enums\MiscStat.cs" />
     <Compile Include="Enums\NoYes.cs" />
+    <Compile Include="Enums\PassthroughSound.cs" />
     <Compile Include="Enums\PlayerAction.cs" />
     <Compile Include="Enums\ScriptType.cs" />
     <Compile Include="Enums\SpellType.cs" />
     <Compile Include="Enums\TerminalServerType.cs" />
+    <Compile Include="Enums\UnitFromWaterType.cs" />
     <Compile Include="Enums\VATSAction.cs" />
     <Compile Include="Enums\VATSValue.cs" />
     <Compile Include="Enums\WeaponCategory.cs" />
@@ -187,6 +194,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Class.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Container.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Container.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\Door.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Door.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\Eyes.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -207,6 +224,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GlobalVariable.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Grass.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Grass.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\Hair.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -222,10 +244,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HeadPart.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Ingredient.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ingredient.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\LandscapeTexture.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LandscapeTexture.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\Light.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Light.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\MagicEffect.cs">
       <AutoGen>True</AutoGen>
@@ -237,10 +269,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MenuIcon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\MiscItem.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MiscItem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\MoveableStatic.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MoveableStatic.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\ObjectEffect.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ObjectEffect.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\PlaceableWater.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PlaceableWater.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\Race.cs">
       <AutoGen>True</AutoGen>
@@ -256,6 +303,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Sound.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\Static.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Static.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\StaticCollection.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StaticCollection.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\TalkingActivator.cs">
       <AutoGen>True</AutoGen>
@@ -328,6 +385,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\InventoryItem.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryItem.tt</DependentUpon>
+    </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\LocalVariable.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -368,17 +430,49 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Book.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Container.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Container.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Door.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Door.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Grass.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Grass.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Ingredient.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Ingredient.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\LandscapeTexture.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LandscapeTexture.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Light.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Light.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\MagicEffect.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MagicEffect.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\MiscItem.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MiscItem.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\MoveableStatic.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MoveableStatic.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\ObjectEffect.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ObjectEffect.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\PlaceableWater.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PlaceableWater.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\Race.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -391,6 +485,14 @@
     <None Include="Records\GeneratedCode\Sound.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Sound.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Static.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Static.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\StaticCollection.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StaticCollection.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\TalkingActivator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -420,6 +522,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FaceGenData.cs</LastGenOutput>
     </None>
+    <None Include="SubrecordCollections\GeneratedCode\InventoryItem.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>InventoryItem.cs</LastGenOutput>
+    </None>
     <None Include="SubrecordCollections\GeneratedCode\LocalVariable.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LocalVariable.cs</LastGenOutput>
@@ -437,6 +543,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RaceHeadData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\StaticCollectionPart.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StaticCollectionPart.tt</DependentUpon>
     </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\TerminalMenu.cs">
       <AutoGen>True</AutoGen>
@@ -485,6 +596,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Condition.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\ContainerData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContainerData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\DecalData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -515,10 +631,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FactionData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\GrassData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GrassData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\HavokData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HavokData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\IngredientData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IngredientData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\InventoryItemData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryItemData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\InventoryItemExtraData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryItemExtraData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\LightData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LightData.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\LocalVariableData.cs">
       <AutoGen>True</AutoGen>
@@ -534,6 +675,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ObjectBounds.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\PlaceableWaterData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PlaceableWaterData.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\PluginHeader.cs">
       <AutoGen>True</AutoGen>
@@ -600,11 +746,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TerminalData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\ValueWeight.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ValueWeight.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\InventoryItemExtraData.cs" />
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
+    <Compile Include="Subrecords\StaticCollectionPartData.cs" />
     <Compile Include="Subrecords\SubMarker.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Zlib.cs" />
+    <None Include="SubrecordCollections\GeneratedCode\StaticCollectionPart.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StaticCollectionPart.cs</LastGenOutput>
+    </None>
     <None Include="SubrecordCollections\GeneratedCode\TerminalMenu.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TerminalMenu.cs</LastGenOutput>
@@ -629,9 +786,41 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BookData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\ContainerData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ContainerData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\GrassData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GrassData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\IngredientData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IngredientData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\InventoryItemData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>InventoryItemData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\InventoryItemExtraData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>InventoryItemExtraData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\LightData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LightData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\PlaceableWaterData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PlaceableWaterData.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\TerminalData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TerminalData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\ValueWeight.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ValueWeight.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

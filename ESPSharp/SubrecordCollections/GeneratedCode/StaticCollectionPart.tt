@@ -1,0 +1,30 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "StaticCollectionPart";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"ONAM",
+			typeof(RecordReference),
+			"Static",
+			"Static"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"DATA",
+			typeof(StaticCollectionPartData),
+			"Placements",
+			"Placements"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

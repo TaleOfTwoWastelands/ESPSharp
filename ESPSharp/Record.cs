@@ -271,6 +271,36 @@ namespace ESPSharp
                 case "BOOK":
                     outRecord = new Book();
                     break;
+                case "CONT":
+                    outRecord = new Container();
+                    break;
+                case "DOOR":
+                    outRecord = new Door();
+                    break;
+                case "INGR":
+                    outRecord = new Ingredient();
+                    break;
+                case "LIGH":
+                    outRecord = new Light();
+                    break;
+                case "MISC":
+                    outRecord = new MiscItem();
+                    break;
+                case "STAT":
+                    outRecord = new Static();
+                    break;
+                case "SCOL":
+                    outRecord = new StaticCollection();
+                    break;
+                case "MSTT":
+                    outRecord = new MoveableStatic();
+                    break;
+                case "PWAT":
+                    outRecord = new PlaceableWater();
+                    break;
+                case "GRAS":
+                    outRecord = new Grass();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;
