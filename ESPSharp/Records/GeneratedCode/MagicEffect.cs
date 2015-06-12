@@ -86,42 +86,42 @@ namespace ESPSharp.Records
 				Data.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (Name != null)		
 			{		
 				ele.TryPathTo("Name", true, out subEle);
-				Name.WriteXML(subEle);
+				Name.WriteXML(subEle, master);
 			}
 			if (Description != null)		
 			{		
 				ele.TryPathTo("Description", true, out subEle);
-				Description.WriteXML(subEle);
+				Description.WriteXML(subEle, master);
 			}
 			if (Icon != null)		
 			{		
 				ele.TryPathTo("Icon", true, out subEle);
-				Icon.WriteXML(subEle);
+				Icon.WriteXML(subEle, master);
 			}
 			if (Model != null)		
 			{		
 				ele.TryPathTo("Model", true, out subEle);
-				Model.WriteXML(subEle);
+				Model.WriteXML(subEle, master);
 			}
 			if (Data != null)		
 			{		
 				ele.TryPathTo("Data", true, out subEle);
-				Data.WriteXML(subEle);
+				Data.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -130,42 +130,42 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Name", false, out subEle))
 			{
 				if (Name == null)
 					Name = new SimpleSubrecord<String>();
 					
-				Name.ReadXML(subEle);
+				Name.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Description", false, out subEle))
 			{
 				if (Description == null)
 					Description = new SimpleSubrecord<String>();
 					
-				Description.ReadXML(subEle);
+				Description.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Icon", false, out subEle))
 			{
 				if (Icon == null)
 					Icon = new Icon();
 					
-				Icon.ReadXML(subEle);
+				Icon.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Model", false, out subEle))
 			{
 				if (Model == null)
 					Model = new Model();
 					
-				Model.ReadXML(subEle);
+				Model.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Data", false, out subEle))
 			{
 				if (Data == null)
 					Data = new MagicEffectData();
 					
-				Data.ReadXML(subEle);
+				Data.ReadXML(subEle, master);
 			}
 		}
 

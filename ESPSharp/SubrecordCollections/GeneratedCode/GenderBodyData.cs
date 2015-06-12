@@ -76,12 +76,12 @@ namespace ESPSharp.SubrecordCollections
 					item.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			ele.TryPathTo("Marker", true, out subEle);
-			Marker.WriteXML(subEle);
+			Marker.WriteXML(subEle, master);
 
 			if (BodyModels != null)		
 			{		
@@ -89,18 +89,18 @@ namespace ESPSharp.SubrecordCollections
 				foreach (var entry in BodyModels)
 				{
 					XElement newEle = new XElement("BodyModel");
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 				}
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
 			if (ele.TryPathTo("Marker", false, out subEle))
-				Marker.ReadXML(subEle);
+				Marker.ReadXML(subEle, master);
 
 			if (ele.TryPathTo("BodyModels", false, out subEle))
 			{
@@ -110,7 +110,7 @@ namespace ESPSharp.SubrecordCollections
 				foreach (XElement e in subEle.Elements())
 				{
 					BodyModel temp = new BodyModel();
-					temp.ReadXML(e);
+					temp.ReadXML(e, master);
 					BodyModels.Add(temp);
 				}
 			}

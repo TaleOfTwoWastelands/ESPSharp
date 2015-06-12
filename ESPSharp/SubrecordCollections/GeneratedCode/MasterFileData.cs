@@ -73,23 +73,23 @@ namespace ESPSharp.SubrecordCollections
 				FileSize.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (FileName != null)		
 			{		
 				ele.TryPathTo("FileName", true, out subEle);
-				FileName.WriteXML(subEle);
+				FileName.WriteXML(subEle, master);
 			}
 			if (FileSize != null)		
 			{		
 				ele.TryPathTo("FileSize", true, out subEle);
-				FileSize.WriteXML(subEle);
+				FileSize.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
@@ -98,14 +98,14 @@ namespace ESPSharp.SubrecordCollections
 				if (FileName == null)
 					FileName = new SimpleSubrecord<String>();
 					
-				FileName.ReadXML(subEle);
+				FileName.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("FileSize", false, out subEle))
 			{
 				if (FileSize == null)
 					FileSize = new SimpleSubrecord<UInt64>();
 					
-				FileSize.ReadXML(subEle);
+				FileSize.ReadXML(subEle, master);
 			}
 		}
 

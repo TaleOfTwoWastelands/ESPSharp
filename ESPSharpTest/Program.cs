@@ -11,7 +11,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        string testFile = "LonesomeRoad.esm";
+        string testFile = "FalloutNV.esm";
         string outDir = Path.GetFileNameWithoutExtension(testFile);
         ElderScrollsPlugin pluggy = new ElderScrollsPlugin();
 

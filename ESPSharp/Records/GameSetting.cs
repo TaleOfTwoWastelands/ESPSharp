@@ -38,17 +38,17 @@ namespace ESPSharp.Records
                 Value.WriteBinary(writer);
         }
 
-        partial void WriteValueXML(XElement ele)
+        partial void WriteValueXML(XElement ele, ElderScrollsPlugin master)
         {
             XElement subEle;
             if (Value != null)
             {
                 ele.TryPathTo("Value", true, out subEle);
-                Value.WriteXML(subEle);
+                Value.WriteXML(subEle, master);
             }
         }
 
-        partial void ReadValueXML(XElement ele)
+        partial void ReadValueXML(XElement ele, ElderScrollsPlugin master)
         {
             XElement subEle;
 
@@ -68,7 +68,7 @@ namespace ESPSharp.Records
                             break;
                     }
 
-                Value.ReadXML(subEle);
+                Value.ReadXML(subEle, master);
             }
         }
     }

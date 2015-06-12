@@ -91,19 +91,19 @@ namespace ESPSharp.SubrecordCollections
 					item.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (BaseEffect != null)		
 			{		
 				ele.TryPathTo("BaseEffect", true, out subEle);
-				BaseEffect.WriteXML(subEle);
+				BaseEffect.WriteXML(subEle, master);
 			}
 			if (EffectData != null)		
 			{		
 				ele.TryPathTo("EffectData", true, out subEle);
-				EffectData.WriteXML(subEle);
+				EffectData.WriteXML(subEle, master);
 			}
 			if (Conditions != null)		
 			{		
@@ -111,13 +111,13 @@ namespace ESPSharp.SubrecordCollections
 				foreach (var entry in Conditions)
 				{
 					XElement newEle = new XElement("Condition");
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 				}
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
@@ -126,14 +126,14 @@ namespace ESPSharp.SubrecordCollections
 				if (BaseEffect == null)
 					BaseEffect = new RecordReference();
 					
-				BaseEffect.ReadXML(subEle);
+				BaseEffect.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("EffectData", false, out subEle))
 			{
 				if (EffectData == null)
 					EffectData = new EffectData();
 					
-				EffectData.ReadXML(subEle);
+				EffectData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Conditions", false, out subEle))
 			{
@@ -143,7 +143,7 @@ namespace ESPSharp.SubrecordCollections
 				foreach (XElement e in subEle.Elements())
 				{
 					Condition temp = new Condition();
-					temp.ReadXML(e);
+					temp.ReadXML(e, master);
 					Conditions.Add(temp);
 				}
 			}

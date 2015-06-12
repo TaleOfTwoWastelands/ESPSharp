@@ -113,57 +113,57 @@ namespace ESPSharp.Records
 				SoundPriority.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (ObjectBounds != null)		
 			{		
 				ele.TryPathTo("ObjectBounds", true, out subEle);
-				ObjectBounds.WriteXML(subEle);
+				ObjectBounds.WriteXML(subEle, master);
 			}
 			if (Filename != null)		
 			{		
 				ele.TryPathTo("Filename", true, out subEle);
-				Filename.WriteXML(subEle);
+				Filename.WriteXML(subEle, master);
 			}
 			if (RandomChance != null)		
 			{		
 				ele.TryPathTo("RandomChance", true, out subEle);
-				RandomChance.WriteXML(subEle);
+				RandomChance.WriteXML(subEle, master);
 			}
 			if (SoundData != null)		
 			{		
 				ele.TryPathTo("SoundData", true, out subEle);
-				SoundData.WriteXML(subEle);
+				SoundData.WriteXML(subEle, master);
 			}
 			if (SoundDataShort != null)		
 			{		
 				ele.TryPathTo("SoundDataShort", true, out subEle);
-				SoundDataShort.WriteXML(subEle);
+				SoundDataShort.WriteXML(subEle, master);
 			}
 			if (AttenuationCurve != null)		
 			{		
 				ele.TryPathTo("AttenuationCurve", true, out subEle);
-				AttenuationCurve.WriteXML(subEle);
+				AttenuationCurve.WriteXML(subEle, master);
 			}
 			if (ReverbAttenuationControl != null)		
 			{		
 				ele.TryPathTo("ReverbAttenuationControl", true, out subEle);
-				ReverbAttenuationControl.WriteXML(subEle);
+				ReverbAttenuationControl.WriteXML(subEle, master);
 			}
 			if (SoundPriority != null)		
 			{		
 				ele.TryPathTo("SoundPriority", true, out subEle);
-				SoundPriority.WriteXML(subEle);
+				SoundPriority.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -172,63 +172,63 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ObjectBounds", false, out subEle))
 			{
 				if (ObjectBounds == null)
 					ObjectBounds = new ObjectBounds();
 					
-				ObjectBounds.ReadXML(subEle);
+				ObjectBounds.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Filename", false, out subEle))
 			{
 				if (Filename == null)
 					Filename = new SimpleSubrecord<String>();
 					
-				Filename.ReadXML(subEle);
+				Filename.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("RandomChance", false, out subEle))
 			{
 				if (RandomChance == null)
 					RandomChance = new SimpleSubrecord<Byte>();
 					
-				RandomChance.ReadXML(subEle);
+				RandomChance.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("SoundData", false, out subEle))
 			{
 				if (SoundData == null)
 					SoundData = new SoundData();
 					
-				SoundData.ReadXML(subEle);
+				SoundData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("SoundDataShort", false, out subEle))
 			{
 				if (SoundDataShort == null)
 					SoundDataShort = new SoundDataShort();
 					
-				SoundDataShort.ReadXML(subEle);
+				SoundDataShort.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("AttenuationCurve", false, out subEle))
 			{
 				if (AttenuationCurve == null)
 					AttenuationCurve = new SoundAttenuation();
 					
-				AttenuationCurve.ReadXML(subEle);
+				AttenuationCurve.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ReverbAttenuationControl", false, out subEle))
 			{
 				if (ReverbAttenuationControl == null)
 					ReverbAttenuationControl = new SimpleSubrecord<Int16>();
 					
-				ReverbAttenuationControl.ReadXML(subEle);
+				ReverbAttenuationControl.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("SoundPriority", false, out subEle))
 			{
 				if (SoundPriority == null)
 					SoundPriority = new SimpleSubrecord<Int32>();
 					
-				SoundPriority.ReadXML(subEle);
+				SoundPriority.ReadXML(subEle, master);
 			}
 		}
 

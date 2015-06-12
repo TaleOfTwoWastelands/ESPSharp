@@ -15,16 +15,16 @@ namespace ESPSharp
         protected int size;
 
 
-        public virtual void WriteXML(XElement root)
+        public virtual void WriteXML(XElement root, ElderScrollsPlugin master)
         {
             root.Add(new XAttribute("Tag", Tag));
-            WriteDataXML(root);
+            WriteDataXML(root, master);
         }
 
-        public virtual void ReadXML(XElement ele)
+        public virtual void ReadXML(XElement ele, ElderScrollsPlugin master)
         {
             Tag = ele.Attribute("Tag").Value;
-            ReadDataXML(ele);
+            ReadDataXML(ele, master);
         }
 
         public virtual void WriteBinary(ESPWriter writer)
@@ -55,7 +55,7 @@ namespace ESPSharp
 
         protected abstract void ReadData(ESPReader reader);
         protected abstract void WriteData(ESPWriter writer);
-        protected abstract void WriteDataXML(XElement ele);
-        protected abstract void ReadDataXML(XElement ele);
+        protected abstract void WriteDataXML(XElement ele, ElderScrollsPlugin master);
+        protected abstract void ReadDataXML(XElement ele, ElderScrollsPlugin master);
     }
 }

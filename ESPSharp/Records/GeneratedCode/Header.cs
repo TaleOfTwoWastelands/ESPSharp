@@ -107,33 +107,33 @@ namespace ESPSharp.Records
 				ScreenshotData.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (FileHeader != null)		
 			{		
 				ele.TryPathTo("FileHeader", true, out subEle);
-				FileHeader.WriteXML(subEle);
+				FileHeader.WriteXML(subEle, master);
 			}
 			if (OffsetData != null)		
 			{		
 				ele.TryPathTo("OffsetData", true, out subEle);
-				OffsetData.WriteXML(subEle);
+				OffsetData.WriteXML(subEle, master);
 			}
 			if (DeletionsData != null)		
 			{		
 				ele.TryPathTo("DeletionsData", true, out subEle);
-				DeletionsData.WriteXML(subEle);
+				DeletionsData.WriteXML(subEle, master);
 			}
 			if (Author != null)		
 			{		
 				ele.TryPathTo("Author", true, out subEle);
-				Author.WriteXML(subEle);
+				Author.WriteXML(subEle, master);
 			}
 			if (Description != null)		
 			{		
 				ele.TryPathTo("Description", true, out subEle);
-				Description.WriteXML(subEle);
+				Description.WriteXML(subEle, master);
 			}
 			if (MasterFiles != null)		
 			{		
@@ -144,7 +144,7 @@ namespace ESPSharp.Records
 				{
 					i = i % xmlNames.Count();
 					XElement newEle = new XElement(xmlNames[i]);
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 					i++;
 				}
@@ -152,16 +152,16 @@ namespace ESPSharp.Records
 			if (OverriddenRecords != null)		
 			{		
 				ele.TryPathTo("OverriddenRecords", true, out subEle);
-				OverriddenRecords.WriteXML(subEle);
+				OverriddenRecords.WriteXML(subEle, master);
 			}
 			if (ScreenshotData != null)		
 			{		
 				ele.TryPathTo("ScreenshotData", true, out subEle);
-				ScreenshotData.WriteXML(subEle);
+				ScreenshotData.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -170,35 +170,35 @@ namespace ESPSharp.Records
 				if (FileHeader == null)
 					FileHeader = new PluginHeader();
 					
-				FileHeader.ReadXML(subEle);
+				FileHeader.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("OffsetData", false, out subEle))
 			{
 				if (OffsetData == null)
 					OffsetData = new SimpleSubrecord<Byte[]>();
 					
-				OffsetData.ReadXML(subEle);
+				OffsetData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("DeletionsData", false, out subEle))
 			{
 				if (DeletionsData == null)
 					DeletionsData = new SimpleSubrecord<Byte[]>();
 					
-				DeletionsData.ReadXML(subEle);
+				DeletionsData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Author", false, out subEle))
 			{
 				if (Author == null)
 					Author = new SimpleSubrecord<String>();
 					
-				Author.ReadXML(subEle);
+				Author.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Description", false, out subEle))
 			{
 				if (Description == null)
 					Description = new SimpleSubrecord<String>();
 					
-				Description.ReadXML(subEle);
+				Description.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("MasterFiles", false, out subEle))
 			{
@@ -208,7 +208,7 @@ namespace ESPSharp.Records
 				foreach (XElement e in subEle.Elements())
 				{
 					MasterFileData tempMAST = new MasterFileData();
-					tempMAST.ReadXML(e);
+					tempMAST.ReadXML(e, master);
 					MasterFiles.Add(tempMAST);
 				}
 			}
@@ -217,14 +217,14 @@ namespace ESPSharp.Records
 				if (OverriddenRecords == null)
 					OverriddenRecords = new FormArray();
 					
-				OverriddenRecords.ReadXML(subEle);
+				OverriddenRecords.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ScreenshotData", false, out subEle))
 			{
 				if (ScreenshotData == null)
 					ScreenshotData = new SimpleSubrecord<Byte[]>();
 					
-				ScreenshotData.ReadXML(subEle);
+				ScreenshotData.ReadXML(subEle, master);
 			}
 		}
 

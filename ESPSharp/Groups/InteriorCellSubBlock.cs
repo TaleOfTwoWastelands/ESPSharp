@@ -18,12 +18,12 @@ namespace ESPSharp
             return "Sub-Block " + Index;
         }
 
-        public override XElement WriteTypeDataXML()
+        public override XElement WriteTypeDataXML(ElderScrollsPlugin master)
         {
             return new XElement("Sub-Block", Index);
         }
 
-        public override void ReadTypeDataXML(XElement element)
+        public override void ReadTypeDataXML(XElement element, ElderScrollsPlugin master)
         {
             Index = element.Element("Sub-Block").ToInt16();
         }

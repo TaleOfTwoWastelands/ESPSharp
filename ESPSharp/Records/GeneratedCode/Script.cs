@@ -50,22 +50,22 @@ namespace ESPSharp.Records
 				Data.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (Data != null)		
 			{		
 				ele.TryPathTo("Data", true, out subEle);
-				Data.WriteXML(subEle);
+				Data.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -74,14 +74,14 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Data", false, out subEle))
 			{
 				if (Data == null)
 					Data = new EmbeddedScript();
 					
-				Data.ReadXML(subEle);
+				Data.ReadXML(subEle, master);
 			}
 		}
 

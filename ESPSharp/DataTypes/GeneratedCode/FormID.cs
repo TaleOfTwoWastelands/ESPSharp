@@ -50,19 +50,19 @@ namespace ESPSharp.DataTypes
 			writer.Write(RawValue);			
 		}
 
-		public void WriteXML(XElement ele)
+		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
-			WriteDataXML(ele);
+			WriteDataXML(ele, master);
 		}
 
-		public void ReadXML(XElement ele)
+		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
-			ReadDataXML(ele);
+			ReadDataXML(ele, master);
 		}
 
-		partial void ReadDataXML(XElement ele);
+		partial void ReadDataXML(XElement ele, ElderScrollsPlugin master);
 
-		partial void WriteDataXML(XElement ele);
+		partial void WriteDataXML(XElement ele, ElderScrollsPlugin master);
 
 		public FormID Clone()
 		{

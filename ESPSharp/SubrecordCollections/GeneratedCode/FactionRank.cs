@@ -101,33 +101,33 @@ namespace ESPSharp.SubrecordCollections
 				Insignia.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (Rank != null)		
 			{		
 				ele.TryPathTo("Rank", true, out subEle);
-				Rank.WriteXML(subEle);
+				Rank.WriteXML(subEle, master);
 			}
 			if (MaleTitle != null)		
 			{		
 				ele.TryPathTo("Title/Male", true, out subEle);
-				MaleTitle.WriteXML(subEle);
+				MaleTitle.WriteXML(subEle, master);
 			}
 			if (FemaleTitle != null)		
 			{		
 				ele.TryPathTo("Title/Female", true, out subEle);
-				FemaleTitle.WriteXML(subEle);
+				FemaleTitle.WriteXML(subEle, master);
 			}
 			if (Insignia != null)		
 			{		
 				ele.TryPathTo("Insignia", true, out subEle);
-				Insignia.WriteXML(subEle);
+				Insignia.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
@@ -136,28 +136,28 @@ namespace ESPSharp.SubrecordCollections
 				if (Rank == null)
 					Rank = new SimpleSubrecord<Int32>();
 					
-				Rank.ReadXML(subEle);
+				Rank.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Title/Male", false, out subEle))
 			{
 				if (MaleTitle == null)
 					MaleTitle = new SimpleSubrecord<String>();
 					
-				MaleTitle.ReadXML(subEle);
+				MaleTitle.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Title/Female", false, out subEle))
 			{
 				if (FemaleTitle == null)
 					FemaleTitle = new SimpleSubrecord<String>();
 					
-				FemaleTitle.ReadXML(subEle);
+				FemaleTitle.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Insignia", false, out subEle))
 			{
 				if (Insignia == null)
 					Insignia = new SimpleSubrecord<String>();
 					
-				Insignia.ReadXML(subEle);
+				Insignia.ReadXML(subEle, master);
 			}
 		}
 

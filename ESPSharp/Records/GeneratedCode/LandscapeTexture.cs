@@ -89,33 +89,33 @@ namespace ESPSharp.Records
 					item.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (Icon != null)		
 			{		
 				ele.TryPathTo("Icon", true, out subEle);
-				Icon.WriteXML(subEle);
+				Icon.WriteXML(subEle, master);
 			}
 			if (TextureSet != null)		
 			{		
 				ele.TryPathTo("TextureSet", true, out subEle);
-				TextureSet.WriteXML(subEle);
+				TextureSet.WriteXML(subEle, master);
 			}
 			if (HavokData != null)		
 			{		
 				ele.TryPathTo("HavokData", true, out subEle);
-				HavokData.WriteXML(subEle);
+				HavokData.WriteXML(subEle, master);
 			}
 			if (TextureSpecularExponent != null)		
 			{		
 				ele.TryPathTo("TextureSpecularExponent", true, out subEle);
-				TextureSpecularExponent.WriteXML(subEle);
+				TextureSpecularExponent.WriteXML(subEle, master);
 			}
 			if (Grasses != null)		
 			{		
@@ -126,14 +126,14 @@ namespace ESPSharp.Records
 				{
 					i = i % xmlNames.Count();
 					XElement newEle = new XElement(xmlNames[i]);
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 					i++;
 				}
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -142,35 +142,35 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Icon", false, out subEle))
 			{
 				if (Icon == null)
 					Icon = new Icon();
 					
-				Icon.ReadXML(subEle);
+				Icon.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("TextureSet", false, out subEle))
 			{
 				if (TextureSet == null)
 					TextureSet = new RecordReference();
 					
-				TextureSet.ReadXML(subEle);
+				TextureSet.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("HavokData", false, out subEle))
 			{
 				if (HavokData == null)
 					HavokData = new HavokData();
 					
-				HavokData.ReadXML(subEle);
+				HavokData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("TextureSpecularExponent", false, out subEle))
 			{
 				if (TextureSpecularExponent == null)
 					TextureSpecularExponent = new SimpleSubrecord<Byte>();
 					
-				TextureSpecularExponent.ReadXML(subEle);
+				TextureSpecularExponent.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Grasses", false, out subEle))
 			{
@@ -180,7 +180,7 @@ namespace ESPSharp.Records
 				foreach (XElement e in subEle.Elements())
 				{
 					RecordReference tempGNAM = new RecordReference();
-					tempGNAM.ReadXML(e);
+					tempGNAM.ReadXML(e, master);
 					Grasses.Add(tempGNAM);
 				}
 			}

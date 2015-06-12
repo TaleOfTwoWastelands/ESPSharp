@@ -31,7 +31,7 @@ namespace ESPSharp
         public delegate void RecordViewAddedHandler(RecordView record);
         public event RecordViewAddedHandler RecordViewAdded;
 
-        public void WriteXML(string destinationFolder)
+        public void WriteXML(string destinationFolder, ElderScrollsPlugin master)
         {
             XDocument header = new XDocument();
             XElement root = new XElement("GroupInfo");
@@ -39,7 +39,7 @@ namespace ESPSharp
 
             root.Add(
                 new XElement("Type", type.ToString()),
-                WriteTypeDataXML(),
+                WriteTypeDataXML(master),
                 new XElement("DateStamp", DateStamp),
                 new XElement("Unknown", Unknown.ToBase64())
                 );
@@ -50,20 +50,20 @@ namespace ESPSharp
             {
                 string newDir = Path.Combine(destinationFolder, group.ToString());
                 Directory.CreateDirectory(newDir);
-                group.WriteXML(newDir);
+                group.WriteXML(newDir, master);
             }
 
             foreach (var view in ChildRecordViews)
-                view.Record.WriteXML(Path.Combine(destinationFolder, view.Record.ToString() + ".xml"));
+                view.Record.WriteXML(Path.Combine(destinationFolder, view.Record.ToString() + ".xml"), master);
         }
 
-        public void ReadXML(string sourceFolder)
+        public void ReadXML(string sourceFolder, ElderScrollsPlugin master)
         {
             XDocument doc = XDocument.Load(Path.Combine(sourceFolder, "GroupHeader.metadata"));
             XElement headerRoot = (XElement)doc.FirstNode;
 
             Tag = "GRUP";
-            ReadTypeDataXML(headerRoot);
+            ReadTypeDataXML(headerRoot, master);
             DateStamp = headerRoot.Element("DateStamp").ToUInt16();
             Unknown = headerRoot.Element("Unknown").ToBytes();
 
@@ -93,7 +93,7 @@ namespace ESPSharp
                 Children.Add(newGroup);
                 AllSubgroups.Add(newGroup);
 
-                newGroup.ReadXML(folder);
+                newGroup.ReadXML(folder, master);
             }
 
             foreach (var file in Directory.EnumerateFiles(sourceFolder, "*.xml", SearchOption.TopDirectoryOnly).Where(f => Path.GetFileName(f) != "GroupHeader.metadata"))
@@ -107,7 +107,7 @@ namespace ESPSharp
             }
         }
 
-        public void WriteBinary(ESPWriter writer)
+        public void WriteBinary(ESPWriter writer, ElderScrollsPlugin master)
         {
             writer.Write(Utility.DesanitizeTag(Tag).ToCharArray());
 
@@ -130,12 +130,12 @@ namespace ESPSharp
                 if (recordGroup != null)
                 {
                     groups.Remove(recordGroup);
-                    recordGroup.WriteBinary(writer);
+                    recordGroup.WriteBinary(writer, master);
                 }
             }
 
             foreach (var group in groups)
-                group.WriteBinary(writer);
+                group.WriteBinary(writer, master);
 
             long dataEnd = writer.BaseStream.Position;
 
@@ -199,8 +199,8 @@ namespace ESPSharp
 
         public abstract void WriteTypeData(ESPWriter writer);
         public abstract void ReadTypeData(ESPReader reader);
-        public abstract XElement WriteTypeDataXML();
-        public abstract void ReadTypeDataXML(XElement element);
+        public abstract XElement WriteTypeDataXML(ElderScrollsPlugin master);
+        public abstract void ReadTypeDataXML(XElement element, ElderScrollsPlugin master);
 
         public static Group CreateGroup(GroupType type)
         {

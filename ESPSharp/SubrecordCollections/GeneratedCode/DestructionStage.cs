@@ -101,33 +101,33 @@ namespace ESPSharp.SubrecordCollections
 				EndMarker.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (StageData != null)		
 			{		
 				ele.TryPathTo("StageData", true, out subEle);
-				StageData.WriteXML(subEle);
+				StageData.WriteXML(subEle, master);
 			}
 			if (ModelFilename != null)		
 			{		
 				ele.TryPathTo("ModelFilename", true, out subEle);
-				ModelFilename.WriteXML(subEle);
+				ModelFilename.WriteXML(subEle, master);
 			}
 			if (ModelTextureHash != null)		
 			{		
 				ele.TryPathTo("ModelTextureHash", true, out subEle);
-				ModelTextureHash.WriteXML(subEle);
+				ModelTextureHash.WriteXML(subEle, master);
 			}
 			if (EndMarker != null)		
 			{		
 				ele.TryPathTo("EndMarker", true, out subEle);
-				EndMarker.WriteXML(subEle);
+				EndMarker.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
@@ -136,28 +136,28 @@ namespace ESPSharp.SubrecordCollections
 				if (StageData == null)
 					StageData = new DestructionStageData();
 					
-				StageData.ReadXML(subEle);
+				StageData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ModelFilename", false, out subEle))
 			{
 				if (ModelFilename == null)
 					ModelFilename = new SimpleSubrecord<String>();
 					
-				ModelFilename.ReadXML(subEle);
+				ModelFilename.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ModelTextureHash", false, out subEle))
 			{
 				if (ModelTextureHash == null)
 					ModelTextureHash = new SimpleSubrecord<Byte[]>();
 					
-				ModelTextureHash.ReadXML(subEle);
+				ModelTextureHash.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("EndMarker", false, out subEle))
 			{
 				if (EndMarker == null)
 					EndMarker = new SubMarker();
 					
-				EndMarker.ReadXML(subEle);
+				EndMarker.ReadXML(subEle, master);
 			}
 		}
 

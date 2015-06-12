@@ -31,14 +31,26 @@ namespace ESPSharp.DataTypes
             return RawValue.ToString("X8");
         }
 
-        partial void WriteDataXML(XElement ele)
+        partial void WriteDataXML(XElement ele, ElderScrollsPlugin master)
         {
-            ele.Value = ToString();
+            ele.Add(new XAttribute("ID", this));
+
+            if (RawValue != 0)
+                try
+                {
+                    ele.Value = new LoadOrderFormID(this, master).GetOriginalView().Record.ToString();
+                }
+                catch
+                {
+                    ele.Value = "UnfoundReference";
+                }
+            else
+                ele.Value = "NullReference";
         }
 
-        partial void ReadDataXML(XElement ele)
+        partial void ReadDataXML(XElement ele, ElderScrollsPlugin master)
         {
-            RawValue = uint.Parse(ele.Value, System.Globalization.NumberStyles.HexNumber);
+            RawValue = uint.Parse(ele.Attribute("ID").Value, System.Globalization.NumberStyles.HexNumber);
         }
     }
 }

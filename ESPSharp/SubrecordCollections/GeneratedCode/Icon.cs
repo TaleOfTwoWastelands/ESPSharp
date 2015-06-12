@@ -75,23 +75,23 @@ namespace ESPSharp.SubrecordCollections
 				SmallIcon.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (LargeIcon != null)		
 			{		
 				ele.TryPathTo("LargeIcon", true, out subEle);
-				LargeIcon.WriteXML(subEle);
+				LargeIcon.WriteXML(subEle, master);
 			}
 			if (SmallIcon != null)		
 			{		
 				ele.TryPathTo("SmallIcon", true, out subEle);
-				SmallIcon.WriteXML(subEle);
+				SmallIcon.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
@@ -100,14 +100,14 @@ namespace ESPSharp.SubrecordCollections
 				if (LargeIcon == null)
 					LargeIcon = new SimpleSubrecord<String>();
 					
-				LargeIcon.ReadXML(subEle);
+				LargeIcon.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("SmallIcon", false, out subEle))
 			{
 				if (SmallIcon == null)
 					SmallIcon = new SimpleSubrecord<String>();
 					
-				SmallIcon.ReadXML(subEle);
+				SmallIcon.ReadXML(subEle, master);
 			}
 		}
 

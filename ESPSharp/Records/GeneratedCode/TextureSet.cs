@@ -122,62 +122,62 @@ namespace ESPSharp.Records
 				TextureSetFlags.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (ObjectBounds != null)		
 			{		
 				ele.TryPathTo("ObjectBounds", true, out subEle);
-				ObjectBounds.WriteXML(subEle);
+				ObjectBounds.WriteXML(subEle, master);
 			}
 			if (BaseImage_Transparency != null)		
 			{		
 				ele.TryPathTo("BaseImage_Transparency", true, out subEle);
-				BaseImage_Transparency.WriteXML(subEle);
+				BaseImage_Transparency.WriteXML(subEle, master);
 			}
 			if (NormalMap_Specular != null)		
 			{		
 				ele.TryPathTo("NormalMap_Specular", true, out subEle);
-				NormalMap_Specular.WriteXML(subEle);
+				NormalMap_Specular.WriteXML(subEle, master);
 			}
 			if (EnvironmentMapMask != null)		
 			{		
 				ele.TryPathTo("EnvironmentMapMask", true, out subEle);
-				EnvironmentMapMask.WriteXML(subEle);
+				EnvironmentMapMask.WriteXML(subEle, master);
 			}
 			if (GlowMap != null)		
 			{		
 				ele.TryPathTo("GlowMap", true, out subEle);
-				GlowMap.WriteXML(subEle);
+				GlowMap.WriteXML(subEle, master);
 			}
 			if (ParallaxMap != null)		
 			{		
 				ele.TryPathTo("ParallaxMap", true, out subEle);
-				ParallaxMap.WriteXML(subEle);
+				ParallaxMap.WriteXML(subEle, master);
 			}
 			if (EnvironmentMap != null)		
 			{		
 				ele.TryPathTo("EnvironmentMap", true, out subEle);
-				EnvironmentMap.WriteXML(subEle);
+				EnvironmentMap.WriteXML(subEle, master);
 			}
 			if (DecalData != null)		
 			{		
 				ele.TryPathTo("DecalData", true, out subEle);
-				DecalData.WriteXML(subEle);
+				DecalData.WriteXML(subEle, master);
 			}
 			if (TextureSetFlags != null)		
 			{		
 				ele.TryPathTo("TextureSetFlags", true, out subEle);
-				TextureSetFlags.WriteXML(subEle);
+				TextureSetFlags.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -186,70 +186,70 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ObjectBounds", false, out subEle))
 			{
 				if (ObjectBounds == null)
 					ObjectBounds = new ObjectBounds();
 					
-				ObjectBounds.ReadXML(subEle);
+				ObjectBounds.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("BaseImage_Transparency", false, out subEle))
 			{
 				if (BaseImage_Transparency == null)
 					BaseImage_Transparency = new SimpleSubrecord<String>();
 					
-				BaseImage_Transparency.ReadXML(subEle);
+				BaseImage_Transparency.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("NormalMap_Specular", false, out subEle))
 			{
 				if (NormalMap_Specular == null)
 					NormalMap_Specular = new SimpleSubrecord<String>();
 					
-				NormalMap_Specular.ReadXML(subEle);
+				NormalMap_Specular.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("EnvironmentMapMask", false, out subEle))
 			{
 				if (EnvironmentMapMask == null)
 					EnvironmentMapMask = new SimpleSubrecord<String>();
 					
-				EnvironmentMapMask.ReadXML(subEle);
+				EnvironmentMapMask.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("GlowMap", false, out subEle))
 			{
 				if (GlowMap == null)
 					GlowMap = new SimpleSubrecord<String>();
 					
-				GlowMap.ReadXML(subEle);
+				GlowMap.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ParallaxMap", false, out subEle))
 			{
 				if (ParallaxMap == null)
 					ParallaxMap = new SimpleSubrecord<String>();
 					
-				ParallaxMap.ReadXML(subEle);
+				ParallaxMap.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("EnvironmentMap", false, out subEle))
 			{
 				if (EnvironmentMap == null)
 					EnvironmentMap = new SimpleSubrecord<String>();
 					
-				EnvironmentMap.ReadXML(subEle);
+				EnvironmentMap.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("DecalData", false, out subEle))
 			{
 				if (DecalData == null)
 					DecalData = new DecalData();
 					
-				DecalData.ReadXML(subEle);
+				DecalData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("TextureSetFlags", false, out subEle))
 			{
 				if (TextureSetFlags == null)
 					TextureSetFlags = new SimpleSubrecord<TXSTFlags>();
 					
-				TextureSetFlags.ReadXML(subEle);
+				TextureSetFlags.ReadXML(subEle, master);
 			}
 		}
 

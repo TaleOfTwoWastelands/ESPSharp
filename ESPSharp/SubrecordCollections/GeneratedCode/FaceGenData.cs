@@ -102,69 +102,69 @@ namespace ESPSharp.SubrecordCollections
 				Unknown.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			ele.TryPathTo("Marker", true, out subEle);
-			Marker.WriteXML(subEle);
+			Marker.WriteXML(subEle, master);
 
 			if (GeometrySymmetric != null)		
 			{		
 				ele.TryPathTo("Geometry/Symmetric", true, out subEle);
-				GeometrySymmetric.WriteXML(subEle);
+				GeometrySymmetric.WriteXML(subEle, master);
 			}
 			if (GeometryAsymmetric != null)		
 			{		
 				ele.TryPathTo("Geometry/Asymmetric", true, out subEle);
-				GeometryAsymmetric.WriteXML(subEle);
+				GeometryAsymmetric.WriteXML(subEle, master);
 			}
 			if (TextureSymmetric != null)		
 			{		
 				ele.TryPathTo("Texture/Symmetric", true, out subEle);
-				TextureSymmetric.WriteXML(subEle);
+				TextureSymmetric.WriteXML(subEle, master);
 			}
 			if (Unknown != null)		
 			{		
 				ele.TryPathTo("Unknown", true, out subEle);
-				Unknown.WriteXML(subEle);
+				Unknown.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
 			if (ele.TryPathTo("Marker", false, out subEle))
-				Marker.ReadXML(subEle);
+				Marker.ReadXML(subEle, master);
 
 			if (ele.TryPathTo("Geometry/Symmetric", false, out subEle))
 			{
 				if (GeometrySymmetric == null)
 					GeometrySymmetric = new SimpleSubrecord<Byte[]>();
 					
-				GeometrySymmetric.ReadXML(subEle);
+				GeometrySymmetric.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Geometry/Asymmetric", false, out subEle))
 			{
 				if (GeometryAsymmetric == null)
 					GeometryAsymmetric = new SimpleSubrecord<Byte[]>();
 					
-				GeometryAsymmetric.ReadXML(subEle);
+				GeometryAsymmetric.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Texture/Symmetric", false, out subEle))
 			{
 				if (TextureSymmetric == null)
 					TextureSymmetric = new SimpleSubrecord<Byte[]>();
 					
-				TextureSymmetric.ReadXML(subEle);
+				TextureSymmetric.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Unknown", false, out subEle))
 			{
 				if (Unknown == null)
 					Unknown = new SimpleSubrecord<Byte[]>();
 					
-				Unknown.ReadXML(subEle);
+				Unknown.ReadXML(subEle, master);
 			}
 		}
 

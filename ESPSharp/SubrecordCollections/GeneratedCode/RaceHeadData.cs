@@ -80,45 +80,45 @@ namespace ESPSharp.SubrecordCollections
 				Female.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			ele.TryPathTo("Marker", true, out subEle);
-			Marker.WriteXML(subEle);
+			Marker.WriteXML(subEle, master);
 
 			if (Male != null)		
 			{		
 				ele.TryPathTo("Male", true, out subEle);
-				Male.WriteXML(subEle);
+				Male.WriteXML(subEle, master);
 			}
 			if (Female != null)		
 			{		
 				ele.TryPathTo("Female", true, out subEle);
-				Female.WriteXML(subEle);
+				Female.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
 			if (ele.TryPathTo("Marker", false, out subEle))
-				Marker.ReadXML(subEle);
+				Marker.ReadXML(subEle, master);
 
 			if (ele.TryPathTo("Male", false, out subEle))
 			{
 				if (Male == null)
 					Male = new GenderHeadData();
 					
-				Male.ReadXML(subEle);
+				Male.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Female", false, out subEle))
 			{
 				if (Female == null)
 					Female = new GenderHeadData();
 					
-				Female.ReadXML(subEle);
+				Female.ReadXML(subEle, master);
 			}
 		}
 

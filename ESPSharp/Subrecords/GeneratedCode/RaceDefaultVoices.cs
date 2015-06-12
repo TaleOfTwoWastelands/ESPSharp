@@ -60,29 +60,29 @@ namespace ESPSharp.Subrecords
 			FemaleVoice.WriteBinary(writer);
 		}
 
-		protected override void WriteDataXML(XElement ele)
+		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			ele.TryPathTo("Male", true, out subEle);
-			MaleVoice.WriteXML(subEle);
+			MaleVoice.WriteXML(subEle, master);
 
 			ele.TryPathTo("Female", true, out subEle);
-			FemaleVoice.WriteXML(subEle);
+			FemaleVoice.WriteXML(subEle, master);
 		}
 
-		protected override void ReadDataXML(XElement ele)
+		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (ele.TryPathTo("Male", false, out subEle))
 			{
-				MaleVoice.ReadXML(subEle);
+				MaleVoice.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("Female", false, out subEle))
 			{
-				FemaleVoice.ReadXML(subEle);
+				FemaleVoice.ReadXML(subEle, master);
 			}
 		}
 

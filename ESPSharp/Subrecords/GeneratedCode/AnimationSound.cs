@@ -75,12 +75,12 @@ namespace ESPSharp.Subrecords
 			writer.Write((UInt32)Type);
 		}
 
-		protected override void WriteDataXML(XElement ele)
+		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			ele.TryPathTo("Sound", true, out subEle);
-			Sound.WriteXML(subEle);
+			Sound.WriteXML(subEle, master);
 
 			ele.TryPathTo("Chance", true, out subEle);
 			subEle.Value = Chance.ToString();
@@ -92,13 +92,13 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Type.ToString();
 		}
 
-		protected override void ReadDataXML(XElement ele)
+		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (ele.TryPathTo("Sound", false, out subEle))
 			{
-				Sound.ReadXML(subEle);
+				Sound.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("Chance", false, out subEle))

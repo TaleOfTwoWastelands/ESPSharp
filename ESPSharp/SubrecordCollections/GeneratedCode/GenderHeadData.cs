@@ -76,12 +76,12 @@ namespace ESPSharp.SubrecordCollections
 					item.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			ele.TryPathTo("Marker", true, out subEle);
-			Marker.WriteXML(subEle);
+			Marker.WriteXML(subEle, master);
 
 			if (HeadModels != null)		
 			{		
@@ -89,18 +89,18 @@ namespace ESPSharp.SubrecordCollections
 				foreach (var entry in HeadModels)
 				{
 					XElement newEle = new XElement("HeadModel");
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 				}
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
 			if (ele.TryPathTo("Marker", false, out subEle))
-				Marker.ReadXML(subEle);
+				Marker.ReadXML(subEle, master);
 
 			if (ele.TryPathTo("HeadModels", false, out subEle))
 			{
@@ -110,7 +110,7 @@ namespace ESPSharp.SubrecordCollections
 				foreach (XElement e in subEle.Elements())
 				{
 					HeadModel temp = new HeadModel();
-					temp.ReadXML(e);
+					temp.ReadXML(e, master);
 					HeadModels.Add(temp);
 				}
 			}

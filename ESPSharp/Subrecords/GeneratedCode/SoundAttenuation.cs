@@ -78,7 +78,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Point5);			
 		}
 
-		protected override void WriteDataXML(XElement ele)
+		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -98,7 +98,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Point5.ToString();
 		}
 
-		protected override void ReadDataXML(XElement ele)
+		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 

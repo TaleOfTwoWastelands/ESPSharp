@@ -17,6 +17,7 @@ namespace ESPSharp
 {
     public class RecordView
     {
+        protected ElderScrollsPlugin master;
         public DataSource Source { get; protected set; }
         public string Tag { get; protected set; }
         public RecordFlag Flags { get; set; }
@@ -46,7 +47,7 @@ namespace ESPSharp
                 {
                     case DataSource.XML:
                         XDocument doc = XDocument.Load(FilePath);
-                        outRecord = Record.ReadXML(FilePath);
+                        outRecord = Record.ReadXML(FilePath, master);
                         break;
                     case DataSource.Binary:
 
@@ -86,7 +87,7 @@ namespace ESPSharp
 
             XDocument doc = XDocument.Load(XMLFilePath);
             FormID = new FormID();
-            FormID.ReadXML((doc.Root as XElement).Element("FormID"));
+            FormID.ReadXML((doc.Root as XElement).Element("FormID"), master);
         }
 
         public RecordView(MemoryMappedFile file, long offset, long size)

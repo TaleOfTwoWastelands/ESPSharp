@@ -80,14 +80,14 @@ namespace ESPSharp.SubrecordCollections
 					item.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (Header != null)		
 			{		
 				ele.TryPathTo("Header", true, out subEle);
-				Header.WriteXML(subEle);
+				Header.WriteXML(subEle, master);
 			}
 			if (DestructionStages != null)		
 			{		
@@ -95,13 +95,13 @@ namespace ESPSharp.SubrecordCollections
 				foreach (var entry in DestructionStages)
 				{
 					XElement newEle = new XElement("DestructionStage");
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 				}
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
@@ -110,7 +110,7 @@ namespace ESPSharp.SubrecordCollections
 				if (Header == null)
 					Header = new DestructableHeader();
 					
-				Header.ReadXML(subEle);
+				Header.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("DestructionStages", false, out subEle))
 			{
@@ -120,7 +120,7 @@ namespace ESPSharp.SubrecordCollections
 				foreach (XElement e in subEle.Elements())
 				{
 					DestructionStage temp = new DestructionStage();
-					temp.ReadXML(e);
+					temp.ReadXML(e, master);
 					DestructionStages.Add(temp);
 				}
 			}

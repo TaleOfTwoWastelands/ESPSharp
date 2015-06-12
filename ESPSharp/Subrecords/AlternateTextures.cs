@@ -33,24 +33,24 @@ namespace ESPSharp.Subrecords
                 writer.Write(texture);
         }
 
-        protected override void WriteDataXML(XElement ele)
+        protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
         {
             foreach (var texture in Textures)
             {
                 XElement subEle = new XElement("AlternateTexture");
-                texture.WriteXML(subEle);
+                texture.WriteXML(subEle, master);
                 ele.Add(subEle);
             }
         }
 
-        protected override void ReadDataXML(XElement ele)
+        protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
         {
             Textures = new List<AlternateTexture>();
 
             foreach (var subEle in ele.Elements())
             {
                 AlternateTexture tex = new AlternateTexture();
-                tex.ReadXML(subEle);
+                tex.ReadXML(subEle, master);
                 Textures.Add(tex);
             }
         }

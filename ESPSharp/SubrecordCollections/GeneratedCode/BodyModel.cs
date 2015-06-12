@@ -86,28 +86,28 @@ namespace ESPSharp.SubrecordCollections
 				Model.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (Index != null)		
 			{		
 				ele.TryPathTo("Index", true, out subEle);
-				Index.WriteXML(subEle);
+				Index.WriteXML(subEle, master);
 			}
 			if (Icon != null)		
 			{		
 				ele.TryPathTo("Icon", true, out subEle);
-				Icon.WriteXML(subEle);
+				Icon.WriteXML(subEle, master);
 			}
 			if (Model != null)		
 			{		
 				ele.TryPathTo("Model", true, out subEle);
-				Model.WriteXML(subEle);
+				Model.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
@@ -116,21 +116,21 @@ namespace ESPSharp.SubrecordCollections
 				if (Index == null)
 					Index = new SimpleSubrecord<BodyPartIndex>();
 					
-				Index.ReadXML(subEle);
+				Index.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Icon", false, out subEle))
 			{
 				if (Icon == null)
 					Icon = new Icon();
 					
-				Icon.ReadXML(subEle);
+				Icon.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Model", false, out subEle))
 			{
 				if (Model == null)
 					Model = new Model();
 					
-				Model.ReadXML(subEle);
+				Model.ReadXML(subEle, master);
 			}
 		}
 

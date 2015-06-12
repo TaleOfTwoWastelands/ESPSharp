@@ -75,23 +75,23 @@ namespace ESPSharp.SubrecordCollections
 				Name.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (Data != null)		
 			{		
 				ele.TryPathTo("Data", true, out subEle);
-				Data.WriteXML(subEle);
+				Data.WriteXML(subEle, master);
 			}
 			if (Name != null)		
 			{		
 				ele.TryPathTo("Name", true, out subEle);
-				Name.WriteXML(subEle);
+				Name.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
@@ -100,14 +100,14 @@ namespace ESPSharp.SubrecordCollections
 				if (Data == null)
 					Data = new LocalVariableData();
 					
-				Data.ReadXML(subEle);
+				Data.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Name", false, out subEle))
 			{
 				if (Name == null)
 					Name = new SimpleSubrecord<String>();
 					
-				Name.ReadXML(subEle);
+				Name.ReadXML(subEle, master);
 			}
 		}
 

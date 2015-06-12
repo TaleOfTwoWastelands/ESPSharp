@@ -98,18 +98,18 @@ namespace ESPSharp.Records
 				IsInterior.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (ObjectBounds != null)		
 			{		
 				ele.TryPathTo("ObjectBounds", true, out subEle);
-				ObjectBounds.WriteXML(subEle);
+				ObjectBounds.WriteXML(subEle, master);
 			}
 			if (Sounds != null)		
 			{		
@@ -120,7 +120,7 @@ namespace ESPSharp.Records
 				{
 					i = i % xmlNames.Count();
 					XElement newEle = new XElement(xmlNames[i]);
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 					i++;
 				}
@@ -128,26 +128,26 @@ namespace ESPSharp.Records
 			if (WallaTriggerCount != null)		
 			{		
 				ele.TryPathTo("WallaTriggerCount", true, out subEle);
-				WallaTriggerCount.WriteXML(subEle);
+				WallaTriggerCount.WriteXML(subEle, master);
 			}
 			if (UseSoundFromRegion != null)		
 			{		
 				ele.TryPathTo("UseSoundFromRegion", true, out subEle);
-				UseSoundFromRegion.WriteXML(subEle);
+				UseSoundFromRegion.WriteXML(subEle, master);
 			}
 			if (EnvironmentType != null)		
 			{		
 				ele.TryPathTo("EnvironmentType", true, out subEle);
-				EnvironmentType.WriteXML(subEle);
+				EnvironmentType.WriteXML(subEle, master);
 			}
 			if (IsInterior != null)		
 			{		
 				ele.TryPathTo("IsInterior", true, out subEle);
-				IsInterior.WriteXML(subEle);
+				IsInterior.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -156,14 +156,14 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ObjectBounds", false, out subEle))
 			{
 				if (ObjectBounds == null)
 					ObjectBounds = new ObjectBounds();
 					
-				ObjectBounds.ReadXML(subEle);
+				ObjectBounds.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Sounds", false, out subEle))
 			{
@@ -173,7 +173,7 @@ namespace ESPSharp.Records
 				foreach (XElement e in subEle.Elements())
 				{
 					RecordReference tempSNAM = new RecordReference();
-					tempSNAM.ReadXML(e);
+					tempSNAM.ReadXML(e, master);
 					Sounds.Add(tempSNAM);
 				}
 			}
@@ -182,28 +182,28 @@ namespace ESPSharp.Records
 				if (WallaTriggerCount == null)
 					WallaTriggerCount = new SimpleSubrecord<UInt32>();
 					
-				WallaTriggerCount.ReadXML(subEle);
+				WallaTriggerCount.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("UseSoundFromRegion", false, out subEle))
 			{
 				if (UseSoundFromRegion == null)
 					UseSoundFromRegion = new RecordReference();
 					
-				UseSoundFromRegion.ReadXML(subEle);
+				UseSoundFromRegion.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("EnvironmentType", false, out subEle))
 			{
 				if (EnvironmentType == null)
 					EnvironmentType = new SimpleSubrecord<EnvironmentType>();
 					
-				EnvironmentType.ReadXML(subEle);
+				EnvironmentType.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("IsInterior", false, out subEle))
 			{
 				if (IsInterior == null)
 					IsInterior = new SimpleSubrecord<IsInteriorEnum>();
 					
-				IsInterior.ReadXML(subEle);
+				IsInterior.ReadXML(subEle, master);
 			}
 		}
 

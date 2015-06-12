@@ -9,8 +9,8 @@ namespace ESPSharp.Interfaces
 {
     public interface IESPSerializable
     {
-        void WriteXML(XElement ele);
-        void ReadXML(XElement ele);
+        void WriteXML(XElement ele, ElderScrollsPlugin master);
+        void ReadXML(XElement ele, ElderScrollsPlugin master);
         void WriteBinary(ESPWriter writer);
         void ReadBinary(ESPReader reader);
     }

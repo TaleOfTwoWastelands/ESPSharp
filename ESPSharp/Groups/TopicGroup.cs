@@ -26,14 +26,14 @@ namespace ESPSharp
             Topic = reader.Read<FormID>();
         }
 
-        public override XElement WriteTypeDataXML()
+        public override XElement WriteTypeDataXML(ElderScrollsPlugin master)
         {
             return new XElement("Topic", Topic.ToString());
         }
 
-        public override void ReadTypeDataXML(XElement element)
+        public override void ReadTypeDataXML(XElement element, ElderScrollsPlugin master)
         {
-            Topic.ReadXML(element.Element("Topic"));
+            Topic.ReadXML(element.Element("Topic"), master);
         }
 
         public override string ToString()

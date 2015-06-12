@@ -66,12 +66,12 @@ namespace ESPSharp.Subrecords
 			writer.Write((UInt32)CombatReaction);
 		}
 
-		protected override void WriteDataXML(XElement ele)
+		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			ele.TryPathTo("Faction", true, out subEle);
-			Faction.WriteXML(subEle);
+			Faction.WriteXML(subEle, master);
 
 			ele.TryPathTo("Modifier", true, out subEle);
 			subEle.Value = Modifier.ToString();
@@ -80,13 +80,13 @@ namespace ESPSharp.Subrecords
 			subEle.Value = CombatReaction.ToString();
 		}
 
-		protected override void ReadDataXML(XElement ele)
+		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (ele.TryPathTo("Faction", false, out subEle))
 			{
-				Faction.ReadXML(subEle);
+				Faction.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("Modifier", false, out subEle))

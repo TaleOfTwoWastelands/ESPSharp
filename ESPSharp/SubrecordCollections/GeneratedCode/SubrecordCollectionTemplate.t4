@@ -150,13 +150,13 @@ namespace ESPSharp.SubrecordCollections
 <# } #>
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 <# if (template.startsWithMarker) { #>
 			ele.TryPathTo("Marker", true, out subEle);
-			Marker.WriteXML(subEle);
+			Marker.WriteXML(subEle, master);
 
 <# } #>
 <# foreach (var field in template.Fields) { #>
@@ -165,31 +165,31 @@ namespace ESPSharp.SubrecordCollections
 			{		
 				ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
 <# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
-				<#= field.Name #>.WriteXML(subEle);
+				<#= field.Name #>.WriteXML(subEle, master);
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
 				foreach (var entry in <#= field.Name #>)
 				{
 					XElement newEle = new XElement("<#= field.XMLSubName #>");
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 				}
 <# } #>
 			}
 <# } else { #>
 
-			Write<#= field.Name #>XML(ele);
+			Write<#= field.Name #>XML(ele, master);
 
 <# } #>
 <# } #>
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
 <# if (template.startsWithMarker) { #>
 			if (ele.TryPathTo("Marker", false, out subEle))
-				Marker.ReadXML(subEle);
+				Marker.ReadXML(subEle, master);
 
 <# } #>
 <# foreach (var field in template.Fields) { #>
@@ -200,19 +200,19 @@ namespace ESPSharp.SubrecordCollections
 					<#= field.Name #> = new <#= field.TypeString #>();
 					
 <# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
-				<#= field.Name #>.ReadXML(subEle);
+				<#= field.Name #>.ReadXML(subEle, master);
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
 				foreach (XElement e in subEle.Elements())
 				{
 					<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
-					temp.ReadXML(e);
+					temp.ReadXML(e, master);
 					<#=  field.Name #>.Add(temp);
 				}
 <# } #>
 			}
 <# } else { #>
 
-			Read<#= field.Name #>XML(ele);
+			Read<#= field.Name #>XML(ele, master);
 
 <# } #>
 <# } #>
@@ -230,10 +230,10 @@ namespace ESPSharp.SubrecordCollections
 		partial void Write<#= field.Name #>(ESPWriter writer);
 <# } #>
 <#foreach (var field in template.Fields.Where(f => !f.implementWriteXML)) { #>
-		partial void Write<#= field.Name #>XML(XElement ele);
+		partial void Write<#= field.Name #>XML(XElement ele, ElderScrollsPlugin master);
 <# } #>
 <#foreach (var field in template.Fields.Where(f => !f.implementReadXML)) { #>
-		partial void Read<#= field.Name #>XML(XElement ele);
+		partial void Read<#= field.Name #>XML(XElement ele, ElderScrollsPlugin master);
 <# } #>
 	}
 }

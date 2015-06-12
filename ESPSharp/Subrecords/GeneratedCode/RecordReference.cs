@@ -54,21 +54,21 @@ namespace ESPSharp.Subrecords
 			Reference.WriteBinary(writer);
 		}
 
-		protected override void WriteDataXML(XElement ele)
+		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			ele.TryPathTo("Reference", true, out subEle);
-			Reference.WriteXML(subEle);
+			Reference.WriteXML(subEle, master);
 		}
 
-		protected override void ReadDataXML(XElement ele)
+		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (ele.TryPathTo("Reference", false, out subEle))
 			{
-				Reference.ReadXML(subEle);
+				Reference.ReadXML(subEle, master);
 			}
 		}
 

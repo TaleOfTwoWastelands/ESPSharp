@@ -131,12 +131,12 @@ namespace ESPSharp
             RecordType = reader.ReadTag();
         }
 
-        public override XElement WriteTypeDataXML()
+        public override XElement WriteTypeDataXML(ElderScrollsPlugin master)
         {
             return new XElement("RecordType", RecordType);
         }
 
-        public override void ReadTypeDataXML(XElement element)
+        public override void ReadTypeDataXML(XElement element, ElderScrollsPlugin master)
         {
             RecordType = element.Element("RecordType").Value;
         }

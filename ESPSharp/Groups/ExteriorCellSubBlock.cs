@@ -13,14 +13,14 @@ namespace ESPSharp
             type = GroupType.ExteriorCellSubBlock;
         }
 
-        public override XElement WriteTypeDataXML()
+        public override XElement WriteTypeDataXML(ElderScrollsPlugin master)
         {
             return new XElement("Sub-Block",
                 new XElement("X", CoordX),
                 new XElement("Y", CoordY));
         }
 
-        public override void ReadTypeDataXML(XElement element)
+        public override void ReadTypeDataXML(XElement element, ElderScrollsPlugin master)
         {
             CoordX = element.Element("Sub-Block").Element("X").ToInt16();
             CoordY = element.Element("Sub-Block").Element("Y").ToInt16();

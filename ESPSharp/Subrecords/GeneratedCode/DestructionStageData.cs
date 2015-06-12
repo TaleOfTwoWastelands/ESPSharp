@@ -96,7 +96,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(DebrisCount);			
 		}
 
-		protected override void WriteDataXML(XElement ele)
+		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -116,16 +116,16 @@ namespace ESPSharp.Subrecords
 			subEle.Value = SelfDamagePerSecond.ToString();
 
 			ele.TryPathTo("Explosion", true, out subEle);
-			Explosion.WriteXML(subEle);
+			Explosion.WriteXML(subEle, master);
 
 			ele.TryPathTo("Debris", true, out subEle);
-			Debris.WriteXML(subEle);
+			Debris.WriteXML(subEle, master);
 
 			ele.TryPathTo("DebrisCount", true, out subEle);
 			subEle.Value = DebrisCount.ToString();
 		}
 
-		protected override void ReadDataXML(XElement ele)
+		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -156,12 +156,12 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Explosion", false, out subEle))
 			{
-				Explosion.ReadXML(subEle);
+				Explosion.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("Debris", false, out subEle))
 			{
-				Debris.ReadXML(subEle);
+				Debris.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("DebrisCount", false, out subEle))

@@ -25,12 +25,12 @@ namespace ESPSharp
             Index = reader.ReadInt32();
         }
 
-        public override XElement WriteTypeDataXML()
+        public override XElement WriteTypeDataXML(ElderScrollsPlugin master)
         {
             return new XElement("Index", Index);
         }
 
-        public override void ReadTypeDataXML(XElement element)
+        public override void ReadTypeDataXML(XElement element, ElderScrollsPlugin master)
         {
             Index = element.Element("Index").ToInt16();
         }

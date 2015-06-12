@@ -165,7 +165,7 @@ namespace ESPSharp.Subrecords
 			writer.Write((Int32)ActorValue);
 		}
 
-		protected override void WriteDataXML(XElement ele)
+		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -176,7 +176,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = BaseCost.ToString();
 
 			ele.TryPathTo("AssociatedItem", true, out subEle);
-			AssociatedItem.WriteXML(subEle);
+			AssociatedItem.WriteXML(subEle, master);
 
 			ele.TryPathTo("MagicSchool", true, out subEle);
 			subEle.Value = MagicSchool.ToString();
@@ -191,28 +191,28 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unused.ToHex();
 
 			ele.TryPathTo("Light", true, out subEle);
-			Light.WriteXML(subEle);
+			Light.WriteXML(subEle, master);
 
 			ele.TryPathTo("ProjectileSpeed", true, out subEle);
 			subEle.Value = ProjectileSpeed.ToString();
 
 			ele.TryPathTo("EffectShader", true, out subEle);
-			EffectShader.WriteXML(subEle);
+			EffectShader.WriteXML(subEle, master);
 
 			ele.TryPathTo("ObjectDisplayShader", true, out subEle);
-			ObjectDisplayShader.WriteXML(subEle);
+			ObjectDisplayShader.WriteXML(subEle, master);
 
 			ele.TryPathTo("EffectSound", true, out subEle);
-			EffectSound.WriteXML(subEle);
+			EffectSound.WriteXML(subEle, master);
 
 			ele.TryPathTo("BoltSound", true, out subEle);
-			BoltSound.WriteXML(subEle);
+			BoltSound.WriteXML(subEle, master);
 
 			ele.TryPathTo("HitSound", true, out subEle);
-			HitSound.WriteXML(subEle);
+			HitSound.WriteXML(subEle, master);
 
 			ele.TryPathTo("AreaSound", true, out subEle);
-			AreaSound.WriteXML(subEle);
+			AreaSound.WriteXML(subEle, master);
 
 			ele.TryPathTo("ConstantEffectEnchantmentFactor", true, out subEle);
 			subEle.Value = ConstantEffectEnchantmentFactor.ToString();
@@ -227,7 +227,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = ActorValue.ToString();
 		}
 
-		protected override void ReadDataXML(XElement ele)
+		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -243,7 +243,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("AssociatedItem", false, out subEle))
 			{
-				AssociatedItem.ReadXML(subEle);
+				AssociatedItem.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("MagicSchool", false, out subEle))
@@ -268,7 +268,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Light", false, out subEle))
 			{
-				Light.ReadXML(subEle);
+				Light.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("ProjectileSpeed", false, out subEle))
@@ -278,32 +278,32 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("EffectShader", false, out subEle))
 			{
-				EffectShader.ReadXML(subEle);
+				EffectShader.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("ObjectDisplayShader", false, out subEle))
 			{
-				ObjectDisplayShader.ReadXML(subEle);
+				ObjectDisplayShader.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("EffectSound", false, out subEle))
 			{
-				EffectSound.ReadXML(subEle);
+				EffectSound.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("BoltSound", false, out subEle))
 			{
-				BoltSound.ReadXML(subEle);
+				BoltSound.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("HitSound", false, out subEle))
 			{
-				HitSound.ReadXML(subEle);
+				HitSound.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("AreaSound", false, out subEle))
 			{
-				AreaSound.ReadXML(subEle);
+				AreaSound.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("ConstantEffectEnchantmentFactor", false, out subEle))

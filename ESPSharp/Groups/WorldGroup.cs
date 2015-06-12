@@ -26,14 +26,14 @@ namespace ESPSharp
             Worldspace = reader.Read<FormID>();
         }
 
-        public override XElement WriteTypeDataXML()
+        public override XElement WriteTypeDataXML(ElderScrollsPlugin master)
         {
             return new XElement("Worldspace", Worldspace.ToString());
         }
 
-        public override void ReadTypeDataXML(XElement element)
+        public override void ReadTypeDataXML(XElement element, ElderScrollsPlugin master)
         {
-            Worldspace.ReadXML(element.Element("Worldspace"));
+            Worldspace.ReadXML(element.Element("Worldspace"), master);
         }
 
         public override string ToString()

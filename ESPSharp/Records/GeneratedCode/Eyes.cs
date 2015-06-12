@@ -68,32 +68,32 @@ namespace ESPSharp.Records
 				EyesFlags.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (Name != null)		
 			{		
 				ele.TryPathTo("Name", true, out subEle);
-				Name.WriteXML(subEle);
+				Name.WriteXML(subEle, master);
 			}
 			if (Texture != null)		
 			{		
 				ele.TryPathTo("Texture", true, out subEle);
-				Texture.WriteXML(subEle);
+				Texture.WriteXML(subEle, master);
 			}
 			if (EyesFlags != null)		
 			{		
 				ele.TryPathTo("Flags", true, out subEle);
-				EyesFlags.WriteXML(subEle);
+				EyesFlags.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -102,28 +102,28 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Name", false, out subEle))
 			{
 				if (Name == null)
 					Name = new SimpleSubrecord<String>();
 					
-				Name.ReadXML(subEle);
+				Name.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Texture", false, out subEle))
 			{
 				if (Texture == null)
 					Texture = new SimpleSubrecord<String>();
 					
-				Texture.ReadXML(subEle);
+				Texture.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Flags", false, out subEle))
 			{
 				if (EyesFlags == null)
 					EyesFlags = new SimpleSubrecord<EyesFlags>();
 					
-				EyesFlags.ReadXML(subEle);
+				EyesFlags.ReadXML(subEle, master);
 			}
 		}
 

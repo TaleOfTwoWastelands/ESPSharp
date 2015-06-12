@@ -410,7 +410,7 @@ namespace ESPSharp.DataTypes
             else throw new ArgumentException(Arg2Type.ToString() + " is not handled.");
         }
 
-        public void WriteXML(XElement ele)
+        public void WriteXML(XElement ele, ElderScrollsPlugin master)
         {
             XElement subEle;
 
@@ -421,7 +421,7 @@ namespace ESPSharp.DataTypes
             if (Arg1Type == null)
                 subEle.Value = ((byte[])Argument1).ToHex();
             else if (Arg1Type == typeof(FormID))
-                Argument1.WriteXML(subEle);
+                Argument1.WriteXML(subEle, master);
             else if (Arg1Type.IsEnum)
                 subEle.Value = Argument1.ToString();
             else throw new ArgumentException(Arg1Type.ToString() + " is not handled.");
@@ -430,7 +430,7 @@ namespace ESPSharp.DataTypes
             if (Arg2Type == null)
                 subEle.Value = ((byte[])Argument2).ToHex();
             else if (Arg2Type == typeof(FormID))
-                Argument2.WriteXML(subEle);
+                Argument2.WriteXML(subEle, master);
             else if (Arg2Type.IsEnum)
                 subEle.Value = Argument2.ToString();
             else if (Arg2Type == typeof(uint))
@@ -438,7 +438,7 @@ namespace ESPSharp.DataTypes
             else throw new ArgumentException(Arg2Type.ToString() + " is not handled.");
         }
 
-        public void ReadXML(XElement ele)
+        public void ReadXML(XElement ele, ElderScrollsPlugin master)
         {
             XElement subEle;
 
@@ -463,7 +463,7 @@ namespace ESPSharp.DataTypes
                     else if (Arg1Type == typeof(FormID))
                     {
                         Argument1 = new FormID();
-                        Argument1.ReadXML(subEle);
+                        Argument1.ReadXML(subEle, master);
                     }
                     else if (Arg1Type == typeof(VATSValue))
                     {
@@ -490,7 +490,7 @@ namespace ESPSharp.DataTypes
                     else if (Arg2Type == typeof(FormID))
                     {
                         Argument2 = new FormID();
-                        Argument2.ReadXML(subEle);
+                        Argument2.ReadXML(subEle, master);
                     }
                     else if (Arg2Type.IsEnum)
                         Argument2 = Enum.Parse(Arg2Type, subEle.Value);

@@ -18,7 +18,7 @@ namespace ESPSharp
     public class ElderScrollsPlugin : IDisposable
     {
         public static List<ElderScrollsPlugin> LoadedPlugins = new List<ElderScrollsPlugin>();
-        public static Dictionary<LoadOrderFormID, List<RecordView>> LoadedRecordViews = new Dictionary<LoadOrderFormID, List<RecordView>>();
+        public static Dictionary<uint, List<RecordView>> LoadedRecordViews = new Dictionary<uint, List<RecordView>>();
 
         protected string name = "";
         public List<string> Masters = new List<string>();
@@ -66,13 +66,13 @@ namespace ESPSharp
 
         public void WriteXML(string destinationFolder)
         {
-            Header.Record.WriteXML(Path.Combine(destinationFolder, "Header.xml"));
+            Header.Record.WriteXML(Path.Combine(destinationFolder, "Header.xml"), this);
 
             foreach (Group group in TopGroups.Where(g => g.ToString() != "Interior Cells" && g.ToString() != "Worldspaces" && g.ToString() != "Dialog Topics"))
             {
                 string newDir = Path.Combine(destinationFolder, group.ToString());
                 Directory.CreateDirectory(newDir);
-                group.WriteXML(newDir);
+                group.WriteXML(newDir, this);
             }
         }
 
@@ -105,7 +105,7 @@ namespace ESPSharp
                 outPlug.TopGroups.Add(newGroup);
                 outPlug.AllGroups.Add(newGroup);
 
-                newGroup.ReadXML(folder);
+                newGroup.ReadXML(folder, outPlug);
             }
 
             ElderScrollsPlugin.LoadedPlugins.Add(outPlug);
@@ -118,7 +118,7 @@ namespace ESPSharp
             Header.Record.WriteBinary(writer);
 
             foreach (var group in TopGroups)
-                group.WriteBinary(writer);
+                group.WriteBinary(writer, this);
         }
 
         public void ReadBinary(string file)
@@ -169,10 +169,10 @@ namespace ESPSharp
 
                 List<RecordView> viewList;
 
-                if (!ElderScrollsPlugin.LoadedRecordViews.TryGetValue(loID, out viewList))
+                if (!ElderScrollsPlugin.LoadedRecordViews.TryGetValue(loID.RawValue, out viewList))
                 {
                     viewList = new List<RecordView>();
-                    ElderScrollsPlugin.LoadedRecordViews.Add(loID, viewList);
+                    ElderScrollsPlugin.LoadedRecordViews.Add(loID.RawValue, viewList);
                 }
 
                 viewList.Add(view);
@@ -187,7 +187,7 @@ namespace ESPSharp
             }
 
             LoadedPlugins = new List<ElderScrollsPlugin>();
-            LoadedRecordViews = new Dictionary<LoadOrderFormID, List<RecordView>>();
+            LoadedRecordViews = new Dictionary<uint, List<RecordView>>();
         }
 
         public void Dispose()

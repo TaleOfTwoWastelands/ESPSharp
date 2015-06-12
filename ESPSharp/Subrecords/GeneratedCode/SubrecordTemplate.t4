@@ -127,7 +127,7 @@ namespace ESPSharp.Subrecords
 <# } #>
 		}
 
-		protected override void WriteDataXML(XElement ele)
+		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 <# foreach (var field in template.Fields) { #>
@@ -136,14 +136,14 @@ namespace ESPSharp.Subrecords
 <# if (field.Type == typeof(byte[])){ #>
 			subEle.Value = <#= field.Name#>.ToHex();
 <# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
-			<#= field.Name#>.WriteXML(subEle);
+			<#= field.Name#>.WriteXML(subEle, master);
 <# } else { #>
 			subEle.Value = <#= field.Name#>.ToString();
 <# } #>
 <# } #>
 		}
 
-		protected override void ReadDataXML(XElement ele)
+		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 <# foreach (var field in template.Fields) { #>
@@ -155,7 +155,7 @@ namespace ESPSharp.Subrecords
 <# } else if (field.Type == typeof(byte[])){ #>
 				<#= field.Name #> = subEle.ToBytes();
 <# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
-				<#= field.Name#>.ReadXML(subEle);
+				<#= field.Name#>.ReadXML(subEle, master);
 <# } else { #>
 				<#= field.Name #> = subEle.To<#= GetFriendlyName(field.Type)#>();
 <# } #>

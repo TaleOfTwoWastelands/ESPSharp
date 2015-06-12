@@ -68,7 +68,7 @@ namespace ESPSharp.DataTypes
 			writer.Write(Alpha_Unused);			
 		}
 
-		public void WriteXML(XElement ele)
+		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -85,7 +85,7 @@ namespace ESPSharp.DataTypes
 			subEle.Value = Alpha_Unused.ToString();
 		}
 
-		public void ReadXML(XElement ele)
+		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 

@@ -78,7 +78,7 @@ namespace ESPSharp.DataTypes
                 writer.Write((Single)ComparisonValue);
         }
 
-        public void WriteXML(XElement ele)
+        public void WriteXML(XElement ele, ElderScrollsPlugin master)
         {
             XElement subEle;
 
@@ -93,12 +93,12 @@ namespace ESPSharp.DataTypes
 
             ele.TryPathTo("ComparisonValue", true, out subEle);
             if (Flags.HasFlag(ConditionFlags.UseGlobal))
-                ComparisonValue.WriteXML(subEle);
+                ComparisonValue.WriteXML(subEle, master);
             else
                 subEle.Value = ComparisonValue.ToString();
         }
 
-        public void ReadXML(XElement ele)
+        public void ReadXML(XElement ele, ElderScrollsPlugin master)
         {
             XElement subEle;
 
@@ -122,7 +122,7 @@ namespace ESPSharp.DataTypes
                 if (Flags.HasFlag(ConditionFlags.UseGlobal))
                 {
                     ComparisonValue = new FormID();
-                    ComparisonValue.ReadXML(subEle);
+                    ComparisonValue.ReadXML(subEle, master);
                 }
                 else
                     ComparisonValue = subEle.ToSingle();

@@ -113,57 +113,57 @@ namespace ESPSharp.Records
 				RadioTemplate.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (ObjectBounds != null)		
 			{		
 				ele.TryPathTo("ObjectBounds", true, out subEle);
-				ObjectBounds.WriteXML(subEle);
+				ObjectBounds.WriteXML(subEle, master);
 			}
 			if (Name != null)		
 			{		
 				ele.TryPathTo("Name", true, out subEle);
-				Name.WriteXML(subEle);
+				Name.WriteXML(subEle, master);
 			}
 			if (Model != null)		
 			{		
 				ele.TryPathTo("Model", true, out subEle);
-				Model.WriteXML(subEle);
+				Model.WriteXML(subEle, master);
 			}
 			if (Script != null)		
 			{		
 				ele.TryPathTo("Script", true, out subEle);
-				Script.WriteXML(subEle);
+				Script.WriteXML(subEle, master);
 			}
 			if (Destructable != null)		
 			{		
 				ele.TryPathTo("Destructable", true, out subEle);
-				Destructable.WriteXML(subEle);
+				Destructable.WriteXML(subEle, master);
 			}
 			if (LoopingSound != null)		
 			{		
 				ele.TryPathTo("LoopingSound", true, out subEle);
-				LoopingSound.WriteXML(subEle);
+				LoopingSound.WriteXML(subEle, master);
 			}
 			if (VoiceType != null)		
 			{		
 				ele.TryPathTo("VoiceType", true, out subEle);
-				VoiceType.WriteXML(subEle);
+				VoiceType.WriteXML(subEle, master);
 			}
 			if (RadioTemplate != null)		
 			{		
 				ele.TryPathTo("RadioTemplate", true, out subEle);
-				RadioTemplate.WriteXML(subEle);
+				RadioTemplate.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -172,63 +172,63 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ObjectBounds", false, out subEle))
 			{
 				if (ObjectBounds == null)
 					ObjectBounds = new ObjectBounds();
 					
-				ObjectBounds.ReadXML(subEle);
+				ObjectBounds.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Name", false, out subEle))
 			{
 				if (Name == null)
 					Name = new SimpleSubrecord<String>();
 					
-				Name.ReadXML(subEle);
+				Name.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Model", false, out subEle))
 			{
 				if (Model == null)
 					Model = new Model();
 					
-				Model.ReadXML(subEle);
+				Model.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Script", false, out subEle))
 			{
 				if (Script == null)
 					Script = new RecordReference();
 					
-				Script.ReadXML(subEle);
+				Script.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Destructable", false, out subEle))
 			{
 				if (Destructable == null)
 					Destructable = new Destructable();
 					
-				Destructable.ReadXML(subEle);
+				Destructable.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("LoopingSound", false, out subEle))
 			{
 				if (LoopingSound == null)
 					LoopingSound = new RecordReference();
 					
-				LoopingSound.ReadXML(subEle);
+				LoopingSound.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("VoiceType", false, out subEle))
 			{
 				if (VoiceType == null)
 					VoiceType = new RecordReference();
 					
-				VoiceType.ReadXML(subEle);
+				VoiceType.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("RadioTemplate", false, out subEle))
 			{
 				if (RadioTemplate == null)
 					RadioTemplate = new RecordReference();
 					
-				RadioTemplate.ReadXML(subEle);
+				RadioTemplate.ReadXML(subEle, master);
 			}
 		}
 

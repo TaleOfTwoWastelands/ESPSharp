@@ -140,7 +140,7 @@ namespace ESPSharp.Subrecords
             }
         }
 
-        protected override void WriteDataXML(XElement ele)
+        protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
         {
             Type tType = typeof(T);
             Type readType = tType;
@@ -165,7 +165,7 @@ namespace ESPSharp.Subrecords
             }
         }
 
-        protected override void ReadDataXML(XElement ele)
+        protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
         {
             Type tType = typeof(T);
             Type readType = tType;
@@ -229,6 +229,11 @@ namespace ESPSharp.Subrecords
         public SimpleSubrecord<T> Clone()
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString();
         }
     }
 }

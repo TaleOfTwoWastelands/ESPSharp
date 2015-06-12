@@ -8,6 +8,7 @@ namespace ESPSharp.DataTypes
 {
     public class LoadOrderFormID : FormID
     {
+        public ElderScrollsPlugin Master { get; protected set; }
         public LoadOrderFormID(FormID fileFormID, ElderScrollsPlugin file)
         {
             uint fileIndex = fileFormID.RawValue >> 24;
@@ -19,6 +20,8 @@ namespace ESPSharp.DataTypes
             if (master == null)
                 throw new Exception();
 
+            Master = master;
+
             uint newFileIndex = (uint)(ElderScrollsPlugin.LoadedPlugins.IndexOf(master) << 24);
 
             RawValue = newFileIndex | recordIndex;
@@ -26,12 +29,17 @@ namespace ESPSharp.DataTypes
 
         public RecordView GetWinningView()
         {
-            return ElderScrollsPlugin.LoadedRecordViews[this].Last();
+            return ElderScrollsPlugin.LoadedRecordViews[RawValue].Last();
+        }
+
+        public RecordView GetOriginalView()
+        {
+            return ElderScrollsPlugin.LoadedRecordViews[RawValue].First();
         }
 
         public List<RecordView> GetViews()
         {
-            return ElderScrollsPlugin.LoadedRecordViews[this];
+            return ElderScrollsPlugin.LoadedRecordViews[RawValue];
         }
     }
 }

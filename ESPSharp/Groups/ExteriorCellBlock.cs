@@ -28,14 +28,14 @@ namespace ESPSharp
             CoordX = reader.ReadInt16();
         }
 
-        public override XElement WriteTypeDataXML()
+        public override XElement WriteTypeDataXML(ElderScrollsPlugin master)
         {
             return new XElement("Block",
                 new XElement("X", CoordX),
                 new XElement("Y", CoordY));
         }
 
-        public override void ReadTypeDataXML(XElement element)
+        public override void ReadTypeDataXML(XElement element, ElderScrollsPlugin master)
         {
             CoordX = element.Element("Block").Element("X").ToInt16();
             CoordY = element.Element("Block").Element("Y").ToInt16();

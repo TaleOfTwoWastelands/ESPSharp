@@ -71,23 +71,23 @@ namespace ESPSharp.Records
 					item.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (Name != null)		
 			{		
 				ele.TryPathTo("Name", true, out subEle);
-				Name.WriteXML(subEle);
+				Name.WriteXML(subEle, master);
 			}
 			if (Data != null)		
 			{		
 				ele.TryPathTo("Data", true, out subEle);
-				Data.WriteXML(subEle);
+				Data.WriteXML(subEle, master);
 			}
 			if (Effects != null)		
 			{		
@@ -98,14 +98,14 @@ namespace ESPSharp.Records
 				{
 					i = i % xmlNames.Count();
 					XElement newEle = new XElement(xmlNames[i]);
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 					i++;
 				}
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -114,21 +114,21 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Name", false, out subEle))
 			{
 				if (Name == null)
 					Name = new SimpleSubrecord<String>();
 					
-				Name.ReadXML(subEle);
+				Name.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Data", false, out subEle))
 			{
 				if (Data == null)
 					Data = new SpellData();
 					
-				Data.ReadXML(subEle);
+				Data.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Effects", false, out subEle))
 			{
@@ -138,7 +138,7 @@ namespace ESPSharp.Records
 				foreach (XElement e in subEle.Elements())
 				{
 					Effect tempEFID = new Effect();
-					tempEFID.ReadXML(e);
+					tempEFID.ReadXML(e, master);
 					Effects.Add(tempEFID);
 				}
 			}

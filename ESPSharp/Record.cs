@@ -30,7 +30,7 @@ namespace ESPSharp
             FormID = new FormID();
         }
 
-        public void WriteXML(string destinationFile)
+        public void WriteXML(string destinationFile, ElderScrollsPlugin master)
         {
             XDocument doc = new XDocument();
 
@@ -41,7 +41,7 @@ namespace ESPSharp
 
             root.Add(
                 new XElement("Flags", Flags),
-                new XElement("FormID", FormID),
+                new XElement("FormID"),
                 new XElement("FormVersion", FormVersion),
                 new XElement("VersionControlInfo",
                     new XElement("Info1", VersionControlInfo1),
@@ -49,13 +49,15 @@ namespace ESPSharp
                 new XElement("CompressionCorrupted", compressionCorrupted)
                 );
 
+            FormID.WriteXML(root.Element("FormID"), master);
+
             if (compressionCorrupted)
                 root.Add(new XElement("CorruptedBytes"), corruptedBytes.ToBase64());
             else
             {
                 XElement ele = new XElement("Subrecords");
                 root.Add(ele);
-                WriteDataXML(ele);
+                WriteDataXML(ele, master);
             }
 
             XMLPostProcessing(root, destinationFile);
@@ -63,7 +65,7 @@ namespace ESPSharp
             doc.Save(destinationFile);
         }
 
-        public static Record ReadXML(string sourceFile)
+        public static Record ReadXML(string sourceFile, ElderScrollsPlugin master)
         {
             XDocument doc = XDocument.Load(sourceFile);
             XElement root = (XElement)doc.FirstNode;
@@ -71,7 +73,7 @@ namespace ESPSharp
             Record outRecord = Record.CreateRecord(root.Attribute("Tag").Value);
 
             outRecord.Flags = root.Element("Flags").ToEnum<RecordFlag>();
-            outRecord.FormID.ReadXML(root.Element("FormID"));
+            outRecord.FormID.ReadXML(root.Element("FormID"), master);
             outRecord.FormVersion = root.Element("FormVersion").ToUInt16();
             outRecord.VersionControlInfo1 = root.Element("VersionControlInfo").Element("Info1").ToUInt32();
             outRecord.VersionControlInfo2 = root.Element("VersionControlInfo").Element("Info2").ToUInt16();
@@ -82,7 +84,7 @@ namespace ESPSharp
             else
             {
                 outRecord.XMLPreProcessing(root, sourceFile);
-                outRecord.ReadDataXML(root.Element("Subrecords"));
+                outRecord.ReadDataXML(root.Element("Subrecords"), master);
             }
 
             return outRecord;
@@ -190,9 +192,9 @@ namespace ESPSharp
 
         public abstract void WriteData(ESPWriter writer);
 
-        public abstract void WriteDataXML(XElement ele);
+        public abstract void WriteDataXML(XElement ele, ElderScrollsPlugin master);
 
-        public abstract void ReadDataXML(XElement ele);
+        public abstract void ReadDataXML(XElement ele, ElderScrollsPlugin master);
 
         protected virtual void XMLPreProcessing(XElement root, string sourceFile) { }
         protected virtual void XMLPostProcessing(XElement root, string destinationFile) { }
@@ -292,9 +294,9 @@ namespace ESPSharp
         public override string ToString()
         {
             if (this is IEditorID)
-                return String.Format("{0} - {1}", (this as IEditorID).EditorID.Value, FormID.ToString());
+                return (this as IEditorID).EditorID.Value;
             else
-                return FormID.ToString();
+                return String.Format("{0} - {1}", Tag, FormID.ToString());
         }
     }
 }

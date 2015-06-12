@@ -11,7 +11,7 @@ namespace ESPSharp
     {
         public abstract void ReadBinary(ESPReader reader);
         public abstract void WriteBinary(ESPWriter writer);
-        public abstract void WriteXML(XElement root);
-        public abstract void ReadXML(XElement ele);
+        public abstract void WriteXML(XElement root, ElderScrollsPlugin master);
+        public abstract void ReadXML(XElement ele, ElderScrollsPlugin master);
     }
 }

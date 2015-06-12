@@ -77,37 +77,37 @@ namespace ESPSharp.Records
 				HairFlags.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (Name != null)		
 			{		
 				ele.TryPathTo("Name", true, out subEle);
-				Name.WriteXML(subEle);
+				Name.WriteXML(subEle, master);
 			}
 			if (Model != null)		
 			{		
 				ele.TryPathTo("Model", true, out subEle);
-				Model.WriteXML(subEle);
+				Model.WriteXML(subEle, master);
 			}
 			if (Texture != null)		
 			{		
 				ele.TryPathTo("Texture", true, out subEle);
-				Texture.WriteXML(subEle);
+				Texture.WriteXML(subEle, master);
 			}
 			if (HairFlags != null)		
 			{		
 				ele.TryPathTo("Flags", true, out subEle);
-				HairFlags.WriteXML(subEle);
+				HairFlags.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -116,35 +116,35 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Name", false, out subEle))
 			{
 				if (Name == null)
 					Name = new SimpleSubrecord<String>();
 					
-				Name.ReadXML(subEle);
+				Name.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Model", false, out subEle))
 			{
 				if (Model == null)
 					Model = new Model();
 					
-				Model.ReadXML(subEle);
+				Model.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Texture", false, out subEle))
 			{
 				if (Texture == null)
 					Texture = new SimpleSubrecord<String>();
 					
-				Texture.ReadXML(subEle);
+				Texture.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Flags", false, out subEle))
 			{
 				if (HairFlags == null)
 					HairFlags = new SimpleSubrecord<HairFlags>();
 					
-				HairFlags.ReadXML(subEle);
+				HairFlags.ReadXML(subEle, master);
 			}
 		}
 

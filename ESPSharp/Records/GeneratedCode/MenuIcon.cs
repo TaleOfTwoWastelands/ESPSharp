@@ -59,27 +59,27 @@ namespace ESPSharp.Records
 				SmallIcon.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (LargeIcon != null)		
 			{		
 				ele.TryPathTo("LargeIcon", true, out subEle);
-				LargeIcon.WriteXML(subEle);
+				LargeIcon.WriteXML(subEle, master);
 			}
 			if (SmallIcon != null)		
 			{		
 				ele.TryPathTo("SmallIcon", true, out subEle);
-				SmallIcon.WriteXML(subEle);
+				SmallIcon.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -88,21 +88,21 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("LargeIcon", false, out subEle))
 			{
 				if (LargeIcon == null)
 					LargeIcon = new SimpleSubrecord<String>();
 					
-				LargeIcon.ReadXML(subEle);
+				LargeIcon.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("SmallIcon", false, out subEle))
 			{
 				if (SmallIcon == null)
 					SmallIcon = new SimpleSubrecord<String>();
 					
-				SmallIcon.ReadXML(subEle);
+				SmallIcon.ReadXML(subEle, master);
 			}
 		}
 

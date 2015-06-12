@@ -27,20 +27,24 @@ namespace ESPSharp.Subrecords
                 writer.Write(id);
         }
 
-        protected override void WriteDataXML(XElement ele)
+        protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
         {
             foreach (var id in Forms)
-                ele.Add(new XElement("Form", id));
+            {
+                XElement subEle = new XElement("Form");
+                id.WriteXML(subEle, master);
+                ele.Add(subEle);
+            }
         }
 
-        protected override void ReadDataXML(XElement ele)
+        protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
         {
             Forms = new List<FormID>();
 
             foreach (var subEle in ele.Elements("Form"))
             {
                 FormID id = new FormID();
-                id.ReadXML(subEle);
+                id.ReadXML(subEle, master);
                 Forms.Add(id);
             }
         }

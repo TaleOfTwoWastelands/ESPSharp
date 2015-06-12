@@ -101,18 +101,18 @@ namespace ESPSharp.Records
 				Reputation.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (Name != null)		
 			{		
 				ele.TryPathTo("Name", true, out subEle);
-				Name.WriteXML(subEle);
+				Name.WriteXML(subEle, master);
 			}
 			if (Relationships != null)		
 			{		
@@ -123,7 +123,7 @@ namespace ESPSharp.Records
 				{
 					i = i % xmlNames.Count();
 					XElement newEle = new XElement(xmlNames[i]);
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 					i++;
 				}
@@ -131,12 +131,12 @@ namespace ESPSharp.Records
 			if (Data != null)		
 			{		
 				ele.TryPathTo("Data", true, out subEle);
-				Data.WriteXML(subEle);
+				Data.WriteXML(subEle, master);
 			}
 			if (Unused != null)		
 			{		
 				ele.TryPathTo("Unused", true, out subEle);
-				Unused.WriteXML(subEle);
+				Unused.WriteXML(subEle, master);
 			}
 			if (Ranks != null)		
 			{		
@@ -147,7 +147,7 @@ namespace ESPSharp.Records
 				{
 					i = i % xmlNames.Count();
 					XElement newEle = new XElement(xmlNames[i]);
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 					i++;
 				}
@@ -155,11 +155,11 @@ namespace ESPSharp.Records
 			if (Reputation != null)		
 			{		
 				ele.TryPathTo("Reputation", true, out subEle);
-				Reputation.WriteXML(subEle);
+				Reputation.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -168,14 +168,14 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Name", false, out subEle))
 			{
 				if (Name == null)
 					Name = new SimpleSubrecord<String>();
 					
-				Name.ReadXML(subEle);
+				Name.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Relationships", false, out subEle))
 			{
@@ -185,7 +185,7 @@ namespace ESPSharp.Records
 				foreach (XElement e in subEle.Elements())
 				{
 					Relationship tempXNAM = new Relationship();
-					tempXNAM.ReadXML(e);
+					tempXNAM.ReadXML(e, master);
 					Relationships.Add(tempXNAM);
 				}
 			}
@@ -194,14 +194,14 @@ namespace ESPSharp.Records
 				if (Data == null)
 					Data = new FactionData();
 					
-				Data.ReadXML(subEle);
+				Data.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Unused", false, out subEle))
 			{
 				if (Unused == null)
 					Unused = new SimpleSubrecord<Single>();
 					
-				Unused.ReadXML(subEle);
+				Unused.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Ranks", false, out subEle))
 			{
@@ -211,7 +211,7 @@ namespace ESPSharp.Records
 				foreach (XElement e in subEle.Elements())
 				{
 					FactionRank tempRNAM = new FactionRank();
-					tempRNAM.ReadXML(e);
+					tempRNAM.ReadXML(e, master);
 					Ranks.Add(tempRNAM);
 				}
 			}
@@ -220,7 +220,7 @@ namespace ESPSharp.Records
 				if (Reputation == null)
 					Reputation = new RecordReference();
 					
-				Reputation.ReadXML(subEle);
+				Reputation.ReadXML(subEle, master);
 			}
 		}
 

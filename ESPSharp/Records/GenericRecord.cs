@@ -31,22 +31,22 @@ namespace ESPSharp.Records
                 sub.WriteBinary(writer);
         }
 
-        public override void WriteDataXML(XElement ele)
+        public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
         {
             foreach (UndecodedSubrecord sub in Subrecords)
             {
                 XElement subEle = new XElement("Subrecord");
-                sub.WriteXML(subEle);
+                sub.WriteXML(subEle, master);
                 ele.Add(subEle);
             }
         }
 
-        public override void ReadDataXML(XElement ele)
+        public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
         {
             foreach(XElement subEle in ele.Elements("Subrecord"))
             {
                 UndecodedSubrecord sub = new UndecodedSubrecord();
-                sub.ReadXML(subEle);
+                sub.ReadXML(subEle, master);
                 Subrecords.Add(sub);
             }
         }

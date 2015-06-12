@@ -58,7 +58,7 @@ namespace ESPSharp.DataTypes
 			WriteData(writer);
 		}
 
-		public void WriteXML(XElement ele)
+		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -66,13 +66,13 @@ namespace ESPSharp.DataTypes
 			subEle.Value = Name.ToString();
 
 			ele.TryPathTo("TextureSet", true, out subEle);
-			TextureSet.WriteXML(subEle);
+			TextureSet.WriteXML(subEle, master);
 
 			ele.TryPathTo("Index", true, out subEle);
 			subEle.Value = Index.ToString();
 		}
 
-		public void ReadXML(XElement ele)
+		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -83,7 +83,7 @@ namespace ESPSharp.DataTypes
 
 			if (ele.TryPathTo("TextureSet", false, out subEle))
 			{
-				TextureSet.ReadXML(subEle);
+				TextureSet.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("Index", false, out subEle))

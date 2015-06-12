@@ -142,24 +142,24 @@ namespace ESPSharp.SubrecordCollections
 					item.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (Data != null)		
 			{		
 				ele.TryPathTo("Data", true, out subEle);
-				Data.WriteXML(subEle);
+				Data.WriteXML(subEle, master);
 			}
 			if (CompiledScript != null)		
 			{		
 				ele.TryPathTo("CompiledScript", true, out subEle);
-				CompiledScript.WriteXML(subEle);
+				CompiledScript.WriteXML(subEle, master);
 			}
 			if (ScriptSource != null)		
 			{		
 				ele.TryPathTo("ScriptSource", true, out subEle);
-				ScriptSource.WriteXML(subEle);
+				ScriptSource.WriteXML(subEle, master);
 			}
 			if (LocalVariables != null)		
 			{		
@@ -167,7 +167,7 @@ namespace ESPSharp.SubrecordCollections
 				foreach (var entry in LocalVariables)
 				{
 					XElement newEle = new XElement("Variable");
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 				}
 			}
@@ -177,7 +177,7 @@ namespace ESPSharp.SubrecordCollections
 				foreach (var entry in LocalReferences)
 				{
 					XElement newEle = new XElement("Reference");
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 				}
 			}
@@ -187,13 +187,13 @@ namespace ESPSharp.SubrecordCollections
 				foreach (var entry in GlobalReferences)
 				{
 					XElement newEle = new XElement("Reference");
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 				}
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
@@ -202,21 +202,21 @@ namespace ESPSharp.SubrecordCollections
 				if (Data == null)
 					Data = new ScriptData();
 					
-				Data.ReadXML(subEle);
+				Data.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("CompiledScript", false, out subEle))
 			{
 				if (CompiledScript == null)
 					CompiledScript = new SimpleSubrecord<Byte[]>();
 					
-				CompiledScript.ReadXML(subEle);
+				CompiledScript.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ScriptSource", false, out subEle))
 			{
 				if (ScriptSource == null)
 					ScriptSource = new SimpleSubrecord<Char[]>();
 					
-				ScriptSource.ReadXML(subEle);
+				ScriptSource.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("LocalVariables", false, out subEle))
 			{
@@ -226,7 +226,7 @@ namespace ESPSharp.SubrecordCollections
 				foreach (XElement e in subEle.Elements())
 				{
 					LocalVariable temp = new LocalVariable();
-					temp.ReadXML(e);
+					temp.ReadXML(e, master);
 					LocalVariables.Add(temp);
 				}
 			}
@@ -238,7 +238,7 @@ namespace ESPSharp.SubrecordCollections
 				foreach (XElement e in subEle.Elements())
 				{
 					SimpleSubrecord<UInt32> temp = new SimpleSubrecord<UInt32>();
-					temp.ReadXML(e);
+					temp.ReadXML(e, master);
 					LocalReferences.Add(temp);
 				}
 			}
@@ -250,7 +250,7 @@ namespace ESPSharp.SubrecordCollections
 				foreach (XElement e in subEle.Elements())
 				{
 					RecordReference temp = new RecordReference();
-					temp.ReadXML(e);
+					temp.ReadXML(e, master);
 					GlobalReferences.Add(temp);
 				}
 			}

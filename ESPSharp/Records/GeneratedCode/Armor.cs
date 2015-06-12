@@ -350,173 +350,173 @@ namespace ESPSharp.Records
 				AnimationSoundsTemplate.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (ObjectBounds != null)		
 			{		
 				ele.TryPathTo("ObjectBounds", true, out subEle);
-				ObjectBounds.WriteXML(subEle);
+				ObjectBounds.WriteXML(subEle, master);
 			}
 			if (Name != null)		
 			{		
 				ele.TryPathTo("Name", true, out subEle);
-				Name.WriteXML(subEle);
+				Name.WriteXML(subEle, master);
 			}
 			if (Script != null)		
 			{		
 				ele.TryPathTo("Script", true, out subEle);
-				Script.WriteXML(subEle);
+				Script.WriteXML(subEle, master);
 			}
 			if (ObjectEffect != null)		
 			{		
 				ele.TryPathTo("ObjectEffect", true, out subEle);
-				ObjectEffect.WriteXML(subEle);
+				ObjectEffect.WriteXML(subEle, master);
 			}
 			if (BipedData != null)		
 			{		
 				ele.TryPathTo("BipedData", true, out subEle);
-				BipedData.WriteXML(subEle);
+				BipedData.WriteXML(subEle, master);
 			}
 			if (MaleBipedModelFileName != null)		
 			{		
 				ele.TryPathTo("Models/Biped/Male/FileName", true, out subEle);
-				MaleBipedModelFileName.WriteXML(subEle);
+				MaleBipedModelFileName.WriteXML(subEle, master);
 			}
 			if (MaleBipedModelTextureHashes != null)		
 			{		
 				ele.TryPathTo("Models/Biped/Male/TextureHashes", true, out subEle);
-				MaleBipedModelTextureHashes.WriteXML(subEle);
+				MaleBipedModelTextureHashes.WriteXML(subEle, master);
 			}
 			if (MaleBipedModelAlternateTextures != null)		
 			{		
 				ele.TryPathTo("Models/Biped/Male/AlternateTextures", true, out subEle);
-				MaleBipedModelAlternateTextures.WriteXML(subEle);
+				MaleBipedModelAlternateTextures.WriteXML(subEle, master);
 			}
 			if (MaleBipedModelFaceGenModelFlags != null)		
 			{		
 				ele.TryPathTo("Models/Biped/Male/FaceGenModelFlags", true, out subEle);
-				MaleBipedModelFaceGenModelFlags.WriteXML(subEle);
+				MaleBipedModelFaceGenModelFlags.WriteXML(subEle, master);
 			}
 			if (MaleWorldModelFileName != null)		
 			{		
 				ele.TryPathTo("Models/World/Male/FileName", true, out subEle);
-				MaleWorldModelFileName.WriteXML(subEle);
+				MaleWorldModelFileName.WriteXML(subEle, master);
 			}
 			if (MaleWorldModelTextureHashes != null)		
 			{		
 				ele.TryPathTo("Models/World/Male/TextureHashes", true, out subEle);
-				MaleWorldModelTextureHashes.WriteXML(subEle);
+				MaleWorldModelTextureHashes.WriteXML(subEle, master);
 			}
 			if (MaleWorldModelAlternateTextures != null)		
 			{		
 				ele.TryPathTo("Models/World/Male/AlternateTextures", true, out subEle);
-				MaleWorldModelAlternateTextures.WriteXML(subEle);
+				MaleWorldModelAlternateTextures.WriteXML(subEle, master);
 			}
 			if (MaleInventoryIcon != null)		
 			{		
 				ele.TryPathTo("Icon/Inventory/Male", true, out subEle);
-				MaleInventoryIcon.WriteXML(subEle);
+				MaleInventoryIcon.WriteXML(subEle, master);
 			}
 			if (MaleMessageIcon != null)		
 			{		
 				ele.TryPathTo("Icon/Message/Male", true, out subEle);
-				MaleMessageIcon.WriteXML(subEle);
+				MaleMessageIcon.WriteXML(subEle, master);
 			}
 			if (FemaleBipedModelFileName != null)		
 			{		
 				ele.TryPathTo("Models/Biped/Female/FileName", true, out subEle);
-				FemaleBipedModelFileName.WriteXML(subEle);
+				FemaleBipedModelFileName.WriteXML(subEle, master);
 			}
 			if (FemaleBipedModelTextureHashes != null)		
 			{		
 				ele.TryPathTo("Models/Biped/Female/TextureHashes", true, out subEle);
-				FemaleBipedModelTextureHashes.WriteXML(subEle);
+				FemaleBipedModelTextureHashes.WriteXML(subEle, master);
 			}
 			if (FemaleBipedModelAlternateTextures != null)		
 			{		
 				ele.TryPathTo("Models/Biped/Female/AlternateTextures", true, out subEle);
-				FemaleBipedModelAlternateTextures.WriteXML(subEle);
+				FemaleBipedModelAlternateTextures.WriteXML(subEle, master);
 			}
 			if (FemaleBipedModelFaceGenModelFlags != null)		
 			{		
 				ele.TryPathTo("Models/Biped/Female/FaceGenModelFlags", true, out subEle);
-				FemaleBipedModelFaceGenModelFlags.WriteXML(subEle);
+				FemaleBipedModelFaceGenModelFlags.WriteXML(subEle, master);
 			}
 			if (FemaleWorldModelFileName != null)		
 			{		
 				ele.TryPathTo("Models/World/Female/FileName", true, out subEle);
-				FemaleWorldModelFileName.WriteXML(subEle);
+				FemaleWorldModelFileName.WriteXML(subEle, master);
 			}
 			if (FemaleWorldModelTextureHashes != null)		
 			{		
 				ele.TryPathTo("Models/World/Female/TextureHashes", true, out subEle);
-				FemaleWorldModelTextureHashes.WriteXML(subEle);
+				FemaleWorldModelTextureHashes.WriteXML(subEle, master);
 			}
 			if (FemaleWorldModelAlternateTextures != null)		
 			{		
 				ele.TryPathTo("Models/World/Female/AlternateTextures", true, out subEle);
-				FemaleWorldModelAlternateTextures.WriteXML(subEle);
+				FemaleWorldModelAlternateTextures.WriteXML(subEle, master);
 			}
 			if (FemaleInventoryIcon != null)		
 			{		
 				ele.TryPathTo("Icon/Inventory/Female", true, out subEle);
-				FemaleInventoryIcon.WriteXML(subEle);
+				FemaleInventoryIcon.WriteXML(subEle, master);
 			}
 			if (FemaleMessageIcon != null)		
 			{		
 				ele.TryPathTo("Icon/Message/Female", true, out subEle);
-				FemaleMessageIcon.WriteXML(subEle);
+				FemaleMessageIcon.WriteXML(subEle, master);
 			}
 			if (RagdollConstraintTemplate != null)		
 			{		
 				ele.TryPathTo("RagdollConstraintTemplate", true, out subEle);
-				RagdollConstraintTemplate.WriteXML(subEle);
+				RagdollConstraintTemplate.WriteXML(subEle, master);
 			}
 			if (RepairList != null)		
 			{		
 				ele.TryPathTo("RepairList", true, out subEle);
-				RepairList.WriteXML(subEle);
+				RepairList.WriteXML(subEle, master);
 			}
 			if (BipedModelList != null)		
 			{		
 				ele.TryPathTo("BipedModelList", true, out subEle);
-				BipedModelList.WriteXML(subEle);
+				BipedModelList.WriteXML(subEle, master);
 			}
 			if (EquipmentType != null)		
 			{		
 				ele.TryPathTo("EquipmentType", true, out subEle);
-				EquipmentType.WriteXML(subEle);
+				EquipmentType.WriteXML(subEle, master);
 			}
 			if (PickupSound != null)		
 			{		
 				ele.TryPathTo("PickupSound", true, out subEle);
-				PickupSound.WriteXML(subEle);
+				PickupSound.WriteXML(subEle, master);
 			}
 			if (DropSound != null)		
 			{		
 				ele.TryPathTo("DropSound", true, out subEle);
-				DropSound.WriteXML(subEle);
+				DropSound.WriteXML(subEle, master);
 			}
 			if (Data != null)		
 			{		
 				ele.TryPathTo("Data", true, out subEle);
-				Data.WriteXML(subEle);
+				Data.WriteXML(subEle, master);
 			}
 			if (ExtraData != null)		
 			{		
 				ele.TryPathTo("ExtraData", true, out subEle);
-				ExtraData.WriteXML(subEle);
+				ExtraData.WriteXML(subEle, master);
 			}
 			if (OverridesAnimationSounds != null)		
 			{		
 				ele.TryPathTo("OverridesAnimationSounds", true, out subEle);
-				OverridesAnimationSounds.WriteXML(subEle);
+				OverridesAnimationSounds.WriteXML(subEle, master);
 			}
 			if (AnimationSounds != null)		
 			{		
@@ -527,7 +527,7 @@ namespace ESPSharp.Records
 				{
 					i = i % xmlNames.Count();
 					XElement newEle = new XElement(xmlNames[i]);
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 					i++;
 				}
@@ -535,11 +535,11 @@ namespace ESPSharp.Records
 			if (AnimationSoundsTemplate != null)		
 			{		
 				ele.TryPathTo("AnimationSoundsTemplate", true, out subEle);
-				AnimationSoundsTemplate.WriteXML(subEle);
+				AnimationSoundsTemplate.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -548,231 +548,231 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ObjectBounds", false, out subEle))
 			{
 				if (ObjectBounds == null)
 					ObjectBounds = new ObjectBounds();
 					
-				ObjectBounds.ReadXML(subEle);
+				ObjectBounds.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Name", false, out subEle))
 			{
 				if (Name == null)
 					Name = new SimpleSubrecord<String>();
 					
-				Name.ReadXML(subEle);
+				Name.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Script", false, out subEle))
 			{
 				if (Script == null)
 					Script = new RecordReference();
 					
-				Script.ReadXML(subEle);
+				Script.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ObjectEffect", false, out subEle))
 			{
 				if (ObjectEffect == null)
 					ObjectEffect = new RecordReference();
 					
-				ObjectEffect.ReadXML(subEle);
+				ObjectEffect.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("BipedData", false, out subEle))
 			{
 				if (BipedData == null)
 					BipedData = new BipedData();
 					
-				BipedData.ReadXML(subEle);
+				BipedData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/Biped/Male/FileName", false, out subEle))
 			{
 				if (MaleBipedModelFileName == null)
 					MaleBipedModelFileName = new SimpleSubrecord<String>();
 					
-				MaleBipedModelFileName.ReadXML(subEle);
+				MaleBipedModelFileName.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/Biped/Male/TextureHashes", false, out subEle))
 			{
 				if (MaleBipedModelTextureHashes == null)
 					MaleBipedModelTextureHashes = new SimpleSubrecord<Byte[]>();
 					
-				MaleBipedModelTextureHashes.ReadXML(subEle);
+				MaleBipedModelTextureHashes.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/Biped/Male/AlternateTextures", false, out subEle))
 			{
 				if (MaleBipedModelAlternateTextures == null)
 					MaleBipedModelAlternateTextures = new AlternateTextures();
 					
-				MaleBipedModelAlternateTextures.ReadXML(subEle);
+				MaleBipedModelAlternateTextures.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/Biped/Male/FaceGenModelFlags", false, out subEle))
 			{
 				if (MaleBipedModelFaceGenModelFlags == null)
 					MaleBipedModelFaceGenModelFlags = new SimpleSubrecord<FaceGenModelFlags>();
 					
-				MaleBipedModelFaceGenModelFlags.ReadXML(subEle);
+				MaleBipedModelFaceGenModelFlags.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/World/Male/FileName", false, out subEle))
 			{
 				if (MaleWorldModelFileName == null)
 					MaleWorldModelFileName = new SimpleSubrecord<String>();
 					
-				MaleWorldModelFileName.ReadXML(subEle);
+				MaleWorldModelFileName.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/World/Male/TextureHashes", false, out subEle))
 			{
 				if (MaleWorldModelTextureHashes == null)
 					MaleWorldModelTextureHashes = new SimpleSubrecord<Byte[]>();
 					
-				MaleWorldModelTextureHashes.ReadXML(subEle);
+				MaleWorldModelTextureHashes.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/World/Male/AlternateTextures", false, out subEle))
 			{
 				if (MaleWorldModelAlternateTextures == null)
 					MaleWorldModelAlternateTextures = new AlternateTextures();
 					
-				MaleWorldModelAlternateTextures.ReadXML(subEle);
+				MaleWorldModelAlternateTextures.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Icon/Inventory/Male", false, out subEle))
 			{
 				if (MaleInventoryIcon == null)
 					MaleInventoryIcon = new SimpleSubrecord<String>();
 					
-				MaleInventoryIcon.ReadXML(subEle);
+				MaleInventoryIcon.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Icon/Message/Male", false, out subEle))
 			{
 				if (MaleMessageIcon == null)
 					MaleMessageIcon = new SimpleSubrecord<String>();
 					
-				MaleMessageIcon.ReadXML(subEle);
+				MaleMessageIcon.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/Biped/Female/FileName", false, out subEle))
 			{
 				if (FemaleBipedModelFileName == null)
 					FemaleBipedModelFileName = new SimpleSubrecord<String>();
 					
-				FemaleBipedModelFileName.ReadXML(subEle);
+				FemaleBipedModelFileName.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/Biped/Female/TextureHashes", false, out subEle))
 			{
 				if (FemaleBipedModelTextureHashes == null)
 					FemaleBipedModelTextureHashes = new SimpleSubrecord<Byte[]>();
 					
-				FemaleBipedModelTextureHashes.ReadXML(subEle);
+				FemaleBipedModelTextureHashes.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/Biped/Female/AlternateTextures", false, out subEle))
 			{
 				if (FemaleBipedModelAlternateTextures == null)
 					FemaleBipedModelAlternateTextures = new AlternateTextures();
 					
-				FemaleBipedModelAlternateTextures.ReadXML(subEle);
+				FemaleBipedModelAlternateTextures.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/Biped/Female/FaceGenModelFlags", false, out subEle))
 			{
 				if (FemaleBipedModelFaceGenModelFlags == null)
 					FemaleBipedModelFaceGenModelFlags = new SimpleSubrecord<FaceGenModelFlags>();
 					
-				FemaleBipedModelFaceGenModelFlags.ReadXML(subEle);
+				FemaleBipedModelFaceGenModelFlags.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/World/Female/FileName", false, out subEle))
 			{
 				if (FemaleWorldModelFileName == null)
 					FemaleWorldModelFileName = new SimpleSubrecord<String>();
 					
-				FemaleWorldModelFileName.ReadXML(subEle);
+				FemaleWorldModelFileName.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/World/Female/TextureHashes", false, out subEle))
 			{
 				if (FemaleWorldModelTextureHashes == null)
 					FemaleWorldModelTextureHashes = new SimpleSubrecord<Byte[]>();
 					
-				FemaleWorldModelTextureHashes.ReadXML(subEle);
+				FemaleWorldModelTextureHashes.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Models/World/Female/AlternateTextures", false, out subEle))
 			{
 				if (FemaleWorldModelAlternateTextures == null)
 					FemaleWorldModelAlternateTextures = new AlternateTextures();
 					
-				FemaleWorldModelAlternateTextures.ReadXML(subEle);
+				FemaleWorldModelAlternateTextures.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Icon/Inventory/Female", false, out subEle))
 			{
 				if (FemaleInventoryIcon == null)
 					FemaleInventoryIcon = new SimpleSubrecord<String>();
 					
-				FemaleInventoryIcon.ReadXML(subEle);
+				FemaleInventoryIcon.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Icon/Message/Female", false, out subEle))
 			{
 				if (FemaleMessageIcon == null)
 					FemaleMessageIcon = new SimpleSubrecord<String>();
 					
-				FemaleMessageIcon.ReadXML(subEle);
+				FemaleMessageIcon.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("RagdollConstraintTemplate", false, out subEle))
 			{
 				if (RagdollConstraintTemplate == null)
 					RagdollConstraintTemplate = new SimpleSubrecord<String>();
 					
-				RagdollConstraintTemplate.ReadXML(subEle);
+				RagdollConstraintTemplate.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("RepairList", false, out subEle))
 			{
 				if (RepairList == null)
 					RepairList = new RecordReference();
 					
-				RepairList.ReadXML(subEle);
+				RepairList.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("BipedModelList", false, out subEle))
 			{
 				if (BipedModelList == null)
 					BipedModelList = new RecordReference();
 					
-				BipedModelList.ReadXML(subEle);
+				BipedModelList.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("EquipmentType", false, out subEle))
 			{
 				if (EquipmentType == null)
 					EquipmentType = new SimpleSubrecord<EquipmentType>();
 					
-				EquipmentType.ReadXML(subEle);
+				EquipmentType.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("PickupSound", false, out subEle))
 			{
 				if (PickupSound == null)
 					PickupSound = new RecordReference();
 					
-				PickupSound.ReadXML(subEle);
+				PickupSound.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("DropSound", false, out subEle))
 			{
 				if (DropSound == null)
 					DropSound = new RecordReference();
 					
-				DropSound.ReadXML(subEle);
+				DropSound.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Data", false, out subEle))
 			{
 				if (Data == null)
 					Data = new ArmorData();
 					
-				Data.ReadXML(subEle);
+				Data.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ExtraData", false, out subEle))
 			{
 				if (ExtraData == null)
 					ExtraData = new ArmorExtraData();
 					
-				ExtraData.ReadXML(subEle);
+				ExtraData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("OverridesAnimationSounds", false, out subEle))
 			{
 				if (OverridesAnimationSounds == null)
 					OverridesAnimationSounds = new SimpleSubrecord<NoYes>();
 					
-				OverridesAnimationSounds.ReadXML(subEle);
+				OverridesAnimationSounds.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("AnimationSounds", false, out subEle))
 			{
@@ -782,7 +782,7 @@ namespace ESPSharp.Records
 				foreach (XElement e in subEle.Elements())
 				{
 					AnimationSound tempSNAM = new AnimationSound();
-					tempSNAM.ReadXML(e);
+					tempSNAM.ReadXML(e, master);
 					AnimationSounds.Add(tempSNAM);
 				}
 			}
@@ -791,7 +791,7 @@ namespace ESPSharp.Records
 				if (AnimationSoundsTemplate == null)
 					AnimationSoundsTemplate = new RecordReference();
 					
-				AnimationSoundsTemplate.ReadXML(subEle);
+				AnimationSoundsTemplate.ReadXML(subEle, master);
 			}
 		}
 

@@ -215,23 +215,23 @@ namespace ESPSharp.Records
 				FemaleFaceGenData.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (Name != null)		
 			{		
 				ele.TryPathTo("Name", true, out subEle);
-				Name.WriteXML(subEle);
+				Name.WriteXML(subEle, master);
 			}
 			if (Description != null)		
 			{		
 				ele.TryPathTo("Description", true, out subEle);
-				Description.WriteXML(subEle);
+				Description.WriteXML(subEle, master);
 			}
 			if (Relationships != null)		
 			{		
@@ -242,7 +242,7 @@ namespace ESPSharp.Records
 				{
 					i = i % xmlNames.Count();
 					XElement newEle = new XElement(xmlNames[i]);
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 					i++;
 				}
@@ -250,86 +250,86 @@ namespace ESPSharp.Records
 			if (Data != null)		
 			{		
 				ele.TryPathTo("Data", true, out subEle);
-				Data.WriteXML(subEle);
+				Data.WriteXML(subEle, master);
 			}
 			if (OlderRace != null)		
 			{		
 				ele.TryPathTo("Race/Older", true, out subEle);
-				OlderRace.WriteXML(subEle);
+				OlderRace.WriteXML(subEle, master);
 			}
 			if (YoungerRace != null)		
 			{		
 				ele.TryPathTo("Race/Younger", true, out subEle);
-				YoungerRace.WriteXML(subEle);
+				YoungerRace.WriteXML(subEle, master);
 			}
 			if (UnknownMarker != null)		
 			{		
 				ele.TryPathTo("UnknownMarker", true, out subEle);
-				UnknownMarker.WriteXML(subEle);
+				UnknownMarker.WriteXML(subEle, master);
 			}
 			if (DefaultVoices != null)		
 			{		
 				ele.TryPathTo("Defaults/Voices", true, out subEle);
-				DefaultVoices.WriteXML(subEle);
+				DefaultVoices.WriteXML(subEle, master);
 			}
 			if (DefaultHairStyles != null)		
 			{		
 				ele.TryPathTo("Defaults/HairStyles", true, out subEle);
-				DefaultHairStyles.WriteXML(subEle);
+				DefaultHairStyles.WriteXML(subEle, master);
 			}
 			if (DefaultHairColors != null)		
 			{		
 				ele.TryPathTo("Defaults/HairColors", true, out subEle);
-				DefaultHairColors.WriteXML(subEle);
+				DefaultHairColors.WriteXML(subEle, master);
 			}
 			if (FaceGenMainClamp != null)		
 			{		
 				ele.TryPathTo("FaceGen/Clamps/Main", true, out subEle);
-				FaceGenMainClamp.WriteXML(subEle);
+				FaceGenMainClamp.WriteXML(subEle, master);
 			}
 			if (FaceGenFaceClamp != null)		
 			{		
 				ele.TryPathTo("FaceGen/Clamps/Face", true, out subEle);
-				FaceGenFaceClamp.WriteXML(subEle);
+				FaceGenFaceClamp.WriteXML(subEle, master);
 			}
 			if (Unknown != null)		
 			{		
 				ele.TryPathTo("Unknown", true, out subEle);
-				Unknown.WriteXML(subEle);
+				Unknown.WriteXML(subEle, master);
 			}
 			if (HeadData != null)		
 			{		
 				ele.TryPathTo("HeadData", true, out subEle);
-				HeadData.WriteXML(subEle);
+				HeadData.WriteXML(subEle, master);
 			}
 			if (BodyData != null)		
 			{		
 				ele.TryPathTo("BodyData", true, out subEle);
-				BodyData.WriteXML(subEle);
+				BodyData.WriteXML(subEle, master);
 			}
 			if (Hairs != null)		
 			{		
 				ele.TryPathTo("Hairs", true, out subEle);
-				Hairs.WriteXML(subEle);
+				Hairs.WriteXML(subEle, master);
 			}
 			if (Eyes != null)		
 			{		
 				ele.TryPathTo("Eyes", true, out subEle);
-				Eyes.WriteXML(subEle);
+				Eyes.WriteXML(subEle, master);
 			}
 			if (MaleFaceGenData != null)		
 			{		
 				ele.TryPathTo("FaceGen/Male", true, out subEle);
-				MaleFaceGenData.WriteXML(subEle);
+				MaleFaceGenData.WriteXML(subEle, master);
 			}
 			if (FemaleFaceGenData != null)		
 			{		
 				ele.TryPathTo("FaceGen/Female", true, out subEle);
-				FemaleFaceGenData.WriteXML(subEle);
+				FemaleFaceGenData.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -338,21 +338,21 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Name", false, out subEle))
 			{
 				if (Name == null)
 					Name = new SimpleSubrecord<String>();
 					
-				Name.ReadXML(subEle);
+				Name.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Description", false, out subEle))
 			{
 				if (Description == null)
 					Description = new SimpleSubrecord<String>();
 					
-				Description.ReadXML(subEle);
+				Description.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Relationships", false, out subEle))
 			{
@@ -362,7 +362,7 @@ namespace ESPSharp.Records
 				foreach (XElement e in subEle.Elements())
 				{
 					Relationship tempXNAM = new Relationship();
-					tempXNAM.ReadXML(e);
+					tempXNAM.ReadXML(e, master);
 					Relationships.Add(tempXNAM);
 				}
 			}
@@ -371,112 +371,112 @@ namespace ESPSharp.Records
 				if (Data == null)
 					Data = new RaceData();
 					
-				Data.ReadXML(subEle);
+				Data.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Race/Older", false, out subEle))
 			{
 				if (OlderRace == null)
 					OlderRace = new RecordReference();
 					
-				OlderRace.ReadXML(subEle);
+				OlderRace.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Race/Younger", false, out subEle))
 			{
 				if (YoungerRace == null)
 					YoungerRace = new RecordReference();
 					
-				YoungerRace.ReadXML(subEle);
+				YoungerRace.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("UnknownMarker", false, out subEle))
 			{
 				if (UnknownMarker == null)
 					UnknownMarker = new SubMarker();
 					
-				UnknownMarker.ReadXML(subEle);
+				UnknownMarker.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Defaults/Voices", false, out subEle))
 			{
 				if (DefaultVoices == null)
 					DefaultVoices = new RaceDefaultVoices();
 					
-				DefaultVoices.ReadXML(subEle);
+				DefaultVoices.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Defaults/HairStyles", false, out subEle))
 			{
 				if (DefaultHairStyles == null)
 					DefaultHairStyles = new RaceDefaultHairStyles();
 					
-				DefaultHairStyles.ReadXML(subEle);
+				DefaultHairStyles.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Defaults/HairColors", false, out subEle))
 			{
 				if (DefaultHairColors == null)
 					DefaultHairColors = new RaceDefaultHairColors();
 					
-				DefaultHairColors.ReadXML(subEle);
+				DefaultHairColors.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("FaceGen/Clamps/Main", false, out subEle))
 			{
 				if (FaceGenMainClamp == null)
 					FaceGenMainClamp = new SimpleSubrecord<Single>();
 					
-				FaceGenMainClamp.ReadXML(subEle);
+				FaceGenMainClamp.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("FaceGen/Clamps/Face", false, out subEle))
 			{
 				if (FaceGenFaceClamp == null)
 					FaceGenFaceClamp = new SimpleSubrecord<Single>();
 					
-				FaceGenFaceClamp.ReadXML(subEle);
+				FaceGenFaceClamp.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Unknown", false, out subEle))
 			{
 				if (Unknown == null)
 					Unknown = new SimpleSubrecord<Byte[]>();
 					
-				Unknown.ReadXML(subEle);
+				Unknown.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("HeadData", false, out subEle))
 			{
 				if (HeadData == null)
 					HeadData = new RaceHeadData();
 					
-				HeadData.ReadXML(subEle);
+				HeadData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("BodyData", false, out subEle))
 			{
 				if (BodyData == null)
 					BodyData = new RaceBodyData();
 					
-				BodyData.ReadXML(subEle);
+				BodyData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Hairs", false, out subEle))
 			{
 				if (Hairs == null)
 					Hairs = new FormArray();
 					
-				Hairs.ReadXML(subEle);
+				Hairs.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Eyes", false, out subEle))
 			{
 				if (Eyes == null)
 					Eyes = new FormArray();
 					
-				Eyes.ReadXML(subEle);
+				Eyes.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("FaceGen/Male", false, out subEle))
 			{
 				if (MaleFaceGenData == null)
 					MaleFaceGenData = new FaceGenData();
 					
-				MaleFaceGenData.ReadXML(subEle);
+				MaleFaceGenData.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("FaceGen/Female", false, out subEle))
 			{
 				if (FemaleFaceGenData == null)
 					FemaleFaceGenData = new FaceGenData();
 					
-				FemaleFaceGenData.ReadXML(subEle);
+				FemaleFaceGenData.ReadXML(subEle, master);
 			}
 		}
 

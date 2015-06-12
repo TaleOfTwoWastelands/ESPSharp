@@ -116,38 +116,38 @@ namespace ESPSharp.SubrecordCollections
 				FaceGenModelFlags.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (FileName != null)		
 			{		
 				ele.TryPathTo("FileName", true, out subEle);
-				FileName.WriteXML(subEle);
+				FileName.WriteXML(subEle, master);
 			}
 			if (Unknown != null)		
 			{		
 				ele.TryPathTo("Unknown", true, out subEle);
-				Unknown.WriteXML(subEle);
+				Unknown.WriteXML(subEle, master);
 			}
 			if (TextureFileHash != null)		
 			{		
 				ele.TryPathTo("TextureFileHash", true, out subEle);
-				TextureFileHash.WriteXML(subEle);
+				TextureFileHash.WriteXML(subEle, master);
 			}
 			if (AlternateTextures != null)		
 			{		
 				ele.TryPathTo("AlternateTextures", true, out subEle);
-				AlternateTextures.WriteXML(subEle);
+				AlternateTextures.WriteXML(subEle, master);
 			}
 			if (FaceGenModelFlags != null)		
 			{		
 				ele.TryPathTo("FaceGenModelFlags", true, out subEle);
-				FaceGenModelFlags.WriteXML(subEle);
+				FaceGenModelFlags.WriteXML(subEle, master);
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
@@ -156,35 +156,35 @@ namespace ESPSharp.SubrecordCollections
 				if (FileName == null)
 					FileName = new SimpleSubrecord<String>();
 					
-				FileName.ReadXML(subEle);
+				FileName.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Unknown", false, out subEle))
 			{
 				if (Unknown == null)
 					Unknown = new SimpleSubrecord<Byte[]>();
 					
-				Unknown.ReadXML(subEle);
+				Unknown.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("TextureFileHash", false, out subEle))
 			{
 				if (TextureFileHash == null)
 					TextureFileHash = new SimpleSubrecord<Byte[]>();
 					
-				TextureFileHash.ReadXML(subEle);
+				TextureFileHash.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("AlternateTextures", false, out subEle))
 			{
 				if (AlternateTextures == null)
 					AlternateTextures = new AlternateTextures();
 					
-				AlternateTextures.ReadXML(subEle);
+				AlternateTextures.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("FaceGenModelFlags", false, out subEle))
 			{
 				if (FaceGenModelFlags == null)
 					FaceGenModelFlags = new SimpleSubrecord<FaceGenModelFlags>();
 					
-				FaceGenModelFlags.ReadXML(subEle);
+				FaceGenModelFlags.ReadXML(subEle, master);
 			}
 		}
 

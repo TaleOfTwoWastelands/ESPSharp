@@ -72,35 +72,35 @@ namespace ESPSharp.Subrecords
 			RunOnReference.WriteBinary(writer);
 		}
 
-		protected override void WriteDataXML(XElement ele)
+		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			ele.TryPathTo("Comparison", true, out subEle);
-			Comparison.WriteXML(subEle);
+			Comparison.WriteXML(subEle, master);
 
 			ele.TryPathTo("Function", true, out subEle);
-			Function.WriteXML(subEle);
+			Function.WriteXML(subEle, master);
 
 			ele.TryPathTo("RunOn", true, out subEle);
 			subEle.Value = RunOn.ToString();
 
 			ele.TryPathTo("RunOnReference", true, out subEle);
-			RunOnReference.WriteXML(subEle);
+			RunOnReference.WriteXML(subEle, master);
 		}
 
-		protected override void ReadDataXML(XElement ele)
+		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (ele.TryPathTo("Comparison", false, out subEle))
 			{
-				Comparison.ReadXML(subEle);
+				Comparison.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("Function", false, out subEle))
 			{
-				Function.ReadXML(subEle);
+				Function.ReadXML(subEle, master);
 			}
 
 			if (ele.TryPathTo("RunOn", false, out subEle))
@@ -110,7 +110,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("RunOnReference", false, out subEle))
 			{
-				RunOnReference.ReadXML(subEle);
+				RunOnReference.ReadXML(subEle, master);
 			}
 		}
 

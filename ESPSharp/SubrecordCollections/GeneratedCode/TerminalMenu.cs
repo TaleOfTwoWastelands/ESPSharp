@@ -141,39 +141,39 @@ namespace ESPSharp.SubrecordCollections
 					item.WriteBinary(writer);
 		}
 
-		public override void WriteXML(XElement ele)
+		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
 			if (ItemText != null)		
 			{		
 				ele.TryPathTo("ItemText", true, out subEle);
-				ItemText.WriteXML(subEle);
+				ItemText.WriteXML(subEle, master);
 			}
 			if (ResultText != null)		
 			{		
 				ele.TryPathTo("ResultText", true, out subEle);
-				ResultText.WriteXML(subEle);
+				ResultText.WriteXML(subEle, master);
 			}
 			if (Flags != null)		
 			{		
 				ele.TryPathTo("Flags", true, out subEle);
-				Flags.WriteXML(subEle);
+				Flags.WriteXML(subEle, master);
 			}
 			if (DisplayNote != null)		
 			{		
 				ele.TryPathTo("DisplayNote", true, out subEle);
-				DisplayNote.WriteXML(subEle);
+				DisplayNote.WriteXML(subEle, master);
 			}
 			if (SubMenu != null)		
 			{		
 				ele.TryPathTo("SubMenu", true, out subEle);
-				SubMenu.WriteXML(subEle);
+				SubMenu.WriteXML(subEle, master);
 			}
 			if (Script != null)		
 			{		
 				ele.TryPathTo("Script", true, out subEle);
-				Script.WriteXML(subEle);
+				Script.WriteXML(subEle, master);
 			}
 			if (Conditions != null)		
 			{		
@@ -181,13 +181,13 @@ namespace ESPSharp.SubrecordCollections
 				foreach (var entry in Conditions)
 				{
 					XElement newEle = new XElement("Condition");
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 				}
 			}
 		}
 
-		public override void ReadXML(XElement ele)
+		public override void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			
@@ -196,42 +196,42 @@ namespace ESPSharp.SubrecordCollections
 				if (ItemText == null)
 					ItemText = new SimpleSubrecord<String>();
 					
-				ItemText.ReadXML(subEle);
+				ItemText.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ResultText", false, out subEle))
 			{
 				if (ResultText == null)
 					ResultText = new SimpleSubrecord<String>();
 					
-				ResultText.ReadXML(subEle);
+				ResultText.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Flags", false, out subEle))
 			{
 				if (Flags == null)
 					Flags = new SimpleSubrecord<TerminalMenuFlags>();
 					
-				Flags.ReadXML(subEle);
+				Flags.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("DisplayNote", false, out subEle))
 			{
 				if (DisplayNote == null)
 					DisplayNote = new RecordReference();
 					
-				DisplayNote.ReadXML(subEle);
+				DisplayNote.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("SubMenu", false, out subEle))
 			{
 				if (SubMenu == null)
 					SubMenu = new RecordReference();
 					
-				SubMenu.ReadXML(subEle);
+				SubMenu.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Script", false, out subEle))
 			{
 				if (Script == null)
 					Script = new EmbeddedScript();
 					
-				Script.ReadXML(subEle);
+				Script.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Conditions", false, out subEle))
 			{
@@ -241,7 +241,7 @@ namespace ESPSharp.SubrecordCollections
 				foreach (XElement e in subEle.Elements())
 				{
 					Condition temp = new Condition();
-					temp.ReadXML(e);
+					temp.ReadXML(e, master);
 					Conditions.Add(temp);
 				}
 			}

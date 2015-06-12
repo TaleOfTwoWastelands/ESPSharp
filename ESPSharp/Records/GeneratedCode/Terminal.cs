@@ -134,58 +134,58 @@ namespace ESPSharp.Records
 					item.WriteBinary(writer);
 		}
 
-		public override void WriteDataXML(XElement ele)
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 			if (EditorID != null)		
 			{		
 				ele.TryPathTo("EditorID", true, out subEle);
-				EditorID.WriteXML(subEle);
+				EditorID.WriteXML(subEle, master);
 			}
 			if (ObjectBounds != null)		
 			{		
 				ele.TryPathTo("ObjectBounds", true, out subEle);
-				ObjectBounds.WriteXML(subEle);
+				ObjectBounds.WriteXML(subEle, master);
 			}
 			if (Name != null)		
 			{		
 				ele.TryPathTo("Name", true, out subEle);
-				Name.WriteXML(subEle);
+				Name.WriteXML(subEle, master);
 			}
 			if (Model != null)		
 			{		
 				ele.TryPathTo("Model", true, out subEle);
-				Model.WriteXML(subEle);
+				Model.WriteXML(subEle, master);
 			}
 			if (Script != null)		
 			{		
 				ele.TryPathTo("Script", true, out subEle);
-				Script.WriteXML(subEle);
+				Script.WriteXML(subEle, master);
 			}
 			if (Destructable != null)		
 			{		
 				ele.TryPathTo("Destructable", true, out subEle);
-				Destructable.WriteXML(subEle);
+				Destructable.WriteXML(subEle, master);
 			}
 			if (WelcomeText != null)		
 			{		
 				ele.TryPathTo("WelcomeText", true, out subEle);
-				WelcomeText.WriteXML(subEle);
+				WelcomeText.WriteXML(subEle, master);
 			}
 			if (LoopingSound != null)		
 			{		
 				ele.TryPathTo("LoopingSound", true, out subEle);
-				LoopingSound.WriteXML(subEle);
+				LoopingSound.WriteXML(subEle, master);
 			}
 			if (Password != null)		
 			{		
 				ele.TryPathTo("Password", true, out subEle);
-				Password.WriteXML(subEle);
+				Password.WriteXML(subEle, master);
 			}
 			if (Data != null)		
 			{		
 				ele.TryPathTo("Data", true, out subEle);
-				Data.WriteXML(subEle);
+				Data.WriteXML(subEle, master);
 			}
 			if (Selections != null)		
 			{		
@@ -196,14 +196,14 @@ namespace ESPSharp.Records
 				{
 					i = i % xmlNames.Count();
 					XElement newEle = new XElement(xmlNames[i]);
-					entry.WriteXML(newEle);
+					entry.WriteXML(newEle, master);
 					subEle.Add(newEle);
 					i++;
 				}
 			}
 		}
 
-		public override void ReadDataXML(XElement ele)
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
 
@@ -212,70 +212,70 @@ namespace ESPSharp.Records
 				if (EditorID == null)
 					EditorID = new SimpleSubrecord<String>();
 					
-				EditorID.ReadXML(subEle);
+				EditorID.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("ObjectBounds", false, out subEle))
 			{
 				if (ObjectBounds == null)
 					ObjectBounds = new ObjectBounds();
 					
-				ObjectBounds.ReadXML(subEle);
+				ObjectBounds.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Name", false, out subEle))
 			{
 				if (Name == null)
 					Name = new SimpleSubrecord<String>();
 					
-				Name.ReadXML(subEle);
+				Name.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Model", false, out subEle))
 			{
 				if (Model == null)
 					Model = new Model();
 					
-				Model.ReadXML(subEle);
+				Model.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Script", false, out subEle))
 			{
 				if (Script == null)
 					Script = new RecordReference();
 					
-				Script.ReadXML(subEle);
+				Script.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Destructable", false, out subEle))
 			{
 				if (Destructable == null)
 					Destructable = new Destructable();
 					
-				Destructable.ReadXML(subEle);
+				Destructable.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("WelcomeText", false, out subEle))
 			{
 				if (WelcomeText == null)
 					WelcomeText = new SimpleSubrecord<String>();
 					
-				WelcomeText.ReadXML(subEle);
+				WelcomeText.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("LoopingSound", false, out subEle))
 			{
 				if (LoopingSound == null)
 					LoopingSound = new RecordReference();
 					
-				LoopingSound.ReadXML(subEle);
+				LoopingSound.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Password", false, out subEle))
 			{
 				if (Password == null)
 					Password = new RecordReference();
 					
-				Password.ReadXML(subEle);
+				Password.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Data", false, out subEle))
 			{
 				if (Data == null)
 					Data = new TerminalData();
 					
-				Data.ReadXML(subEle);
+				Data.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Selections", false, out subEle))
 			{
@@ -285,7 +285,7 @@ namespace ESPSharp.Records
 				foreach (XElement e in subEle.Elements())
 				{
 					TerminalMenu tempITXT = new TerminalMenu();
-					tempITXT.ReadXML(e);
+					tempITXT.ReadXML(e, master);
 					Selections.Add(tempITXT);
 				}
 			}

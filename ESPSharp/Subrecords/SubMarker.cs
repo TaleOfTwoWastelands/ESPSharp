@@ -33,11 +33,11 @@ namespace ESPSharp.Subrecords
         {
         }
 
-        protected override void WriteDataXML(XElement ele)
+        protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
         {
         }
 
-        protected override void ReadDataXML(XElement ele)
+        protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
         {
         }
 
