@@ -32,7 +32,7 @@
   <PropertyGroup />
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\..\Visual Studio 2013\Projects\ESPSharpOLD\ESPSharp\ESPSharp\bin\Debug\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
