@@ -324,6 +324,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Terminal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Tree.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tree.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GenericRecord.cs" />
     <Compile Include="Records\GeneratedCode\TextureSet.cs">
       <AutoGen>True</AutoGen>
@@ -502,6 +507,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Terminal.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Tree.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Tree.cs</LastGenOutput>
+    </None>
     <None Include="SubrecordCollections\GeneratedCode\Destructable.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Destructable.cs</LastGenOutput>
@@ -575,6 +584,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Attributes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\BillboardDimensions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BillboardDimensions.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\BipedData.cs">
       <AutoGen>True</AutoGen>
@@ -746,6 +760,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TerminalData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\TreeData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TreeData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\ValueWeight.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -753,6 +772,7 @@
     </Compile>
     <Compile Include="Subrecords\InventoryItemExtraData.cs" />
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
+    <Compile Include="Subrecords\SpeedtreeSeeds.cs" />
     <Compile Include="Subrecords\StaticCollectionPartData.cs" />
     <Compile Include="Subrecords\SubMarker.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
@@ -777,6 +797,10 @@
     <None Include="Subrecords\GeneratedCode\ArmorExtraData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ArmorExtraData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\BillboardDimensions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BillboardDimensions.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\BipedData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -817,6 +841,10 @@
     <None Include="Subrecords\GeneratedCode\TerminalData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TerminalData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\TreeData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TreeData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\ValueWeight.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
