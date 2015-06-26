@@ -271,6 +271,8 @@ namespace ESPSharp.Records
 
 						AnimationSoundsTemplate.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

@@ -82,6 +82,8 @@ namespace ESPSharp.Records
 
 						ScreenshotData.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

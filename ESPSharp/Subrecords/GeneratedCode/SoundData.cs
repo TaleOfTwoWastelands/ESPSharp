@@ -289,5 +289,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new SoundData(this);
 		}
+
 	}
 }

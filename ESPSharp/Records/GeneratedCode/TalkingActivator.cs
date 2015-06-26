@@ -87,6 +87,8 @@ namespace ESPSharp.Records
 
 						RadioTemplate.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

@@ -345,5 +345,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new RaceData(this);
 		}
+
 	}
 }

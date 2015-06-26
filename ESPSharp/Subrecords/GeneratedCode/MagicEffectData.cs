@@ -331,5 +331,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new MagicEffectData(this);
 		}
+
 	}
 }

@@ -132,5 +132,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new EffectData(this);
 		}
+
 	}
 }

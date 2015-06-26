@@ -124,5 +124,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new LocalVariableData(this);
 		}
+
 	}
 }

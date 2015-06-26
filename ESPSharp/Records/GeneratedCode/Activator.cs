@@ -108,6 +108,8 @@ namespace ESPSharp.Records
 
 						ActivationPrompt.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

@@ -52,6 +52,8 @@ namespace ESPSharp.Records
 
 						EyesFlags.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

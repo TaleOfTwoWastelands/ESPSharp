@@ -149,5 +149,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new ScriptData(this);
 		}
+
 	}
 }

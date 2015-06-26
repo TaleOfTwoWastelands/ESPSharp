@@ -73,6 +73,8 @@ namespace ESPSharp.Records
 
 						BillboardDimensions.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

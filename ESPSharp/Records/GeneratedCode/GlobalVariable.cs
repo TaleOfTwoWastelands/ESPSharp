@@ -45,6 +45,8 @@ namespace ESPSharp.Records
 
 						Value.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

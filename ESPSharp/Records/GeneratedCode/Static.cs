@@ -59,6 +59,8 @@ namespace ESPSharp.Records
 
 						Looping_RandomSound.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

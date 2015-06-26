@@ -96,6 +96,8 @@ namespace ESPSharp.Records
 						tempEFID.ReadBinary(reader);
 						Effects.Add(tempEFID);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

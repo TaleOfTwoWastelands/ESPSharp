@@ -59,6 +59,8 @@ namespace ESPSharp.Records
 
 						HairFlags.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

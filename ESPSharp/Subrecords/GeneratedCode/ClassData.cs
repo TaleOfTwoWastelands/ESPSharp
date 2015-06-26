@@ -191,5 +191,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new ClassData(this);
 		}
+
 	}
 }

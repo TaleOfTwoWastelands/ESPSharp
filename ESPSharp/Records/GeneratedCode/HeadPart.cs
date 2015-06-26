@@ -61,6 +61,8 @@ namespace ESPSharp.Records
 						tempHNAM.ReadBinary(reader);
 						ExtraParts.Add(tempHNAM);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

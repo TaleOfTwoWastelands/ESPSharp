@@ -94,6 +94,8 @@ namespace ESPSharp.Records
 
 						TextureSetFlags.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

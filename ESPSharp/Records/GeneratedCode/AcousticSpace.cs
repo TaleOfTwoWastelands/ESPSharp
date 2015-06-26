@@ -75,6 +75,8 @@ namespace ESPSharp.Records
 
 						IsInterior.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

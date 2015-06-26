@@ -107,5 +107,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new FactionData(this);
 		}
+
 	}
 }

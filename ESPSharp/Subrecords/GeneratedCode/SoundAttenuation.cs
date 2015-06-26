@@ -132,5 +132,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new SoundAttenuation(this);
 		}
+
 	}
 }

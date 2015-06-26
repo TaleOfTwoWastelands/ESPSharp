@@ -54,7 +54,10 @@ namespace ESPSharp
             }
 
             foreach (var view in ChildRecordViews)
-                view.Record.WriteXML(Path.Combine(destinationFolder, view.Record.ToString() + ".xml"), master);
+            {
+                var record = view.Record;
+                record.WriteXML(Path.Combine(destinationFolder, record.ToString() + ".xml"), master);
+            }
         }
 
         public void ReadXML(string sourceFolder, ElderScrollsPlugin master)
@@ -124,8 +127,9 @@ namespace ESPSharp
 
             foreach (var view in ChildRecordViews)
             {
-                view.Record.WriteBinary(writer);
-                Group recordGroup = groups.FirstOrDefault(g => g is ISubgroup && ((uint)(g as ISubgroup).GetRecordID()) == ((uint)view.Record.FormID));
+                var record = view.Record;
+                record.WriteBinary(writer);
+                Group recordGroup = groups.FirstOrDefault(g => g is ISubgroup && ((uint)(g as ISubgroup).GetRecordID()) == ((uint)record.FormID));
 
                 if (recordGroup != null)
                 {

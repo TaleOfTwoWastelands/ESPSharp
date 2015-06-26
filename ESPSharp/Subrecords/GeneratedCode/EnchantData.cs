@@ -141,5 +141,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new EnchantData(this);
 		}
+
 	}
 }

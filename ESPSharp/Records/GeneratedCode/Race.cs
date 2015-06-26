@@ -166,6 +166,8 @@ namespace ESPSharp.Records
 
 						FemaleFaceGenData.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

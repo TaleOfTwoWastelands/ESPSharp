@@ -1,0 +1,610 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Weapon";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"OBND",
+			typeof(ObjectBounds),
+			"ObjectBounds",
+			"ObjectBounds"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"MODL",
+			typeof(SimpleSubrecord<string>),
+			"ModelFileName",
+			"Model/FileName"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODB",
+			typeof(SimpleSubrecord<byte[]>),
+			"ModelUnknown",
+			"Model/Unknown"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODT",
+			typeof(SimpleSubrecord<byte[]>),
+			"ModelTextureFileHash",
+			"Model/TextureFileHash"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODS",
+			typeof(AlternateTextures),
+			"ModelAlternateTextures",
+			"Model/AlternateTextures"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODD",
+			typeof(SimpleSubrecord<FaceGenModelFlags>),
+			"FaceGenModelFlags",
+			"FaceGenModelFlags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ICON",
+			typeof(SimpleSubrecord<string>),
+			"LargeIcon",
+			"Icon/Large"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MICO",
+			typeof(SimpleSubrecord<string>),
+			"SmallIcon",
+			"Icon/Small"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SCRI",
+			typeof(RecordReference),
+			"Script",
+			"Script"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"EITM",
+			typeof(RecordReference),
+			"ObjectEffect",
+			"ObjectEffect"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"EAMT",
+			typeof(SimpleSubrecord<ushort>),
+			"EnchantmentChargeAmount",
+			"EnchantmentChargeAmount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM0",
+			typeof(RecordReference),
+			"Ammo",
+			"Ammo"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DEST",
+			typeof(Destructable),
+			"Destructable",
+			"Destructable"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"REPL",
+			typeof(RecordReference),
+			"RepairList",
+			"RepairList"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ETYP",
+			typeof(SimpleSubrecord<EquipmentType>),
+			"EquipmentType",
+			"EquipmentType"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"BIPL",
+			typeof(RecordReference),
+			"BipedalModelList",
+			"BipedalModelList"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"YNAM",
+			typeof(RecordReference),
+			"PickUpSound",
+			"Sound/PickUp"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ZNAM",
+			typeof(RecordReference),
+			"DropSound",
+			"Sound/Drop"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MOD2",
+			typeof(SimpleSubrecord<string>),
+			"ShellCasingModelFileName",
+			"ShellCasingModel/FileName"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO2T",
+			typeof(SimpleSubrecord<byte[]>),
+			"ShellCasingModelTextureFileHash",
+			"ShellCasingModel/TextureFileHash"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO2S",
+			typeof(AlternateTextures),
+			"ShellCasingModelAlternateTextures",
+			"ShellCasingModel/AlternateTextures"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MOD3",
+			typeof(SimpleSubrecord<string>),
+			"ScopeModelFileName",
+			"ScopeModel/FileName"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO3T",
+			typeof(SimpleSubrecord<byte[]>),
+			"ScopeModelTextureFileHash",
+			"ScopeModel/TextureFileHash"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO3S",
+			typeof(AlternateTextures),
+			"ScopeModelAlternateTextures",
+			"ScopeModel/AlternateTextures"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"EFSD",
+			typeof(RecordReference),
+			"ScopeEffect",
+			"ScopeEffect"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MOD4",
+			typeof(SimpleSubrecord<string>),
+			"ScopeEffectModelFileName",
+			"ScopeEffectModel/FileName"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO4T",
+			typeof(SimpleSubrecord<byte[]>),
+			"ScopeEffectModelTextureFileHash",
+			"ScopeEffectModel/TextureFileHash"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO4S",
+			typeof(AlternateTextures),
+			"ScopeEffectModelAlternateTextures",
+			"ScopeEffectModel/AlternateTextures"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"MWD1",
+			typeof(SimpleSubrecord<string>),
+			"ModelWithMod1",
+			"ModelWithMod1"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"MWD2",
+			typeof(SimpleSubrecord<string>),
+			"ModelWithMod2",
+			"ModelWithMod2"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"MWD3",
+			typeof(SimpleSubrecord<string>),
+			"ModelWithMod1_2",
+			"ModelWithMod1_2"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"MWD4",
+			typeof(SimpleSubrecord<string>),
+			"ModelWithMod3",
+			"ModelWithMod3"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"MWD5",
+			typeof(SimpleSubrecord<string>),
+			"ModelWithMod1_3",
+			"ModelWithMod1_3"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"MWD6",
+			typeof(SimpleSubrecord<string>),
+			"ModelWithMod2_3",
+			"ModelWithMod2_3"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"MWD7",
+			typeof(SimpleSubrecord<string>),
+			"ModelWithMod1_2_3",
+			"ModelWithMod1_2_3"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"VANM",
+			typeof(SimpleSubrecord<string>),
+			"VATSAttackName",
+			"VATSAttackName"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"NNAM",
+			typeof(SimpleSubrecord<string>),
+			"EmbeddedWeaponNode",
+			"EmbeddedWeaponNode"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"INAM",
+			typeof(RecordReference),
+			"ImpactDataset",
+			"ImpactDataset"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WNAM",
+			typeof(RecordReference),
+			"FirstPersonModel",
+			"FirstPersonModel"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WNM1",
+			typeof(RecordReference),
+			"FirstPersonModelWithMod1",
+			"FirstPersonModelWithMod1"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WNM2",
+			typeof(RecordReference),
+			"FirstPersonModelWithMod2",
+			"FirstPersonModelWithMod2"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WNM3",
+			typeof(RecordReference),
+			"FirstPersonModelWithMod1_2",
+			"FirstPersonModelWithMod1_2"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WNM4",
+			typeof(RecordReference),
+			"FirstPersonModelWithMod3",
+			"FirstPersonModelWithMod3"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WNM5",
+			typeof(RecordReference),
+			"FirstPersonModelWithMod1_3",
+			"FirstPersonModelWithMod1_3"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WNM6",
+			typeof(RecordReference),
+			"FirstPersonModelWithMod2_3",
+			"FirstPersonModelWithMod2_3"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WNM7",
+			typeof(RecordReference),
+			"FirstPersonModelWithMod1_2_3",
+			"FirstPersonModelWithMod1_2_3"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WMI1",
+			typeof(RecordReference),
+			"WeaponMod1",
+			"WeaponMod1"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WMI2",
+			typeof(RecordReference),
+			"WeaponMod2",
+			"WeaponMod2"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WMI3",
+			typeof(RecordReference),
+			"WeaponMod3",
+			"WeaponMod3"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"SNAM",
+			typeof(List<RecordReference>),
+			"SoundGunShoot",
+			"Sound/Gun/Shoot"
+			);
+	tempField.XMLSubNames = new List<string> {"_3D", "Distant"};
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"XNAM",
+			typeof(RecordReference),
+			"SoundGunShoot2D",
+			"Sound/Gun/Shoot2D"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"NAM7",
+			typeof(RecordReference),
+			"SoundGunShoot3DLooping",
+			"Sound/Gun/Shoot3DLooping"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"TNAM",
+			typeof(RecordReference),
+			"SoundMeleeSwing",
+			"Sound/Melee/Swing"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"NAM6",
+			typeof(RecordReference),
+			"SoundMeleeBlock",
+			"Sound/Melee/Block"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"UNAM",
+			typeof(RecordReference),
+			"SoundIdle",
+			"Sound/Idle"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"NAM9",
+			typeof(RecordReference),
+			"SoundEquip",
+			"Sound/Equip"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"NAM8",
+			typeof(RecordReference),
+			"SoundUnequip",
+			"Sound/Unequip"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WMS1",
+			typeof(List<RecordReference>),
+			"SoundMod1Shoot",
+			"Sound/Mod1Shoot"
+			);
+	tempField.XMLSubNames = new List<string> {"_3D", "Distant"};
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"WMS2",
+			typeof(RecordReference),
+			"SoundMod1Shoot2D",
+			"Sound/Mod1/Shoot2D"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(WeaponData),
+			"Data",
+			"Data"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"DNAM",
+			typeof(WeaponExtraData),
+			"ExtraData",
+			"ExtraData"
+			);
+	template.Fields.Add(tempField);
+	tempField.isRequired = true;
+	
+	tempField = 
+		new RecordField(
+			"CRDT",
+			typeof(WeaponCriticalHitData),
+			"CriticalHitData",
+			"CriticalHitData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"VATS",
+			typeof(WeaponVATSData),
+			"VATSSpecialAttack",
+			"VATSSpecialAttack"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"VNAM",
+			typeof(SimpleSubrecord<uint>),
+			"SoundLevel",
+			"SoundLevel"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

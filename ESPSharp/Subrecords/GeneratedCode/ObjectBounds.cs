@@ -146,5 +146,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new ObjectBounds(this);
 		}
+
 	}
 }

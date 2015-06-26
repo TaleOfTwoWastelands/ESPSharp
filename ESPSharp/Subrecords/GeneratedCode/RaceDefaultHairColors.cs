@@ -90,5 +90,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new RaceDefaultHairColors(this);
 		}
+
 	}
 }

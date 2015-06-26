@@ -35,6 +35,8 @@ namespace ESPSharp.Records
 					case "DATA":
 						ReadValue(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

@@ -118,5 +118,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new Condition(this);
 		}
+
 	}
 }

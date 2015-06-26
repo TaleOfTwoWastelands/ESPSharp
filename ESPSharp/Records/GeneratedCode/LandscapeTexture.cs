@@ -68,6 +68,8 @@ namespace ESPSharp.Records
 						tempGNAM.ReadBinary(reader);
 						Grasses.Add(tempGNAM);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

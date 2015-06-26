@@ -54,6 +54,8 @@ namespace ESPSharp.Records
 						tempONAM.ReadBinary(reader);
 						Parts.Add(tempONAM);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

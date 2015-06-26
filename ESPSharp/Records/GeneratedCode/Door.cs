@@ -94,6 +94,8 @@ namespace ESPSharp.Records
 
 						DoorFlags.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

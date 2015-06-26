@@ -77,6 +77,8 @@ namespace ESPSharp.Records
 
 						Reputation.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

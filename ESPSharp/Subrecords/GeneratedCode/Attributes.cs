@@ -160,5 +160,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new Attributes(this);
 		}
+
 	}
 }

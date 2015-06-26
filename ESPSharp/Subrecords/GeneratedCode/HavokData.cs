@@ -104,5 +104,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new HavokData(this);
 		}
+
 	}
 }

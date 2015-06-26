@@ -74,6 +74,7 @@
     <Compile Include="Enums\CreatureType.cs" />
     <Compile Include="Enums\CriticalStage.cs" />
     <Compile Include="Enums\EffectType.cs" />
+    <Compile Include="Enums\EmbeddedWeaponActorValue.cs" />
     <Compile Include="Enums\EnchantType.cs" />
     <Compile Include="Enums\EnvironmentType.cs" />
     <Compile Include="Enums\EquipmentType.cs" />
@@ -100,6 +101,9 @@
     <Compile Include="Enums\Flags\SpellFlags.cs" />
     <Compile Include="Enums\Flags\TerminalFlags.cs" />
     <Compile Include="Enums\Flags\TerminalMenuFlags.cs" />
+    <Compile Include="Enums\Flags\WeaponCritFlags.cs" />
+    <Compile Include="Enums\Flags\WeaponDataFlags1.cs" />
+    <Compile Include="Enums\Flags\WeaponDataFlags2.cs" />
     <Compile Include="Enums\FormType.cs" />
     <Compile Include="Enums\FunctionTarget.cs" />
     <Compile Include="Enums\FunctionType.cs" />
@@ -108,11 +112,13 @@
     <Compile Include="Enums\HairColor.cs" />
     <Compile Include="Enums\HeadPartIndex.cs" />
     <Compile Include="Enums\IsInterior.cs" />
+    <Compile Include="Enums\LimbKillBehavior.cs" />
     <Compile Include="Enums\MagicEffectArchetype.cs" />
     <Compile Include="Enums\MagicSchool.cs" />
     <Compile Include="Enums\MaterialType.cs" />
     <Compile Include="Enums\MenuMode.cs" />
     <Compile Include="Enums\MiscStat.cs" />
+    <Compile Include="Enums\NoYesByte.cs" />
     <Compile Include="Enums\NoYes.cs" />
     <Compile Include="Enums\PassthroughSound.cs" />
     <Compile Include="Enums\PlayerAction.cs" />
@@ -122,7 +128,14 @@
     <Compile Include="Enums\UnitFromWaterType.cs" />
     <Compile Include="Enums\VATSAction.cs" />
     <Compile Include="Enums\VATSValue.cs" />
+    <Compile Include="Enums\WeaponAnimationType.cs" />
+    <Compile Include="Enums\WeaponAttackAnimationType.cs" />
     <Compile Include="Enums\WeaponCategory.cs" />
+    <Compile Include="Enums\WeaponGripAnimationType.cs" />
+    <Compile Include="Enums\WeaponModEffect.cs" />
+    <Compile Include="Enums\WeaponPowerAttackAnimation.cs" />
+    <Compile Include="Enums\WeaponReloadAnimationType.cs" />
+    <Compile Include="Enums\WeaponRumblePattern.cs" />
     <Compile Include="Interfaces\ICloneable.cs" />
     <Compile Include="Enums\ActorValues.cs" />
     <Compile Include="Enums\DataSource.cs" />
@@ -213,6 +226,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Faction.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\Furniture.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Furniture.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\GameSetting.cs">
       <AutoGen>True</AutoGen>
@@ -329,6 +347,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Tree.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Weapon.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Weapon.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GenericRecord.cs" />
     <Compile Include="Records\GeneratedCode\TextureSet.cs">
       <AutoGen>True</AutoGen>
@@ -443,6 +466,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Door.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Furniture.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Furniture.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Grass.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Grass.cs</LastGenOutput>
@@ -510,6 +537,10 @@
     <None Include="Records\GeneratedCode\Tree.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Tree.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Weapon.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Weapon.cs</LastGenOutput>
     </None>
     <None Include="SubrecordCollections\GeneratedCode\Destructable.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -770,6 +801,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ValueWeight.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\WeaponCriticalHitData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeaponCriticalHitData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\WeaponData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeaponData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\WeaponExtraData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeaponExtraData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\WeaponVATSData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeaponVATSData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\InventoryItemExtraData.cs" />
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
     <Compile Include="Subrecords\SpeedtreeSeeds.cs" />
@@ -849,6 +900,22 @@
     <None Include="Subrecords\GeneratedCode\ValueWeight.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ValueWeight.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\WeaponCriticalHitData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WeaponCriticalHitData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\WeaponData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WeaponData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\WeaponExtraData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WeaponExtraData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\WeaponVATSData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WeaponVATSData.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

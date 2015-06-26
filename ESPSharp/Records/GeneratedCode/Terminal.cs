@@ -103,6 +103,8 @@ namespace ESPSharp.Records
 						tempITXT.ReadBinary(reader);
 						Selections.Add(tempITXT);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

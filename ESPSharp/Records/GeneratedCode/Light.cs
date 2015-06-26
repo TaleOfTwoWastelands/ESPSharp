@@ -87,6 +87,8 @@ namespace ESPSharp.Records
 
 						Sound.ReadBinary(reader);
 						break;
+					default:
+						throw new Exception();
 				}
 			}
 		}

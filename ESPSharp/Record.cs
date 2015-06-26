@@ -301,6 +301,15 @@ namespace ESPSharp
                 case "GRAS":
                     outRecord = new Grass();
                     break;
+                case "TREE":
+                    outRecord = new Tree();
+                    break;
+                case "FURN":
+                    outRecord = new Furniture();
+                    break;
+                case "WEAP":
+                    outRecord = new Weapon();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;

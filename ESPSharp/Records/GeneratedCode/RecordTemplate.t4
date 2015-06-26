@@ -58,6 +58,8 @@ namespace ESPSharp.Records
 <# } #>
 						break;
 <# } #>
+					default:
+						throw new Exception();
 				}
 			}
 		}

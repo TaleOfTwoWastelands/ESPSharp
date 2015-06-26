@@ -174,5 +174,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new SoundDataShort(this);
 		}
+
 	}
 }

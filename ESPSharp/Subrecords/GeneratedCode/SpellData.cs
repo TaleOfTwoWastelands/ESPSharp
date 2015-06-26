@@ -135,5 +135,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new SpellData(this);
 		}
+
 	}
 }

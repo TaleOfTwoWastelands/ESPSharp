@@ -76,5 +76,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new RecordReference(this);
 		}
+
 	}
 }

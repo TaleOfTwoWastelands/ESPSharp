@@ -219,5 +219,6 @@ namespace ESPSharp.Subrecords
 		{
 			return new DecalData(this);
 		}
+
 	}
 }
