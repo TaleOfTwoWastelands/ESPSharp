@@ -104,6 +104,7 @@
     <Compile Include="Enums\Flags\WeaponCritFlags.cs" />
     <Compile Include="Enums\Flags\WeaponDataFlags1.cs" />
     <Compile Include="Enums\Flags\WeaponDataFlags2.cs" />
+    <Compile Include="Enums\Flags\WeaponFlags.cs" />
     <Compile Include="Enums\FormType.cs" />
     <Compile Include="Enums\FunctionTarget.cs" />
     <Compile Include="Enums\FunctionType.cs" />
@@ -191,6 +192,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ActorEffect.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\Ammunition.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ammunition.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\Armor.cs">
       <AutoGen>True</AutoGen>
@@ -450,6 +456,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ActorEffect.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Ammunition.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Ammunition.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Armor.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Armor.cs</LastGenOutput>
@@ -596,6 +606,16 @@
     </Compile>
     <Compile Include="Subrecords\FormArray.cs" />
     <Compile Include="Subrecords\AlternateTextures.cs" />
+    <Compile Include="Subrecords\GeneratedCode\AmmoData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AmmoData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\AmmoExtraData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AmmoExtraData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\AnimationSound.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -836,6 +856,14 @@
     <None Include="SubrecordCollections\GeneratedCode\TerminalMenu.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TerminalMenu.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\AmmoData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AmmoData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\AmmoExtraData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AmmoExtraData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\AnimationSound.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

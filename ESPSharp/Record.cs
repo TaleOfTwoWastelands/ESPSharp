@@ -310,6 +310,9 @@ namespace ESPSharp
                 case "WEAP":
                     outRecord = new Weapon();
                     break;
+                case "AMMO":
+                    outRecord = new Ammunition();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;
