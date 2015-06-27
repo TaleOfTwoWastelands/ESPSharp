@@ -32,6 +32,9 @@ namespace ESPSharp
 
         public void WriteXML(string destinationFile, ElderScrollsPlugin master)
         {
+            if (this is GenericRecord)
+                return;
+
             XDocument doc = new XDocument();
 
             XElement root = new XElement("Record", 
@@ -312,6 +315,12 @@ namespace ESPSharp
                     break;
                 case "AMMO":
                     outRecord = new Ammunition();
+                    break;
+                case "NPC_":
+                    outRecord = new NonPlayerCharacter();
+                    break;
+                case "CREA":
+                    outRecord = new Creature();
                     break;
                 default:
                     outRecord = new GenericRecord();

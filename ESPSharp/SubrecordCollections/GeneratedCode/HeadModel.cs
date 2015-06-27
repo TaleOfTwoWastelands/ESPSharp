@@ -18,7 +18,8 @@ namespace ESPSharp.SubrecordCollections
 	{
 		public SimpleSubrecord<HeadPartIndex> Index { get; set; }
 		public Model Model { get; set; }
-		public Icon Icon { get; set; }
+		public SimpleSubrecord<String> LargeIcon { get; set; }
+		public SimpleSubrecord<String> SmallIcon { get; set; }
 
 		public HeadModel()
 		{
@@ -26,18 +27,20 @@ namespace ESPSharp.SubrecordCollections
 			Model = new Model();
 		}
 
-		public HeadModel(SimpleSubrecord<HeadPartIndex> Index, Model Model, Icon Icon)
+		public HeadModel(SimpleSubrecord<HeadPartIndex> Index, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon)
 		{
 			this.Index = Index;
 			this.Model = Model;
-			this.Icon = Icon;
+			this.LargeIcon = LargeIcon;
+			this.SmallIcon = SmallIcon;
 		}
 
 		public HeadModel(HeadModel copyObject)
 		{
 			Index = copyObject.Index.Clone();
 			Model = copyObject.Model.Clone();
-			Icon = copyObject.Icon.Clone();
+			LargeIcon = copyObject.LargeIcon.Clone();
+			SmallIcon = copyObject.SmallIcon.Clone();
 		}
 	
 		public override void ReadBinary(ESPReader reader)
@@ -63,10 +66,18 @@ namespace ESPSharp.SubrecordCollections
 					case "ICON":
 						if (readTags.Contains("ICON"))
 							return;
-						if (Icon == null)
-							Icon = new Icon();
+						if (LargeIcon == null)
+							LargeIcon = new SimpleSubrecord<String>();
 
-						Icon.ReadBinary(reader);
+						LargeIcon.ReadBinary(reader);
+						break;
+					case "MICO":
+						if (readTags.Contains("MICO"))
+							return;
+						if (SmallIcon == null)
+							SmallIcon = new SimpleSubrecord<String>();
+
+						SmallIcon.ReadBinary(reader);
 						break;
 				default:
 					return;
@@ -82,8 +93,10 @@ namespace ESPSharp.SubrecordCollections
 				Index.WriteBinary(writer);
 			if (Model != null)
 				Model.WriteBinary(writer);
-			if (Icon != null)
-				Icon.WriteBinary(writer);
+			if (LargeIcon != null)
+				LargeIcon.WriteBinary(writer);
+			if (SmallIcon != null)
+				SmallIcon.WriteBinary(writer);
 		}
 
 		public override void WriteXML(XElement ele, ElderScrollsPlugin master)
@@ -100,10 +113,15 @@ namespace ESPSharp.SubrecordCollections
 				ele.TryPathTo("Model", true, out subEle);
 				Model.WriteXML(subEle, master);
 			}
-			if (Icon != null)		
+			if (LargeIcon != null)		
 			{		
-				ele.TryPathTo("Icon", true, out subEle);
-				Icon.WriteXML(subEle, master);
+				ele.TryPathTo("Icon/Large", true, out subEle);
+				LargeIcon.WriteXML(subEle, master);
+			}
+			if (SmallIcon != null)		
+			{		
+				ele.TryPathTo("Icon/Small", true, out subEle);
+				SmallIcon.WriteXML(subEle, master);
 			}
 		}
 
@@ -125,12 +143,19 @@ namespace ESPSharp.SubrecordCollections
 					
 				Model.ReadXML(subEle, master);
 			}
-			if (ele.TryPathTo("Icon", false, out subEle))
+			if (ele.TryPathTo("Icon/Large", false, out subEle))
 			{
-				if (Icon == null)
-					Icon = new Icon();
+				if (LargeIcon == null)
+					LargeIcon = new SimpleSubrecord<String>();
 					
-				Icon.ReadXML(subEle, master);
+				LargeIcon.ReadXML(subEle, master);
+			}
+			if (ele.TryPathTo("Icon/Small", false, out subEle))
+			{
+				if (SmallIcon == null)
+					SmallIcon = new SimpleSubrecord<String>();
+					
+				SmallIcon.ReadXML(subEle, master);
 			}
 		}
 

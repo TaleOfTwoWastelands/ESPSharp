@@ -65,12 +65,16 @@
     <Compile Include="DataTypes\LoadOrderFormID.cs" />
     <Compile Include="DataTypes\TypeStringArgData.cs" />
     <Compile Include="Enums\ActorValuesByte.cs" />
+    <Compile Include="Enums\AggressionType.cs" />
     <Compile Include="Enums\Alignment.cs" />
     <Compile Include="Enums\AnimationSoundType.cs" />
+    <Compile Include="Enums\AssistanceType.cs" />
     <Compile Include="Enums\Axis.cs" />
     <Compile Include="Enums\BodyLocation.cs" />
     <Compile Include="Enums\BodyPartIndex.cs" />
     <Compile Include="Enums\ConditionComparisonType.cs" />
+    <Compile Include="Enums\ConfidenceType.cs" />
+    <Compile Include="Enums\CreatureSoundType.cs" />
     <Compile Include="Enums\CreatureType.cs" />
     <Compile Include="Enums\CriticalStage.cs" />
     <Compile Include="Enums\EffectType.cs" />
@@ -78,12 +82,15 @@
     <Compile Include="Enums\EnchantType.cs" />
     <Compile Include="Enums\EnvironmentType.cs" />
     <Compile Include="Enums\EquipmentType.cs" />
+    <Compile Include="Enums\Flags\ActorTemplateFlags.cs" />
+    <Compile Include="Enums\Flags\AggroRadiusBehaviorFlags.cs" />
     <Compile Include="Enums\Flags\ArmorFlags.cs" />
     <Compile Include="Enums\Flags\BipedDataFlags.cs" />
     <Compile Include="Enums\Flags\BodySlotFlags.cs" />
     <Compile Include="Enums\Flags\BookFlags.cs" />
     <Compile Include="Enums\Flags\ConditionTypeFlags.cs" />
     <Compile Include="Enums\Flags\ContainerFlags.cs" />
+    <Compile Include="Enums\Flags\CreatureFlags.cs" />
     <Compile Include="Enums\Flags\DecalDataFlags.cs" />
     <Compile Include="Enums\Flags\DestructableFlags.cs" />
     <Compile Include="Enums\Flags\DestructionStageFlags.cs" />
@@ -94,6 +101,8 @@
     <Compile Include="Enums\Flags\LightFlags.cs" />
     <Compile Include="Enums\Flags\LocalVariableFlag.cs" />
     <Compile Include="Enums\Flags\MagicEffectFlags.cs" />
+    <Compile Include="Enums\Flags\MaterialTypeUInt.cs" />
+    <Compile Include="Enums\Flags\NPCFlags.cs" />
     <Compile Include="Enums\Flags\PlaceableWaterFlags.cs" />
     <Compile Include="Enums\Flags\RaceFlags.cs" />
     <Compile Include="Enums\Flags\ScriptFlags.cs" />
@@ -119,11 +128,13 @@
     <Compile Include="Enums\MaterialType.cs" />
     <Compile Include="Enums\MenuMode.cs" />
     <Compile Include="Enums\MiscStat.cs" />
+    <Compile Include="Enums\MoodType.cs" />
     <Compile Include="Enums\NoYesByte.cs" />
     <Compile Include="Enums\NoYes.cs" />
     <Compile Include="Enums\PassthroughSound.cs" />
     <Compile Include="Enums\PlayerAction.cs" />
     <Compile Include="Enums\ScriptType.cs" />
+    <Compile Include="Enums\SoundLevel.cs" />
     <Compile Include="Enums\SpellType.cs" />
     <Compile Include="Enums\TerminalServerType.cs" />
     <Compile Include="Enums\UnitFromWaterType.cs" />
@@ -218,6 +229,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Container.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Creature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Creature.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\Door.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -303,6 +319,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MoveableStatic.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\NonPlayerCharacter.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NonPlayerCharacter.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\ObjectEffect.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -374,6 +395,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BodyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\CreatureSound.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreatureSound.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\CreatureSoundData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreatureSoundData.tt</DependentUpon>
+    </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\Destructable.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -413,11 +444,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GenderBodyData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SubrecordCollections\GeneratedCode\Icon.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Icon.tt</DependentUpon>
     </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\InventoryItem.cs">
       <AutoGen>True</AutoGen>
@@ -472,6 +498,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Container.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Creature.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Creature.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Door.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Door.cs</LastGenOutput>
@@ -507,6 +537,10 @@
     <None Include="Records\GeneratedCode\MoveableStatic.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MoveableStatic.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\NonPlayerCharacter.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NonPlayerCharacter.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\ObjectEffect.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -551,6 +585,14 @@
     <None Include="Records\GeneratedCode\Weapon.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Weapon.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\CreatureSound.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CreatureSound.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\CreatureSoundData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CreatureSoundData.cs</LastGenOutput>
     </None>
     <None Include="SubrecordCollections\GeneratedCode\Destructable.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -606,6 +648,11 @@
     </Compile>
     <Compile Include="Subrecords\FormArray.cs" />
     <Compile Include="Subrecords\AlternateTextures.cs" />
+    <Compile Include="Subrecords\GeneratedCode\AIData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AIData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\AmmoData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -666,6 +713,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContainerData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\CreatureBaseStats.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreatureBaseStats.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\CreatureData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreatureData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\DecalData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -695,6 +752,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FactionData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\FactionMembership.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FactionMembership.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\GrassData.cs">
       <AutoGen>True</AutoGen>
@@ -735,6 +797,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MagicEffectData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\NPCBaseStats.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NPCBaseStats.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\NPCData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NPCData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\NPCSkills.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NPCSkills.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\ObjectBounds.cs">
       <AutoGen>True</AutoGen>
@@ -846,6 +923,7 @@
     <Compile Include="Subrecords\SpeedtreeSeeds.cs" />
     <Compile Include="Subrecords\StaticCollectionPartData.cs" />
     <Compile Include="Subrecords\SubMarker.cs" />
+    <Compile Include="Subrecords\SubNullStringList.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Zlib.cs" />
@@ -856,6 +934,10 @@
     <None Include="SubrecordCollections\GeneratedCode\TerminalMenu.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TerminalMenu.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\AIData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AIData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\AmmoData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -893,6 +975,18 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ContainerData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\CreatureBaseStats.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CreatureBaseStats.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\CreatureData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CreatureData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\FactionMembership.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FactionMembership.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\GrassData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GrassData.cs</LastGenOutput>
@@ -912,6 +1006,18 @@
     <None Include="Subrecords\GeneratedCode\LightData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LightData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\NPCBaseStats.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NPCBaseStats.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\NPCData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NPCData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\NPCSkills.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NPCSkills.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\PlaceableWaterData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1021,10 +1127,6 @@
     <None Include="SubrecordCollections\GeneratedCode\RaceHeadData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RaceHeadData.cs</LastGenOutput>
-    </None>
-    <None Include="SubrecordCollections\GeneratedCode\Icon.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Icon.cs</LastGenOutput>
     </None>
     <None Include="SubrecordCollections\GeneratedCode\MasterFileData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

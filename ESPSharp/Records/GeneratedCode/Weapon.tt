@@ -601,7 +601,7 @@
 	tempField = 
 		new RecordField(
 			"VNAM",
-			typeof(SimpleSubrecord<uint>),
+			typeof(SimpleSubrecord<SoundLevel>),
 			"SoundLevel",
 			"SoundLevel"
 			);

@@ -80,7 +80,7 @@ namespace ESPSharp.Records
 		public WeaponExtraData ExtraData { get; set; }
 		public WeaponCriticalHitData CriticalHitData { get; set; }
 		public WeaponVATSData VATSSpecialAttack { get; set; }
-		public SimpleSubrecord<UInt32> SoundLevel { get; set; }
+		public SimpleSubrecord<SoundLevel> SoundLevel { get; set; }
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -486,7 +486,7 @@ namespace ESPSharp.Records
 						break;
 					case "VNAM":
 						if (SoundLevel == null)
-							SoundLevel = new SimpleSubrecord<UInt32>();
+							SoundLevel = new SimpleSubrecord<SoundLevel>();
 
 						SoundLevel.ReadBinary(reader);
 						break;
@@ -1459,7 +1459,7 @@ namespace ESPSharp.Records
 			if (ele.TryPathTo("SoundLevel", false, out subEle))
 			{
 				if (SoundLevel == null)
-					SoundLevel = new SimpleSubrecord<UInt32>();
+					SoundLevel = new SimpleSubrecord<SoundLevel>();
 					
 				SoundLevel.ReadXML(subEle, master);
 			}

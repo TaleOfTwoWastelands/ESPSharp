@@ -6,6 +6,7 @@ using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Xml.Linq;
 using System.Diagnostics;
+using ESPSharp.Records;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
 
@@ -33,6 +34,12 @@ namespace ESPSharp
 
         public void WriteXML(string destinationFolder, ElderScrollsPlugin master)
         {
+            if (ChildRecordViews.Count <= 0 || ChildRecordViews.First().Record is GenericRecord)
+            {
+                Directory.Delete(destinationFolder, true);
+                return;
+            }
+
             XDocument header = new XDocument();
             XElement root = new XElement("GroupInfo");
             header.Add(root);

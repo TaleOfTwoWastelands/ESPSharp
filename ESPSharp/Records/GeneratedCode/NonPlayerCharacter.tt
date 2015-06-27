@@ -1,0 +1,338 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "NonPlayerCharacter";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"OBND",
+			typeof(ObjectBounds),
+			"ObjectBounds",
+			"ObjectBounds"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODL",
+			typeof(Model),
+			"Model",
+			"Model"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ACBS",
+			typeof(NPCBaseStats),
+			"BaseStats",
+			"BaseStats"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SNAM",
+			typeof(List<FactionMembership>),
+			"Factions",
+			"Factions"
+			);
+	tempField.XMLSubNames = new List<string>{"Faction"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"INAM",
+			typeof(RecordReference),
+			"DeathItem",
+			"DeathItem"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"VTCK",
+			typeof(RecordReference),
+			"VoiceType",
+			"VoiceType"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TPLT",
+			typeof(RecordReference),
+			"Template",
+			"Template"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RNAM",
+			typeof(RecordReference),
+			"Race",
+			"Race"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SPLO",
+			typeof(List<RecordReference>),
+			"ActorEffects",
+			"ActorEffects"
+			);
+	tempField.XMLSubNames = new List<string> {"ActorEffect"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"EITM",
+			typeof(RecordReference),
+			"UnarmedAttackEffect",
+			"Unarmed/AttackEffect"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"EAMT",
+			typeof(SimpleSubrecord<ushort>),
+			"UnarmedAttackAnimation",
+			"Unarmed/AttackAnimation"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DEST",
+			typeof(Destructable),
+			"Destructable",
+			"Destructable"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SCRI",
+			typeof(RecordReference),
+			"Script",
+			"Script"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CNTO",
+			typeof(List<InventoryItem>),
+			"Contents",
+			"Contents"
+			);
+	tempField.XMLSubNames = new List<string> {"Item"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"AIDT",
+			typeof(AIData),
+			"AIData",
+			"AIData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PKID",
+			typeof(List<RecordReference>),
+			"Packages",
+			"Packages"
+			);
+	tempField.XMLSubNames = new List<string> {"Package"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CNAM",
+			typeof(RecordReference),
+			"Class",
+			"Class"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(NPCData),
+			"Data",
+			"Data"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DNAM",
+			typeof(NPCSkills),
+			"Skills",
+			"Skills"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PNAM",
+			typeof(List<RecordReference>),
+			"HeadParts",
+			"HeadParts"
+			);
+	tempField.XMLSubNames = new List<string> {"HeadPart"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"HNAM",
+			typeof(RecordReference),
+			"HairType",
+			"Hair/Type"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"LNAM",
+			typeof(SimpleSubrecord<float>),
+			"HairLength",
+			"Hair/Length"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ENAM",
+			typeof(RecordReference),
+			"Eyes",
+			"Eyes"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"HCLR",
+			typeof(SimpleSubrecord<Color>),
+			"HairColor",
+			"Hair/Color"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ZNAM",
+			typeof(RecordReference),
+			"CombatStyle",
+			"CombatStyle"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM4",
+			typeof(SimpleSubrecord<MaterialTypeUInt>),
+			"ImpactMaterialType",
+			"ImpactMaterialType"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FGGS",
+			typeof(SimpleSubrecord<byte[]>),
+			"FaceGenGeometrySymmetric",
+			"FaceGen/Geometry/Symmetric"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FGGA",
+			typeof(SimpleSubrecord<byte[]>),
+			"FaceGenGeometryAsymmetric",
+			"FaceGen/Geometry/Asymmetric"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FGTS",
+			typeof(SimpleSubrecord<byte[]>),
+			"FaceGenTexture",
+			"FaceGen/Texture"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM5",
+			typeof(SimpleSubrecord<ushort>),
+			"Unknown",
+			"Unknown"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM6",
+			typeof(SimpleSubrecord<float>),
+			"Height",
+			"Height"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM7",
+			typeof(SimpleSubrecord<float>),
+			"Weight",
+			"Weight"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

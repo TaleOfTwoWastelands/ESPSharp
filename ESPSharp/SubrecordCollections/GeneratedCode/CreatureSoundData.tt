@@ -1,0 +1,31 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "CreatureSoundData";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"CSDT",
+			typeof(SimpleSubrecord<CreatureSoundType>),
+			"SoundType",
+			"SoundType"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"CSDI",
+			typeof(List<CreatureSound>),
+			"Sounds",
+			"Sounds"
+			);
+	tempField.XMLSubName = "Sound";
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

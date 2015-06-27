@@ -19,11 +19,19 @@
 	tempField = 
 		new RecordField(
 			"ICON",
-			typeof(Icon),
-			"Icon",
-			"Icon"
+			typeof(SimpleSubrecord<string>),
+			"LargeIcon",
+			"Icon/Large"
 			);
-	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MICO",
+			typeof(SimpleSubrecord<string>),
+			"SmallIcon",
+			"Icon/Small"
+			);
 	template.Fields.Add(tempField);
 
 	tempField = 

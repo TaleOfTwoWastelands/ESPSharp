@@ -18,7 +18,8 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<String> Description { get; set; }
-		public Icon Icon { get; set; }
+		public SimpleSubrecord<String> LargeIcon { get; set; }
+		public SimpleSubrecord<String> SmallIcon { get; set; }
 		public Model Model { get; set; }
 		public MagicEffectData Data { get; set; }
 	
@@ -49,10 +50,16 @@ namespace ESPSharp.Records
 						Description.ReadBinary(reader);
 						break;
 					case "ICON":
-						if (Icon == null)
-							Icon = new Icon();
+						if (LargeIcon == null)
+							LargeIcon = new SimpleSubrecord<String>();
 
-						Icon.ReadBinary(reader);
+						LargeIcon.ReadBinary(reader);
+						break;
+					case "MICO":
+						if (SmallIcon == null)
+							SmallIcon = new SimpleSubrecord<String>();
+
+						SmallIcon.ReadBinary(reader);
 						break;
 					case "MODL":
 						if (Model == null)
@@ -80,8 +87,10 @@ namespace ESPSharp.Records
 				Name.WriteBinary(writer);
 			if (Description != null)
 				Description.WriteBinary(writer);
-			if (Icon != null)
-				Icon.WriteBinary(writer);
+			if (LargeIcon != null)
+				LargeIcon.WriteBinary(writer);
+			if (SmallIcon != null)
+				SmallIcon.WriteBinary(writer);
 			if (Model != null)
 				Model.WriteBinary(writer);
 			if (Data != null)
@@ -106,10 +115,15 @@ namespace ESPSharp.Records
 				ele.TryPathTo("Description", true, out subEle);
 				Description.WriteXML(subEle, master);
 			}
-			if (Icon != null)		
+			if (LargeIcon != null)		
 			{		
-				ele.TryPathTo("Icon", true, out subEle);
-				Icon.WriteXML(subEle, master);
+				ele.TryPathTo("Icon/Large", true, out subEle);
+				LargeIcon.WriteXML(subEle, master);
+			}
+			if (SmallIcon != null)		
+			{		
+				ele.TryPathTo("Icon/Small", true, out subEle);
+				SmallIcon.WriteXML(subEle, master);
 			}
 			if (Model != null)		
 			{		
@@ -148,12 +162,19 @@ namespace ESPSharp.Records
 					
 				Description.ReadXML(subEle, master);
 			}
-			if (ele.TryPathTo("Icon", false, out subEle))
+			if (ele.TryPathTo("Icon/Large", false, out subEle))
 			{
-				if (Icon == null)
-					Icon = new Icon();
+				if (LargeIcon == null)
+					LargeIcon = new SimpleSubrecord<String>();
 					
-				Icon.ReadXML(subEle, master);
+				LargeIcon.ReadXML(subEle, master);
+			}
+			if (ele.TryPathTo("Icon/Small", false, out subEle))
+			{
+				if (SmallIcon == null)
+					SmallIcon = new SimpleSubrecord<String>();
+					
+				SmallIcon.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Model", false, out subEle))
 			{

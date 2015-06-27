@@ -1,0 +1,324 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Creature";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"OBND",
+			typeof(ObjectBounds),
+			"ObjectBounds",
+			"ObjectBounds"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODL",
+			typeof(Model),
+			"Model",
+			"Model"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SPLO",
+			typeof(List<RecordReference>),
+			"ActorEffects",
+			"ActorEffects"
+			);
+	tempField.XMLSubNames = new List<string> {"ActorEffect"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"EITM",
+			typeof(RecordReference),
+			"UnarmedAttackEffect",
+			"Unarmed/AttackEffect"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"EAMT",
+			typeof(SimpleSubrecord<ushort>),
+			"UnarmedAttackAnimation",
+			"Unarmed/AttackAnimation"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NIFZ",
+			typeof(SubNullStringList),
+			"Models",
+			"Models"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NIFT",
+			typeof(SimpleSubrecord<byte[]>),
+			"TextureHashes",
+			"TextureHashes"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ACBS",
+			typeof(CreatureBaseStats),
+			"BaseStats",
+			"BaseStats"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SNAM",
+			typeof(List<FactionMembership>),
+			"Factions",
+			"Factions"
+			);
+	tempField.XMLSubNames = new List<string>{"Faction"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"INAM",
+			typeof(RecordReference),
+			"DeathItem",
+			"DeathItem"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"VTCK",
+			typeof(RecordReference),
+			"VoiceType",
+			"VoiceType"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TPLT",
+			typeof(RecordReference),
+			"Template",
+			"Template"
+			);
+	template.Fields.Add(tempField);
+	
+	tempField = 
+		new RecordField(
+			"DEST",
+			typeof(Destructable),
+			"Destructable",
+			"Destructable"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SCRI",
+			typeof(RecordReference),
+			"Script",
+			"Script"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CNTO",
+			typeof(List<InventoryItem>),
+			"Contents",
+			"Contents"
+			);
+	tempField.XMLSubNames = new List<string> {"Item"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"AIDT",
+			typeof(AIData),
+			"AIData",
+			"AIData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PKID",
+			typeof(List<RecordReference>),
+			"Packages",
+			"Packages"
+			);
+	tempField.XMLSubNames = new List<string> {"Package"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"KFFZ",
+			typeof(SubNullStringList),
+			"Animations",
+			"Animations"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(CreatureData),
+			"Data",
+			"Data"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RNAM",
+			typeof(SimpleSubrecord<byte>),
+			"AttackReach",
+			"AttackReach"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ZNAM",
+			typeof(RecordReference),
+			"CombatStyle",
+			"CombatStyle"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PNAM",
+			typeof(RecordReference),
+			"BodyPartData",
+			"BodyPartData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TNAM",
+			typeof(SimpleSubrecord<float>),
+			"TurningSpeed",
+			"TurningSpeed"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"BNAM",
+			typeof(SimpleSubrecord<float>),
+			"BaseScale",
+			"BaseScale"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"WNAM",
+			typeof(SimpleSubrecord<float>),
+			"FootWeight",
+			"FootWeight"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM4",
+			typeof(SimpleSubrecord<MaterialTypeUInt>),
+			"ImpactMaterialType",
+			"ImpactMaterialType"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM5",
+			typeof(SimpleSubrecord<SoundLevel>),
+			"SoundLevel",
+			"SoundLevel"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CSCR",
+			typeof(RecordReference),
+			"SoundTemplate",
+			"SoundTemplate"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CSDT",
+			typeof(List<CreatureSoundData>),
+			"SoundData",
+			"SoundData"
+			);
+	tempField.XMLSubNames = new List<string>{"Sound"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CNAM",
+			typeof(RecordReference),
+			"ImpactDataset",
+			"ImpactDataset"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"LNAM",
+			typeof(RecordReference),
+			"MeleeWeaponList",
+			"MeleeWeaponList"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

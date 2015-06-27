@@ -77,6 +77,11 @@ namespace ESPSharp.Subrecords
                     reader.ReadByte();
                     Value = (T)(object)(outString.Replace("\0", ""));
                     break;
+                case "ESPSharp.DataTypes.Color":
+                    var color = new DataTypes.Color();
+                    color.ReadBinary(reader);
+                    Value = (T)(object)color;
+                    break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");
             }
@@ -135,6 +140,9 @@ namespace ESPSharp.Subrecords
                     writer.Write(((string)(object)Value).ToCharArray());
                     writer.Write((byte)0);
                     break;
+                case "ESPSharp.DataTypes.Color":
+                    (Value as DataTypes.Color).WriteBinary(writer);
+                    break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");
             }
@@ -158,6 +166,9 @@ namespace ESPSharp.Subrecords
                     break;
                 case "System.Char[]":
                     ele.Value = new String(((char[])(object)Value));
+                    break;
+                case "ESPSharp.DataTypes.Color":
+                    (Value as DataTypes.Color).WriteXML(ele, master);
                     break;
                 default:
                     ele.Value = Value.ToString();
@@ -220,6 +231,11 @@ namespace ESPSharp.Subrecords
                 case "System.String":
                     string outString = ele.Value;
                     Value = (T)(object)outString;
+                    break;
+                case "ESPSharp.DataTypes.Color":
+                    var color = new DataTypes.Color();
+                    color.ReadXML(ele, master);
+                    Value = (T)(object)color;
                     break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");
