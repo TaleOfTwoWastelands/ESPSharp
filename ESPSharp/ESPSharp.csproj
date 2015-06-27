@@ -97,7 +97,9 @@
     <Compile Include="Enums\Flags\DoorFlags.cs" />
     <Compile Include="Enums\Flags\EnchantFlags.cs" />
     <Compile Include="Enums\Flags\GrassFlags.cs" />
+    <Compile Include="Enums\Flags\IngestibleFlags.cs" />
     <Compile Include="Enums\Flags\IngredientFlags.cs" />
+    <Compile Include="Enums\Flags\LeveledListFlags.cs" />
     <Compile Include="Enums\Flags\LightFlags.cs" />
     <Compile Include="Enums\Flags\LocalVariableFlag.cs" />
     <Compile Include="Enums\Flags\MagicEffectFlags.cs" />
@@ -284,15 +286,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HeadPart.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Ingestible.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ingestible.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\Ingredient.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Ingredient.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Key.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Key.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\LandscapeTexture.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LandscapeTexture.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\LeveledCreature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LeveledCreature.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\LeveledNPC.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LeveledNPC.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\Light.cs">
       <AutoGen>True</AutoGen>
@@ -450,6 +472,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InventoryItem.tt</DependentUpon>
     </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\LeveledListEntry.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LeveledListEntry.tt</DependentUpon>
+    </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\LocalVariable.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -514,13 +541,29 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Grass.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Ingestible.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Ingestible.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Ingredient.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Ingredient.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Key.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Key.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\LandscapeTexture.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LandscapeTexture.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\LeveledCreature.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LeveledCreature.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\LeveledNPC.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LeveledNPC.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\Light.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -617,6 +660,10 @@
     <None Include="SubrecordCollections\GeneratedCode\InventoryItem.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>InventoryItem.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\LeveledListEntry.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LeveledListEntry.cs</LastGenOutput>
     </None>
     <None Include="SubrecordCollections\GeneratedCode\LocalVariable.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -768,6 +815,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HavokData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\IngestibleData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IngestibleData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\IngredientData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -782,6 +834,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>InventoryItemExtraData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\LeveledObjectData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LeveledObjectData.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\LightData.cs">
       <AutoGen>True</AutoGen>
@@ -991,6 +1048,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GrassData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\IngestibleData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IngestibleData.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\IngredientData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IngredientData.cs</LastGenOutput>
@@ -1002,6 +1063,10 @@
     <None Include="Subrecords\GeneratedCode\InventoryItemExtraData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>InventoryItemExtraData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\LeveledObjectData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LeveledObjectData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\LightData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

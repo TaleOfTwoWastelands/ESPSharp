@@ -322,6 +322,18 @@ namespace ESPSharp
                 case "CREA":
                     outRecord = new Creature();
                     break;
+                case "LVLC":
+                    outRecord = new LeveledCreature();
+                    break;
+                case "LVLN":
+                    outRecord = new LeveledNPC();
+                    break;
+                case "KEYM":
+                    outRecord = new Key();
+                    break;
+                case "ALCH":
+                    outRecord = new Ingestible();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;
