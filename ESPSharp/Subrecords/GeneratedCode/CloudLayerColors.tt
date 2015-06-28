@@ -1,0 +1,41 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "CloudLayerColors";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Layer0",
+			"Layer0"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Layer1",
+			"Layer1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Layer2",
+			"Layer2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Layer3",
+			"Layer3"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

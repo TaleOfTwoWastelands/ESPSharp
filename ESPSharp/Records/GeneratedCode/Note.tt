@@ -1,0 +1,134 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Note";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"OBND",
+			typeof(ObjectBounds),
+			"ObjectBounds",
+			"ObjectBounds"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODL",
+			typeof(Model),
+			"Model",
+			"Model"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ICON",
+			typeof(SimpleSubrecord<string>),
+			"LargeIcon",
+			"Icon/Large"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MICO",
+			typeof(SimpleSubrecord<string>),
+			"SmallIcon",
+			"Icon/Small"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"YNAM",
+			typeof(RecordReference),
+			"PickUpSound",
+			"PickUpSound"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ZNAM",
+			typeof(RecordReference),
+			"DropSound",
+			"DropSound"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(SimpleSubrecord<NoteType>),
+			"Type",
+			"Type"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ONAM",
+			typeof(List<RecordReference>),
+			"Quests",
+			"Quests"
+			);
+	tempField.XMLSubNames = new List<string> {"Quest"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XNAM",
+			typeof(SimpleSubrecord<string>),
+			"Image",
+			"Image"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TNAM",
+			typeof(object),
+			"EntryData",
+			"EntryData"
+			);
+	tempField.implementReadData = false;
+	tempField.implementWriteData = false;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SNAM",
+			typeof(RecordReference),
+			"Audio",
+			"Audio"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

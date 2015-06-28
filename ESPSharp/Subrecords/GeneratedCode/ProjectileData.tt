@@ -1,0 +1,185 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "ProjectileData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(ProjectileFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ProjectileType),
+			"Type",
+			"Type"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Gravity",
+			"Gravity"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Speed",
+			"Speed"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Range",
+			"Range"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"Light",
+			"Light"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"MuzzleFlashLight",
+			"MuzzleFlash/Light"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"TracerChance",
+			"TracerChance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ExplosionAltTriggerProximity",
+			"Explosion/AltTrigger/Proximity"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ExplosionAltTriggerTimer",
+			"Explosion/AltTrigger/Timer"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"Explosion",
+			"Explosion/Form"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"Sound",
+			"Sound"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MuzzleFlashDuration",
+			"MuzzleFlash/Duration"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FadeDuration",
+			"FadeDuration"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ImpactForce",
+			"ImpactForce"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"SoundCountdown",
+			"Sound/Countdown"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"Sounddisable",
+			"Sound/Disable"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"DefaultWeaponSource",
+			"DefaultWeaponSource"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"XRotation",
+			"XRotation"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"YRotation",
+			"YRotation"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ZRotation",
+			"ZRotation"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"BouncyMult",
+			"BouncyMult"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

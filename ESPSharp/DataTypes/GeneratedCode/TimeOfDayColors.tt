@@ -1,0 +1,57 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	DataTypeTemplate template = new DataTypeTemplate();
+	template.ClassName = "TimeOfDayColors";
+
+	DataTypeField tempField;
+
+	tempField = 
+		new DataTypeField(
+			typeof(Color),
+			"Sunrise",
+			"Sunrise"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(Color),
+			"Day",
+			"Day"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(Color),
+			"Sunset",
+			"Sunset"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(Color),
+			"Night",
+			"Night"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(Color),
+			"HighNoon",
+			"HighNoon"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(Color),
+			"Midnight",
+			"Midnight"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

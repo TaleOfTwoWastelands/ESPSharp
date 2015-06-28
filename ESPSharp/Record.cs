@@ -334,6 +334,27 @@ namespace ESPSharp
                 case "ALCH":
                     outRecord = new Ingestible();
                     break;
+                case "IDLM":
+                    outRecord = new IdleMarker();
+                    break;
+                case "NOTE":
+                    outRecord = new Note();
+                    break;
+                case "COBJ":
+                    outRecord = new ConstructibleObject();
+                    break;
+                case "PROJ":
+                    outRecord = new Projectile();
+                    break;
+                case "LVLI":
+                    outRecord = new LeveledItem();
+                    break;
+                case "WTHR":
+                    outRecord = new Weather();
+                    break;
+                case "CLMT":
+                    outRecord = new Climate();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;

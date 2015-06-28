@@ -1,0 +1,89 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "EnvironmentalColors";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"SkyUpper",
+			"Sky/Upper"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Fog",
+			"Fog"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Unused1",
+			"Unused1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Ambient",
+			"Ambient"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Sunlight",
+			"Sunlight"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Sun",
+			"Sun"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Stars",
+			"Stars"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"SkyLower",
+			"Sky/Lower"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Horizon",
+			"Horizon"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(TimeOfDayColors),
+			"Unused2",
+			"Unused2"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

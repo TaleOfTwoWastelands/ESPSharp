@@ -1,0 +1,33 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	DataTypeTemplate template = new DataTypeTemplate();
+	template.ClassName = "WeatherChance";
+
+	DataTypeField tempField;
+
+	tempField = 
+		new DataTypeField(
+			typeof(FormID),
+			"Weather",
+			"Weather"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(int),
+			"Chance",
+			"Chance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(FormID),
+			"Global",
+			"Global"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

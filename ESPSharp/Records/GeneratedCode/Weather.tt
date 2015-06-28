@@ -1,0 +1,201 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Weather";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"aIAD",
+			typeof(RecordReference),
+			"ImageSpaceModifierSunrise",
+			"ImageSpaceModifier/Sunrise"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"bIAD",
+			typeof(RecordReference),
+			"ImageSpaceModifierDay",
+			"ImageSpaceModifier/Day"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"cIAD",
+			typeof(RecordReference),
+			"ImageSpaceModifierSunset",
+			"ImageSpaceModifier/Sunset"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"dIAD",
+			typeof(RecordReference),
+			"ImageSpaceModifierNight",
+			"ImageSpaceModifier/Night"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"eIAD",
+			typeof(RecordReference),
+			"ImageSpaceModifierHighNoon",
+			"ImageSpaceModifier/HighNoon"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"fIAD",
+			typeof(RecordReference),
+			"ImageSpaceModifierMidnight",
+			"ImageSpaceModifier/Midnight"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DNAM",
+			typeof(SimpleSubrecord<string>),
+			"CloudTextureLayer0",
+			"CloudTexture/Layer0"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CNAM",
+			typeof(SimpleSubrecord<string>),
+			"CloudTextureLayer1",
+			"CloudTexture/Layer1"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ANAM",
+			typeof(SimpleSubrecord<string>),
+			"CloudTextureLayer2",
+			"CloudTexture/Layer2"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"BNAM",
+			typeof(SimpleSubrecord<string>),
+			"CloudTextureLayer3",
+			"CloudTexture/Layer3"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODL",
+			typeof(Model),
+			"Model",
+			"Model"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"LNAM",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown",
+			"Unknown"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ONAM",
+			typeof(CloudLayerSpeed),
+			"CloudLayerSpeed",
+			"CloudLayerSpeed"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PNAM",
+			typeof(CloudLayerColors),
+			"CloudLayerColors",
+			"CloudLayerColors"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM0",
+			typeof(EnvironmentalColors),
+			"EnvironmentalColors",
+			"EnvironmentalColors"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FNAM",
+			typeof(WeatherFogDistance),
+			"WeatherFogDistance",
+			"WeatherFogDistance"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"INAM",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused",
+			"Unused"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(WeatherData),
+			"Data",
+			"Data"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SNAM",
+			typeof(List<WeatherSound>),
+			"Sounds",
+			"Sounds"
+			);
+	tempField.XMLSubNames = new List<string> {"Sound"};
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

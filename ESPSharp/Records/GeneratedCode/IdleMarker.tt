@@ -1,0 +1,66 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "IdleMarker";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"OBND",
+			typeof(ObjectBounds),
+			"ObjectBounds",
+			"ObjectBounds"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IDLF",
+			typeof(SimpleSubrecord<IdleMarkerFlags>),
+			"IdleMarkerFlags",
+			"IdleMarkerFlags"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IDLC",
+			typeof(SimpleSubrecord<byte>),
+			"AnimationCount",
+			"AnimationCount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IDLT",
+			typeof(SimpleSubrecord<float>),
+			"IdleTimer",
+			"IdleTimer"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IDLA",
+			typeof(FormArray),
+			"Animations",
+			"Animations"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

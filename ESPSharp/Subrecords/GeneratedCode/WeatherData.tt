@@ -1,0 +1,113 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "WeatherData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"WindSpeed",
+			"WindSpeed"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"CloudSpeedLower",
+			"CloudSpeed/Lower"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"CloudSpeedUpper",
+			"CloudSpeed/Upper"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"TransitionDelta",
+			"TransitionDelta"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SunGlare",
+			"SunGlare"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SunDamage",
+			"SunDamage"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"PrecipitationBeginFadeIn",
+			"Precipitation/BeginFadeIn"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"PrecipitationEndFadeOut",
+			"Precipitation/EndFadeOut"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"Thunder_LightningBeginFadeIn",
+			"Thunder_Lightning/BeginFadeIn"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"Thunder_LightningEndFadeOut",
+			"Thunder_Lightning/EndFadeOut"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"Thunder_LightningFrequency",
+			"Thunder_Lightning/Frequency"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(WeatherClassification),
+			"Classification",
+			"Classification"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"LightningColor",
+			"LightningColor"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

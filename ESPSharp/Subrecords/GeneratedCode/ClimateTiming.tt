@@ -1,0 +1,57 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "ClimateTiming";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SunriseBegin",
+			"Sunrise/Begin"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SunriseEnd",
+			"Sunrise/End"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SunsetBegin",
+			"Sunset/Begin"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SunsetEnd",
+			"Sunset/End"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"Volatility",
+			"Volatility"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(MoonData),
+			"MoonData",
+			"MoonData"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

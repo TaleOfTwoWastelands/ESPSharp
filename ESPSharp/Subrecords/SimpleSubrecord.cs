@@ -27,7 +27,7 @@ namespace ESPSharp.Subrecords
             switch (typeName)
             {
                 case "System.Byte":
-                    Debug.Assert(size == 1);
+                    //Debug.Assert(size == 1);
                     Value = (T)(object)reader.ReadByte();
                     break;
                 case "System.SByte":

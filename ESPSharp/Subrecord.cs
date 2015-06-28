@@ -50,7 +50,12 @@ namespace ESPSharp
             Tag = reader.ReadTag();
             size = reader.ReadUInt16();
 
+            long endPosition = reader.BaseStream.Position + size;
+
             ReadData(reader);
+
+            if (reader.BaseStream.Position != endPosition)
+                reader.BaseStream.Seek(endPosition, SeekOrigin.Begin);
         }
 
         protected abstract void ReadData(ESPReader reader);

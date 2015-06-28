@@ -1,0 +1,64 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Climate";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"WLST",
+			typeof(WeatherList),
+			"Weathers",
+			"Weathers"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FNAM",
+			typeof(SimpleSubrecord<string>),
+			"SunTexture",
+			"SunTexture"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"GNAM",
+			typeof(SimpleSubrecord<string>),
+			"SunGlareTexture",
+			"SunGlareTexture"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODL",
+			typeof(Model),
+			"Model",
+			"Model"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TNAM",
+			typeof(ClimateTiming),
+			"Timing",
+			"Timing"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

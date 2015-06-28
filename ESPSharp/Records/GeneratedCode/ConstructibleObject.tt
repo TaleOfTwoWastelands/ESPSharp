@@ -1,0 +1,99 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "ConstructibleObject";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"OBND",
+			typeof(ObjectBounds),
+			"ObjectBounds",
+			"ObjectBounds"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODL",
+			typeof(Model),
+			"Model",
+			"Model"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ICON",
+			typeof(SimpleSubrecord<string>),
+			"LargeIcon",
+			"Icon/Large"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MICO",
+			typeof(SimpleSubrecord<string>),
+			"SmallIcon",
+			"Icon/Small"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SCRI",
+			typeof(RecordReference),
+			"Script",
+			"Script"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"YNAM",
+			typeof(RecordReference),
+			"PickUpSound",
+			"PickUpSound"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ZNAM",
+			typeof(RecordReference),
+			"DropSound",
+			"DropSound"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(ValueWeight),
+			"Data",
+			"Data"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

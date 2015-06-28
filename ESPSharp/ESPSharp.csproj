@@ -62,7 +62,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FormID.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataTypes\GeneratedCode\TimeOfDayColors.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TimeOfDayColors.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypes\GeneratedCode\WeatherChance.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeatherChance.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataTypes\LoadOrderFormID.cs" />
+    <Compile Include="DataTypes\MoonData.cs" />
     <Compile Include="DataTypes\TypeStringArgData.cs" />
     <Compile Include="Enums\ActorValuesByte.cs" />
     <Compile Include="Enums\AggressionType.cs" />
@@ -97,6 +108,7 @@
     <Compile Include="Enums\Flags\DoorFlags.cs" />
     <Compile Include="Enums\Flags\EnchantFlags.cs" />
     <Compile Include="Enums\Flags\GrassFlags.cs" />
+    <Compile Include="Enums\Flags\IdleMarkerFlags.cs" />
     <Compile Include="Enums\Flags\IngestibleFlags.cs" />
     <Compile Include="Enums\Flags\IngredientFlags.cs" />
     <Compile Include="Enums\Flags\LeveledListFlags.cs" />
@@ -104,8 +116,10 @@
     <Compile Include="Enums\Flags\LocalVariableFlag.cs" />
     <Compile Include="Enums\Flags\MagicEffectFlags.cs" />
     <Compile Include="Enums\Flags\MaterialTypeUInt.cs" />
+    <Compile Include="Enums\Flags\MoonFlags.cs" />
     <Compile Include="Enums\Flags\NPCFlags.cs" />
     <Compile Include="Enums\Flags\PlaceableWaterFlags.cs" />
+    <Compile Include="Enums\Flags\ProjectileFlags.cs" />
     <Compile Include="Enums\Flags\RaceFlags.cs" />
     <Compile Include="Enums\Flags\ScriptFlags.cs" />
     <Compile Include="Enums\Flags\SoundDataFlags.cs" />
@@ -131,10 +145,12 @@
     <Compile Include="Enums\MenuMode.cs" />
     <Compile Include="Enums\MiscStat.cs" />
     <Compile Include="Enums\MoodType.cs" />
+    <Compile Include="Enums\NoteType.cs" />
     <Compile Include="Enums\NoYesByte.cs" />
     <Compile Include="Enums\NoYes.cs" />
     <Compile Include="Enums\PassthroughSound.cs" />
     <Compile Include="Enums\PlayerAction.cs" />
+    <Compile Include="Enums\ProjectileType.cs" />
     <Compile Include="Enums\ScriptType.cs" />
     <Compile Include="Enums\SoundLevel.cs" />
     <Compile Include="Enums\SpellType.cs" />
@@ -150,6 +166,8 @@
     <Compile Include="Enums\WeaponPowerAttackAnimation.cs" />
     <Compile Include="Enums\WeaponReloadAnimationType.cs" />
     <Compile Include="Enums\WeaponRumblePattern.cs" />
+    <Compile Include="Enums\WeatherClassification.cs" />
+    <Compile Include="Enums\WeatherType.cs" />
     <Compile Include="Interfaces\ICloneable.cs" />
     <Compile Include="Enums\ActorValues.cs" />
     <Compile Include="Enums\DataSource.cs" />
@@ -226,6 +244,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Class.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Climate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Climate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\ConstructibleObject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConstructibleObject.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\Container.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -286,6 +314,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HeadPart.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\IdleMarker.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IdleMarker.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\Ingestible.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -310,6 +343,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LeveledCreature.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\LeveledItem.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LeveledItem.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\LeveledNPC.cs">
       <AutoGen>True</AutoGen>
@@ -346,6 +384,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NonPlayerCharacter.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Note.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Note.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\ObjectEffect.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -355,6 +398,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PlaceableWater.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\Projectile.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Projectile.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\Race.cs">
       <AutoGen>True</AutoGen>
@@ -401,12 +449,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Weapon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Weather.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Weather.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GenericRecord.cs" />
     <Compile Include="Records\GeneratedCode\TextureSet.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TextureSet.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\Note.cs" />
     <Compile Include="Records\Script.cs" />
     <Compile Include="Records\Terminal.cs" />
     <Compile Include="RecordView.cs" />
@@ -416,6 +470,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BodyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\ClimateTiming.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClimateTiming.tt</DependentUpon>
     </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\CreatureSound.cs">
       <AutoGen>True</AutoGen>
@@ -497,6 +556,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HeadModel.tt</DependentUpon>
     </Compile>
+    <None Include="DataTypes\GeneratedCode\TimeOfDayColors.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TimeOfDayColors.cs</LastGenOutput>
+    </None>
+    <None Include="DataTypes\GeneratedCode\WeatherChance.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WeatherChance.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\AcousticSpace.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AcousticSpace.cs</LastGenOutput>
@@ -521,6 +588,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Book.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Climate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Climate.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\ConstructibleObject.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ConstructibleObject.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Container.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Container.cs</LastGenOutput>
@@ -541,6 +616,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Grass.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\IdleMarker.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IdleMarker.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Ingestible.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Ingestible.cs</LastGenOutput>
@@ -560,6 +639,10 @@
     <None Include="Records\GeneratedCode\LeveledCreature.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LeveledCreature.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\LeveledItem.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LeveledItem.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\LeveledNPC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -585,6 +668,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NonPlayerCharacter.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Note.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Note.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\ObjectEffect.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ObjectEffect.cs</LastGenOutput>
@@ -592,6 +679,10 @@
     <None Include="Records\GeneratedCode\PlaceableWater.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PlaceableWater.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Projectile.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Projectile.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\Race.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -628,6 +719,14 @@
     <None Include="Records\GeneratedCode\Weapon.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Weapon.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Weather.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Weather.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\ClimateTiming.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ClimateTiming.cs</LastGenOutput>
     </None>
     <None Include="SubrecordCollections\GeneratedCode\CreatureSound.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -750,6 +849,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClassData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\CloudLayerColors.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CloudLayerColors.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\CloudLayerSpeed.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CloudLayerSpeed.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\Condition.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -794,6 +903,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EnchantData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\EnvironmentalColors.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnvironmentalColors.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\FactionData.cs">
       <AutoGen>True</AutoGen>
@@ -885,6 +999,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PluginHeader.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\ProjectileData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectileData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\RaceData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -975,6 +1094,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WeaponVATSData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\WeatherData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeatherData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\WeatherFogDistance.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeatherFogDistance.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\WeatherSound.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeatherSound.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\InventoryItemExtraData.cs" />
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
     <Compile Include="Subrecords\SpeedtreeSeeds.cs" />
@@ -982,6 +1116,7 @@
     <Compile Include="Subrecords\SubMarker.cs" />
     <Compile Include="Subrecords\SubNullStringList.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
+    <Compile Include="Subrecords\WeatherList.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Zlib.cs" />
     <None Include="SubrecordCollections\GeneratedCode\StaticCollectionPart.tt">
@@ -1028,6 +1163,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BookData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\CloudLayerSpeed.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CloudLayerSpeed.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\ContainerData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ContainerData.cs</LastGenOutput>
@@ -1039,6 +1178,10 @@
     <None Include="Subrecords\GeneratedCode\CreatureData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreatureData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\EnvironmentalColors.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EnvironmentalColors.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\FactionMembership.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1088,9 +1231,17 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PlaceableWaterData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\ProjectileData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ProjectileData.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\TerminalData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TerminalData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\CloudLayerColors.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CloudLayerColors.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\TreeData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1115,6 +1266,18 @@
     <None Include="Subrecords\GeneratedCode\WeaponVATSData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WeaponVATSData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\WeatherData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WeatherData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\WeatherFogDistance.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WeatherFogDistance.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\WeatherSound.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WeatherSound.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
