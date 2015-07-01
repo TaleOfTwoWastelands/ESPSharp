@@ -1,0 +1,38 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "QuestObjective";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"QOBJ",
+			typeof(SimpleSubrecord<int>),
+			"Index",
+			"Index"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"NNAM",
+			typeof(SimpleSubrecord<string>),
+			"Description",
+			"Description"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"QSTA",
+			typeof(List<QuestTarget>),
+			"Targets",
+			"Targets"
+			);
+	tempField.XMLSubName = "Target";
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

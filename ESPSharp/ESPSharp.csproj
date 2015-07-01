@@ -88,6 +88,7 @@
     <Compile Include="Enums\CreatureSoundType.cs" />
     <Compile Include="Enums\CreatureType.cs" />
     <Compile Include="Enums\CriticalStage.cs" />
+    <Compile Include="Enums\DialogType.cs" />
     <Compile Include="Enums\EffectType.cs" />
     <Compile Include="Enums\EmbeddedWeaponActorValue.cs" />
     <Compile Include="Enums\EnchantType.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Enums\Flags\DecalDataFlags.cs" />
     <Compile Include="Enums\Flags\DestructableFlags.cs" />
     <Compile Include="Enums\Flags\DestructionStageFlags.cs" />
+    <Compile Include="Enums\Flags\DialogFlags.cs" />
     <Compile Include="Enums\Flags\DoorFlags.cs" />
     <Compile Include="Enums\Flags\EnchantFlags.cs" />
     <Compile Include="Enums\Flags\GrassFlags.cs" />
@@ -120,6 +122,9 @@
     <Compile Include="Enums\Flags\NPCFlags.cs" />
     <Compile Include="Enums\Flags\PlaceableWaterFlags.cs" />
     <Compile Include="Enums\Flags\ProjectileFlags.cs" />
+    <Compile Include="Enums\Flags\QuestFlags.cs" />
+    <Compile Include="Enums\Flags\QuestStageFlags.cs" />
+    <Compile Include="Enums\Flags\QuestTargetFlags.cs" />
     <Compile Include="Enums\Flags\RaceFlags.cs" />
     <Compile Include="Enums\Flags\ScriptFlags.cs" />
     <Compile Include="Enums\Flags\SoundDataFlags.cs" />
@@ -263,6 +268,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Creature.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\DialogTopic.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DialogTopic.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\Door.cs">
       <AutoGen>True</AutoGen>
@@ -466,10 +476,35 @@
     <Compile Include="RecordView.cs" />
     <Compile Include="Subrecord.cs" />
     <Compile Include="SubrecordCollection.cs" />
+    <Compile Include="SubrecordCollections\GeneratedCode\AddedQuest.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddedQuest.tt</DependentUpon>
+    </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\BodyModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BodyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\QuestLogEntry.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuestLogEntry.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\QuestObjective.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuestObjective.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\QuestTarget.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuestTarget.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\SharedInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedInfo.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\ClimateTiming.cs">
       <AutoGen>True</AutoGen>
@@ -604,6 +639,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Creature.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\DialogTopic.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DialogTopic.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Door.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Door.cs</LastGenOutput>
@@ -723,6 +762,26 @@
     <None Include="Records\GeneratedCode\Weather.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Weather.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\AddedQuest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AddedQuest.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\QuestLogEntry.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QuestLogEntry.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\QuestObjective.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QuestObjective.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\QuestTarget.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QuestTarget.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\SharedInfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SharedInfo.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\ClimateTiming.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -894,6 +953,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DestructionStageData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\DialogTopicData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DialogTopicData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\EffectData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1003,6 +1067,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectileData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\QuestTargetData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuestTargetData.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\RaceData.cs">
       <AutoGen>True</AutoGen>
@@ -1179,6 +1248,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreatureData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\DialogTopicData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DialogTopicData.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\EnvironmentalColors.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EnvironmentalColors.cs</LastGenOutput>
@@ -1234,6 +1307,10 @@
     <None Include="Subrecords\GeneratedCode\ProjectileData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ProjectileData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\QuestTargetData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QuestTargetData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\TerminalData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
