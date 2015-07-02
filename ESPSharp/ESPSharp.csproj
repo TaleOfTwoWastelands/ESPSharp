@@ -62,6 +62,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FormID.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataTypes\GeneratedCode\RegionGrass.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegionGrass.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypes\GeneratedCode\RegionObject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegionObject.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypes\GeneratedCode\RegionSound.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegionSound.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataTypes\GeneratedCode\TimeOfDayColors.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -71,6 +86,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WeatherChance.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypes\GeneratedCode\XYFloat.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XYFloat.tt</DependentUpon>
     </Compile>
     <Compile Include="DataTypes\LoadOrderFormID.cs" />
     <Compile Include="DataTypes\MoonData.cs" />
@@ -121,6 +141,9 @@
     <Compile Include="Enums\Flags\PlaceableWaterFlags.cs" />
     <Compile Include="Enums\Flags\ProjectileFlags.cs" />
     <Compile Include="Enums\Flags\RaceFlags.cs" />
+    <Compile Include="Enums\Flags\RegionDataFlags.cs" />
+    <Compile Include="Enums\Flags\RegionObjectFlags.cs" />
+    <Compile Include="Enums\Flags\RegionSoundFlags.cs" />
     <Compile Include="Enums\Flags\ScriptFlags.cs" />
     <Compile Include="Enums\Flags\SoundDataFlags.cs" />
     <Compile Include="Enums\Flags\SpellFlags.cs" />
@@ -151,6 +174,8 @@
     <Compile Include="Enums\PassthroughSound.cs" />
     <Compile Include="Enums\PlayerAction.cs" />
     <Compile Include="Enums\ProjectileType.cs" />
+    <Compile Include="Enums\RegionDataType.cs" />
+    <Compile Include="Enums\RegionMusicType.cs" />
     <Compile Include="Enums\ScriptType.cs" />
     <Compile Include="Enums\SoundLevel.cs" />
     <Compile Include="Enums\SpellType.cs" />
@@ -409,6 +434,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Race.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Region.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Region.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\Script.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -470,6 +500,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BodyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\RegionArea.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegionArea.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\RegionDataEntry.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegionDataEntry.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\ClimateTiming.cs">
       <AutoGen>True</AutoGen>
@@ -556,6 +596,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HeadModel.tt</DependentUpon>
     </Compile>
+    <None Include="DataTypes\GeneratedCode\RegionGrass.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RegionGrass.cs</LastGenOutput>
+    </None>
+    <None Include="DataTypes\GeneratedCode\RegionObject.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RegionObject.cs</LastGenOutput>
+    </None>
+    <None Include="DataTypes\GeneratedCode\RegionSound.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RegionSound.cs</LastGenOutput>
+    </None>
     <None Include="DataTypes\GeneratedCode\TimeOfDayColors.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TimeOfDayColors.cs</LastGenOutput>
@@ -563,6 +615,10 @@
     <None Include="DataTypes\GeneratedCode\WeatherChance.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WeatherChance.cs</LastGenOutput>
+    </None>
+    <None Include="DataTypes\GeneratedCode\XYFloat.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>XYFloat.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\AcousticSpace.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -688,6 +744,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Race.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Region.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Region.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Script.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Script.cs</LastGenOutput>
@@ -723,6 +783,14 @@
     <None Include="Records\GeneratedCode\Weather.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Weather.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\RegionArea.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RegionArea.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\RegionDataEntry.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RegionDataEntry.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\ClimateTiming.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1029,6 +1097,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RecordReference.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\RegionDataHeader.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegionDataHeader.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\Relationship.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1110,6 +1183,11 @@
       <DependentUpon>WeatherSound.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\InventoryItemExtraData.cs" />
+    <Compile Include="Subrecords\RegionGrassList.cs" />
+    <Compile Include="Subrecords\RegionObjectList.cs" />
+    <Compile Include="Subrecords\RegionPointList.cs" />
+    <Compile Include="Subrecords\RegionSoundList.cs" />
+    <Compile Include="Subrecords\RegionWeatherList.cs" />
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
     <Compile Include="Subrecords\SpeedtreeSeeds.cs" />
     <Compile Include="Subrecords\StaticCollectionPartData.cs" />
@@ -1234,6 +1312,10 @@
     <None Include="Subrecords\GeneratedCode\ProjectileData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ProjectileData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\RegionDataHeader.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RegionDataHeader.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\TerminalData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

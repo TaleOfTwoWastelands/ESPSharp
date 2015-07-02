@@ -49,7 +49,7 @@ namespace ESPSharp.Subrecords
             }
         }
 
-        FormArray ICloneable<FormArray>.Clone()
+        public FormArray Clone()
         {
             throw new NotImplementedException();
         }

@@ -1,0 +1,164 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	DataTypeTemplate template = new DataTypeTemplate();
+	template.ClassName = "RegionObject";
+
+	DataTypeField tempField;
+
+	tempField = 
+		new DataTypeField(
+			typeof(FormID),
+			"Object",
+			"Object"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(ushort),
+			"ParentIndex",
+			"ParentIndex"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte[]),
+			"Unused",
+			"Unused"
+			);
+	tempField.byteCount = 2;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(float),
+			"Density",
+			"Density"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte),
+			"Clustering",
+			"Clustering"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte),
+			"MinSlope",
+			"Slope/Min"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte),
+			"MaxSlope",
+			"Slope/Max"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(RegionObjectFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(ushort),
+			"RadiusWithRespectToParent",
+			"RadiusWithRespectToParent"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(ushort),
+			"Radius",
+			"Radius"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte[]),
+			"Unknown1",
+			"Unknown1"
+			);
+	tempField.byteCount = 4;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(float),
+			"MaxHeight",
+			"MaxHeight"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(float),
+			"Sink",
+			"Sink"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(float),
+			"SinkVariance",
+			"SinkVariance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(float),
+			"SizeVariance",
+			"SizeVariance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(ushort),
+			"XAngleVariance",
+			"XAngleVariance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(ushort),
+			"YAngleVariance",
+			"YAngleVariance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(ushort),
+			"ZAngleVariance",
+			"ZAngleVariance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte[]),
+			"Unknown2",
+			"Unknown2"
+			);
+	tempField.byteCount = 6;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

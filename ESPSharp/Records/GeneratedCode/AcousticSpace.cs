@@ -115,7 +115,7 @@ namespace ESPSharp.Records
 			}
 			if (Sounds != null)		
 			{		
-				ele.TryPathTo("Sounds", true, out subEle);
+				ele.TryPathTo("Weathers", true, out subEle);
 				List<string> xmlNames = new List<string>{"DawnOrDefaultLoop", "Afternoon", "Dusk", "Night", "Walla"};
 				int i = 0;
 				foreach (var entry in Sounds)
@@ -167,7 +167,7 @@ namespace ESPSharp.Records
 					
 				ObjectBounds.ReadXML(subEle, master);
 			}
-			if (ele.TryPathTo("Sounds", false, out subEle))
+			if (ele.TryPathTo("Weathers", false, out subEle))
 			{
 				if (Sounds == null)
 					Sounds = new List<RecordReference>();

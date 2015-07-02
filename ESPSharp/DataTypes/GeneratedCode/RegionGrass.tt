@@ -1,0 +1,26 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	DataTypeTemplate template = new DataTypeTemplate();
+	template.ClassName = "RegionGrass";
+
+	DataTypeField tempField;
+
+	tempField = 
+		new DataTypeField(
+			typeof(FormID),
+			"Form",
+			"Form"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte[]),
+			"Unknown",
+			"Unknown"
+			);
+	tempField.byteCount = 4;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

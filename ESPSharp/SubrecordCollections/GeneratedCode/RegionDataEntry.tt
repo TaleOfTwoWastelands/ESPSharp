@@ -1,0 +1,110 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "RegionDataEntry";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"RDAT",
+			typeof(RegionDataHeader),
+			"Header",
+			"Header"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"RDOT",
+			typeof(RegionObjectList),
+			"ObjectList",
+			"ObjectList"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"RDMP",
+			typeof(SimpleSubrecord<string>),
+			"MapName",
+			"MapName"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"RDGS",
+			typeof(RegionGrassList),
+			"GrassList",
+			"GrassList"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"RDMD",
+			typeof(SimpleSubrecord<RegionMusicType>),
+			"MusicType",
+			"MusicType"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"RDMO",
+			typeof(RecordReference),
+			"Music",
+			"Music"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"RDSO",
+			typeof(RecordReference),
+			"IncidentalMediaSet",
+			"MediaSet/Incidental"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"RDSB",
+			typeof(List<RecordReference>),
+			"BattleMediaSets",
+			"MediaSet/Battle"
+			);
+	tempField.XMLSubName = "MediaSet";
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"RDSD",
+			typeof(RegionSoundList),
+			"Sounds",
+			"Sounds"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"RDWT",
+			typeof(RegionWeatherList),
+			"Weathers",
+			"Weathers"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"RDID",
+			typeof(FormArray),
+			"Imposters",
+			"Imposters"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

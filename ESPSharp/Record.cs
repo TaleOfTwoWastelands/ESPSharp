@@ -355,6 +355,9 @@ namespace ESPSharp
                 case "CLMT":
                     outRecord = new Climate();
                     break;
+                case "REGN":
+                    outRecord = new Region();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;

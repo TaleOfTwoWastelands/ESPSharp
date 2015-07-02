@@ -1,0 +1,75 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Region";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ICON",
+			typeof(SimpleSubrecord<string>),
+			"LargeIcon",
+			"Icon/Large"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MICO",
+			typeof(SimpleSubrecord<string>),
+			"SmallIcon",
+			"Icon/Small"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RCLR",
+			typeof(SimpleSubrecord<Color>),
+			"MapColor",
+			"MapColor"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"WNAM",
+			typeof(RecordReference),
+			"Worldspace",
+			"Worldspace"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RPLI",
+			typeof(List<RegionArea>),
+			"Areas",
+			"Areas"
+			);
+	tempField.XMLSubNames = new List<string> {"Area"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RDAT",
+			typeof(List<RegionDataEntry>),
+			"DataEntries",
+			"DataEntries"
+			);
+	tempField.XMLSubNames = new List<string> {"DataEntry"};
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>
