@@ -89,7 +89,7 @@ namespace ESPSharp.SubrecordCollections
 			}
 			if (Sounds != null)		
 			{		
-				ele.TryPathTo("Weathers", true, out subEle);
+				ele.TryPathTo("Sounds", true, out subEle);
 				foreach (var entry in Sounds)
 				{
 					XElement newEle = new XElement("Sound");
@@ -110,7 +110,7 @@ namespace ESPSharp.SubrecordCollections
 					
 				SoundType.ReadXML(subEle, master);
 			}
-			if (ele.TryPathTo("Weathers", false, out subEle))
+			if (ele.TryPathTo("Sounds", false, out subEle))
 			{
 				if (Sounds == null)
 					Sounds = new List<CreatureSound>();

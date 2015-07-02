@@ -317,7 +317,7 @@ namespace ESPSharp.Records
 			}
 			if (Sounds != null)		
 			{		
-				ele.TryPathTo("Weathers", true, out subEle);
+				ele.TryPathTo("Sounds", true, out subEle);
 				List<string> xmlNames = new List<string>{"Sound"};
 				int i = 0;
 				foreach (var entry in Sounds)
@@ -468,7 +468,7 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
-			if (ele.TryPathTo("Weathers", false, out subEle))
+			if (ele.TryPathTo("Sounds", false, out subEle))
 			{
 				if (Sounds == null)
 					Sounds = new List<WeatherSound>();

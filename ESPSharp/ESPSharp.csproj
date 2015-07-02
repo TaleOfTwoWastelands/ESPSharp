@@ -516,7 +516,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BodyModel.tt</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="SubrecordCollections\GeneratedCode\RegionArea.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -526,7 +525,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RegionDataEntry.tt</DependentUpon>
-=======
+    </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\QuestLogEntry.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -546,7 +545,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedInfo.tt</DependentUpon>
->>>>>>> 02d80a1718f2288c77352352b478e5cac40e01b4
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\ClimateTiming.cs">
       <AutoGen>True</AutoGen>
@@ -825,7 +823,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Weather.cs</LastGenOutput>
     </None>
-<<<<<<< HEAD
     <None Include="SubrecordCollections\GeneratedCode\RegionArea.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RegionArea.cs</LastGenOutput>
@@ -833,7 +830,7 @@
     <None Include="SubrecordCollections\GeneratedCode\RegionDataEntry.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RegionDataEntry.cs</LastGenOutput>
-=======
+    </None>
     <None Include="SubrecordCollections\GeneratedCode\AddedQuest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AddedQuest.cs</LastGenOutput>
@@ -853,7 +850,6 @@
     <None Include="SubrecordCollections\GeneratedCode\SharedInfo.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SharedInfo.cs</LastGenOutput>
->>>>>>> 02d80a1718f2288c77352352b478e5cac40e01b4
     </None>
     <None Include="Subrecords\GeneratedCode\ClimateTiming.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1390,15 +1386,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ProjectileData.cs</LastGenOutput>
     </None>
-<<<<<<< HEAD
     <None Include="Subrecords\GeneratedCode\RegionDataHeader.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RegionDataHeader.cs</LastGenOutput>
-=======
+    </None>
     <None Include="Subrecords\GeneratedCode\QuestTargetData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>QuestTargetData.cs</LastGenOutput>
->>>>>>> 02d80a1718f2288c77352352b478e5cac40e01b4
     </None>
     <None Include="Subrecords\GeneratedCode\TerminalData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
