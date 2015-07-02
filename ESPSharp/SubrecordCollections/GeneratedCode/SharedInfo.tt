@@ -1,0 +1,27 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "SharedInfo";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"INFC",
+			typeof(RecordReference),
+			"InfoConnection",
+			"InfoConnection"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"INFX",
+			typeof(SimpleSubrecord<int>),
+			"InfoIndex",
+			"InfoIndex"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

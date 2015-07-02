@@ -1,0 +1,28 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "AddedQuest";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"QSTI",
+			typeof(RecordReference),
+			"Quest",
+			"Quest"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"INFC",
+			typeof(List<SharedInfo>),
+			"SharedInfos",
+			"SharedInfos"
+			);
+	tempField.XMLSubName = "SharedInfo";
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

@@ -1,0 +1,56 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "QuestLogEntry";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"QSDT",
+			typeof(SimpleSubrecord<QuestStageFlags>),
+			"StageFlags",
+			"StageFlags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"CTDA",
+			typeof(List<Condition>),
+			"Conditions",
+			"Conditions"
+			);
+	tempField.XMLSubName = "Condition";
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"CNAM",
+			typeof(SimpleSubrecord<string>),
+			"LogEntry",
+			"LogEntry"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"SCHR",
+			typeof(EmbeddedScript),
+			"Script",
+			"Script"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"NAM0",
+			typeof(RecordReference),
+			"NextQuest",
+			"NextQuest"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>
