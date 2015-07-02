@@ -439,6 +439,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Projectile.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\Quest.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Quest.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\Race.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -515,6 +520,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BodyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\QuestStage.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuestStage.tt</DependentUpon>
     </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\RegionArea.cs">
       <AutoGen>True</AutoGen>
@@ -779,6 +789,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Projectile.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\Quest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Quest.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Race.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Race.cs</LastGenOutput>
@@ -822,6 +836,10 @@
     <None Include="Records\GeneratedCode\Weather.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Weather.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\QuestStage.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QuestStage.cs</LastGenOutput>
     </None>
     <None Include="SubrecordCollections\GeneratedCode\RegionArea.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1136,6 +1154,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectileData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\QuestData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuestData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\QuestTargetData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1385,6 +1408,10 @@
     <None Include="Subrecords\GeneratedCode\ProjectileData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ProjectileData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\QuestData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QuestData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\RegionDataHeader.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

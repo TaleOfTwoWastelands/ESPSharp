@@ -63,7 +63,7 @@
 
 	tempField = 
 		new SubrecordCollectionField(
-			"RDSO",
+			"RDSI",
 			typeof(RecordReference),
 			"IncidentalMediaSet",
 			"MediaSet/Incidental"

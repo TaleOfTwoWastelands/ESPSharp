@@ -1,0 +1,95 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Quest";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SCRI",
+			typeof(RecordReference),
+			"Script",
+			"Script"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ICON",
+			typeof(SimpleSubrecord<string>),
+			"LargeIcon",
+			"Icon/Large"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MICO",
+			typeof(SimpleSubrecord<string>),
+			"SmallIcon",
+			"Icon/Small"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(QuestData),
+			"Data",
+			"Data"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CTDA",
+			typeof(List<Condition>),
+			"Conditions",
+			"Conditions"
+			);
+	tempField.XMLSubNames = new List<string> {"Condition"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"INDX",
+			typeof(List<QuestStage>),
+			"Stages",
+			"Stages"
+			);
+	tempField.XMLSubNames = new List<string> {"Stage"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"QOBJ",
+			typeof(List<QuestObjective>),
+			"Objectives",
+			"Objectives"
+			);
+	tempField.XMLSubNames = new List<string> {"Objective"};
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

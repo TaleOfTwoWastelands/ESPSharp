@@ -122,8 +122,8 @@ namespace ESPSharp.SubrecordCollections
 
 						Music.ReadBinary(reader);
 						break;
-					case "RDSO":
-						if (readTags.Contains("RDSO"))
+					case "RDSI":
+						if (readTags.Contains("RDSI"))
 							return;
 						if (IncidentalMediaSet == null)
 							IncidentalMediaSet = new RecordReference();

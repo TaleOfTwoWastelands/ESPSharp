@@ -358,6 +358,12 @@ namespace ESPSharp
                 case "REGN":
                     outRecord = new Region();
                     break;
+                case "DIAL":
+                    outRecord = new DialogTopic();
+                    break;
+                case "QUST":
+                    outRecord = new Quest();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;
