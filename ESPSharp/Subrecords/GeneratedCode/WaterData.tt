@@ -1,0 +1,380 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "WaterData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unknown",
+			"Unknown"
+			);
+	tempField.byteCount = 16;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"WaterPropertiesSunPower",
+			"WaterProperties/SunPower"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"WaterPropertiesReflectivityAmount",
+			"WaterProperties/ReflectivityAmount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"WaterPropertiesFresnelAmount",
+			"WaterProperties/FresnelAmount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused1",
+			"Unused1"
+			);
+	tempField.byteCount = 4;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FogPropertiesAboveWaterFogNearPlaneDistance",
+			"FogProperties/AboveWater/FogNearPlaneDistance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FogPropertiesAboveWaterFogFarPlaneDistance",
+			"FogProperties/AboveWater/FogFarPlaneDistance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"ColorShallow",
+			"Color/Shallow"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"ColorDeep",
+			"Color/Deep"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"ColorReflection",
+			"Color/Reflection"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused2",
+			"Unused2"
+			);
+	tempField.byteCount = 4;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"RainSimulatorForce",
+			"RainSimulator/Force"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"RainSimulatorVelocity",
+			"RainSimulator/Velocity"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"RainSimulatorFalloff",
+			"RainSimulator/Falloff"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"RainSimulatorDampener",
+			"RainSimulator/Dampener"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DisplacementSimulatorStartingSize",
+			"DisplacementSimulator/StartingSize"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DisplacementSimulatorForce",
+			"DisplacementSimulator/Force"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DisplacementSimulatorVelocity",
+			"DisplacementSimulator/Velocity"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DisplacementSimulatorFalloff",
+			"DisplacementSimulator/Falloff"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DisplacementSimulatorDampener",
+			"DisplacementSimulator/Dampener"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"RainSimulatorStartingSize",
+			"RainSimulator/StartingSize"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNormalsNoiseScale",
+			"NoiseProperties/Normals/NoiseScale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerOneWindDirection",
+			"NoiseProperties/NoiseLayerOne/WindDirection"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerTwoWindDirection",
+			"NoiseProperties/NoiseLayerTwo/WindDirection"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerThreeWindDirection",
+			"NoiseProperties/NoiseLayerThree/WindDirection"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerOneWindSpeed",
+			"NoiseProperties/NoiseLayerOne/WindSpeed"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerTwoWindSpeed",
+			"NoiseProperties/NoiseLayerTwo/WindSpeed"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerThreeWindSpeed",
+			"NoiseProperties/NoiseLayerThree/WindSpeed"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNormalsDepthFalloffStart",
+			"NoiseProperties/Normals/DepthFalloff/Start"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNormalsDepthFalloffEnd",
+			"NoiseProperties/Normals/DepthFalloff/End"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FogPropertiesAboveWaterFogAmount",
+			"FogProperties/AboveWater/FogAmount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNormalsUVScale",
+			"NoiseProperties/Normals/UVScale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FogPropertiesUnderWaterFogAmount",
+			"FogProperties/UnderWater/FogAmount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FogPropertiesUnderWaterFogNearPlaneDistance",
+			"FogProperties/UnderWater/FogNearPlaneDistance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FogPropertiesUnderWaterFogFarPlaneDistance",
+			"FogProperties/UnderWater/FogFarPlaneDistance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"WaterPropertiesDistortionAmount",
+			"WaterProperties/DistortionAmount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"WaterPropertiesShininess",
+			"WaterProperties/Shininess"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"WaterPropertiesReflectionHDRMult",
+			"WaterProperties/ReflectionHDRMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"WaterPropertiesLightRadius",
+			"WaterProperties/LightRadius"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"WaterPropertiesLightBrightness",
+			"WaterProperties/LightBrightness"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerOneUVScale",
+			"NoiseProperties/NoiseLayerOne/UVScale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerTwoUVScale",
+			"NoiseProperties/NoiseLayerTwo/UVScale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerThreeUVScale",
+			"NoiseProperties/NoiseLayerThree/UVScale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerOneAmplitudeScale",
+			"NoiseProperties/NoiseLayerOne/AmplitudeScale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerTwoAmplitudeScale",
+			"NoiseProperties/NoiseLayerTwo/AmplitudeScale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NoisePropertiesNoiseLayerThreeAmplitudeScale",
+			"NoiseProperties/NoiseLayerThree/AmplitudeScale"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

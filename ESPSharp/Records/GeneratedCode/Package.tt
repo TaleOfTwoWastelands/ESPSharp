@@ -1,0 +1,242 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Package";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PKDT",
+			typeof(PackageData),
+			"Data",
+			"Data"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PLDT",
+			typeof(List<PackageLocations>),
+			"LocationData",
+			"LocationData"
+			);
+	tempField.XMLSubNames = new List<string>{"LocationSet"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PSDT",
+			typeof(PackageScheduleData),
+			"Schedule",
+			"Schedule"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PTDT",
+			typeof(PackageTarget),
+			"Target1",
+			"Target1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CTDA",
+			typeof(List<Condition>),
+			"Conditions",
+			"Conditions"
+			);
+	tempField.XMLSubNames = new List<string>{"Condition"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IDLF",
+			typeof(SimpleSubrecord<PackageIdleFlags>),
+			"IdleFlags",
+			"Idle/Flags"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IDLC",
+			typeof(SimpleSubrecord<byte>),
+			"IdleCount",
+			"Idle/Count"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IDLT",
+			typeof(SimpleSubrecord<float>),
+			"IdleTimerSetting",
+			"Idle/TimerSetting"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IDLA",
+			typeof(FormArray),
+			"IdleAnimations",
+			"Idle/Animations"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IDLB",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused",
+			"Unused"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CNAM",
+			typeof(RecordReference),
+			"CombatStyle",
+			"CombatStyle"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PKED",
+			typeof(SubMarker),
+			"EatMarker",
+			"EatMarker"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PKE2",
+			typeof(SimpleSubrecord<uint>),
+			"EscortDistance",
+			"EscortDistance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PKFD",
+			typeof(SimpleSubrecord<uint>),
+			"FollowDistance_StartLocation_TriggerRadius",
+			"FollowDistance_StartLocation_TriggerRadius"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PKPT",
+			typeof(SimpleSubrecord<NoYesShort>),
+			"PatrolIsRepeatable",
+			"PatrolIsRepeatable"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PKW3",
+			typeof(PackageUseWeaponData),
+			"UseWeaponData",
+			"UseWeaponData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PTD2",
+			typeof(PackageTarget),
+			"Target2",
+			"Target2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PUID",
+			typeof(SubMarker),
+			"UseItemMarker",
+			"UseItemMarker"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PKAM",
+			typeof(SubMarker),
+			"AmbushMarker",
+			"AmbushMarker"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PKDD",
+			typeof(PackageDialogData),
+			"DialogData",
+			"DialogData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PLD2",
+			typeof(PackageLocation),
+			"Location2",
+			"Location2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"POBA",
+			typeof(PackageEvent),
+			"OnBegin",
+			"OnBegin"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"POEA",
+			typeof(PackageEvent),
+			"OnEnd",
+			"OnEnd"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"POCA",
+			typeof(PackageEvent),
+			"OnChange",
+			"OnChange"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

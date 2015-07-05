@@ -1,0 +1,286 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "CombatStyleDecision";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"ManeuverDodgeChance",
+			"Maneuver/DodgeChance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"ManeuverSidestepChance",
+			"Maneuver/SidestepChance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused1",
+			"Unused/Unused1"
+			);
+	tempField.byteCount = 2;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ManeuverDodgeLRTimerMin",
+			"Maneuver/DodgeLRTimer/Min"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ManeuverDodgeLRTimerMax",
+			"Maneuver/DodgeLRTimer/Max"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ManeuverDodgeForwardTimerMin",
+			"Maneuver/DodgeForwardTimer/Min"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ManeuverDodgeForwardTimerMax",
+			"Maneuver/DodgeForwardTimer/Max"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ManeuverDodgeBackwardTimerMin",
+			"Maneuver/DodgeBackwardTimer/Min"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ManeuverDodgeBackwardTimerMax",
+			"Maneuver/DodgeBackwardTimer/Max"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ManeuverDodgeIdleTimerMin",
+			"Maneuver/DodgeIdleTimer/Min"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ManeuverDodgeIdleTimerMax",
+			"Maneuver/DodgeIdleTimer/Max"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"MeleeBlockChance",
+			"Melee/BlockChance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"MeleeAttackChance",
+			"Melee/AttackChance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused2",
+			"Unused/Unused2"
+			);
+	tempField.byteCount = 2;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MeleeRecoilStaggerBonusToAttack",
+			"Melee/RecoilStaggerBonusToAttack"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MeleeUnconsciousBonusToAttack",
+			"Melee/UnconsciousBonusToAttack"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MeleeHandToHandBonusToAttack",
+			"Melee/HandToHandBonusToAttack"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"MeleePowerAttackChance",
+			"Melee/PowerAttack/Chance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused3",
+			"Unused/Unused3"
+			);
+	tempField.byteCount = 3;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MeleePowerAttackRecoilStaggerBonus",
+			"Melee/PowerAttack/RecoilStaggerBonus"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MeleePowerAttackUnconsciousBonus",
+			"Melee/PowerAttack/UnconsciousBonus"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"MeleePowerAttackNormal",
+			"Melee/PowerAttack/Normal"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"MeleePowerAttackForward",
+			"Melee/PowerAttack/Forward"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"MeleePowerAttackBack",
+			"Melee/PowerAttack/Back"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"MeleePowerAttackLeft",
+			"Melee/PowerAttack/Left"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"MeleePowerAttackRight",
+			"Melee/PowerAttack/Right"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused4",
+			"Unused/Unused4"
+			);
+	tempField.byteCount = 3;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MeleeHoldTimerMin",
+			"Melee/HoldTimer/Min"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MeleeHoldTimerMax",
+			"Melee/HoldTimer/Max"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(CombatStyleFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"ManeuverAcrobaticDodgeChance",
+			"Maneuver/AcrobaticDodgeChance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"MeleeRushingPowerAttackChance",
+			"Melee/PowerAttack/RushingChance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused5",
+			"Unused/Unused5"
+			);
+	tempField.byteCount = 2;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MeleeRushingPowerAttackDistanceMult",
+			"Melee/PowerAttack/DistanceMult"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

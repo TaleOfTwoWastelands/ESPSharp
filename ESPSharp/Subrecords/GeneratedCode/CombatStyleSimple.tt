@@ -2,127 +2,136 @@
 <#@ output extension=".cs" #>
 <#	
 	SubrecordTemplate template = new SubrecordTemplate();
-	template.ClassName = "WeatherData";
+	template.ClassName = "CombatStyleSimple";
 
 	SubrecordField tempField;
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"WindSpeed",
-			"WindSpeed"
+			typeof(float),
+			"CoverSearchRadius",
+			"CoverSearchRadius"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"CloudSpeedLower",
-			"CloudSpeed/Lower"
+			typeof(float),
+			"TakeCoverChance",
+			"TakeCoverChance"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"CloudSpeedUpper",
-			"CloudSpeed/Upper"
+			typeof(float),
+			"WaitTimerMin",
+			"WaitTimer/Min"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"TransitionDelta",
-			"TransitionDelta"
+			typeof(float),
+			"WaitTimerMax",
+			"WaitTimer/Max"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"SunGlare",
-			"SunGlare"
+			typeof(float),
+			"WaitToFireTimerMin",
+			"WaitToFireTimer/Min"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"SunDamage",
-			"SunDamage"
+			typeof(float),
+			"WaitToFireTimerMax",
+			"WaitToFireTimer/Max"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"PrecipitationBeginFadeIn",
-			"Precipitation/BeginFadeIn"
+			typeof(float),
+			"FireTimerMin",
+			"FireTimer/Min"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"PrecipitationEndFadeOut",
-			"Precipitation/EndFadeOut"
+			typeof(float),
+			"FireTimerMax",
+			"FireTimer/Max"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"Thunder_LightningBeginFadeIn",
-			"Thunder_Lightning/BeginFadeIn"
+			typeof(float),
+			"RangedWeaponRangeMultMin",
+			"RangedWeaponRangeMult/Min"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"Thunder_LightningEndFadeOut",
-			"Thunder_Lightning/EndFadeOut"
+			typeof(byte[]),
+			"Unused",
+			"Unused"
+			);
+	tempField.byteCount = 4;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(WeaponRestrictions),
+			"WeaponRestrictions",
+			"WeaponRestrictions"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"Thunder_LightningFrequency",
-			"Thunder_Lightning/Frequency"
+			typeof(float),
+			"RangedWeaponRangeMultMax",
+			"RangedWeaponRangeMult/Max"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(WeatherClassification),
-			"Classification",
-			"Classification"
+			typeof(float),
+			"MaxTargetingFOV",
+			"MaxTargetingFOV"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"LightningColorRed",
-			"LightningColor/Red"
+			typeof(float),
+			"CombatRadius",
+			"CombatRadius"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"LightningColorGreen",
-			"LightningColor/Green"
+			typeof(float),
+			"SemiAutoFiringDelayMultMin",
+			"SemiAutoFiringDelayMult/Min"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"LightningColorBlue",
-			"LightningColor/Blue"
+			typeof(float),
+			"SemiAutoFiringDelayMultMax",
+			"SemiAutoFiringDelayMult/Max"
 			);
 	template.Fields.Add(tempField);
 #>

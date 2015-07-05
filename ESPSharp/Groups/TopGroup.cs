@@ -21,7 +21,7 @@ namespace ESPSharp
             {"HAIR", "Hairs"},
             {"EYES", "Eyes"},
             {"RACE", "Races"},
-            {"SOUN", "Weathers"},
+            {"SOUN", "Sounds"},
             {"ASPC", "Acoustic Spaces"},
             {"MGEF", "Magic Effects"},
             {"SCPT", "Scripts"},

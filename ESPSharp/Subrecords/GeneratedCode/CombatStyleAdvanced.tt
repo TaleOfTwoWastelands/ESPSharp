@@ -1,0 +1,177 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "CombatStyleAdvanced";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DodgeFatigueModMult",
+			"DodgeFatigueMod/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DodgeFatigueModBase",
+			"DodgeFatigueMod/Base"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EncumbSpeedModBase",
+			"EncumbSpeedMod/Base"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EncumbSpeedModMult",
+			"EncumbSpeedMod/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DodgeWhileUnderAttackMult",
+			"DodgeWhileUnderAttackMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DodgeNotUnderAttackMult",
+			"DodgeNotUnderAttackMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DodgeBackWhileUnderAttackMult",
+			"DodgeBackWhileUnderAttackMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DodgeBackNotUnderAttackMult",
+			"DodgeBackNotUnderAttackMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DodgeForwardWhileAttackingMult",
+			"DodgeForwardWhileAttackingMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DodgeForwardNotAttackingMult",
+			"DodgeForwardNotAttackingMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"BlockSkillModifierMult",
+			"BlockSkillModifier/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"BlockSkillModifierBase",
+			"BlockSkillModifier/Base"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"BlockWhileUnderAttackMult",
+			"BlockWhileUnderAttackMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"BlockNotUnderAttackMult",
+			"BlockNotUnderAttackMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AttackSkillModifierMult",
+			"AttackSkillModifier/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AttackSkillModifierBase",
+			"AttackSkillModifier/Base"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AttackWhileUnderAttackMult",
+			"AttackWhileUnderAttackMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AttackNotUnderAttackMult",
+			"AttackNotUnderAttackMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AttackDuringBlockMult",
+			"AttackDuringBlockMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"PowerAttackFatigueModBase",
+			"PowerAttackFatigueMod/Base"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"PowerAttackFatigueModMult",
+			"PowerAttackFatigueMod/Mult"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

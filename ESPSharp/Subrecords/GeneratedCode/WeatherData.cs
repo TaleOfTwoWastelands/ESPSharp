@@ -28,7 +28,9 @@ namespace ESPSharp.Subrecords
 		public Byte Thunder_LightningEndFadeOut { get; set; }
 		public Byte Thunder_LightningFrequency { get; set; }
 		public WeatherClassification Classification { get; set; }
-		public Color LightningColor { get; set; }
+		public Byte LightningColorRed { get; set; }
+		public Byte LightningColorGreen { get; set; }
+		public Byte LightningColorBlue { get; set; }
 
 		public WeatherData()
 		{
@@ -44,10 +46,12 @@ namespace ESPSharp.Subrecords
 			Thunder_LightningEndFadeOut = new Byte();
 			Thunder_LightningFrequency = new Byte();
 			Classification = new WeatherClassification();
-			LightningColor = new Color();
+			LightningColorRed = new Byte();
+			LightningColorGreen = new Byte();
+			LightningColorBlue = new Byte();
 		}
 
-		public WeatherData(Byte WindSpeed, Byte CloudSpeedLower, Byte CloudSpeedUpper, Byte TransitionDelta, Byte SunGlare, Byte SunDamage, Byte PrecipitationBeginFadeIn, Byte PrecipitationEndFadeOut, Byte Thunder_LightningBeginFadeIn, Byte Thunder_LightningEndFadeOut, Byte Thunder_LightningFrequency, WeatherClassification Classification, Color LightningColor)
+		public WeatherData(Byte WindSpeed, Byte CloudSpeedLower, Byte CloudSpeedUpper, Byte TransitionDelta, Byte SunGlare, Byte SunDamage, Byte PrecipitationBeginFadeIn, Byte PrecipitationEndFadeOut, Byte Thunder_LightningBeginFadeIn, Byte Thunder_LightningEndFadeOut, Byte Thunder_LightningFrequency, WeatherClassification Classification, Byte LightningColorRed, Byte LightningColorGreen, Byte LightningColorBlue)
 		{
 			this.WindSpeed = WindSpeed;
 			this.CloudSpeedLower = CloudSpeedLower;
@@ -61,7 +65,9 @@ namespace ESPSharp.Subrecords
 			this.Thunder_LightningEndFadeOut = Thunder_LightningEndFadeOut;
 			this.Thunder_LightningFrequency = Thunder_LightningFrequency;
 			this.Classification = Classification;
-			this.LightningColor = LightningColor;
+			this.LightningColorRed = LightningColorRed;
+			this.LightningColorGreen = LightningColorGreen;
+			this.LightningColorBlue = LightningColorBlue;
 		}
 
 		public WeatherData(WeatherData copyObject)
@@ -78,7 +84,9 @@ namespace ESPSharp.Subrecords
 			Thunder_LightningEndFadeOut = copyObject.Thunder_LightningEndFadeOut;
 			Thunder_LightningFrequency = copyObject.Thunder_LightningFrequency;
 			Classification = copyObject.Classification;
-			LightningColor = copyObject.LightningColor.Clone();
+			LightningColorRed = copyObject.LightningColorRed;
+			LightningColorGreen = copyObject.LightningColorGreen;
+			LightningColorBlue = copyObject.LightningColorBlue;
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -100,7 +108,9 @@ namespace ESPSharp.Subrecords
 					Thunder_LightningEndFadeOut = subReader.ReadByte();
 					Thunder_LightningFrequency = subReader.ReadByte();
 					Classification = subReader.ReadEnum<WeatherClassification>();
-					LightningColor.ReadBinary(subReader);
+					LightningColorRed = subReader.ReadByte();
+					LightningColorGreen = subReader.ReadByte();
+					LightningColorBlue = subReader.ReadByte();
 				}
 				catch
 				{
@@ -123,7 +133,9 @@ namespace ESPSharp.Subrecords
 			writer.Write(Thunder_LightningEndFadeOut);			
 			writer.Write(Thunder_LightningFrequency);			
 			writer.Write((Byte)Classification);
-			LightningColor.WriteBinary(writer);
+			writer.Write(LightningColorRed);			
+			writer.Write(LightningColorGreen);			
+			writer.Write(LightningColorBlue);			
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -166,8 +178,14 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Classification", true, out subEle);
 			subEle.Value = Classification.ToString();
 
-			ele.TryPathTo("LightningColor", true, out subEle);
-			LightningColor.WriteXML(subEle, master);
+			ele.TryPathTo("LightningColor/Red", true, out subEle);
+			subEle.Value = LightningColorRed.ToString();
+
+			ele.TryPathTo("LightningColor/Green", true, out subEle);
+			subEle.Value = LightningColorGreen.ToString();
+
+			ele.TryPathTo("LightningColor/Blue", true, out subEle);
+			subEle.Value = LightningColorBlue.ToString();
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -234,9 +252,19 @@ namespace ESPSharp.Subrecords
 				Classification = subEle.ToEnum<WeatherClassification>();
 			}
 
-			if (ele.TryPathTo("LightningColor", false, out subEle))
+			if (ele.TryPathTo("LightningColor/Red", false, out subEle))
 			{
-				LightningColor.ReadXML(subEle, master);
+				LightningColorRed = subEle.ToByte();
+			}
+
+			if (ele.TryPathTo("LightningColor/Green", false, out subEle))
+			{
+				LightningColorGreen = subEle.ToByte();
+			}
+
+			if (ele.TryPathTo("LightningColor/Blue", false, out subEle))
+			{
+				LightningColorBlue = subEle.ToByte();
 			}
 		}
 

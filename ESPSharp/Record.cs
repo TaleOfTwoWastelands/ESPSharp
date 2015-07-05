@@ -364,6 +364,33 @@ namespace ESPSharp
                 case "QUST":
                     outRecord = new Quest();
                     break;
+                case "IDLE":
+                    outRecord = new IdleAnimation();
+                    break;
+                case "PACK":
+                    outRecord = new Package();
+                    break;
+                case "CSTY":
+                    outRecord = new CombatStyle();
+                    break;
+                case "LSCR":
+                    outRecord = new LoadScreen();
+                    break;
+                case "ANIO":
+                    outRecord = new AnimatedObject();
+                    break;
+                case "WATR":
+                    outRecord = new Water();
+                    break;
+                case "EFSH":
+                    outRecord = new EffectShader();
+                    break;
+                case "EXPL":
+                    outRecord = new Explosion();
+                    break;
+                case "DEBR":
+                    outRecord = new Debris();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;

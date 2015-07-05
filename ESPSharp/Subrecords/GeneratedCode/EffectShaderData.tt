@@ -1,0 +1,634 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "EffectShaderData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(EffectShaderFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused",
+			"Unused"
+			);
+	tempField.byteCount = 3;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(BlendMode),
+			"MembraneShaderSourceBlendMode",
+			"MembraneShader/SourceBlendMode"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(BlendOperation),
+			"MembraneShaderBlendOperation",
+			"MembraneShader/BlendOperation"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ZTestFunction),
+			"MembraneShaderZTestFunction",
+			"MembraneShader/ZTestFunction"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"Fill_TextureEffectColor",
+			"Fill_TextureEffect/Color"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Fill_TextureEffectAlphaFadeTimeIn",
+			"Fill_TextureEffect/Alpha/FadeTime/In"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Fill_TextureEffectAlphaFadeTimeFull",
+			"Fill_TextureEffect/Alpha/FadeTime/Full"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Fill_TextureEffectAlphaFadeTimeOut",
+			"Fill_TextureEffect/Alpha/FadeTime/Out"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Fill_TextureEffectAlphaPersistentRatio",
+			"Fill_TextureEffect/Alpha/PersistentRatio"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Fill_TextureEffectAlphaPulseAmplitude",
+			"Fill_TextureEffect/Alpha/Pulse/Amplitude"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Fill_TextureEffectAlphaPulseFrequency",
+			"Fill_TextureEffect/Alpha/Pulse/Frequency"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Fill_TextureEffectTextureAnimationSpeedU",
+			"Fill_TextureEffect/TextureAnimationSpeed/U"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Fill_TextureEffectTextureAnimationSpeedV",
+			"Fill_TextureEffect/TextureAnimationSpeed/V"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EdgeEffectFallOff",
+			"EdgeEffect/FallOff"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"EdgeEffectColor",
+			"EdgeEffect/Color"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EdgeEffectAlphaFadeTimeIn",
+			"EdgeEffect/Alpha/FadeTime/In"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EdgeEffectAlphaFadeTimeFull",
+			"EdgeEffect/Alpha/FadeTime/Full"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EdgeEffectAlphaFadeTimeOut",
+			"EdgeEffect/Alpha/FadeTime/Out"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EdgeEffectAlphaPersistentRatio",
+			"EdgeEffect/Alpha/PersistentRatio"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EdgeEffectAlphaPulseAmplitude",
+			"EdgeEffect/Alpha/Pulse/Amplitude"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EdgeEffectAlphaPulseFrequency",
+			"EdgeEffect/Alpha/Pulse/Frequency"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EdgeEffectFill_TextureEffectFullAlphaRatio",
+			"EdgeEffect/Fill_TextureEffect/FullAlphaRatio"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EdgeEffectFullAlphaRatio",
+			"EdgeEffect/FullAlphaRatio"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(BlendMode),
+			"MembraneShaderDestBlendMode",
+			"MembraneShader/DestBlendMode"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(BlendMode),
+			"ParticleShaderSourceBlendMode",
+			"ParticleShader/SourceBlendMode"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(BlendOperation),
+			"ParticleShaderBlendOperation",
+			"ParticleShader/BlendOperation"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ZTestFunction),
+			"ParticleShaderZTestFunction",
+			"ParticleShader/ZTestFunction"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(BlendMode),
+			"ParticleShaderDestBlendMode",
+			"ParticleShader/DestBlendMode"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderBirthTimeRampUp",
+			"ParticleShader/BirthTime/RampUp"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderBirthTimeFull",
+			"ParticleShader/BirthTime/Full"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderBirthTimeRampDown",
+			"ParticleShader/BirthTime/RampDown"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderFullBirthRatio",
+			"ParticleShader/FullBirthRatio"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderPersistentBirthRatio",
+			"ParticleShader/PersistentBirthRatio"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderLifetimeBase",
+			"ParticleShader/Lifetime/Base"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderLifetimeVariance",
+			"ParticleShader/Lifetime/Variance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderNormalMovementInitialSpeed",
+			"ParticleShader/NormalMovement/InitialSpeed"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderNormalMovementAcceleration",
+			"ParticleShader/NormalMovement/Acceleration"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderInitialVelocity1",
+			"ParticleShader/InitialVelocity/Velocity1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderInitialVelocity2",
+			"ParticleShader/InitialVelocity/Velocity2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderInitialVelocity3",
+			"ParticleShader/InitialVelocity/Velocity3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderAcceleration1",
+			"ParticleShader/Acceleration/Acceleration1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderAcceleration2",
+			"ParticleShader/Acceleration/Acceleration2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderAcceleration3",
+			"ParticleShader/Acceleration/Acceleration3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderScaleKey1",
+			"ParticleShader/ScaleKey/Key1/Value"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderScaleKey2",
+			"ParticleShader/ScaleKey/Key2/Value"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderScaleKey1Time",
+			"ParticleShader/ScaleKey/Key1/Time"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderScaleKey2Time",
+			"ParticleShader/ScaleKey/Key2/Time"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"ParticleShaderColorKey1",
+			"ParticleShader/ColorKey/Key1/Color"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"ParticleShaderColorKey2",
+			"ParticleShader/ColorKey/Key2/Color"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"ParticleShaderColorKey3",
+			"ParticleShader/ColorKey/Key3/Color"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderColorKey1Alpha",
+			"ParticleShader/ColorKey/Key1/Alpha"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderColorKey2Alpha",
+			"ParticleShader/ColorKey/Key2/Alpha"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderColorKey3Alpha",
+			"ParticleShader/ColorKey/Key3/Alpha"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderColorKey1Time",
+			"ParticleShader/ColorKey/Key1/Time"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderColorKey2Time",
+			"ParticleShader/ColorKey/Key2/Time"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderColorKey3Time",
+			"ParticleShader/ColorKey/Key3/Time"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderInitSpeedAlongNormalVariance",
+			"ParticleShader/InitSpeedAlongNormal/Variance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderInitialRotationValue",
+			"ParticleShader/InitialRotation/Value"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderInitialRotationVariance",
+			"ParticleShader/InitialRotation/Variance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderRotationSpeedValue",
+			"ParticleShader/RotationSpeed/Value"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ParticleShaderRotationSpeedVariance",
+			"ParticleShader/RotationSpeed/Variance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"AddonModelsModel",
+			"AddonModels/Model"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HolesTimeStart",
+			"Holes/Time/Start"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HolesTimeEnd",
+			"Holes/Time/End"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HolesValueStart",
+			"Holes/Value/Start"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HolesValueEnd",
+			"Holes/Value/End"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"EdgeWidth",
+			"EdgeWidth"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"EdgeColor",
+			"EdgeColor"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ExplosionWindSpeed",
+			"ExplosionWindSpeed"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"TextureCountU",
+			"TextureCount/U"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"TextureCountV",
+			"TextureCount/V"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AddonModelsFadeTimeIn",
+			"AddonModels/FadeTime/In"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AddonModelsFadeTimeOut",
+			"AddonModels/FadeTime/Out"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AddonModelsScaleIn",
+			"AddonModels/Scale/In"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AddonModelsScaleOut",
+			"AddonModels/Scale/Out"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AddonModelsScaleTimeIn",
+			"AddonModels/ScaleTime/In"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AddonModelsScaleTimeOut",
+			"AddonModels/ScaleTime/Out"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

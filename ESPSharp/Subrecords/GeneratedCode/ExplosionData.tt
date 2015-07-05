@@ -2,127 +2,111 @@
 <#@ output extension=".cs" #>
 <#	
 	SubrecordTemplate template = new SubrecordTemplate();
-	template.ClassName = "WeatherData";
+	template.ClassName = "ExplosionData";
 
 	SubrecordField tempField;
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"WindSpeed",
-			"WindSpeed"
+			typeof(float),
+			"Force",
+			"Force"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"CloudSpeedLower",
-			"CloudSpeed/Lower"
+			typeof(float),
+			"Damage",
+			"Damage"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"CloudSpeedUpper",
-			"CloudSpeed/Upper"
+			typeof(float),
+			"Radius",
+			"Radius"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"TransitionDelta",
-			"TransitionDelta"
+			typeof(FormID),
+			"Light",
+			"Light"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"SunGlare",
-			"SunGlare"
+			typeof(FormID),
+			"Sound1",
+			"Sound1"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"SunDamage",
-			"SunDamage"
+			typeof(ExplosionFlags),
+			"Flags",
+			"Flags"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"PrecipitationBeginFadeIn",
-			"Precipitation/BeginFadeIn"
+			typeof(float),
+			"ISRadius",
+			"ISRadius"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"PrecipitationEndFadeOut",
-			"Precipitation/EndFadeOut"
+			typeof(FormID),
+			"ImpactDataSet",
+			"ImpactDataSet"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"Thunder_LightningBeginFadeIn",
-			"Thunder_Lightning/BeginFadeIn"
+			typeof(FormID),
+			"Sound2",
+			"Sound2"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"Thunder_LightningEndFadeOut",
-			"Thunder_Lightning/EndFadeOut"
+			typeof(float),
+			"RadiationLevel",
+			"Radiation/Level"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"Thunder_LightningFrequency",
-			"Thunder_Lightning/Frequency"
+			typeof(float),
+			"RadiationDissipationTime",
+			"Radiation/DissipationTime"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(WeatherClassification),
-			"Classification",
-			"Classification"
+			typeof(float),
+			"RadiationRadius",
+			"Radiation/Radius"
 			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordField(
-			typeof(byte),
-			"LightningColorRed",
-			"LightningColor/Red"
-			);
-	template.Fields.Add(tempField);
-
-	tempField = 
-		new SubrecordField(
-			typeof(byte),
-			"LightningColorGreen",
-			"LightningColor/Green"
-			);
-	template.Fields.Add(tempField);
-
-	tempField = 
-		new SubrecordField(
-			typeof(byte),
-			"LightningColorBlue",
-			"LightningColor/Blue"
+			typeof(SoundLevel),
+			"SoundLevel",
+			"SoundLevel"
 			);
 	template.Fields.Add(tempField);
 #>
