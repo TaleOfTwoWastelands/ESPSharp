@@ -62,6 +62,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FormID.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataTypes\GeneratedCode\IMADTimeColor.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IMADTimeColor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypes\GeneratedCode\IMADTimeValue.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IMADTimeValue.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataTypes\GeneratedCode\RegionGrass.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -115,6 +125,8 @@
     <Compile Include="Enums\EffectType.cs" />
     <Compile Include="Enums\EmbeddedWeaponActorValue.cs" />
     <Compile Include="Enums\EnchantType.cs" />
+    <Compile Include="Enums\EntryPoint.cs" />
+    <Compile Include="Enums\EntryPointFunctionType.cs" />
     <Compile Include="Enums\EnvironmentType.cs" />
     <Compile Include="Enums\EquipmentType.cs" />
     <Compile Include="Enums\Flags\ActorTemplateFlags.cs" />
@@ -206,6 +218,9 @@
     <Compile Include="Enums\PackageUseWeaponFireCount.cs" />
     <Compile Include="Enums\PackageUseWeaponFireRate.cs" />
     <Compile Include="Enums\PassthroughSound.cs" />
+    <Compile Include="Enums\PerkFunction.cs" />
+    <Compile Include="Enums\PerkRunOn.cs" />
+    <Compile Include="Enums\PerkType.cs" />
     <Compile Include="Enums\PlayerAction.cs" />
     <Compile Include="Enums\ProjectileType.cs" />
     <Compile Include="Enums\RegionDataType.cs" />
@@ -370,6 +385,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Faction.tt</DependentUpon>
     </Compile>
+    <Compile Include="Records\GeneratedCode\FormList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FormList.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\Furniture.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -414,6 +434,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IdleMarker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\ImageSpace.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageSpace.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\ImageSpaceAdapter.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageSpaceAdapter.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\Ingestible.cs">
       <AutoGen>True</AutoGen>
@@ -499,6 +529,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Package.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\Perk.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Perk.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\GeneratedCode\PlaceableWater.cs">
       <AutoGen>True</AutoGen>
@@ -613,6 +648,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PackageLocations.tt</DependentUpon>
     </Compile>
+    <Compile Include="SubrecordCollections\GeneratedCode\PerkCondition.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PerkCondition.tt</DependentUpon>
+    </Compile>
     <Compile Include="SubrecordCollections\GeneratedCode\QuestStage.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -648,6 +688,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedInfo.tt</DependentUpon>
     </Compile>
+    <Compile Include="SubrecordCollections\PerkEffect.cs" />
     <Compile Include="Subrecords\GeneratedCode\CombatStyleAdvanced.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -673,15 +714,60 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EffectShaderData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\EntryPointActorValMult.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryPointActorValMult.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\EntryPointRandRange.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryPointRandRange.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\ExplosionData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ExplosionData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\ImageSpaceAdapterData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageSpaceAdapterData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\ImageSpaceData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageSpaceData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\LoadScreenLocation.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LoadScreenLocation.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\PerkAbilityData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PerkAbilityData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\PerkData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PerkData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\PerkEffectHeader.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PerkEffectHeader.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\PerkEntryPointData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PerkEntryPointData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\PerkQuestStageData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PerkQuestStageData.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\RelatedWaters.cs">
       <AutoGen>True</AutoGen>
@@ -698,6 +784,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WaterDataAndDamage.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\IMADTimeColors.cs" />
+    <Compile Include="Subrecords\IMADTimeValues.cs" />
     <Compile Include="Subrecords\PackageData.cs" />
     <Compile Include="Subrecords\PackageLocation.cs" />
     <Compile Include="Subrecords\GeneratedCode\ClimateTiming.cs">
@@ -785,6 +873,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HeadModel.tt</DependentUpon>
     </Compile>
+    <None Include="DataTypes\GeneratedCode\IMADTimeColor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IMADTimeColor.cs</LastGenOutput>
+    </None>
+    <None Include="DataTypes\GeneratedCode\IMADTimeValue.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IMADTimeValue.cs</LastGenOutput>
+    </None>
     <None Include="DataTypes\GeneratedCode\RegionGrass.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RegionGrass.cs</LastGenOutput>
@@ -877,6 +973,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Explosion.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\FormList.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FormList.cs</LastGenOutput>
+    </None>
     <None Include="Records\GeneratedCode\Furniture.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Furniture.cs</LastGenOutput>
@@ -892,6 +992,14 @@
     <None Include="Records\GeneratedCode\IdleMarker.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IdleMarker.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\ImageSpace.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ImageSpace.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\ImageSpaceAdapter.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ImageSpaceAdapter.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\Ingestible.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -956,6 +1064,10 @@
     <None Include="Records\GeneratedCode\Package.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Package.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\Perk.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Perk.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\PlaceableWater.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1028,6 +1140,10 @@
     <None Include="SubrecordCollections\GeneratedCode\PackageLocations.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PackageLocations.cs</LastGenOutput>
+    </None>
+    <None Include="SubrecordCollections\GeneratedCode\PerkCondition.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PerkCondition.cs</LastGenOutput>
     </None>
     <None Include="SubrecordCollections\GeneratedCode\QuestStage.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1591,6 +1707,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EffectShaderData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\EntryPointActorValMult.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntryPointActorValMult.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\EntryPointRandRange.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntryPointRandRange.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\EnvironmentalColors.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EnvironmentalColors.cs</LastGenOutput>
@@ -1610,6 +1734,14 @@
     <None Include="Subrecords\GeneratedCode\IdleAnimationData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IdleAnimationData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\ImageSpaceAdapterData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ImageSpaceAdapterData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\ImageSpaceData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ImageSpaceData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\IngestibleData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1662,6 +1794,26 @@
     <None Include="Subrecords\GeneratedCode\PackageUseWeaponData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PackageUseWeaponData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\PerkAbilityData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PerkAbilityData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\PerkData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PerkData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\PerkEffectHeader.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PerkEffectHeader.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\PerkEntryPointData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PerkEntryPointData.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\PerkQuestStageData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PerkQuestStageData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\PlaceableWaterData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

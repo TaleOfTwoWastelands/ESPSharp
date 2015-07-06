@@ -1,0 +1,283 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "ImageSpaceData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDREyeAdaptSpeed",
+			"HDR/EyeAdaptSpeed"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRBlurRadius",
+			"HDR/Blur/Radius"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRBlurPasses",
+			"HDR/Blur/Passes"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDREmissiveMult",
+			"HDR/EmissiveMult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRLUMTarget",
+			"HDR/LUM/Target"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRLUMUpperClamp",
+			"HDR/LUM/UpperClamp"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRBrightScale",
+			"HDR/Bright/Scale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRBrightClamp",
+			"HDR/Bright/Clamp"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRLUMRampNoTex",
+			"HDR/LUM/RampNoTex"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRLUMRampMin",
+			"HDR/LUM/RampMin"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRLUMRampMax",
+			"HDR/LUM/RampMax"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRSunlightDimmer",
+			"HDR/SunlightDimmer"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRGrassDimmer",
+			"HDR/GrassDimmer"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRTreeDimmer",
+			"HDR/TreeDimmer"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HDRSkinDimmer",
+			"HDR/SkinDimmer"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"BloomBlurRadius",
+			"Bloom/BlurRadius"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"BloomAlphaMultInterior",
+			"Bloom/AlphaMult/Interior"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"BloomAlphaMultExterior",
+			"Bloom/AlphaMult/Exterior"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"GetHitBlurRadius",
+			"GetHit/Blur/Radius"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"GetHitBlurDampingConstant",
+			"GetHit/Blur/DampingConstant"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NightEyeTintColorRed",
+			"NightEyeTintColor/Red"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NightEyeTintColorGreen",
+			"NightEyeTintColor/Green"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"NightEyeTintColorBlue",
+			"NightEyeTintColor/Blue"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Brightness",
+			"Brightness"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"CinematicSaturation",
+			"Cinematic/Saturation"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"CinematicContrastAvgLUMValue",
+			"Cinematic/Contrast/AvgLUMValue"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"CinematicContrastValue",
+			"Cinematic/Contrast/Value"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"CinematicBrightnessTintColorRed",
+			"Cinematic/BrightnessTint/Color/Red"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"CinematicBrightnessTintColorGreen",
+			"Cinematic/BrightnessTint/Color/Green"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"CinematicBrightnessTintColorBlue",
+			"Cinematic/BrightnessTint/Color/Blue"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"CinematicBrightnessTintValue",
+			"Cinematic/BrightnessTint/Value"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused1",
+			"Unused1"
+			);
+	tempField.byteCount = 16;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ImageSpaceFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused2",
+			"Unused2"
+			);
+	tempField.byteCount = 3;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

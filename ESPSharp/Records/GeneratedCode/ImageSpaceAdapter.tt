@@ -1,0 +1,541 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "ImageSpaceAdapter";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DNAM",
+			typeof(ImageSpaceAdapterData),
+			"Data",
+			"Data"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"BNAM",
+			typeof(IMADTimeValues),
+			"BlurRadius",
+			"BlurRadius"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"VNAM",
+			typeof(IMADTimeValues),
+			"DoubleVisionStrength",
+			"DoubleVisionStrength"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TNAM",
+			typeof(IMADTimeColors),
+			"TintColor",
+			"TintColor"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM3",
+			typeof(IMADTimeColors),
+			"FadeColor",
+			"FadeColor"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RNAM",
+			typeof(IMADTimeValues),
+			"RadialBlurStrength",
+			"RadialBlur/Strength"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SNAM",
+			typeof(IMADTimeValues),
+			"RadialBlurRampUp",
+			"RadialBlur/RampUp"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"UNAM",
+			typeof(IMADTimeValues),
+			"RadialBlurStart",
+			"RadialBlur/Start"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM1",
+			typeof(IMADTimeValues),
+			"RadialBlurRampDown",
+			"RadialBlur/RampDown"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM2",
+			typeof(IMADTimeValues),
+			"RadialBlurDownStart",
+			"RadialBlur/DownStart"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"WNAM",
+			typeof(IMADTimeValues),
+			"DoFStrength",
+			"DoF/Strength"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XNAM",
+			typeof(IMADTimeValues),
+			"DoFDistance",
+			"DoF/Distance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"YNAM",
+			typeof(IMADTimeValues),
+			"DoFRange",
+			"DoF/Range"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM4",
+			typeof(IMADTimeValues),
+			"MotionBlurStrength",
+			"MotionBlurStrength"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"aIAD",
+			typeof(IMADTimeValues),
+			"HDREyeAdaptSpeedMult",
+			"HDR/EyeAdaptSpeed/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"zIAD",
+			typeof(IMADTimeValues),
+			"HDREyeAdaptSpeedAdd",
+			"HDR/EyeAdaptSpeed/Add"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"bIAD",
+			typeof(IMADTimeValues),
+			"HDRBloomBlurRadiusMult",
+			"HDR/Bloom/BlurRadius/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"AIAD",
+			typeof(IMADTimeValues),
+			"HDRBloomBlurRadiusAdd",
+			"HDR/Bloom/BlurRadius/Add"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"cIAD",
+			typeof(IMADTimeValues),
+			"HDRBloomThresholdMult",
+			"HDR/Bloom/Threshold/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"BIAD",
+			typeof(IMADTimeValues),
+			"HDRBloomThresholdAdd",
+			"HDR/Bloom/Threshold/Add"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"dIAD",
+			typeof(IMADTimeValues),
+			"HDRBloomScaleMult",
+			"HDR/Bloom/Scale/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CIAD",
+			typeof(IMADTimeValues),
+			"HDRBloomScaleAdd",
+			"HDR/Bloom/Scale/Add"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"eIAD",
+			typeof(IMADTimeValues),
+			"HDRTargetLUMMinMult",
+			"HDR/TargetLUM/Min/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DIAD",
+			typeof(IMADTimeValues),
+			"HDRTargetLUMMinAdd",
+			"HDR/TargetLUM/Min/Add"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"fIAD",
+			typeof(IMADTimeValues),
+			"HDRTargetLUMMaxMult",
+			"HDR/TargetLUM/Max/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"EIAD",
+			typeof(IMADTimeValues),
+			"HDRTargetLUMMaxAdd",
+			"HDR/TargetLUM/Max/Add"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"gIAD",
+			typeof(IMADTimeValues),
+			"HDRSunlightScaleMult",
+			"HDR/SunlightScale/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FIAD",
+			typeof(IMADTimeValues),
+			"HDRSunlightScaleAdd",
+			"HDR/SunlightScale/Add"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"hIAD",
+			typeof(IMADTimeValues),
+			"HDRSkyScaleMult",
+			"HDR/SkyScale/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"GIAD",
+			typeof(IMADTimeValues),
+			"HDRSkyScaleAdd",
+			"HDR/SkyScale/Add"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"iIAD",
+			typeof(IMADTimeValues),
+			"Unknown1",
+			"Unknown1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"HIAD",
+			typeof(IMADTimeValues),
+			"Unknown2",
+			"Unknown2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"jIAD",
+			typeof(IMADTimeValues),
+			"Unknown3",
+			"Unknown3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IIAD",
+			typeof(IMADTimeValues),
+			"Unknown4",
+			"Unknown4"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"kIAD",
+			typeof(IMADTimeValues),
+			"Unknown5",
+			"Unknown5"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"JIAD",
+			typeof(IMADTimeValues),
+			"Unknown6",
+			"Unknown6"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"lIAD",
+			typeof(IMADTimeValues),
+			"Unknown7",
+			"Unknown7"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"KIAD",
+			typeof(IMADTimeValues),
+			"Unknown8",
+			"Unknown8"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"mIAD",
+			typeof(IMADTimeValues),
+			"Unknown9",
+			"Unknown9"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"LIAD",
+			typeof(IMADTimeValues),
+			"Unknown10",
+			"Unknown10"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"nIAD",
+			typeof(IMADTimeValues),
+			"Unknown11",
+			"Unknown11"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MIAD",
+			typeof(IMADTimeValues),
+			"Unknown12",
+			"Unknown12"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"oIAD",
+			typeof(IMADTimeValues),
+			"Unknown13",
+			"Unknown13"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NIAD",
+			typeof(IMADTimeValues),
+			"Unknown14",
+			"Unknown14"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"pIAD",
+			typeof(IMADTimeValues),
+			"Unknown15",
+			"Unknown15"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"OIAD",
+			typeof(IMADTimeValues),
+			"Unknown16",
+			"Unknown16"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"qIAD",
+			typeof(IMADTimeValues),
+			"Unknown17",
+			"Unknown17"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PIAD",
+			typeof(IMADTimeValues),
+			"Unknown18",
+			"Unknown18"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"rIAD",
+			typeof(IMADTimeValues),
+			"CinematicSaturationMult",
+			"Cinematic/Saturation/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"QIAD",
+			typeof(IMADTimeValues),
+			"CinematicSaturationAdd",
+			"Cinematic/Saturation/Add"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"sIAD",
+			typeof(IMADTimeValues),
+			"CinematicBrightnessMult",
+			"Cinematic/Brightness/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RIAD",
+			typeof(IMADTimeValues),
+			"CinematicBrightnessAdd",
+			"Cinematic/Brightness/Add"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"tIAD",
+			typeof(IMADTimeValues),
+			"CinematicContrastMult",
+			"Cinematic/Contrast/Mult"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SIAD",
+			typeof(IMADTimeValues),
+			"CinematicContrastAdd",
+			"Cinematic/Contrast/Add"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"uIAD",
+			typeof(IMADTimeValues),
+			"Unknown19",
+			"Unknown19"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TIAD",
+			typeof(IMADTimeValues),
+			"Unknown20",
+			"Unknown20"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RDSD",
+			typeof(RecordReference),
+			"SoundIntro",
+			"Sound/Intro"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RDSI",
+			typeof(RecordReference),
+			"SoundOutro",
+			"Sound/Outro"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

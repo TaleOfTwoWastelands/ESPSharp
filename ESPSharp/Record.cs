@@ -391,6 +391,18 @@ namespace ESPSharp
                 case "DEBR":
                     outRecord = new Debris();
                     break;
+                case "IMGS":
+                    outRecord = new ImageSpace();
+                    break;
+                case "IMAD":
+                    outRecord = new ImageSpaceAdapter();
+                    break;
+                case "FLST":
+                    outRecord = new FormList();
+                    break;
+                case "PERK":
+                    outRecord = new Perk();
+                    break;
                 default:
                     outRecord = new GenericRecord();
                     break;

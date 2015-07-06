@@ -1,0 +1,25 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "EntryPointActorValMult";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(ActorValues),
+			"ActorValue",
+			"ActorValue"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Multiplier",
+			"Multiplier"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>
