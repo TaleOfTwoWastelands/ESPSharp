@@ -263,97 +263,97 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("HDR/EyeAdaptSpeed", true, out subEle);
-			subEle.Value = HDREyeAdaptSpeed.ToString();
+			subEle.Value = HDREyeAdaptSpeed.ToString("G15");
 
 			ele.TryPathTo("HDR/Blur/Radius", true, out subEle);
-			subEle.Value = HDRBlurRadius.ToString();
+			subEle.Value = HDRBlurRadius.ToString("G15");
 
 			ele.TryPathTo("HDR/Blur/Passes", true, out subEle);
-			subEle.Value = HDRBlurPasses.ToString();
+			subEle.Value = HDRBlurPasses.ToString("G15");
 
 			ele.TryPathTo("HDR/EmissiveMult", true, out subEle);
-			subEle.Value = HDREmissiveMult.ToString();
+			subEle.Value = HDREmissiveMult.ToString("G15");
 
 			ele.TryPathTo("HDR/LUM/Target", true, out subEle);
-			subEle.Value = HDRLUMTarget.ToString();
+			subEle.Value = HDRLUMTarget.ToString("G15");
 
 			ele.TryPathTo("HDR/LUM/UpperClamp", true, out subEle);
-			subEle.Value = HDRLUMUpperClamp.ToString();
+			subEle.Value = HDRLUMUpperClamp.ToString("G15");
 
 			ele.TryPathTo("HDR/Bright/Scale", true, out subEle);
-			subEle.Value = HDRBrightScale.ToString();
+			subEle.Value = HDRBrightScale.ToString("G15");
 
 			ele.TryPathTo("HDR/Bright/Clamp", true, out subEle);
-			subEle.Value = HDRBrightClamp.ToString();
+			subEle.Value = HDRBrightClamp.ToString("G15");
 
 			ele.TryPathTo("HDR/LUM/RampNoTex", true, out subEle);
-			subEle.Value = HDRLUMRampNoTex.ToString();
+			subEle.Value = HDRLUMRampNoTex.ToString("G15");
 
 			ele.TryPathTo("HDR/LUM/RampMin", true, out subEle);
-			subEle.Value = HDRLUMRampMin.ToString();
+			subEle.Value = HDRLUMRampMin.ToString("G15");
 
 			ele.TryPathTo("HDR/LUM/RampMax", true, out subEle);
-			subEle.Value = HDRLUMRampMax.ToString();
+			subEle.Value = HDRLUMRampMax.ToString("G15");
 
 			ele.TryPathTo("HDR/SunlightDimmer", true, out subEle);
-			subEle.Value = HDRSunlightDimmer.ToString();
+			subEle.Value = HDRSunlightDimmer.ToString("G15");
 
 			ele.TryPathTo("HDR/GrassDimmer", true, out subEle);
-			subEle.Value = HDRGrassDimmer.ToString();
+			subEle.Value = HDRGrassDimmer.ToString("G15");
 
 			ele.TryPathTo("HDR/TreeDimmer", true, out subEle);
-			subEle.Value = HDRTreeDimmer.ToString();
+			subEle.Value = HDRTreeDimmer.ToString("G15");
 
 			ele.TryPathTo("HDR/SkinDimmer", true, out subEle);
-			subEle.Value = HDRSkinDimmer.ToString();
+			subEle.Value = HDRSkinDimmer.ToString("G15");
 
 			ele.TryPathTo("Bloom/BlurRadius", true, out subEle);
-			subEle.Value = BloomBlurRadius.ToString();
+			subEle.Value = BloomBlurRadius.ToString("G15");
 
 			ele.TryPathTo("Bloom/AlphaMult/Interior", true, out subEle);
-			subEle.Value = BloomAlphaMultInterior.ToString();
+			subEle.Value = BloomAlphaMultInterior.ToString("G15");
 
 			ele.TryPathTo("Bloom/AlphaMult/Exterior", true, out subEle);
-			subEle.Value = BloomAlphaMultExterior.ToString();
+			subEle.Value = BloomAlphaMultExterior.ToString("G15");
 
 			ele.TryPathTo("GetHit/Blur/Radius", true, out subEle);
-			subEle.Value = GetHitBlurRadius.ToString();
+			subEle.Value = GetHitBlurRadius.ToString("G15");
 
 			ele.TryPathTo("GetHit/Blur/DampingConstant", true, out subEle);
-			subEle.Value = GetHitBlurDampingConstant.ToString();
+			subEle.Value = GetHitBlurDampingConstant.ToString("G15");
 
 			ele.TryPathTo("NightEyeTintColor/Red", true, out subEle);
-			subEle.Value = NightEyeTintColorRed.ToString();
+			subEle.Value = NightEyeTintColorRed.ToString("G15");
 
 			ele.TryPathTo("NightEyeTintColor/Green", true, out subEle);
-			subEle.Value = NightEyeTintColorGreen.ToString();
+			subEle.Value = NightEyeTintColorGreen.ToString("G15");
 
 			ele.TryPathTo("NightEyeTintColor/Blue", true, out subEle);
-			subEle.Value = NightEyeTintColorBlue.ToString();
+			subEle.Value = NightEyeTintColorBlue.ToString("G15");
 
 			ele.TryPathTo("Brightness", true, out subEle);
-			subEle.Value = Brightness.ToString();
+			subEle.Value = Brightness.ToString("G15");
 
 			ele.TryPathTo("Cinematic/Saturation", true, out subEle);
-			subEle.Value = CinematicSaturation.ToString();
+			subEle.Value = CinematicSaturation.ToString("G15");
 
 			ele.TryPathTo("Cinematic/Contrast/AvgLUMValue", true, out subEle);
-			subEle.Value = CinematicContrastAvgLUMValue.ToString();
+			subEle.Value = CinematicContrastAvgLUMValue.ToString("G15");
 
 			ele.TryPathTo("Cinematic/Contrast/Value", true, out subEle);
-			subEle.Value = CinematicContrastValue.ToString();
+			subEle.Value = CinematicContrastValue.ToString("G15");
 
 			ele.TryPathTo("Cinematic/BrightnessTint/Color/Red", true, out subEle);
-			subEle.Value = CinematicBrightnessTintColorRed.ToString();
+			subEle.Value = CinematicBrightnessTintColorRed.ToString("G15");
 
 			ele.TryPathTo("Cinematic/BrightnessTint/Color/Green", true, out subEle);
-			subEle.Value = CinematicBrightnessTintColorGreen.ToString();
+			subEle.Value = CinematicBrightnessTintColorGreen.ToString("G15");
 
 			ele.TryPathTo("Cinematic/BrightnessTint/Color/Blue", true, out subEle);
-			subEle.Value = CinematicBrightnessTintColorBlue.ToString();
+			subEle.Value = CinematicBrightnessTintColorBlue.ToString("G15");
 
 			ele.TryPathTo("Cinematic/BrightnessTint/Value", true, out subEle);
-			subEle.Value = CinematicBrightnessTintValue.ToString();
+			subEle.Value = CinematicBrightnessTintValue.ToString("G15");
 
 			ele.TryPathTo("Unused1", true, out subEle);
 			subEle.Value = Unused1.ToHex();

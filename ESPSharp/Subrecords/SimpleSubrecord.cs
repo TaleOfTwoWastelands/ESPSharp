@@ -82,6 +82,11 @@ namespace ESPSharp.Subrecords
                     color.ReadBinary(reader);
                     Value = (T)(object)color;
                     break;
+                case "ESPSharp.DataTypes.XYFloat":
+                    var temp = new DataTypes.XYFloat();
+                    temp.ReadBinary(reader);
+                    Value = (T)(object)temp;
+                    break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");
             }
@@ -143,6 +148,9 @@ namespace ESPSharp.Subrecords
                 case "ESPSharp.DataTypes.Color":
                     (Value as DataTypes.Color).WriteBinary(writer);
                     break;
+                case "ESPSharp.DataTypes.XYFloat":
+                    (Value as DataTypes.XYFloat).WriteBinary(writer);
+                    break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");
             }
@@ -164,11 +172,17 @@ namespace ESPSharp.Subrecords
                 case "System.Byte[]":
                     ele.Value = ((byte[])(object)Value).ToHex();
                     break;
+                case "System.Single":
+                    ele.Value = ((float)(object)Value).ToString("G15");
+                    break;
                 case "System.Char[]":
                     ele.Value = new String(((char[])(object)Value));
                     break;
                 case "ESPSharp.DataTypes.Color":
                     (Value as DataTypes.Color).WriteXML(ele, master);
+                    break;
+                case "ESPSharp.DataTypes.XYFloat":
+                    (Value as DataTypes.XYFloat).WriteXML(ele, master);
                     break;
                 default:
                     ele.Value = Value.ToString();
@@ -236,6 +250,11 @@ namespace ESPSharp.Subrecords
                     var color = new DataTypes.Color();
                     color.ReadXML(ele, master);
                     Value = (T)(object)color;
+                    break;
+                case "ESPSharp.DataTypes.XYFloat":
+                    var temp = new DataTypes.XYFloat();
+                    temp.ReadXML(ele, master);
+                    Value = (T)(object)temp;
                     break;
                 default:
                     throw new NotImplementedException(typeName + " is not yet implemented.");

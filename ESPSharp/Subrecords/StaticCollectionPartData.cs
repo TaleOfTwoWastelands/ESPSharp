@@ -94,25 +94,25 @@ namespace ESPSharp.Subrecords
                 ele.Add(subEle);
 
                 subEle.TryPathTo("Position/X", true, out subSubEle);
-                subSubEle.Value = placement.PosX.ToString();
+                subSubEle.Value = placement.PosX.ToString("G15");
 
                 subEle.TryPathTo("Position/Y", true, out subSubEle);
-                subSubEle.Value = placement.PosY.ToString();
+                subSubEle.Value = placement.PosY.ToString("G15");
 
                 subEle.TryPathTo("Position/Z", true, out subSubEle);
-                subSubEle.Value = placement.PosZ.ToString();
+                subSubEle.Value = placement.PosZ.ToString("G15");
 
                 subEle.TryPathTo("Rotation/X", true, out subSubEle);
-                subSubEle.Value = placement.RotX.ToString();
+                subSubEle.Value = placement.RotX.ToString("G15");
 
                 subEle.TryPathTo("Rotation/Y", true, out subSubEle);
-                subSubEle.Value = placement.RotY.ToString();
+                subSubEle.Value = placement.RotY.ToString("G15");
 
                 subEle.TryPathTo("Rotation/Z", true, out subSubEle);
-                subSubEle.Value = placement.RotZ.ToString();
+                subSubEle.Value = placement.RotZ.ToString("G15");
 
                 subEle.TryPathTo("Scale", true, out subSubEle);
-                subSubEle.Value = placement.Scale.ToString();
+                subSubEle.Value = placement.Scale.ToString("G15");
             }
         }
 

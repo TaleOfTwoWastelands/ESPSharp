@@ -65,10 +65,10 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("RandMin", true, out subEle);
-			subEle.Value = RandMin.ToString();
+			subEle.Value = RandMin.ToString("G15");
 
 			ele.TryPathTo("RandMax", true, out subEle);
-			subEle.Value = RandMax.ToString();
+			subEle.Value = RandMax.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

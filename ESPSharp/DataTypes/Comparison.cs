@@ -95,7 +95,7 @@ namespace ESPSharp.DataTypes
             if (Flags.HasFlag(ConditionFlags.UseGlobal))
                 ComparisonValue.WriteXML(subEle, master);
             else
-                subEle.Value = ComparisonValue.ToString();
+                subEle.Value = ComparisonValue.ToString("G15");
         }
 
         public void ReadXML(XElement ele, ElderScrollsPlugin master)

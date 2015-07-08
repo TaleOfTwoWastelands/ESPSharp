@@ -136,6 +136,8 @@ namespace ESPSharp.DataTypes
 			ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
 <# if (field.Type == typeof(byte[])){ #>
 			subEle.Value = <#= field.Name#>.ToHex();
+<# } else if (field.Type == typeof(Single)){ #>
+			subEle.Value = <#= field.Name#>.ToString("G15");
 <# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
 			<#= field.Name#>.WriteXML(subEle, master);
 <# } else { #>

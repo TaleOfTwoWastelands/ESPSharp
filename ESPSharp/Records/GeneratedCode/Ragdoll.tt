@@ -1,0 +1,96 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Ragdoll";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NVER",
+			typeof(SimpleSubrecord<uint>),
+			"Version",
+			"Version"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(RagdollData),
+			"GeneralData",
+			"GeneralData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XNAM",
+			typeof(RecordReference),
+			"ActorBase",
+			"ActorBase"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TNAM",
+			typeof(RecordReference),
+			"BodyPartData",
+			"BodyPartData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RAFD",
+			typeof(RagdollFeedbackData),
+			"FeedbackData",
+			"FeedbackData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RAFB",
+			typeof(RagdollDynamicBones),
+			"DynamicBones",
+			"DynamicBones"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RAPS",
+			typeof(RagdollPoseMatching),
+			"PoseMatchingData",
+			"PoseMatchingData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ANAM",
+			typeof(SimpleSubrecord<string>),
+			"DeathPose",
+			"DeathPose"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

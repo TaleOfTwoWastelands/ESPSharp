@@ -144,6 +144,8 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
 <# if (field.Type == typeof(byte[])){ #>
 			subEle.Value = <#= field.Name#>.ToHex();
+<# } else if (field.Type == typeof(Single)){ #>
+			subEle.Value = <#= field.Name#>.ToString("G15");
 <# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
 			<#= field.Name#>.WriteXML(subEle, master);
 <# } else { #>
@@ -167,6 +169,8 @@ namespace ESPSharp.Subrecords
 				<#= field.Name #> = subEle.ToEnum<<#= GetFriendlyName(field.Type)#>>();
 <# } else if (field.Type == typeof(byte[])){ #>
 				<#= field.Name #> = subEle.ToBytes();
+<# } else if (field.Type == typeof(string)){ #>
+				<#= field.Name #> = subEle.Value;
 <# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
 				<#= field.Name#>.ReadXML(subEle, master);
 <# } else { #>

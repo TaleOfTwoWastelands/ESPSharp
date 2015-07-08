@@ -79,19 +79,19 @@ namespace ESPSharp.DataTypes
 			XElement subEle;
 
 			ele.TryPathTo("Time", true, out subEle);
-			subEle.Value = Time.ToString();
+			subEle.Value = Time.ToString("G15");
 
 			ele.TryPathTo("Color/Red", true, out subEle);
-			subEle.Value = Red.ToString();
+			subEle.Value = Red.ToString("G15");
 
 			ele.TryPathTo("Color/Green", true, out subEle);
-			subEle.Value = Green.ToString();
+			subEle.Value = Green.ToString("G15");
 
 			ele.TryPathTo("Color/Blue", true, out subEle);
-			subEle.Value = Blue.ToString();
+			subEle.Value = Blue.ToString("G15");
 
 			ele.TryPathTo("Color/Alpha", true, out subEle);
-			subEle.Value = Alpha.ToString();
+			subEle.Value = Alpha.ToString("G15");
 		}
 
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)

@@ -1,0 +1,202 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Cell";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(SimpleSubrecord<CellFlags>),
+			"CellFlags",
+			"CellFlags"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCLC",
+			typeof(CellGrid),
+			"Grid",
+			"Grid"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCLL",
+			typeof(CellLighting),
+			"Lighting",
+			"Lighting"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IMPF",
+			typeof(FootstepMaterial),
+			"FootstepMaterial",
+			"FootstepMaterial"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"LTMP",
+			typeof(RecordReference),
+			"LightTemplate",
+			"LightTemplate"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"LNAM",
+			typeof(SimpleSubrecord<LightTemplateInheritFlags>),
+			"LightTemplateInherit",
+			"LightTemplateInherit"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCLW",
+			typeof(SimpleSubrecord<float>),
+			"WaterHeight",
+			"WaterHeight"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XNAM",
+			typeof(SimpleSubrecord<string>),
+			"WaterNoiseTexture",
+			"WaterNoiseTexture"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCLR",
+			typeof(FormArray),
+			"Regions",
+			"Regions"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCIM",
+			typeof(RecordReference),
+			"ImageSpace",
+			"ImageSpace"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCET",
+			typeof(SimpleSubrecord<byte>),
+			"Unknown",
+			"Unknown"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XEZN",
+			typeof(RecordReference),
+			"EncounterZone",
+			"EncounterZone"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCCM",
+			typeof(RecordReference),
+			"Climate",
+			"Climate"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCWT",
+			typeof(RecordReference),
+			"Water",
+			"Water"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XOWN",
+			typeof(RecordReference),
+			"Owner",
+			"Owner"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRNK",
+			typeof(SimpleSubrecord<int>),
+			"FactionRank",
+			"FactionRank"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCAS",
+			typeof(RecordReference),
+			"AcousticSpace",
+			"AcousticSpace"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCMT",
+			typeof(SimpleSubrecord<byte>),
+			"Unused",
+			"Unused"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCMO",
+			typeof(RecordReference),
+			"MusicType",
+			"MusicType"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

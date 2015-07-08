@@ -1,0 +1,170 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "DialogResponse";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(DialogResponseData),
+			"Data",
+			"Data"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"QSTI",
+			typeof(RecordReference),
+			"Quest",
+			"Quest"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TPIC",
+			typeof(RecordReference),
+			"Topic",
+			"Topic"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PNAM",
+			typeof(RecordReference),
+			"PreviousDialogResponse",
+			"PreviousDialogResponse"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAME",
+			typeof(List<RecordReference>),
+			"LearnedTopics",
+			"LearnedTopics"
+			);
+	tempField.XMLSubNames = new List<string>{"Topic"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TRDT",
+			typeof(List<Response>),
+			"Responses",
+			"Responses"
+			);
+	tempField.XMLSubNames = new List<string>{"Response"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CTDA",
+			typeof(List<Condition>),
+			"Conditions",
+			"Conditions"
+			);
+	tempField.XMLSubNames = new List<string>{"Condition"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TCLT",
+			typeof(List<RecordReference>),
+			"Choices",
+			"Choices"
+			);
+	tempField.XMLSubNames = new List<string>{"Choice"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TCLF",
+			typeof(List<RecordReference>),
+			"LinkedFromList",
+			"LinkedFromList"
+			);
+	tempField.XMLSubNames = new List<string>{"LinkedFrom"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TCFU",
+			typeof(List<RecordReference>),
+			"UnknownList",
+			"UnknownList"
+			);
+	tempField.XMLSubNames = new List<string>{"Unknown"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SCHR",
+			typeof(EmbeddedScript),
+			"BeginScript",
+			"BeginScript"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NEXT",
+			typeof(DialogEndScript),
+			"EndScript",
+			"EndScript"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SNDD",
+			typeof(RecordReference),
+			"UnusedSound",
+			"UnusedSound"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RNAM",
+			typeof(SimpleSubrecord<string>),
+			"Prompt",
+			"Prompt"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ANAM",
+			typeof(RecordReference),
+			"Speaker",
+			"Speaker"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"KNAM",
+			typeof(RecordReference),
+			"RelatedSkillOrPerk",
+			"RelatedSkillOrPerk"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DNAM",
+			typeof(SimpleSubrecord<SpeechChallengeType>),
+			"SpeechChallenge",
+			"SpeechChallenge"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

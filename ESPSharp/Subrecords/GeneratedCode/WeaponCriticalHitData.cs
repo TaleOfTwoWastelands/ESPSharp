@@ -101,7 +101,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unused1.ToHex();
 
 			ele.TryPathTo("ChanceMult", true, out subEle);
-			subEle.Value = ChanceMult.ToString();
+			subEle.Value = ChanceMult.ToString("G15");
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();

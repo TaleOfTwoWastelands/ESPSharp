@@ -1,0 +1,239 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Worldspace";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XEZN",
+			typeof(RecordReference),
+			"EncounterZone",
+			"EncounterZone"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"WNAM",
+			typeof(RecordReference),
+			"ParentWorldspace",
+			"ParentWorldspace"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PNAM",
+			typeof(SimpleSubrecord<ParentWorldspaceFlags>),
+			"ParentWorldspaceFlags",
+			"ParentWorldspaceFlags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CNAM",
+			typeof(RecordReference),
+			"Climate",
+			"Climate"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM2",
+			typeof(RecordReference),
+			"Water",
+			"Water"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM3",
+			typeof(RecordReference),
+			"LODWaterType",
+			"LODWater/Type"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM4",
+			typeof(SimpleSubrecord<float>),
+			"LODWaterHeight",
+			"LODWater/Height"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DNAM",
+			typeof(WorldLandData),
+			"LandData",
+			"LandData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ICON",
+			typeof(SimpleSubrecord<string>),
+			"LargeIcon",
+			"Icon/Large"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MICO",
+			typeof(SimpleSubrecord<string>),
+			"SmallIcon",
+			"Icon/Small"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MNAM",
+			typeof(MapData),
+			"MapData",
+			"MapData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ONAM",
+			typeof(WorldMapOffsetData),
+			"WorldMapOffsetData",
+			"WorldMapOffsetData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"INAM",
+			typeof(RecordReference),
+			"ImageSpace",
+			"ImageSpace"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(SimpleSubrecord<WorldspaceFlags>),
+			"WorldspaceFlags",
+			"WorldspaceFlags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM0",
+			typeof(SimpleSubrecord<XYFloat>),
+			"MinObjectBounds",
+			"ObjectBounds/Min"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM9",
+			typeof(SimpleSubrecord<XYFloat>),
+			"MaxObjectBounds",
+			"ObjectBounds/Max"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ZNAM",
+			typeof(RecordReference),
+			"Music",
+			"Music"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NNAM",
+			typeof(SimpleSubrecord<string>),
+			"CanopyShadow",
+			"CanopyShadow"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XNAM",
+			typeof(SimpleSubrecord<string>),
+			"WaterNoiseTexture",
+			"WaterNoiseTexture"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IMPS",
+			typeof(List<SwappedImpact>),
+			"SwappedImpacts",
+			"SwappedImpacts"
+			);
+	tempField.XMLSubNames = new List<string>{"SwappedImpact"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"IMPF",
+			typeof(FootstepMaterial),
+			"FootstepMaterial",
+			"FootstepMaterial"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XXXX",
+			typeof(SimpleSubrecord<uint>),
+			"OffsetDataSize",
+			"OffsetDataSize"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"OFST",
+			typeof(SimpleSubrecord<byte[]>),
+			"OffsetData",
+			"OffsetData"
+			);
+	tempField.implementReadData = false;
+	tempField.implementWriteData = false;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

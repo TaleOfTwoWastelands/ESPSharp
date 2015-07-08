@@ -131,13 +131,13 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("Force", true, out subEle);
-			subEle.Value = Force.ToString();
+			subEle.Value = Force.ToString("G15");
 
 			ele.TryPathTo("Damage", true, out subEle);
-			subEle.Value = Damage.ToString();
+			subEle.Value = Damage.ToString("G15");
 
 			ele.TryPathTo("Radius", true, out subEle);
-			subEle.Value = Radius.ToString();
+			subEle.Value = Radius.ToString("G15");
 
 			ele.TryPathTo("Light", true, out subEle);
 			Light.WriteXML(subEle, master);
@@ -149,7 +149,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			ele.TryPathTo("ISRadius", true, out subEle);
-			subEle.Value = ISRadius.ToString();
+			subEle.Value = ISRadius.ToString("G15");
 
 			ele.TryPathTo("ImpactDataSet", true, out subEle);
 			ImpactDataSet.WriteXML(subEle, master);
@@ -158,13 +158,13 @@ namespace ESPSharp.Subrecords
 			Sound2.WriteXML(subEle, master);
 
 			ele.TryPathTo("Radiation/Level", true, out subEle);
-			subEle.Value = RadiationLevel.ToString();
+			subEle.Value = RadiationLevel.ToString("G15");
 
 			ele.TryPathTo("Radiation/DissipationTime", true, out subEle);
-			subEle.Value = RadiationDissipationTime.ToString();
+			subEle.Value = RadiationDissipationTime.ToString("G15");
 
 			ele.TryPathTo("Radiation/Radius", true, out subEle);
-			subEle.Value = RadiationRadius.ToString();
+			subEle.Value = RadiationRadius.ToString("G15");
 
 			ele.TryPathTo("SoundLevel", true, out subEle);
 			subEle.Value = SoundLevel.ToString();

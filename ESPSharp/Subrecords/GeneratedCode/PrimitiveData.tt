@@ -1,0 +1,74 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "PrimitiveData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"XBound",
+			"Bounds/X"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"YBound",
+			"Bounds/Y"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ZBound",
+			"Bounds/Z"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Red",
+			"Color/Red"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Green",
+			"Color/Green"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Blue",
+			"Color/Blue"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unknown",
+			"Unknown"
+			);
+	tempField.byteCount = 4;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(PrimitiveType),
+			"Type",
+			"Type"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

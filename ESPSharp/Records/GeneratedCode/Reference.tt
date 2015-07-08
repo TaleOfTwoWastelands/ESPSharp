@@ -1,0 +1,490 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Reference";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RCLR",
+			typeof(LinkedReferenceColor),
+			"Unknown1",
+			"Unknown1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAME",
+			typeof(RecordReference),
+			"Base",
+			"Base"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XEZN",
+			typeof(RecordReference),
+			"EncounterZone",
+			"EncounterZone"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRGD",
+			typeof(SimpleSubrecord<byte[]>),
+			"RagdollData",
+			"RagdollData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRGB",
+			typeof(SimpleSubrecord<byte[]>),
+			"RagdollBipedData",
+			"RagdollBipedData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XPRM",
+			typeof(PrimitiveData),
+			"Primitive",
+			"Primitive"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XTRI",
+			typeof(SimpleSubrecord<CollisionLayer>),
+			"CollisionLayer",
+			"CollisionLayer"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XMBP",
+			typeof(SubMarker),
+			"MultiboundPrimitiveMarker",
+			"MultiboundPrimitiveMarker"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XMBO",
+			typeof(BoundHalfExtents),
+			"BoundHalfExtents",
+			"BoundHalfExtents"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XTEL",
+			typeof(TeleportDestinationData),
+			"TeleportDestination",
+			"TeleportDestination"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XMRK",
+			typeof(MapMarker),
+			"MapMarker",
+			"MapMarker"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MMRK",
+			typeof(ReferenceAudio),
+			"Audio",
+			"Audio"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XSRF",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown2",
+			"Unknown2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XSRD",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown3",
+			"Unknown3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XTRG",
+			typeof(RecordReference),
+			"Target",
+			"Target"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XLCM",
+			typeof(SimpleSubrecord<int>),
+			"LevelModifier",
+			"LevelModifier"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XPRD",
+			typeof(ReferencePatrolData),
+			"Patrol",
+			"Patrol"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRDO",
+			typeof(RadioData),
+			"Radio",
+			"Radio"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XOWN",
+			typeof(RecordReference),
+			"Owner",
+			"Owner"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRNK",
+			typeof(SimpleSubrecord<int>),
+			"FactionRank",
+			"FactionRank"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XLOC",
+			typeof(LockData),
+			"Lock",
+			"Lock"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCNT",
+			typeof(SimpleSubrecord<int>),
+			"Count",
+			"Count"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRDS",
+			typeof(SimpleSubrecord<float>),
+			"Radius",
+			"Radius"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XHLP",
+			typeof(SimpleSubrecord<float>),
+			"Health",
+			"Health"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRAD",
+			typeof(SimpleSubrecord<float>),
+			"Radiation",
+			"Radiation"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCHG",
+			typeof(SimpleSubrecord<float>),
+			"Charge",
+			"Charge"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XAMT",
+			typeof(ReferenceAmmo),
+			"Ammo",
+			"Ammo"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XPWR",
+			typeof(List<WaterReflection>),
+			"WaterReflections",
+			"WaterReflections"
+			);
+	tempField.XMLSubNames = new List<string>{"WaterReflection"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XLTW",
+			typeof(List<RecordReference>),
+			"LitWaters",
+			"LitWaters"
+			);
+	tempField.XMLSubNames = new List<string>{"LitWater"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XDCR",
+			typeof(List<SimpleSubrecord<byte[]>>),
+			"Decals",
+			"Decals"
+			);
+	tempField.XMLSubNames = new List<string>{"Decal"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XLKR",
+			typeof(RecordReference),
+			"LinkedReference",
+			"LinkedReference"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCLP",
+			typeof(LinkedReferenceColor),
+			"LinkedReferenceColor",
+			"LinkedReferenceColor"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XAPD",
+			typeof(SimpleSubrecord<NoYesByte>),
+			"ParentActivateOnly",
+			"ParentActivateOnly"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XAPR",
+			typeof(List<ActivateParent>),
+			"ActivateParents",
+			"ActivateParents"
+			);
+	tempField.XMLSubNames = new List<string>{"ActivateParent"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XATO",
+			typeof(SimpleSubrecord<string>),
+			"ActivationPrompt",
+			"ActivationPrompt"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XESP",
+			typeof(EnableParent),
+			"EnableParent",
+			"EnableParent"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XEMI",
+			typeof(RecordReference),
+			"Emittance",
+			"Emittance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XMBR",
+			typeof(RecordReference),
+			"MultiBound",
+			"MultiBound"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XACT",
+			typeof(SimpleSubrecord<ActionFlags>),
+			"ActionFlags",
+			"ActionFlags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ONAM",
+			typeof(SubMarker),
+			"OpenByDefault",
+			"OpenByDefault"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XIBS",
+			typeof(SubMarker),
+			"IgnoredBySandbox",
+			"IgnoredBySandbox"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XNDP",
+			typeof(NavigationDoorLink),
+			"NavigationDoorLink",
+			"NavigationDoorLink"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XPOD",
+			typeof(FormArray),
+			"PortalRooms",
+			"PortalRooms"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XPTL",
+			typeof(PlaneData),
+			"PortalData",
+			"PortalData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XSED",
+			typeof(SimpleSubrecord<byte>),
+			"SpeedTreeSeed",
+			"SpeedTreeSeed"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRMR",
+			typeof(RoomDataHeader),
+			"RoomDataHeader",
+			"RoomDataHeader"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XLRM",
+			typeof(RecordReference),
+			"LinkedRoom",
+			"LinkedRoom"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XOCP",
+			typeof(PlaneData),
+			"OcclusionPlaneData",
+			"OcclusionPlaneData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XORD",
+			typeof(LinkedOcclusionPlanes),
+			"LinkedOcclusionPlanes",
+			"LinkedOcclusionPlanes"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XLOD",
+			typeof(SimpleSubrecord<byte[]>),
+			"DistantLODData",
+			"DistantLODData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XSCL",
+			typeof(SimpleSubrecord<float>),
+			"Scale",
+			"Scale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(PositionRotation),
+			"PositionRotation",
+			"PositionRotation"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

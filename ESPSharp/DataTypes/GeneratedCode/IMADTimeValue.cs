@@ -61,10 +61,10 @@ namespace ESPSharp.DataTypes
 			XElement subEle;
 
 			ele.TryPathTo("Time", true, out subEle);
-			subEle.Value = Time.ToString();
+			subEle.Value = Time.ToString("G15");
 
 			ele.TryPathTo("Value", true, out subEle);
-			subEle.Value = Value.ToString();
+			subEle.Value = Value.ToString("G15");
 		}
 
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)

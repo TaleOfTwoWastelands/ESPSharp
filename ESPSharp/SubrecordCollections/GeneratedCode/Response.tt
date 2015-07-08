@@ -1,0 +1,63 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "Response";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"TRDT",
+			typeof(ResponseData),
+			"ResponseData",
+			"ResponseData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"NAM1",
+			typeof(SimpleSubrecord<string>),
+			"ResponseText",
+			"ResponseText"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"NAM2",
+			typeof(SimpleSubrecord<string>),
+			"ScriptNotes",
+			"ScriptNotes"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"NAM3",
+			typeof(SimpleSubrecord<string>),
+			"Edits",
+			"Edits"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"SNAM",
+			typeof(RecordReference),
+			"SpeakerAnimation",
+			"SpeakerAnimation"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"LNAM",
+			typeof(RecordReference),
+			"ListenerAnimation",
+			"ListenerAnimation"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

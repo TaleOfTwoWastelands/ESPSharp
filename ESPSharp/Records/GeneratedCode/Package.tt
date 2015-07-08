@@ -29,11 +29,19 @@
 	tempField = 
 		new RecordField(
 			"PLDT",
-			typeof(List<PackageLocations>),
-			"LocationData",
-			"LocationData"
+			typeof(PackageLocation),
+			"Location1",
+			"Location1"
 			);
-	tempField.XMLSubNames = new List<string>{"LocationSet"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PLD2",
+			typeof(PackageLocation),
+			"Location2",
+			"Location2"
+			);
 	template.Fields.Add(tempField);
 
 	tempField = 
@@ -152,7 +160,7 @@
 	tempField = 
 		new RecordField(
 			"PKPT",
-			typeof(SimpleSubrecord<NoYesShort>),
+			typeof(SimpleSubrecord<NoYesByte>),
 			"PatrolIsRepeatable",
 			"PatrolIsRepeatable"
 			);
@@ -200,15 +208,6 @@
 			typeof(PackageDialogData),
 			"DialogData",
 			"DialogData"
-			);
-	template.Fields.Add(tempField);
-
-	tempField = 
-		new RecordField(
-			"PLD2",
-			typeof(PackageLocation),
-			"Location2",
-			"Location2"
 			);
 	template.Fields.Add(tempField);
 

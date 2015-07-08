@@ -91,7 +91,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Model", false, out subEle))
 			{
-				Model = subEle.ToString();
+				Model = subEle.Value;
 			}
 
 			if (ele.TryPathTo("HasCollisionData", false, out subEle))

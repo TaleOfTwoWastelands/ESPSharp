@@ -75,7 +75,7 @@ namespace ESPSharp.Subrecords
 			WriteOwnerDataXML(ele, master);
 
 			ele.TryPathTo("Condition", true, out subEle);
-			subEle.Value = Condition.ToString();
+			subEle.Value = Condition.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

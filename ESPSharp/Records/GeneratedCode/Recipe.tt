@@ -1,0 +1,67 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Recipe";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CTDA",
+			typeof(List<Condition>),
+			"Conditions",
+			"Conditions"
+			);
+	tempField.XMLSubNames = new List<string>{"Condition"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(RecipeData),
+			"Data",
+			"Data"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RCIL",
+			typeof(List<RecipeIngredient>),
+			"Ingredients",
+			"Ingredients"
+			);
+	tempField.XMLSubNames = new List<string>{"Ingredient"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RCOD",
+			typeof(List<RecipeOutput>),
+			"Outputs",
+			"Outputs"
+			);
+	tempField.XMLSubNames = new List<string>{"Output"};
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

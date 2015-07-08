@@ -71,14 +71,14 @@ namespace ESPSharp
             Header.Record.WriteXML(Path.Combine(destinationFolder, "Header.xml"), this);
 
 #if PARALLEL
-            Parallel.ForEach(TopGroups, group =>
+            Parallel.ForEach(TopGroups.Where(g => g.ToString() != "Interior Cells" && g.ToString() != "Worldspaces" && g.ToString() != "Dialog Topics"), group =>
             {
                 string newDir = Path.Combine(destinationFolder, group.ToString());
                 Directory.CreateDirectory(newDir);
                 group.WriteXML(newDir, this);
             });
 #else
-            foreach (Group group in TopGroups)
+            foreach (Group group in TopGroups.Where(g => g.ToString() != "Interior Cells" && g.ToString() != "Worldspaces" && g.ToString() != "Dialog Topics"))
             {
                 string newDir = Path.Combine(destinationFolder, group.ToString());
                 Directory.CreateDirectory(newDir);

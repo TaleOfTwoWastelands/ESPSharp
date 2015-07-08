@@ -89,7 +89,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Health.ToString();
 
 			ele.TryPathTo("Weight", true, out subEle);
-			subEle.Value = Weight.ToString();
+			subEle.Value = Weight.ToString("G15");
 
 			ele.TryPathTo("BaseDamage", true, out subEle);
 			subEle.Value = BaseDamage.ToString();

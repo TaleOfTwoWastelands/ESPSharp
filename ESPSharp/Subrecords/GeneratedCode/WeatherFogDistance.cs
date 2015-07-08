@@ -89,22 +89,22 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("Day/Near", true, out subEle);
-			subEle.Value = DayNear.ToString();
+			subEle.Value = DayNear.ToString("G15");
 
 			ele.TryPathTo("Day/Far", true, out subEle);
-			subEle.Value = DayFar.ToString();
+			subEle.Value = DayFar.ToString("G15");
 
 			ele.TryPathTo("Night/Near", true, out subEle);
-			subEle.Value = NightNear.ToString();
+			subEle.Value = NightNear.ToString("G15");
 
 			ele.TryPathTo("Night/Far", true, out subEle);
-			subEle.Value = NightFar.ToString();
+			subEle.Value = NightFar.ToString("G15");
 
 			ele.TryPathTo("Day/Power", true, out subEle);
-			subEle.Value = DayPower.ToString();
+			subEle.Value = DayPower.ToString("G15");
 
 			ele.TryPathTo("Night/Power", true, out subEle);
-			subEle.Value = NightPower.ToString();
+			subEle.Value = NightPower.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

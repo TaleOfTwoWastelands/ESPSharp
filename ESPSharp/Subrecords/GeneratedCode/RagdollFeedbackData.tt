@@ -1,0 +1,129 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "RagdollFeedbackData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"Dynamic_KeyframeBlendAmount",
+			"Dynamic_KeyframeBlendAmount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"HierarchyGain",
+			"HierarchyGain"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"PositionGain",
+			"PositionGain"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"VelocityGain",
+			"VelocityGain"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"AccelerationGain",
+			"AccelerationGain"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"SnapGain",
+			"SnapGain"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"VelocityDamping",
+			"VelocityDamping"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"SnapMaxLinearVelocity",
+			"SnapMax/LinearVelocity"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"SnapMaxAngularVelocity",
+			"SnapMax/AngularVelocity"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"SnapMaxLinearDistance",
+			"SnapMax/LinearDistance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"SnapMaxAngularDistance",
+			"SnapMax/AngularDistance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"PositionMaxLinearVelocity",
+			"PositionMax/LinearVelocity"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"PositionMaxAngularVelocity",
+			"PositionMax/AngularVelocity"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ProjectilePositionMaxVelocity",
+			"ProjectilePositionMaxVelocity"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MeleePositionMaxVelocity",
+			"MeleePositionMaxVelocity"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

@@ -134,7 +134,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = SpeedMultiplier.ToString();
 
 			ele.TryPathTo("Karma", true, out subEle);
-			subEle.Value = Karma.ToString();
+			subEle.Value = Karma.ToString("G15");
 
 			ele.TryPathTo("DispositionBase", true, out subEle);
 			subEle.Value = DispositionBase.ToString();

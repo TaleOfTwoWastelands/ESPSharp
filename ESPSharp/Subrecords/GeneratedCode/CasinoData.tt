@@ -1,0 +1,121 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "CasinoData";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DecksPercentBeforeShuffle",
+			"DecksPercentBeforeShuffle"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"BlackjackPayoutRatio",
+			"BlackjackPayoutRatio"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"SlotReelStop1",
+			"SlotReelStop/Symbol1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"SlotReelStop2",
+			"SlotReelStop/Symbol2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"SlotReelStop3",
+			"SlotReelStop/Symbol3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"SlotReelStop4",
+			"SlotReelStop/Symbol4"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"SlotReelStop5",
+			"SlotReelStop/Symbol5"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"SlotReelStop6",
+			"SlotReelStop/Symbol6"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"SlotReelStopW",
+			"SlotReelStop/SymbolW"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"NumberOfDecks",
+			"NumberOfDecks"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(uint),
+			"MaxWinnings",
+			"MaxWinnings"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"Currency",
+			"Currency"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"WinningsQuest",
+			"WinningsQuest"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(NoYes),
+			"DealerStayOnSoft17",
+			"DealerStayOnSoft17"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

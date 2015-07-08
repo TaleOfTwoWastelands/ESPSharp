@@ -1,0 +1,169 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "MediaLocationController";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM1",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown1",
+			"Unknown1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM2",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown2",
+			"Unknown2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM3",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown3",
+			"Unknown3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM4",
+			typeof(SimpleSubrecord<float>),
+			"LocationDelay",
+			"LocationDelay"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM5",
+			typeof(SimpleSubrecord<uint>),
+			"DayStart",
+			"DayStart"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM6",
+			typeof(SimpleSubrecord<uint>),
+			"NightStart",
+			"NightStart"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM7",
+			typeof(SimpleSubrecord<float>),
+			"RetriggerDelay",
+			"RetriggerDelay"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"HNAM",
+			typeof(List<RecordReference>),
+			"MediaSetsNeutral",
+			"MediaSets/Neutral"
+			);
+	tempField.XMLSubNames = new List<string> {"MediaSet"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ZNAM",
+			typeof(List<RecordReference>),
+			"MediaSetsAlly",
+			"MediaSets/Ally"
+			);
+	tempField.XMLSubNames = new List<string> {"MediaSet"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XNAM",
+			typeof(List<RecordReference>),
+			"MediaSetsFriend",
+			"MediaSets/Friend"
+			);
+	tempField.XMLSubNames = new List<string> {"MediaSet"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"YNAM",
+			typeof(List<RecordReference>),
+			"MediaSetsEnemy",
+			"MediaSets/Enemy"
+			);
+	tempField.XMLSubNames = new List<string> {"MediaSet"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"LNAM",
+			typeof(List<RecordReference>),
+			"MediaSetsLocation",
+			"MediaSets/Location"
+			);
+	tempField.XMLSubNames = new List<string> {"MediaSet"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"GNAM",
+			typeof(List<RecordReference>),
+			"MediaSetsBattle",
+			"MediaSets/Battle"
+			);
+	tempField.XMLSubNames = new List<string> {"MediaSet"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RNAM",
+			typeof(RecordReference),
+			"ConditionalFaction",
+			"ConditionalFaction"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FNAM",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown4",
+			"Unknown4"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

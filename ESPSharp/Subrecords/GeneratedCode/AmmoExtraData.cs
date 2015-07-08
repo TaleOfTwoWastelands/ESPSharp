@@ -89,13 +89,13 @@ namespace ESPSharp.Subrecords
 			Projectile.WriteXML(subEle, master);
 
 			ele.TryPathTo("Weight", true, out subEle);
-			subEle.Value = Weight.ToString();
+			subEle.Value = Weight.ToString("G15");
 
 			ele.TryPathTo("ConsumedAmmo", true, out subEle);
 			ConsumedAmmo.WriteXML(subEle, master);
 
 			ele.TryPathTo("ConsumedPercentage", true, out subEle);
-			subEle.Value = ConsumedPercentage.ToString();
+			subEle.Value = ConsumedPercentage.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

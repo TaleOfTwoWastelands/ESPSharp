@@ -173,7 +173,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = MagicEffectFlags.ToString();
 
 			ele.TryPathTo("BaseCost", true, out subEle);
-			subEle.Value = BaseCost.ToString();
+			subEle.Value = BaseCost.ToString("G15");
 
 			ele.TryPathTo("AssociatedItem", true, out subEle);
 			AssociatedItem.WriteXML(subEle, master);
@@ -194,7 +194,7 @@ namespace ESPSharp.Subrecords
 			Light.WriteXML(subEle, master);
 
 			ele.TryPathTo("ProjectileSpeed", true, out subEle);
-			subEle.Value = ProjectileSpeed.ToString();
+			subEle.Value = ProjectileSpeed.ToString("G15");
 
 			ele.TryPathTo("EffectShader", true, out subEle);
 			EffectShader.WriteXML(subEle, master);
@@ -215,10 +215,10 @@ namespace ESPSharp.Subrecords
 			AreaSound.WriteXML(subEle, master);
 
 			ele.TryPathTo("ConstantEffectEnchantmentFactor", true, out subEle);
-			subEle.Value = ConstantEffectEnchantmentFactor.ToString();
+			subEle.Value = ConstantEffectEnchantmentFactor.ToString("G15");
 
 			ele.TryPathTo("ConstantEffectBarterFactor", true, out subEle);
-			subEle.Value = ConstantEffectBarterFactor.ToString();
+			subEle.Value = ConstantEffectBarterFactor.ToString("G15");
 
 			ele.TryPathTo("Archetype", true, out subEle);
 			subEle.Value = Archetype.ToString();

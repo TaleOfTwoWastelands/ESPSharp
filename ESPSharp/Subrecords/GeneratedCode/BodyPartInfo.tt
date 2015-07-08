@@ -1,0 +1,234 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "BodyPartInfo";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DamageMultiplier",
+			"DamageMultiplier"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(BodyPartDataFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(BodyPartType),
+			"Type",
+			"Type"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"HealthPercent",
+			"HealthPercent"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ActorValuesByte),
+			"ActorValue",
+			"ActorValue"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"ToHitChance",
+			"ToHitChance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"ExplosionChance",
+			"Explodable/ExplosionChance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ushort),
+			"ExplosionDebrisCount",
+			"Explodable/DebrisCount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"ExplosionDebris",
+			"Explodable/Debris"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"Explosion",
+			"Explodable/Explosion"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"TrackingMaxAngle",
+			"TrackingMaxAngle"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"ExplosionDebrisScale",
+			"Explodable/DebrisScale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(int),
+			"SeverableDebrisCount",
+			"Severable/DebrisCount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"SeverableDebris",
+			"Severable/Debris"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"SeverableExplosion",
+			"Severable/Explosion"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"SeverableDebrisScale",
+			"Severable/DebrisScale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"GoreEffectsTranslateX",
+			"GoreEffects/Translate/X"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"GoreEffectsTranslateY",
+			"GoreEffects/Translate/Y"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"GoreEffectsTranslateZ",
+			"GoreEffects/Translate/Z"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"GoreEffectsRotationX",
+			"GoreEffects/Rotation/X"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"GoreEffectsRotationY",
+			"GoreEffects/Rotation/Y"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"GoreEffectsRotationZ",
+			"GoreEffects/Rotation/Z"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"SeverableImpactDataSet",
+			"Severable/ImpactDataSet"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"ExplosionImpactDataSet",
+			"Explodable/ImpactDataSet"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"SeverableDecalCount",
+			"Severable/DecalCount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"ExplosionDecalCount",
+			"Explodable/DecalCount"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unused",
+			"Unused"
+			);
+	tempField.byteCount = 2;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"LimbReplacementScale",
+			"LimbReplacementScale"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

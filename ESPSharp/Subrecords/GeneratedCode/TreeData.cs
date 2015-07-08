@@ -101,28 +101,28 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("Leaf/Curvature", true, out subEle);
-			subEle.Value = LeafCurvature.ToString();
+			subEle.Value = LeafCurvature.ToString("G15");
 
 			ele.TryPathTo("Leaf/Angle/Min", true, out subEle);
-			subEle.Value = MinLeafAngle.ToString();
+			subEle.Value = MinLeafAngle.ToString("G15");
 
 			ele.TryPathTo("Leaf/Angle/Max", true, out subEle);
-			subEle.Value = MaxLeafAngle.ToString();
+			subEle.Value = MaxLeafAngle.ToString("G15");
 
 			ele.TryPathTo("BranchDimmingValue", true, out subEle);
-			subEle.Value = BranchDimmingValue.ToString();
+			subEle.Value = BranchDimmingValue.ToString("G15");
 
 			ele.TryPathTo("Leaf/DimmingValue", true, out subEle);
-			subEle.Value = LeafDimmingValue.ToString();
+			subEle.Value = LeafDimmingValue.ToString("G15");
 
 			ele.TryPathTo("ShadowRadius", true, out subEle);
 			subEle.Value = ShadowRadius.ToString();
 
 			ele.TryPathTo("RockSpeed", true, out subEle);
-			subEle.Value = RockSpeed.ToString();
+			subEle.Value = RockSpeed.ToString("G15");
 
 			ele.TryPathTo("RustleSpeed", true, out subEle);
-			subEle.Value = RustleSpeed.ToString();
+			subEle.Value = RustleSpeed.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

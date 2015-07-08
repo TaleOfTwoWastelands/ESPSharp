@@ -22,5 +22,13 @@ namespace ESPSharp
         {
             writeObject.WriteBinary(this);
         }
+
+        public override void Write(string value)
+        {
+            var chars = value.ToCharArray();
+
+            Write(chars);
+            Write('\0');
+        }
     }
 }

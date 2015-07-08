@@ -21,7 +21,7 @@ namespace ESPSharp
 
         public static float ToSingle(this XElement ele)
         {
-            return float.Parse(ele.Value);
+            return (float)(double.Parse(ele.Value));
         }
 
         public static ulong ToUInt64(this XElement ele)
@@ -84,14 +84,6 @@ namespace ESPSharp
             return ele.Value.ToArray();
         }
 
-        public static void AddSimpleSubrecord(this XElement ele, string name, string tag, object value)
-        {
-            ele.Add(
-                new XElement(name,
-                    new XAttribute("Tag", tag),
-                    value));
-        }
-
         public static bool TryPathTo(this XElement ele, string path, bool createPath, out XElement outEle)
         {
             List<string> nodes = Utility.PathToStrings(path);
@@ -137,19 +129,6 @@ namespace ESPSharp
         public static string ToHex(this byte[] bytes)
         {
             return bytes.ToBase64();
-        }
-
-        public static MemoryStream CreateSubStream(this Stream origStream, long bytesToCopy)
-        {
-            MemoryStream outStream = new MemoryStream();
-
-            for (long i = 0; i < bytesToCopy; i+= (64 * 1024))
-            {
-                byte[] buffer = new byte[64 * 1024];
-                origStream.Read(buffer, 0, 64 * 1024);
-            }
-
-            return outStream;
         }
     }
 }

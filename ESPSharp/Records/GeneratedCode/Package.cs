@@ -17,7 +17,8 @@ namespace ESPSharp.Records
 	public partial class Package : Record, IEditorID	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public PackageData Data { get; set; }
-		public List<PackageLocations> LocationData { get; set; }
+		public PackageLocation Location1 { get; set; }
+		public PackageLocation Location2 { get; set; }
 		public PackageScheduleData Schedule { get; set; }
 		public PackageTarget Target1 { get; set; }
 		public List<Condition> Conditions { get; set; }
@@ -30,13 +31,12 @@ namespace ESPSharp.Records
 		public SubMarker EatMarker { get; set; }
 		public SimpleSubrecord<UInt32> EscortDistance { get; set; }
 		public SimpleSubrecord<UInt32> FollowDistance_StartLocation_TriggerRadius { get; set; }
-		public SimpleSubrecord<NoYesShort> PatrolIsRepeatable { get; set; }
+		public SimpleSubrecord<NoYesByte> PatrolIsRepeatable { get; set; }
 		public PackageUseWeaponData UseWeaponData { get; set; }
 		public PackageTarget Target2 { get; set; }
 		public SubMarker UseItemMarker { get; set; }
 		public SubMarker AmbushMarker { get; set; }
 		public PackageDialogData DialogData { get; set; }
-		public PackageLocation Location2 { get; set; }
 		public PackageEvent OnBegin { get; set; }
 		public PackageEvent OnEnd { get; set; }
 		public PackageEvent OnChange { get; set; }
@@ -62,12 +62,16 @@ namespace ESPSharp.Records
 						Data.ReadBinary(reader);
 						break;
 					case "PLDT":
-						if (LocationData == null)
-							LocationData = new List<PackageLocations>();
+						if (Location1 == null)
+							Location1 = new PackageLocation();
 
-						PackageLocations tempPLDT = new PackageLocations();
-						tempPLDT.ReadBinary(reader);
-						LocationData.Add(tempPLDT);
+						Location1.ReadBinary(reader);
+						break;
+					case "PLD2":
+						if (Location2 == null)
+							Location2 = new PackageLocation();
+
+						Location2.ReadBinary(reader);
 						break;
 					case "PSDT":
 						if (Schedule == null)
@@ -145,7 +149,7 @@ namespace ESPSharp.Records
 						break;
 					case "PKPT":
 						if (PatrolIsRepeatable == null)
-							PatrolIsRepeatable = new SimpleSubrecord<NoYesShort>();
+							PatrolIsRepeatable = new SimpleSubrecord<NoYesByte>();
 
 						PatrolIsRepeatable.ReadBinary(reader);
 						break;
@@ -179,12 +183,6 @@ namespace ESPSharp.Records
 
 						DialogData.ReadBinary(reader);
 						break;
-					case "PLD2":
-						if (Location2 == null)
-							Location2 = new PackageLocation();
-
-						Location2.ReadBinary(reader);
-						break;
 					case "POBA":
 						if (OnBegin == null)
 							OnBegin = new PackageEvent();
@@ -215,9 +213,10 @@ namespace ESPSharp.Records
 				EditorID.WriteBinary(writer);
 			if (Data != null)
 				Data.WriteBinary(writer);
-			if (LocationData != null)
-				foreach (var item in LocationData)
-					item.WriteBinary(writer);
+			if (Location1 != null)
+				Location1.WriteBinary(writer);
+			if (Location2 != null)
+				Location2.WriteBinary(writer);
 			if (Schedule != null)
 				Schedule.WriteBinary(writer);
 			if (Target1 != null)
@@ -255,8 +254,6 @@ namespace ESPSharp.Records
 				AmbushMarker.WriteBinary(writer);
 			if (DialogData != null)
 				DialogData.WriteBinary(writer);
-			if (Location2 != null)
-				Location2.WriteBinary(writer);
 			if (OnBegin != null)
 				OnBegin.WriteBinary(writer);
 			if (OnEnd != null)
@@ -278,19 +275,15 @@ namespace ESPSharp.Records
 				ele.TryPathTo("Data", true, out subEle);
 				Data.WriteXML(subEle, master);
 			}
-			if (LocationData != null)		
+			if (Location1 != null)		
 			{		
-				ele.TryPathTo("LocationData", true, out subEle);
-				List<string> xmlNames = new List<string>{"LocationSet"};
-				int i = 0;
-				foreach (var entry in LocationData)
-				{
-					i = i % xmlNames.Count();
-					XElement newEle = new XElement(xmlNames[i]);
-					entry.WriteXML(newEle, master);
-					subEle.Add(newEle);
-					i++;
-				}
+				ele.TryPathTo("Location1", true, out subEle);
+				Location1.WriteXML(subEle, master);
+			}
+			if (Location2 != null)		
+			{		
+				ele.TryPathTo("Location2", true, out subEle);
+				Location2.WriteXML(subEle, master);
 			}
 			if (Schedule != null)		
 			{		
@@ -391,11 +384,6 @@ namespace ESPSharp.Records
 				ele.TryPathTo("DialogData", true, out subEle);
 				DialogData.WriteXML(subEle, master);
 			}
-			if (Location2 != null)		
-			{		
-				ele.TryPathTo("Location2", true, out subEle);
-				Location2.WriteXML(subEle, master);
-			}
 			if (OnBegin != null)		
 			{		
 				ele.TryPathTo("OnBegin", true, out subEle);
@@ -431,17 +419,19 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
-			if (ele.TryPathTo("LocationData", false, out subEle))
+			if (ele.TryPathTo("Location1", false, out subEle))
 			{
-				if (LocationData == null)
-					LocationData = new List<PackageLocations>();
+				if (Location1 == null)
+					Location1 = new PackageLocation();
 					
-				foreach (XElement e in subEle.Elements())
-				{
-					PackageLocations tempPLDT = new PackageLocations();
-					tempPLDT.ReadXML(e, master);
-					LocationData.Add(tempPLDT);
-				}
+				Location1.ReadXML(subEle, master);
+			}
+			if (ele.TryPathTo("Location2", false, out subEle))
+			{
+				if (Location2 == null)
+					Location2 = new PackageLocation();
+					
+				Location2.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("Schedule", false, out subEle))
 			{
@@ -535,7 +525,7 @@ namespace ESPSharp.Records
 			if (ele.TryPathTo("PatrolIsRepeatable", false, out subEle))
 			{
 				if (PatrolIsRepeatable == null)
-					PatrolIsRepeatable = new SimpleSubrecord<NoYesShort>();
+					PatrolIsRepeatable = new SimpleSubrecord<NoYesByte>();
 					
 				PatrolIsRepeatable.ReadXML(subEle, master);
 			}
@@ -573,13 +563,6 @@ namespace ESPSharp.Records
 					DialogData = new PackageDialogData();
 					
 				DialogData.ReadXML(subEle, master);
-			}
-			if (ele.TryPathTo("Location2", false, out subEle))
-			{
-				if (Location2 == null)
-					Location2 = new PackageLocation();
-					
-				Location2.ReadXML(subEle, master);
 			}
 			if (ele.TryPathTo("OnBegin", false, out subEle))
 			{

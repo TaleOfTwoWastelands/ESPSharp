@@ -341,22 +341,22 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unknown.ToHex();
 
 			ele.TryPathTo("WaterProperties/SunPower", true, out subEle);
-			subEle.Value = WaterPropertiesSunPower.ToString();
+			subEle.Value = WaterPropertiesSunPower.ToString("G15");
 
 			ele.TryPathTo("WaterProperties/ReflectivityAmount", true, out subEle);
-			subEle.Value = WaterPropertiesReflectivityAmount.ToString();
+			subEle.Value = WaterPropertiesReflectivityAmount.ToString("G15");
 
 			ele.TryPathTo("WaterProperties/FresnelAmount", true, out subEle);
-			subEle.Value = WaterPropertiesFresnelAmount.ToString();
+			subEle.Value = WaterPropertiesFresnelAmount.ToString("G15");
 
 			ele.TryPathTo("Unused1", true, out subEle);
 			subEle.Value = Unused1.ToHex();
 
 			ele.TryPathTo("FogProperties/AboveWater/FogNearPlaneDistance", true, out subEle);
-			subEle.Value = FogPropertiesAboveWaterFogNearPlaneDistance.ToString();
+			subEle.Value = FogPropertiesAboveWaterFogNearPlaneDistance.ToString("G15");
 
 			ele.TryPathTo("FogProperties/AboveWater/FogFarPlaneDistance", true, out subEle);
-			subEle.Value = FogPropertiesAboveWaterFogFarPlaneDistance.ToString();
+			subEle.Value = FogPropertiesAboveWaterFogFarPlaneDistance.ToString("G15");
 
 			ele.TryPathTo("Color/Shallow", true, out subEle);
 			ColorShallow.WriteXML(subEle, master);
@@ -371,109 +371,109 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unused2.ToHex();
 
 			ele.TryPathTo("RainSimulator/Force", true, out subEle);
-			subEle.Value = RainSimulatorForce.ToString();
+			subEle.Value = RainSimulatorForce.ToString("G15");
 
 			ele.TryPathTo("RainSimulator/Velocity", true, out subEle);
-			subEle.Value = RainSimulatorVelocity.ToString();
+			subEle.Value = RainSimulatorVelocity.ToString("G15");
 
 			ele.TryPathTo("RainSimulator/Falloff", true, out subEle);
-			subEle.Value = RainSimulatorFalloff.ToString();
+			subEle.Value = RainSimulatorFalloff.ToString("G15");
 
 			ele.TryPathTo("RainSimulator/Dampener", true, out subEle);
-			subEle.Value = RainSimulatorDampener.ToString();
+			subEle.Value = RainSimulatorDampener.ToString("G15");
 
 			ele.TryPathTo("DisplacementSimulator/StartingSize", true, out subEle);
-			subEle.Value = DisplacementSimulatorStartingSize.ToString();
+			subEle.Value = DisplacementSimulatorStartingSize.ToString("G15");
 
 			ele.TryPathTo("DisplacementSimulator/Force", true, out subEle);
-			subEle.Value = DisplacementSimulatorForce.ToString();
+			subEle.Value = DisplacementSimulatorForce.ToString("G15");
 
 			ele.TryPathTo("DisplacementSimulator/Velocity", true, out subEle);
-			subEle.Value = DisplacementSimulatorVelocity.ToString();
+			subEle.Value = DisplacementSimulatorVelocity.ToString("G15");
 
 			ele.TryPathTo("DisplacementSimulator/Falloff", true, out subEle);
-			subEle.Value = DisplacementSimulatorFalloff.ToString();
+			subEle.Value = DisplacementSimulatorFalloff.ToString("G15");
 
 			ele.TryPathTo("DisplacementSimulator/Dampener", true, out subEle);
-			subEle.Value = DisplacementSimulatorDampener.ToString();
+			subEle.Value = DisplacementSimulatorDampener.ToString("G15");
 
 			ele.TryPathTo("RainSimulator/StartingSize", true, out subEle);
-			subEle.Value = RainSimulatorStartingSize.ToString();
+			subEle.Value = RainSimulatorStartingSize.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/Normals/NoiseScale", true, out subEle);
-			subEle.Value = NoisePropertiesNormalsNoiseScale.ToString();
+			subEle.Value = NoisePropertiesNormalsNoiseScale.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerOne/WindDirection", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerOneWindDirection.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerOneWindDirection.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerTwo/WindDirection", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerTwoWindDirection.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerTwoWindDirection.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerThree/WindDirection", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerThreeWindDirection.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerThreeWindDirection.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerOne/WindSpeed", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerOneWindSpeed.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerOneWindSpeed.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerTwo/WindSpeed", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerTwoWindSpeed.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerTwoWindSpeed.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerThree/WindSpeed", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerThreeWindSpeed.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerThreeWindSpeed.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/Normals/DepthFalloff/Start", true, out subEle);
-			subEle.Value = NoisePropertiesNormalsDepthFalloffStart.ToString();
+			subEle.Value = NoisePropertiesNormalsDepthFalloffStart.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/Normals/DepthFalloff/End", true, out subEle);
-			subEle.Value = NoisePropertiesNormalsDepthFalloffEnd.ToString();
+			subEle.Value = NoisePropertiesNormalsDepthFalloffEnd.ToString("G15");
 
 			ele.TryPathTo("FogProperties/AboveWater/FogAmount", true, out subEle);
-			subEle.Value = FogPropertiesAboveWaterFogAmount.ToString();
+			subEle.Value = FogPropertiesAboveWaterFogAmount.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/Normals/UVScale", true, out subEle);
-			subEle.Value = NoisePropertiesNormalsUVScale.ToString();
+			subEle.Value = NoisePropertiesNormalsUVScale.ToString("G15");
 
 			ele.TryPathTo("FogProperties/UnderWater/FogAmount", true, out subEle);
-			subEle.Value = FogPropertiesUnderWaterFogAmount.ToString();
+			subEle.Value = FogPropertiesUnderWaterFogAmount.ToString("G15");
 
 			ele.TryPathTo("FogProperties/UnderWater/FogNearPlaneDistance", true, out subEle);
-			subEle.Value = FogPropertiesUnderWaterFogNearPlaneDistance.ToString();
+			subEle.Value = FogPropertiesUnderWaterFogNearPlaneDistance.ToString("G15");
 
 			ele.TryPathTo("FogProperties/UnderWater/FogFarPlaneDistance", true, out subEle);
-			subEle.Value = FogPropertiesUnderWaterFogFarPlaneDistance.ToString();
+			subEle.Value = FogPropertiesUnderWaterFogFarPlaneDistance.ToString("G15");
 
 			ele.TryPathTo("WaterProperties/DistortionAmount", true, out subEle);
-			subEle.Value = WaterPropertiesDistortionAmount.ToString();
+			subEle.Value = WaterPropertiesDistortionAmount.ToString("G15");
 
 			ele.TryPathTo("WaterProperties/Shininess", true, out subEle);
-			subEle.Value = WaterPropertiesShininess.ToString();
+			subEle.Value = WaterPropertiesShininess.ToString("G15");
 
 			ele.TryPathTo("WaterProperties/ReflectionHDRMult", true, out subEle);
-			subEle.Value = WaterPropertiesReflectionHDRMult.ToString();
+			subEle.Value = WaterPropertiesReflectionHDRMult.ToString("G15");
 
 			ele.TryPathTo("WaterProperties/LightRadius", true, out subEle);
-			subEle.Value = WaterPropertiesLightRadius.ToString();
+			subEle.Value = WaterPropertiesLightRadius.ToString("G15");
 
 			ele.TryPathTo("WaterProperties/LightBrightness", true, out subEle);
-			subEle.Value = WaterPropertiesLightBrightness.ToString();
+			subEle.Value = WaterPropertiesLightBrightness.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerOne/UVScale", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerOneUVScale.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerOneUVScale.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerTwo/UVScale", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerTwoUVScale.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerTwoUVScale.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerThree/UVScale", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerThreeUVScale.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerThreeUVScale.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerOne/AmplitudeScale", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerOneAmplitudeScale.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerOneAmplitudeScale.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerTwo/AmplitudeScale", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerTwoAmplitudeScale.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerTwoAmplitudeScale.ToString("G15");
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerThree/AmplitudeScale", true, out subEle);
-			subEle.Value = NoisePropertiesNoiseLayerThreeAmplitudeScale.ToString();
+			subEle.Value = NoisePropertiesNoiseLayerThreeAmplitudeScale.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

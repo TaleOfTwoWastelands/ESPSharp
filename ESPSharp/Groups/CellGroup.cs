@@ -28,11 +28,14 @@ namespace ESPSharp
 
         public override XElement WriteTypeDataXML(ElderScrollsPlugin master)
         {
-            return new XElement("Cell", Cell.ToString());
+            XElement ele = new XElement("Cell");
+            Cell.WriteXML(ele, master);
+            return ele;
         }
 
         public override void ReadTypeDataXML(XElement element, ElderScrollsPlugin master)
         {
+            Cell = new FormID();
             Cell.ReadXML(element.Element("Cell"), master);
         }
 

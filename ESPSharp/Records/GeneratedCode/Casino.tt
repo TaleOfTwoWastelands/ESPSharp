@@ -1,0 +1,94 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Casino";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(CasinoData),
+			"Data",
+			"Data"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODL",
+			typeof(List<SimpleSubrecord<string>>),
+			"Models",
+			"Models"
+			);
+	tempField.XMLSubNames = new List<string>{"Chip1", "Chip5", "Chip10", "Chip25", "Chip100", "Chip500", "RouletteChip", "SlotMachine"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MOD2",
+			typeof(SimpleSubrecord<string>),
+			"ModelSlotMachine",
+			"Model/SlotMachine"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MOD3",
+			typeof(SimpleSubrecord<string>),
+			"ModelBlackjackTable",
+			"Model/BlackjackTable"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MOD4",
+			typeof(SimpleSubrecord<string>),
+			"ModelRouletteTable",
+			"Model/RouletteTable"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ICON",
+			typeof(List<SimpleSubrecord<string>>),
+			"SlotReelTextures",
+			"SlotReelTextures"
+			);
+	tempField.XMLSubNames = new List<string>{"Symbol1", "Symbol2", "Symbol3", "Symbol4", "Symbol5", "Symbol6", "SymbolW"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ICO2",
+			typeof(List<SimpleSubrecord<string>>),
+			"BlackjackTextures",
+			"BlackjackTextures"
+			);
+	tempField.XMLSubNames = new List<string>{"Deck1", "Deck2", "Deck3", "Deck4"};
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

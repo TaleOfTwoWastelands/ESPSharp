@@ -128,10 +128,10 @@ namespace ESPSharp.Subrecords
 			subEle.Value = ShotsPerVolleyMax.ToString();
 
 			ele.TryPathTo("PauseBetweenVolleys/Min", true, out subEle);
-			subEle.Value = PauseBetweenVolleysMin.ToString();
+			subEle.Value = PauseBetweenVolleysMin.ToString("G15");
 
 			ele.TryPathTo("PauseBetweenVolleys/Max", true, out subEle);
-			subEle.Value = PauseBetweenVolleysMax.ToString();
+			subEle.Value = PauseBetweenVolleysMax.ToString("G15");
 
 			ele.TryPathTo("Unused", true, out subEle);
 			subEle.Value = Unused.ToHex();

@@ -191,13 +191,13 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Type.ToString();
 
 			ele.TryPathTo("Gravity", true, out subEle);
-			subEle.Value = Gravity.ToString();
+			subEle.Value = Gravity.ToString("G15");
 
 			ele.TryPathTo("Speed", true, out subEle);
-			subEle.Value = Speed.ToString();
+			subEle.Value = Speed.ToString("G15");
 
 			ele.TryPathTo("Range", true, out subEle);
-			subEle.Value = Range.ToString();
+			subEle.Value = Range.ToString("G15");
 
 			ele.TryPathTo("Light", true, out subEle);
 			Light.WriteXML(subEle, master);
@@ -206,13 +206,13 @@ namespace ESPSharp.Subrecords
 			MuzzleFlashLight.WriteXML(subEle, master);
 
 			ele.TryPathTo("TracerChance", true, out subEle);
-			subEle.Value = TracerChance.ToString();
+			subEle.Value = TracerChance.ToString("G15");
 
 			ele.TryPathTo("Explosion/AltTrigger/Proximity", true, out subEle);
-			subEle.Value = ExplosionAltTriggerProximity.ToString();
+			subEle.Value = ExplosionAltTriggerProximity.ToString("G15");
 
 			ele.TryPathTo("Explosion/AltTrigger/Timer", true, out subEle);
-			subEle.Value = ExplosionAltTriggerTimer.ToString();
+			subEle.Value = ExplosionAltTriggerTimer.ToString("G15");
 
 			ele.TryPathTo("Explosion/Form", true, out subEle);
 			Explosion.WriteXML(subEle, master);
@@ -221,13 +221,13 @@ namespace ESPSharp.Subrecords
 			Sound.WriteXML(subEle, master);
 
 			ele.TryPathTo("MuzzleFlash/Duration", true, out subEle);
-			subEle.Value = MuzzleFlashDuration.ToString();
+			subEle.Value = MuzzleFlashDuration.ToString("G15");
 
 			ele.TryPathTo("FadeDuration", true, out subEle);
-			subEle.Value = FadeDuration.ToString();
+			subEle.Value = FadeDuration.ToString("G15");
 
 			ele.TryPathTo("ImpactForce", true, out subEle);
-			subEle.Value = ImpactForce.ToString();
+			subEle.Value = ImpactForce.ToString("G15");
 
 			ele.TryPathTo("Sound/Countdown", true, out subEle);
 			SoundCountdown.WriteXML(subEle, master);
@@ -239,16 +239,16 @@ namespace ESPSharp.Subrecords
 			DefaultWeaponSource.WriteXML(subEle, master);
 
 			ele.TryPathTo("XRotation", true, out subEle);
-			subEle.Value = XRotation.ToString();
+			subEle.Value = XRotation.ToString("G15");
 
 			ele.TryPathTo("YRotation", true, out subEle);
-			subEle.Value = YRotation.ToString();
+			subEle.Value = YRotation.ToString("G15");
 
 			ele.TryPathTo("ZRotation", true, out subEle);
-			subEle.Value = ZRotation.ToString();
+			subEle.Value = ZRotation.ToString("G15");
 
 			ele.TryPathTo("BouncyMult", true, out subEle);
-			subEle.Value = BouncyMult.ToString();
+			subEle.Value = BouncyMult.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

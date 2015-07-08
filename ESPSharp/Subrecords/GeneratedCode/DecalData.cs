@@ -122,25 +122,25 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("Width/Min", true, out subEle);
-			subEle.Value = MinWidth.ToString();
+			subEle.Value = MinWidth.ToString("G15");
 
 			ele.TryPathTo("Width/Max", true, out subEle);
-			subEle.Value = MaxWidth.ToString();
+			subEle.Value = MaxWidth.ToString("G15");
 
 			ele.TryPathTo("Height/Min", true, out subEle);
-			subEle.Value = MinHeight.ToString();
+			subEle.Value = MinHeight.ToString("G15");
 
 			ele.TryPathTo("Height/Max", true, out subEle);
-			subEle.Value = MaxHeight.ToString();
+			subEle.Value = MaxHeight.ToString("G15");
 
 			ele.TryPathTo("Depth", true, out subEle);
-			subEle.Value = Depth.ToString();
+			subEle.Value = Depth.ToString("G15");
 
 			ele.TryPathTo("Shininess", true, out subEle);
-			subEle.Value = Shininess.ToString();
+			subEle.Value = Shininess.ToString("G15");
 
 			ele.TryPathTo("Parallax/Scale", true, out subEle);
-			subEle.Value = ParallaxScale.ToString();
+			subEle.Value = ParallaxScale.ToString("G15");
 
 			ele.TryPathTo("Parallax/Passes", true, out subEle);
 			subEle.Value = ParallaxPasses.ToString();

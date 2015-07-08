@@ -1,0 +1,244 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "ArmorAddon";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"OBND",
+			typeof(ObjectBounds),
+			"ObjectBounds",
+			"ObjectBounds"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"BMDT",
+			typeof(BipedData),
+			"BipedData",
+			"BipedData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODL",
+			typeof(SimpleSubrecord<string>),
+			"MaleBipedModelFileName",
+			"Models/Biped/Male/FileName"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODT",
+			typeof(SimpleSubrecord<byte[]>),
+			"MaleBipedModelTextureHashes",
+			"Models/Biped/Male/TextureHashes"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODS",
+			typeof(AlternateTextures),
+			"MaleBipedModelAlternateTextures",
+			"Models/Biped/Male/AlternateTextures"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODD",
+			typeof(SimpleSubrecord<FaceGenModelFlags>),
+			"MaleBipedModelFaceGenModelFlags",
+			"Models/Biped/Male/FaceGenModelFlags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MOD2",
+			typeof(SimpleSubrecord<string>),
+			"MaleWorldModelFileName",
+			"Models/World/Male/FileName"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO2T",
+			typeof(SimpleSubrecord<byte[]>),
+			"MaleWorldModelTextureHashes",
+			"Models/World/Male/TextureHashes"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO2S",
+			typeof(AlternateTextures),
+			"MaleWorldModelAlternateTextures",
+			"Models/World/Male/AlternateTextures"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ICON",
+			typeof(SimpleSubrecord<string>),
+			"MaleInventoryIcon",
+			"Icon/Inventory/Male"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MICO",
+			typeof(SimpleSubrecord<string>),
+			"MaleMessageIcon",
+			"Icon/Message/Male"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MOD3",
+			typeof(SimpleSubrecord<string>),
+			"FemaleBipedModelFileName",
+			"Models/Biped/Female/FileName"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO3T",
+			typeof(SimpleSubrecord<byte[]>),
+			"FemaleBipedModelTextureHashes",
+			"Models/Biped/Female/TextureHashes"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO3S",
+			typeof(AlternateTextures),
+			"FemaleBipedModelAlternateTextures",
+			"Models/Biped/Female/AlternateTextures"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MOSD",
+			typeof(SimpleSubrecord<FaceGenModelFlags>),
+			"FemaleBipedModelFaceGenModelFlags",
+			"Models/Biped/Female/FaceGenModelFlags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MOD4",
+			typeof(SimpleSubrecord<string>),
+			"FemaleWorldModelFileName",
+			"Models/World/Female/FileName"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO4T",
+			typeof(SimpleSubrecord<byte[]>),
+			"FemaleWorldModelTextureHashes",
+			"Models/World/Female/TextureHashes"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MO4S",
+			typeof(AlternateTextures),
+			"FemaleWorldModelAlternateTextures",
+			"Models/World/Female/AlternateTextures"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ICO2",
+			typeof(SimpleSubrecord<string>),
+			"FemaleInventoryIcon",
+			"Icon/Inventory/Female"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MIC2",
+			typeof(SimpleSubrecord<string>),
+			"FemaleMessageIcon",
+			"Icon/Message/Female"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ETYP",
+			typeof(SimpleSubrecord<EquipmentType>),
+			"EquipmentType",
+			"EquipmentType"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(ArmorData),
+			"Data",
+			"Data"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DNAM",
+			typeof(ArmorAddonData),
+			"ExtraData",
+			"ExtraData"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

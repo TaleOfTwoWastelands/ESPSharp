@@ -1,0 +1,89 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "CellLighting";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"ColorAmbient",
+			"Color/Ambient"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"ColorDirectional",
+			"Color/Directional"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(Color),
+			"FogColor",
+			"Fog/Color"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FogNear",
+			"Fog/Near"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FogFar",
+			"Fog/Far"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(int),
+			"DirectionalRotationXY",
+			"DirectionalRotation/XY"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(int),
+			"DirectionalRotationZ",
+			"DirectionalRotation/Z"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DirectionalFade",
+			"DirectionalFade"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FogClipDistance",
+			"Fog/ClipDistance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"FogPower",
+			"Fog/Power"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

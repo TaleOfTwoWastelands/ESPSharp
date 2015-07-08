@@ -235,6 +235,9 @@ namespace ESPSharp
                 case "HAIR":
                     outRecord = new Hair();
                     break;
+                case "EYES":
+                    outRecord = new Eyes();
+                    break;
                 case "RACE":
                     outRecord = new Race();
                     break;
@@ -358,6 +361,9 @@ namespace ESPSharp
                 case "REGN":
                     outRecord = new Region();
                     break;
+                case "NAVI":
+                    outRecord = new GenericRecord();
+                    break;
                 case "DIAL":
                     outRecord = new DialogTopic();
                     break;
@@ -403,7 +409,137 @@ namespace ESPSharp
                 case "PERK":
                     outRecord = new Perk();
                     break;
+                case "BPTD":
+                    outRecord = new BodyPartData();
+                    break;
+                case "ADDN":
+                    outRecord = new AddonNode();
+                    break;
+                case "AVIF":
+                    outRecord = new ActorValueInformation();
+                    break;
+                case "RADS":
+                    outRecord = new RadiationStage();
+                    break;
+                case "CAMS":
+                    outRecord = new CameraShot();
+                    break;
+                case "CPTH":
+                    outRecord = new CameraPath();
+                    break;
+                case "VTYP":
+                    outRecord = new VoiceType();
+                    break;
+                case "IPCT":
+                    outRecord = new Impact();
+                    break;
+                case "IPDS":
+                    outRecord = new ImpactDataSet();
+                    break;
+                case "ARMA":
+                    outRecord = new ArmorAddon();
+                    break;
+                case "ECZN":
+                    outRecord = new EncounterZone();
+                    break;
+                case "MESG":
+                    outRecord = new Message();
+                    break;
+                case "RGDL":
+                    outRecord = new Ragdoll();
+                    break;
+                case "DOBJ":
+                    outRecord = new DefaultObjectManager();
+                    break;
+                case "LGTM":
+                    outRecord = new LightingTemplate();
+                    break;
+                case "MUSC":
+                    outRecord = new MusicType();
+                    break;
+                case "IMOD":
+                    outRecord = new ItemMod();
+                    break;
+                case "REPU":
+                    outRecord = new Reputation();
+                    break;
+                case "RCPE":
+                    outRecord = new Recipe();
+                    break;
+                case "RCCT":
+                    outRecord = new RecipeCategory();
+                    break;
+                case "CHIP":
+                    outRecord = new CasinoChip();
+                    break;
+                case "CSNO":
+                    outRecord = new Casino();
+                    break;
+                case "LSCT":
+                    outRecord = new LoadScreenType();
+                    break;
+                case "MSET":
+                    outRecord = new MediaSet();
+                    break;
+                case "ALOC":
+                    outRecord = new MediaLocationController();
+                    break;
+                case "CHAL":
+                    outRecord = new Challenge();
+                    break;
+                case "AMEF":
+                    outRecord = new AmmoEffect();
+                    break;
+                case "CCRD":
+                    outRecord = new CaravanCard();
+                    break;
+                case "CMNY":
+                    outRecord = new CaravanMoney();
+                    break;
+                case "CDCK":
+                    outRecord = new CaravanDeck();
+                    break;
+                case "DEHY":
+                    outRecord = new DehydrationStage();
+                    break;
+                case "HUNG":
+                    outRecord = new HungerStage();
+                    break;
+                case "SLPD":
+                    outRecord = new SleepDeprivationStage();
+                    break;
+                case "CELL":
+                    outRecord = new Cell();
+                    break;
+                case "WRLD":
+                    outRecord = new Worldspace();
+                    break;
+                case "LAND":
+                    outRecord = new GenericRecord();
+                    break;
+                case "NAVM":
+                    outRecord = new GenericRecord();
+                    break;
+                case "INFO":
+                    outRecord = new DialogResponse();
+                    break;
+                case "REFR":
+                    outRecord = new Reference();
+                    break;
+                case "ACHR":
+                    outRecord = new PlacedNPC();
+                    break;
+                case "ACRE":
+                    outRecord = new PlacedCreature();
+                    break;
+                case "PGRE":
+                    outRecord = new PlacedGrenade();
+                    break;
+                case "PMIS":
+                    outRecord = new PlacedMissile();
+                    break;
                 default:
+                    Console.WriteLine("Encountered unknown record: " + Tag);
                     outRecord = new GenericRecord();
                     break;
             }
@@ -425,7 +561,7 @@ namespace ESPSharp
 
         public override string ToString()
         {
-            if (this is IEditorID)
+            if (this is IEditorID && (this as IEditorID).EditorID != null)
                 return (this as IEditorID).EditorID.Value;
             else
                 return String.Format("{0} - {1}", Tag, FormID.ToString());

@@ -1,0 +1,81 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "RagdollPoseMatching";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(ushort),
+			"MatchBone1",
+			"MatchBone1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ushort),
+			"MatchBone2",
+			"MatchBone2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ushort),
+			"MatchBone3",
+			"MatchBone3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(NoYesByte),
+			"DisableOnMove",
+			"DisableOnMove"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte),
+			"Unused",
+			"Unused"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MotorsStrength",
+			"MotorsStrength"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"PoseActivationDelayTime",
+			"PoseActivationDelayTime"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"MatchErrorAllowance",
+			"MatchErrorAllowance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(float),
+			"DisplacementToDisable",
+			"DisplacementToDisable"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

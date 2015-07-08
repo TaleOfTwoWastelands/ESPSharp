@@ -1,0 +1,33 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "CellGrid";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(int),
+			"X",
+			"X"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(int),
+			"Y",
+			"Y"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(ForceHideLandFlags),
+			"ForceHideLand",
+			"ForceHideLand"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

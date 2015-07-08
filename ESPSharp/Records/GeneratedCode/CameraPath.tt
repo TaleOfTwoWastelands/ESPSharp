@@ -1,0 +1,58 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "CameraPath";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CTDA",
+			typeof(List<Condition>),
+			"Conditions",
+			"Conditions"
+			);
+	tempField.XMLSubNames = new List<String>{"Condition"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ANAM",
+			typeof(RelatedCameraPaths),
+			"RelatedCameraPaths",
+			"RelatedCameraPaths"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(SimpleSubrecord<CameraPathZoom>),
+			"CameraZoom",
+			"CameraZoom"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"SNAM",
+			typeof(List<RecordReference>),
+			"CameraShots",
+			"CameraShots"
+			);
+	tempField.XMLSubNames = new List<string>{"CameraShot"};
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

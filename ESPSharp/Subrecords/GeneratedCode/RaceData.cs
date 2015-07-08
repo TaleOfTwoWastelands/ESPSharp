@@ -221,16 +221,16 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unused.ToHex();
 
 			ele.TryPathTo("Height/Male", true, out subEle);
-			subEle.Value = MaleHeight.ToString();
+			subEle.Value = MaleHeight.ToString("G15");
 
 			ele.TryPathTo("Height/Female", true, out subEle);
-			subEle.Value = FemaleHeight.ToString();
+			subEle.Value = FemaleHeight.ToString("G15");
 
 			ele.TryPathTo("Weight/Male", true, out subEle);
-			subEle.Value = MaleWeight.ToString();
+			subEle.Value = MaleWeight.ToString("G15");
 
 			ele.TryPathTo("Weight/Female", true, out subEle);
-			subEle.Value = FemaleWeight.ToString();
+			subEle.Value = FemaleWeight.ToString("G15");
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = RaceFlags.ToString();

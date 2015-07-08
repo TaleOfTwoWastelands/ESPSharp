@@ -152,31 +152,31 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("CoverSearchRadius", true, out subEle);
-			subEle.Value = CoverSearchRadius.ToString();
+			subEle.Value = CoverSearchRadius.ToString("G15");
 
 			ele.TryPathTo("TakeCoverChance", true, out subEle);
-			subEle.Value = TakeCoverChance.ToString();
+			subEle.Value = TakeCoverChance.ToString("G15");
 
 			ele.TryPathTo("WaitTimer/Min", true, out subEle);
-			subEle.Value = WaitTimerMin.ToString();
+			subEle.Value = WaitTimerMin.ToString("G15");
 
 			ele.TryPathTo("WaitTimer/Max", true, out subEle);
-			subEle.Value = WaitTimerMax.ToString();
+			subEle.Value = WaitTimerMax.ToString("G15");
 
 			ele.TryPathTo("WaitToFireTimer/Min", true, out subEle);
-			subEle.Value = WaitToFireTimerMin.ToString();
+			subEle.Value = WaitToFireTimerMin.ToString("G15");
 
 			ele.TryPathTo("WaitToFireTimer/Max", true, out subEle);
-			subEle.Value = WaitToFireTimerMax.ToString();
+			subEle.Value = WaitToFireTimerMax.ToString("G15");
 
 			ele.TryPathTo("FireTimer/Min", true, out subEle);
-			subEle.Value = FireTimerMin.ToString();
+			subEle.Value = FireTimerMin.ToString("G15");
 
 			ele.TryPathTo("FireTimer/Max", true, out subEle);
-			subEle.Value = FireTimerMax.ToString();
+			subEle.Value = FireTimerMax.ToString("G15");
 
 			ele.TryPathTo("RangedWeaponRangeMult/Min", true, out subEle);
-			subEle.Value = RangedWeaponRangeMultMin.ToString();
+			subEle.Value = RangedWeaponRangeMultMin.ToString("G15");
 
 			ele.TryPathTo("Unused", true, out subEle);
 			subEle.Value = Unused.ToHex();
@@ -185,19 +185,19 @@ namespace ESPSharp.Subrecords
 			subEle.Value = WeaponRestrictions.ToString();
 
 			ele.TryPathTo("RangedWeaponRangeMult/Max", true, out subEle);
-			subEle.Value = RangedWeaponRangeMultMax.ToString();
+			subEle.Value = RangedWeaponRangeMultMax.ToString("G15");
 
 			ele.TryPathTo("MaxTargetingFOV", true, out subEle);
-			subEle.Value = MaxTargetingFOV.ToString();
+			subEle.Value = MaxTargetingFOV.ToString("G15");
 
 			ele.TryPathTo("CombatRadius", true, out subEle);
-			subEle.Value = CombatRadius.ToString();
+			subEle.Value = CombatRadius.ToString("G15");
 
 			ele.TryPathTo("SemiAutoFiringDelayMult/Min", true, out subEle);
-			subEle.Value = SemiAutoFiringDelayMultMin.ToString();
+			subEle.Value = SemiAutoFiringDelayMultMin.ToString("G15");
 
 			ele.TryPathTo("SemiAutoFiringDelayMult/Max", true, out subEle);
-			subEle.Value = SemiAutoFiringDelayMultMax.ToString();
+			subEle.Value = SemiAutoFiringDelayMultMax.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

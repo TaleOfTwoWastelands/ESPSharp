@@ -320,7 +320,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = IsAnimatable.ToString();
 
 			ele.TryPathTo("Duration", true, out subEle);
-			subEle.Value = Duration.ToString();
+			subEle.Value = Duration.ToString("G15");
 
 			ele.TryPathTo("HDR/EyeAdaptSpeed/Mult", true, out subEle);
 			subEle.Value = HDREyeAdaptSpeedMult.ToString();

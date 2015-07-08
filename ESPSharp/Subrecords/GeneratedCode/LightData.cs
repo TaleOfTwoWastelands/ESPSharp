@@ -113,16 +113,16 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			ele.TryPathTo("FalloffExponent", true, out subEle);
-			subEle.Value = FalloffExponent.ToString();
+			subEle.Value = FalloffExponent.ToString("G15");
 
 			ele.TryPathTo("FOV", true, out subEle);
-			subEle.Value = FOV.ToString();
+			subEle.Value = FOV.ToString("G15");
 
 			ele.TryPathTo("Value", true, out subEle);
 			subEle.Value = Value.ToString();
 
 			ele.TryPathTo("Weight", true, out subEle);
-			subEle.Value = Weight.ToString();
+			subEle.Value = Weight.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

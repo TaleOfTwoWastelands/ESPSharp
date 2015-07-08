@@ -1,0 +1,78 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "BodyPart";
+
+	SubrecordCollectionField tempField;
+
+	tempField = 
+		new SubrecordCollectionField(
+			"BPNN",
+			typeof(SimpleSubrecord<string>),
+			"PartNode",
+			"PartNode"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"BPNT",
+			typeof(SimpleSubrecord<string>),
+			"VATSTarget",
+			"VATSTarget"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"BPNI",
+			typeof(SimpleSubrecord<string>),
+			"IKDataStartNode",
+			"IKData/StartNode"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"BPND",
+			typeof(BodyPartInfo),
+			"Data",
+			"Data"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"NAM1",
+			typeof(SimpleSubrecord<string>),
+			"LimbReplacementModel",
+			"LimbReplacementModel"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"NAM4",
+			typeof(SimpleSubrecord<string>),
+			"GoreEffectsTargetBone",
+			"GoreEffectsTargetBone"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"NAM5",
+			typeof(SimpleSubrecord<byte[]>),
+			"TextureFileHashes",
+			"TextureFileHashes"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

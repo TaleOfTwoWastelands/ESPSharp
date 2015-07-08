@@ -89,7 +89,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unused.ToHex();
 
 			ele.TryPathTo("QuestDelay", true, out subEle);
-			subEle.Value = QuestDelay.ToString();
+			subEle.Value = QuestDelay.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

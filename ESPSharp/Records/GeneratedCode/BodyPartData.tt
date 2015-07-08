@@ -1,0 +1,60 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "BodyPartData";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MODL",
+			typeof(Model),
+			"Model",
+			"Model"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"BPTN",
+			typeof(List<NamedBodyPart>),
+			"NamedBodyParts",
+			"NamedBodyParts"
+			);
+	tempField.isRequired = true;
+	tempField.XMLSubNames = new List<string>{"NamedBodyPart"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"BPNN",
+			typeof(List<BodyPart>),
+			"BodyParts",
+			"BodyParts"
+			);
+	tempField.isRequired = true;
+	tempField.XMLSubNames = new List<string>{"BodyPart"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"RAGA",
+			typeof(RecordReference),
+			"Ragdoll",
+			"Ragdoll"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

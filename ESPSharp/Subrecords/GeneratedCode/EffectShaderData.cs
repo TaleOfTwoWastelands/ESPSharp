@@ -542,58 +542,58 @@ namespace ESPSharp.Subrecords
 			Fill_TextureEffectColor.WriteXML(subEle, master);
 
 			ele.TryPathTo("Fill_TextureEffect/Alpha/FadeTime/In", true, out subEle);
-			subEle.Value = Fill_TextureEffectAlphaFadeTimeIn.ToString();
+			subEle.Value = Fill_TextureEffectAlphaFadeTimeIn.ToString("G15");
 
 			ele.TryPathTo("Fill_TextureEffect/Alpha/FadeTime/Full", true, out subEle);
-			subEle.Value = Fill_TextureEffectAlphaFadeTimeFull.ToString();
+			subEle.Value = Fill_TextureEffectAlphaFadeTimeFull.ToString("G15");
 
 			ele.TryPathTo("Fill_TextureEffect/Alpha/FadeTime/Out", true, out subEle);
-			subEle.Value = Fill_TextureEffectAlphaFadeTimeOut.ToString();
+			subEle.Value = Fill_TextureEffectAlphaFadeTimeOut.ToString("G15");
 
 			ele.TryPathTo("Fill_TextureEffect/Alpha/PersistentRatio", true, out subEle);
-			subEle.Value = Fill_TextureEffectAlphaPersistentRatio.ToString();
+			subEle.Value = Fill_TextureEffectAlphaPersistentRatio.ToString("G15");
 
 			ele.TryPathTo("Fill_TextureEffect/Alpha/Pulse/Amplitude", true, out subEle);
-			subEle.Value = Fill_TextureEffectAlphaPulseAmplitude.ToString();
+			subEle.Value = Fill_TextureEffectAlphaPulseAmplitude.ToString("G15");
 
 			ele.TryPathTo("Fill_TextureEffect/Alpha/Pulse/Frequency", true, out subEle);
-			subEle.Value = Fill_TextureEffectAlphaPulseFrequency.ToString();
+			subEle.Value = Fill_TextureEffectAlphaPulseFrequency.ToString("G15");
 
 			ele.TryPathTo("Fill_TextureEffect/TextureAnimationSpeed/U", true, out subEle);
-			subEle.Value = Fill_TextureEffectTextureAnimationSpeedU.ToString();
+			subEle.Value = Fill_TextureEffectTextureAnimationSpeedU.ToString("G15");
 
 			ele.TryPathTo("Fill_TextureEffect/TextureAnimationSpeed/V", true, out subEle);
-			subEle.Value = Fill_TextureEffectTextureAnimationSpeedV.ToString();
+			subEle.Value = Fill_TextureEffectTextureAnimationSpeedV.ToString("G15");
 
 			ele.TryPathTo("EdgeEffect/FallOff", true, out subEle);
-			subEle.Value = EdgeEffectFallOff.ToString();
+			subEle.Value = EdgeEffectFallOff.ToString("G15");
 
 			ele.TryPathTo("EdgeEffect/Color", true, out subEle);
 			EdgeEffectColor.WriteXML(subEle, master);
 
 			ele.TryPathTo("EdgeEffect/Alpha/FadeTime/In", true, out subEle);
-			subEle.Value = EdgeEffectAlphaFadeTimeIn.ToString();
+			subEle.Value = EdgeEffectAlphaFadeTimeIn.ToString("G15");
 
 			ele.TryPathTo("EdgeEffect/Alpha/FadeTime/Full", true, out subEle);
-			subEle.Value = EdgeEffectAlphaFadeTimeFull.ToString();
+			subEle.Value = EdgeEffectAlphaFadeTimeFull.ToString("G15");
 
 			ele.TryPathTo("EdgeEffect/Alpha/FadeTime/Out", true, out subEle);
-			subEle.Value = EdgeEffectAlphaFadeTimeOut.ToString();
+			subEle.Value = EdgeEffectAlphaFadeTimeOut.ToString("G15");
 
 			ele.TryPathTo("EdgeEffect/Alpha/PersistentRatio", true, out subEle);
-			subEle.Value = EdgeEffectAlphaPersistentRatio.ToString();
+			subEle.Value = EdgeEffectAlphaPersistentRatio.ToString("G15");
 
 			ele.TryPathTo("EdgeEffect/Alpha/Pulse/Amplitude", true, out subEle);
-			subEle.Value = EdgeEffectAlphaPulseAmplitude.ToString();
+			subEle.Value = EdgeEffectAlphaPulseAmplitude.ToString("G15");
 
 			ele.TryPathTo("EdgeEffect/Alpha/Pulse/Frequency", true, out subEle);
-			subEle.Value = EdgeEffectAlphaPulseFrequency.ToString();
+			subEle.Value = EdgeEffectAlphaPulseFrequency.ToString("G15");
 
 			ele.TryPathTo("EdgeEffect/Fill_TextureEffect/FullAlphaRatio", true, out subEle);
-			subEle.Value = EdgeEffectFill_TextureEffectFullAlphaRatio.ToString();
+			subEle.Value = EdgeEffectFill_TextureEffectFullAlphaRatio.ToString("G15");
 
 			ele.TryPathTo("EdgeEffect/FullAlphaRatio", true, out subEle);
-			subEle.Value = EdgeEffectFullAlphaRatio.ToString();
+			subEle.Value = EdgeEffectFullAlphaRatio.ToString("G15");
 
 			ele.TryPathTo("MembraneShader/DestBlendMode", true, out subEle);
 			subEle.Value = MembraneShaderDestBlendMode.ToString();
@@ -611,61 +611,61 @@ namespace ESPSharp.Subrecords
 			subEle.Value = ParticleShaderDestBlendMode.ToString();
 
 			ele.TryPathTo("ParticleShader/BirthTime/RampUp", true, out subEle);
-			subEle.Value = ParticleShaderBirthTimeRampUp.ToString();
+			subEle.Value = ParticleShaderBirthTimeRampUp.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/BirthTime/Full", true, out subEle);
-			subEle.Value = ParticleShaderBirthTimeFull.ToString();
+			subEle.Value = ParticleShaderBirthTimeFull.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/BirthTime/RampDown", true, out subEle);
-			subEle.Value = ParticleShaderBirthTimeRampDown.ToString();
+			subEle.Value = ParticleShaderBirthTimeRampDown.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/FullBirthRatio", true, out subEle);
-			subEle.Value = ParticleShaderFullBirthRatio.ToString();
+			subEle.Value = ParticleShaderFullBirthRatio.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/PersistentBirthRatio", true, out subEle);
-			subEle.Value = ParticleShaderPersistentBirthRatio.ToString();
+			subEle.Value = ParticleShaderPersistentBirthRatio.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/Lifetime/Base", true, out subEle);
-			subEle.Value = ParticleShaderLifetimeBase.ToString();
+			subEle.Value = ParticleShaderLifetimeBase.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/Lifetime/Variance", true, out subEle);
-			subEle.Value = ParticleShaderLifetimeVariance.ToString();
+			subEle.Value = ParticleShaderLifetimeVariance.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/NormalMovement/InitialSpeed", true, out subEle);
-			subEle.Value = ParticleShaderNormalMovementInitialSpeed.ToString();
+			subEle.Value = ParticleShaderNormalMovementInitialSpeed.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/NormalMovement/Acceleration", true, out subEle);
-			subEle.Value = ParticleShaderNormalMovementAcceleration.ToString();
+			subEle.Value = ParticleShaderNormalMovementAcceleration.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/InitialVelocity/Velocity1", true, out subEle);
-			subEle.Value = ParticleShaderInitialVelocity1.ToString();
+			subEle.Value = ParticleShaderInitialVelocity1.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/InitialVelocity/Velocity2", true, out subEle);
-			subEle.Value = ParticleShaderInitialVelocity2.ToString();
+			subEle.Value = ParticleShaderInitialVelocity2.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/InitialVelocity/Velocity3", true, out subEle);
-			subEle.Value = ParticleShaderInitialVelocity3.ToString();
+			subEle.Value = ParticleShaderInitialVelocity3.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/Acceleration/Acceleration1", true, out subEle);
-			subEle.Value = ParticleShaderAcceleration1.ToString();
+			subEle.Value = ParticleShaderAcceleration1.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/Acceleration/Acceleration2", true, out subEle);
-			subEle.Value = ParticleShaderAcceleration2.ToString();
+			subEle.Value = ParticleShaderAcceleration2.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/Acceleration/Acceleration3", true, out subEle);
-			subEle.Value = ParticleShaderAcceleration3.ToString();
+			subEle.Value = ParticleShaderAcceleration3.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/ScaleKey/Key1/Value", true, out subEle);
-			subEle.Value = ParticleShaderScaleKey1.ToString();
+			subEle.Value = ParticleShaderScaleKey1.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/ScaleKey/Key2/Value", true, out subEle);
-			subEle.Value = ParticleShaderScaleKey2.ToString();
+			subEle.Value = ParticleShaderScaleKey2.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/ScaleKey/Key1/Time", true, out subEle);
-			subEle.Value = ParticleShaderScaleKey1Time.ToString();
+			subEle.Value = ParticleShaderScaleKey1Time.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/ScaleKey/Key2/Time", true, out subEle);
-			subEle.Value = ParticleShaderScaleKey2Time.ToString();
+			subEle.Value = ParticleShaderScaleKey2Time.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/ColorKey/Key1/Color", true, out subEle);
 			ParticleShaderColorKey1.WriteXML(subEle, master);
@@ -677,61 +677,61 @@ namespace ESPSharp.Subrecords
 			ParticleShaderColorKey3.WriteXML(subEle, master);
 
 			ele.TryPathTo("ParticleShader/ColorKey/Key1/Alpha", true, out subEle);
-			subEle.Value = ParticleShaderColorKey1Alpha.ToString();
+			subEle.Value = ParticleShaderColorKey1Alpha.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/ColorKey/Key2/Alpha", true, out subEle);
-			subEle.Value = ParticleShaderColorKey2Alpha.ToString();
+			subEle.Value = ParticleShaderColorKey2Alpha.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/ColorKey/Key3/Alpha", true, out subEle);
-			subEle.Value = ParticleShaderColorKey3Alpha.ToString();
+			subEle.Value = ParticleShaderColorKey3Alpha.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/ColorKey/Key1/Time", true, out subEle);
-			subEle.Value = ParticleShaderColorKey1Time.ToString();
+			subEle.Value = ParticleShaderColorKey1Time.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/ColorKey/Key2/Time", true, out subEle);
-			subEle.Value = ParticleShaderColorKey2Time.ToString();
+			subEle.Value = ParticleShaderColorKey2Time.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/ColorKey/Key3/Time", true, out subEle);
-			subEle.Value = ParticleShaderColorKey3Time.ToString();
+			subEle.Value = ParticleShaderColorKey3Time.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/InitSpeedAlongNormal/Variance", true, out subEle);
-			subEle.Value = ParticleShaderInitSpeedAlongNormalVariance.ToString();
+			subEle.Value = ParticleShaderInitSpeedAlongNormalVariance.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/InitialRotation/Value", true, out subEle);
-			subEle.Value = ParticleShaderInitialRotationValue.ToString();
+			subEle.Value = ParticleShaderInitialRotationValue.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/InitialRotation/Variance", true, out subEle);
-			subEle.Value = ParticleShaderInitialRotationVariance.ToString();
+			subEle.Value = ParticleShaderInitialRotationVariance.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/RotationSpeed/Value", true, out subEle);
-			subEle.Value = ParticleShaderRotationSpeedValue.ToString();
+			subEle.Value = ParticleShaderRotationSpeedValue.ToString("G15");
 
 			ele.TryPathTo("ParticleShader/RotationSpeed/Variance", true, out subEle);
-			subEle.Value = ParticleShaderRotationSpeedVariance.ToString();
+			subEle.Value = ParticleShaderRotationSpeedVariance.ToString("G15");
 
 			ele.TryPathTo("AddonModels/Model", true, out subEle);
 			AddonModelsModel.WriteXML(subEle, master);
 
 			ele.TryPathTo("Holes/Time/Start", true, out subEle);
-			subEle.Value = HolesTimeStart.ToString();
+			subEle.Value = HolesTimeStart.ToString("G15");
 
 			ele.TryPathTo("Holes/Time/End", true, out subEle);
-			subEle.Value = HolesTimeEnd.ToString();
+			subEle.Value = HolesTimeEnd.ToString("G15");
 
 			ele.TryPathTo("Holes/Value/Start", true, out subEle);
-			subEle.Value = HolesValueStart.ToString();
+			subEle.Value = HolesValueStart.ToString("G15");
 
 			ele.TryPathTo("Holes/Value/End", true, out subEle);
-			subEle.Value = HolesValueEnd.ToString();
+			subEle.Value = HolesValueEnd.ToString("G15");
 
 			ele.TryPathTo("EdgeWidth", true, out subEle);
-			subEle.Value = EdgeWidth.ToString();
+			subEle.Value = EdgeWidth.ToString("G15");
 
 			ele.TryPathTo("EdgeColor", true, out subEle);
 			EdgeColor.WriteXML(subEle, master);
 
 			ele.TryPathTo("ExplosionWindSpeed", true, out subEle);
-			subEle.Value = ExplosionWindSpeed.ToString();
+			subEle.Value = ExplosionWindSpeed.ToString("G15");
 
 			ele.TryPathTo("TextureCount/U", true, out subEle);
 			subEle.Value = TextureCountU.ToString();
@@ -740,22 +740,22 @@ namespace ESPSharp.Subrecords
 			subEle.Value = TextureCountV.ToString();
 
 			ele.TryPathTo("AddonModels/FadeTime/In", true, out subEle);
-			subEle.Value = AddonModelsFadeTimeIn.ToString();
+			subEle.Value = AddonModelsFadeTimeIn.ToString("G15");
 
 			ele.TryPathTo("AddonModels/FadeTime/Out", true, out subEle);
-			subEle.Value = AddonModelsFadeTimeOut.ToString();
+			subEle.Value = AddonModelsFadeTimeOut.ToString("G15");
 
 			ele.TryPathTo("AddonModels/Scale/In", true, out subEle);
-			subEle.Value = AddonModelsScaleIn.ToString();
+			subEle.Value = AddonModelsScaleIn.ToString("G15");
 
 			ele.TryPathTo("AddonModels/Scale/Out", true, out subEle);
-			subEle.Value = AddonModelsScaleOut.ToString();
+			subEle.Value = AddonModelsScaleOut.ToString("G15");
 
 			ele.TryPathTo("AddonModels/ScaleTime/In", true, out subEle);
-			subEle.Value = AddonModelsScaleTimeIn.ToString();
+			subEle.Value = AddonModelsScaleTimeIn.ToString("G15");
 
 			ele.TryPathTo("AddonModels/ScaleTime/Out", true, out subEle);
-			subEle.Value = AddonModelsScaleTimeOut.ToString();
+			subEle.Value = AddonModelsScaleTimeOut.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

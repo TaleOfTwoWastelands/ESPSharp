@@ -71,7 +71,7 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("Version", true, out subEle);
-			subEle.Value = Version.ToString();
+			subEle.Value = Version.ToString("G15");
 
 			ele.TryPathTo("RecordCount", true, out subEle);
 			subEle.Value = RecordCount.ToString();

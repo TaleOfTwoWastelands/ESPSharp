@@ -1,0 +1,55 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
+	template.ClassName = "ReferenceAudio";
+	template.startsWithMarker = true;
+
+	SubrecordCollectionField tempField;	
+
+	tempField = 
+		new SubrecordCollectionField(
+			"FULL",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown1",
+			"Unknown1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"CNAM",
+			typeof(RecordReference),
+			"AudioLocation",
+			"AudioLocation"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"BNAM",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown2",
+			"Unknown2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"MNAM",
+			typeof(SimpleSubrecord<float>),
+			"Unknown3",
+			"Unknown3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordCollectionField(
+			"NNAM",
+			typeof(SimpleSubrecord<float>),
+			"Unknown4",
+			"Unknown4"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

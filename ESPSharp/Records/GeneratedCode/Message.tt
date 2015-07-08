@@ -1,0 +1,167 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "Message";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DESC",
+			typeof(SimpleSubrecord<string>),
+			"Content",
+			"Content"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Header",
+			"Header"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"INAM",
+			typeof(RecordReference),
+			"Icon",
+			"Icon"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM0",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused0",
+			"Unused/Unused0"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM1",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused1",
+			"Unused/Unused1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM2",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused2",
+			"Unused/Unused2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM3",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused3",
+			"Unused/Unused3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM4",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused4",
+			"Unused/Unused4"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM5",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused5",
+			"Unused/Unused5"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM6",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused6",
+			"Unused/Unused6"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM7",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused7",
+			"Unused/Unused7"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM8",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused8",
+			"Unused/Unused8"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM9",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unused9",
+			"Unused/Unused9"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DNAM",
+			typeof(SimpleSubrecord<MessageFlags>),
+			"MessageFlags",
+			"MessageFlags"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"TNAM",
+			typeof(SimpleSubrecord<uint>),
+			"DisplayTime",
+			"DisplayTime"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ITXT",
+			typeof(List<MessageButton>),
+			"Buttons",
+			"Buttons"
+			);
+	tempField.XMLSubNames = new List<string> {"Button"};
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

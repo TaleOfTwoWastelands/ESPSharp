@@ -132,7 +132,7 @@ namespace ESPSharp.Subrecords
             subEle.Value = Value.ToString();
 
             ele.TryPathTo("Unknown", true, out subEle);
-            subEle.Value = Unknown.ToString();
+            subEle.Value = Unknown.ToString("G15");
         }
 
         protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

@@ -1,0 +1,271 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "MediaSet";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	tempField.isRequired = true;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FULL",
+			typeof(SimpleSubrecord<string>),
+			"Name",
+			"Name"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM1",
+			typeof(SimpleSubrecord<MediaSetType>),
+			"Type",
+			"Type"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM2",
+			typeof(SimpleSubrecord<string>),
+			"Loop_Battle_DayOuter",
+			"Loop_Battle_DayOuter"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM3",
+			typeof(SimpleSubrecord<string>),
+			"Explore_DayMiddle",
+			"Explore_DayMiddle"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM4",
+			typeof(SimpleSubrecord<string>),
+			"Suspense_DayInner",
+			"Suspense_DayInner"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM5",
+			typeof(SimpleSubrecord<string>),
+			"NightOuter",
+			"NightOuter"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM6",
+			typeof(SimpleSubrecord<string>),
+			"NightMiddle",
+			"NightMiddle"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM7",
+			typeof(SimpleSubrecord<string>),
+			"NightInner",
+			"NightInner"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM8",
+			typeof(SimpleSubrecord<float>),
+			"DecibelLoop_Battle_DayOuter",
+			"Decibel/Loop_Battle_DayOuter"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM9",
+			typeof(SimpleSubrecord<float>),
+			"DecibelExplore_DayMiddle",
+			"Decibel/Explore_DayMiddle"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAM0",
+			typeof(SimpleSubrecord<float>),
+			"DecibelSuspense_DayInner",
+			"Decibel/Suspense_DayInner"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ANAM",
+			typeof(SimpleSubrecord<float>),
+			"DecibelNightOuter",
+			"Decibel/NightOuter"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"BNAM",
+			typeof(SimpleSubrecord<float>),
+			"DecibelNightMiddle",
+			"Decibel/NightMiddle"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"CNAM",
+			typeof(SimpleSubrecord<float>),
+			"DecibelNightInner",
+			"Decibel/NightInner"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"JNAM",
+			typeof(SimpleSubrecord<float>),
+			"DayOuterBoundary",
+			"Boundaries/DayOuter"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"KNAM",
+			typeof(SimpleSubrecord<float>),
+			"DayMiddleBoundary",
+			"Boundaries/DayMiddle"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"LNAM",
+			typeof(SimpleSubrecord<float>),
+			"DayInnerBoundary",
+			"Boundaries/DayInner"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"MNAM",
+			typeof(SimpleSubrecord<float>),
+			"NightOuterBoundary",
+			"Boundaries/NightOuter"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NNAM",
+			typeof(SimpleSubrecord<float>),
+			"NightMiddleBoundary",
+			"Boundaries/NightMiddle"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ONAM",
+			typeof(SimpleSubrecord<float>),
+			"NightInnerBoundary",
+			"Boundaries/NightInner"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"PNAM",
+			typeof(SimpleSubrecord<MediaSetEnableFlags>),
+			"EnableFlags",
+			"EnableFlags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DNAM",
+			typeof(SimpleSubrecord<float>),
+			"WaitTime_MinTimeOn_DaytimeMin",
+			"WaitTime_MinTimeOn_DaytimeMin"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"ENAM",
+			typeof(SimpleSubrecord<float>),
+			"LoopFadeOut_LoopingRandomCrossfadeOverlap_NighttimeMin",
+			"LoopFadeOut_LoopingRandomCrossfadeOverlap_NighttimeMin"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"FNAM",
+			typeof(SimpleSubrecord<float>),
+			"RecoveryTime_LayerCrossfadeTime_DaytimeMax",
+			"RecoveryTime_LayerCrossfadeTime_DaytimeMax"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"GNAM",
+			typeof(SimpleSubrecord<float>),
+			"NighttimeMax",
+			"NighttimeMax"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"HNAM",
+			typeof(RecordReference),
+			"Intro_Daytime",
+			"Intro_Daytime"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"INAM",
+			typeof(RecordReference),
+			"Outro_Nighttime",
+			"Outro_Nighttime"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown",
+			"Unknown"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

@@ -1,0 +1,228 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "PlacedMissile";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NAME",
+			typeof(RecordReference),
+			"Base",
+			"Base"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XEZN",
+			typeof(RecordReference),
+			"EncounterZone",
+			"EncounterZone"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRGD",
+			typeof(SimpleSubrecord<byte[]>),
+			"RagdollData",
+			"RagdollData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRGB",
+			typeof(SimpleSubrecord<byte[]>),
+			"RagdollBipedData",
+			"RagdollBipedData"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XPRD",
+			typeof(ReferencePatrolData),
+			"Patrol",
+			"Patrol"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XOWN",
+			typeof(RecordReference),
+			"Owner",
+			"Owner"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRNK",
+			typeof(SimpleSubrecord<int>),
+			"FactionRank",
+			"FactionRank"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCNT",
+			typeof(SimpleSubrecord<int>),
+			"Count",
+			"Count"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XRDS",
+			typeof(SimpleSubrecord<float>),
+			"Radius",
+			"Radius"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XHLP",
+			typeof(SimpleSubrecord<float>),
+			"Health",
+			"Health"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XPWR",
+			typeof(List<WaterReflection>),
+			"WaterReflections",
+			"WaterReflections"
+			);
+	tempField.XMLSubNames = new List<string>{"WaterReflection"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XDCR",
+			typeof(List<SimpleSubrecord<byte[]>>),
+			"Decals",
+			"Decals"
+			);
+	tempField.XMLSubNames = new List<string>{"Decal"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XLKR",
+			typeof(RecordReference),
+			"LinkedReference",
+			"LinkedReference"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XCLP",
+			typeof(LinkedReferenceColor),
+			"LinkedReferenceColor",
+			"LinkedReferenceColor"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XAPD",
+			typeof(SimpleSubrecord<NoYesByte>),
+			"ParentActivateOnly",
+			"ParentActivateOnly"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XAPR",
+			typeof(List<ActivateParent>),
+			"ActivateParents",
+			"ActivateParents"
+			);
+	tempField.XMLSubNames = new List<string>{"ActivateParent"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XATO",
+			typeof(SimpleSubrecord<string>),
+			"ActivationPrompt",
+			"ActivationPrompt"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XESP",
+			typeof(EnableParent),
+			"EnableParent",
+			"EnableParent"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XEMI",
+			typeof(RecordReference),
+			"Emittance",
+			"Emittance"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XMBR",
+			typeof(RecordReference),
+			"MultiBound",
+			"MultiBound"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XIBS",
+			typeof(SubMarker),
+			"IgnoredBySandbox",
+			"IgnoredBySandbox"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"XSCL",
+			typeof(SimpleSubrecord<float>),
+			"Scale",
+			"Scale"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(PositionRotation),
+			"PositionRotation",
+			"PositionRotation"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

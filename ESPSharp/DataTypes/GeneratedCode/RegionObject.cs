@@ -181,7 +181,7 @@ namespace ESPSharp.DataTypes
 			subEle.Value = Unused.ToHex();
 
 			ele.TryPathTo("Density", true, out subEle);
-			subEle.Value = Density.ToString();
+			subEle.Value = Density.ToString("G15");
 
 			ele.TryPathTo("Clustering", true, out subEle);
 			subEle.Value = Clustering.ToString();
@@ -205,16 +205,16 @@ namespace ESPSharp.DataTypes
 			subEle.Value = Unknown1.ToHex();
 
 			ele.TryPathTo("MaxHeight", true, out subEle);
-			subEle.Value = MaxHeight.ToString();
+			subEle.Value = MaxHeight.ToString("G15");
 
 			ele.TryPathTo("Sink", true, out subEle);
-			subEle.Value = Sink.ToString();
+			subEle.Value = Sink.ToString("G15");
 
 			ele.TryPathTo("SinkVariance", true, out subEle);
-			subEle.Value = SinkVariance.ToString();
+			subEle.Value = SinkVariance.ToString("G15");
 
 			ele.TryPathTo("SizeVariance", true, out subEle);
-			subEle.Value = SizeVariance.ToString();
+			subEle.Value = SizeVariance.ToString("G15");
 
 			ele.TryPathTo("XAngleVariance", true, out subEle);
 			subEle.Value = XAngleVariance.ToString();

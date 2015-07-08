@@ -281,28 +281,28 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unused1.ToHex();
 
 			ele.TryPathTo("Maneuver/DodgeLRTimer/Min", true, out subEle);
-			subEle.Value = ManeuverDodgeLRTimerMin.ToString();
+			subEle.Value = ManeuverDodgeLRTimerMin.ToString("G15");
 
 			ele.TryPathTo("Maneuver/DodgeLRTimer/Max", true, out subEle);
-			subEle.Value = ManeuverDodgeLRTimerMax.ToString();
+			subEle.Value = ManeuverDodgeLRTimerMax.ToString("G15");
 
 			ele.TryPathTo("Maneuver/DodgeForwardTimer/Min", true, out subEle);
-			subEle.Value = ManeuverDodgeForwardTimerMin.ToString();
+			subEle.Value = ManeuverDodgeForwardTimerMin.ToString("G15");
 
 			ele.TryPathTo("Maneuver/DodgeForwardTimer/Max", true, out subEle);
-			subEle.Value = ManeuverDodgeForwardTimerMax.ToString();
+			subEle.Value = ManeuverDodgeForwardTimerMax.ToString("G15");
 
 			ele.TryPathTo("Maneuver/DodgeBackwardTimer/Min", true, out subEle);
-			subEle.Value = ManeuverDodgeBackwardTimerMin.ToString();
+			subEle.Value = ManeuverDodgeBackwardTimerMin.ToString("G15");
 
 			ele.TryPathTo("Maneuver/DodgeBackwardTimer/Max", true, out subEle);
-			subEle.Value = ManeuverDodgeBackwardTimerMax.ToString();
+			subEle.Value = ManeuverDodgeBackwardTimerMax.ToString("G15");
 
 			ele.TryPathTo("Maneuver/DodgeIdleTimer/Min", true, out subEle);
-			subEle.Value = ManeuverDodgeIdleTimerMin.ToString();
+			subEle.Value = ManeuverDodgeIdleTimerMin.ToString("G15");
 
 			ele.TryPathTo("Maneuver/DodgeIdleTimer/Max", true, out subEle);
-			subEle.Value = ManeuverDodgeIdleTimerMax.ToString();
+			subEle.Value = ManeuverDodgeIdleTimerMax.ToString("G15");
 
 			ele.TryPathTo("Melee/BlockChance", true, out subEle);
 			subEle.Value = MeleeBlockChance.ToString();
@@ -314,13 +314,13 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unused2.ToHex();
 
 			ele.TryPathTo("Melee/RecoilStaggerBonusToAttack", true, out subEle);
-			subEle.Value = MeleeRecoilStaggerBonusToAttack.ToString();
+			subEle.Value = MeleeRecoilStaggerBonusToAttack.ToString("G15");
 
 			ele.TryPathTo("Melee/UnconsciousBonusToAttack", true, out subEle);
-			subEle.Value = MeleeUnconsciousBonusToAttack.ToString();
+			subEle.Value = MeleeUnconsciousBonusToAttack.ToString("G15");
 
 			ele.TryPathTo("Melee/HandToHandBonusToAttack", true, out subEle);
-			subEle.Value = MeleeHandToHandBonusToAttack.ToString();
+			subEle.Value = MeleeHandToHandBonusToAttack.ToString("G15");
 
 			ele.TryPathTo("Melee/PowerAttack/Chance", true, out subEle);
 			subEle.Value = MeleePowerAttackChance.ToString();
@@ -329,10 +329,10 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unused3.ToHex();
 
 			ele.TryPathTo("Melee/PowerAttack/RecoilStaggerBonus", true, out subEle);
-			subEle.Value = MeleePowerAttackRecoilStaggerBonus.ToString();
+			subEle.Value = MeleePowerAttackRecoilStaggerBonus.ToString("G15");
 
 			ele.TryPathTo("Melee/PowerAttack/UnconsciousBonus", true, out subEle);
-			subEle.Value = MeleePowerAttackUnconsciousBonus.ToString();
+			subEle.Value = MeleePowerAttackUnconsciousBonus.ToString("G15");
 
 			ele.TryPathTo("Melee/PowerAttack/Normal", true, out subEle);
 			subEle.Value = MeleePowerAttackNormal.ToString();
@@ -353,10 +353,10 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unused4.ToHex();
 
 			ele.TryPathTo("Melee/HoldTimer/Min", true, out subEle);
-			subEle.Value = MeleeHoldTimerMin.ToString();
+			subEle.Value = MeleeHoldTimerMin.ToString("G15");
 
 			ele.TryPathTo("Melee/HoldTimer/Max", true, out subEle);
-			subEle.Value = MeleeHoldTimerMax.ToString();
+			subEle.Value = MeleeHoldTimerMax.ToString("G15");
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
@@ -371,7 +371,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unused5.ToHex();
 
 			ele.TryPathTo("Melee/PowerAttack/DistanceMult", true, out subEle);
-			subEle.Value = MeleeRushingPowerAttackDistanceMult.ToString();
+			subEle.Value = MeleeRushingPowerAttackDistanceMult.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

@@ -104,7 +104,7 @@ namespace ESPSharp.Subrecords
 			WithdrawalEffect.WriteXML(subEle, master);
 
 			ele.TryPathTo("AddictionChance", true, out subEle);
-			subEle.Value = AddictionChance.ToString();
+			subEle.Value = AddictionChance.ToString("G15");
 
 			ele.TryPathTo("ConsumeSound", true, out subEle);
 			SoundConsume.WriteXML(subEle, master);

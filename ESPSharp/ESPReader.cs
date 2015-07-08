@@ -27,6 +27,18 @@ namespace ESPSharp
             return peek;
         }
 
+        public override string ReadString()
+        {
+            StringBuilder builder = new StringBuilder();
+            char nextChar = ReadChar();
+            while (nextChar != '\0')
+            {
+                builder.Append(nextChar);
+                nextChar = ReadChar();
+            }
+            return builder.ToString();
+        }
+
         public T ReadEnum<T>()
         {
             Type enumType = Enum.GetUnderlyingType(typeof(T));

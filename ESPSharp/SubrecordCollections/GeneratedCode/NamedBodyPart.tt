@@ -2,26 +2,28 @@
 <#@ output extension=".cs" #>
 <#	
 	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
-	template.ClassName = "PackageLocations";
+	template.ClassName = "NamedBodyPart";
 
 	SubrecordCollectionField tempField;
 
 	tempField = 
 		new SubrecordCollectionField(
-			"PLDT",
-			typeof(PackageLocation),
-			"Location1",
-			"Location1"
+			"BPTN",
+			typeof(SimpleSubrecord<string>),
+			"PartName",
+			"PartName"
 			);
+	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordCollectionField(
-			"PLD2",
-			typeof(PackageLocation),
-			"Location2",
-			"Location2"
+			"BPNN",
+			typeof(BodyPart),
+			"BodyPart",
+			"BodyPart"
 			);
+	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
 #>

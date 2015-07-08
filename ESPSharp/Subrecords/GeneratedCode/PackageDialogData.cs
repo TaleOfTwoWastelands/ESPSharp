@@ -86,7 +86,7 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("FOV", true, out subEle);
-			subEle.Value = FOV.ToString();
+			subEle.Value = FOV.ToString("G15");
 
 			ele.TryPathTo("Topic", true, out subEle);
 			Topic.WriteXML(subEle, master);

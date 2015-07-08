@@ -1,0 +1,99 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "FootstepMaterial";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"ConcreteSolid",
+			"ConcreteSolid"
+			);
+	tempField.byteCount = 30;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"ConcreteBroken",
+			"ConcreteBroken"
+			);
+	tempField.byteCount = 30;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"MetalSolid",
+			"MetalSolid"
+			);
+	tempField.byteCount = 30;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"MetalHollow",
+			"MetalHollow"
+			);
+	tempField.byteCount = 30;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"MetalSheet",
+			"MetalSheet"
+			);
+	tempField.byteCount = 30;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Wood",
+			"Wood"
+			);
+	tempField.byteCount = 30;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Sand",
+			"Sand"
+			);
+	tempField.byteCount = 30;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Dirt",
+			"Dirt"
+			);
+	tempField.byteCount = 30;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Grass",
+			"Grass"
+			);
+	tempField.byteCount = 30;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Water",
+			"Water"
+			);
+	tempField.byteCount = 30;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

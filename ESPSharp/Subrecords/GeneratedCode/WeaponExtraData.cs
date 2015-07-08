@@ -416,10 +416,10 @@ namespace ESPSharp.Subrecords
 			subEle.Value = AnimationType.ToString();
 
 			ele.TryPathTo("AnimationMultiplier", true, out subEle);
-			subEle.Value = AnimationMultiplier.ToString();
+			subEle.Value = AnimationMultiplier.ToString("G15");
 
 			ele.TryPathTo("Reach", true, out subEle);
-			subEle.Value = Reach.ToString();
+			subEle.Value = Reach.ToString("G15");
 
 			ele.TryPathTo("Flags1", true, out subEle);
 			subEle.Value = Flags1.ToString();
@@ -434,19 +434,19 @@ namespace ESPSharp.Subrecords
 			subEle.Value = ReloadAnimation.ToString();
 
 			ele.TryPathTo("MinSpread", true, out subEle);
-			subEle.Value = MinSpread.ToString();
+			subEle.Value = MinSpread.ToString("G15");
 
 			ele.TryPathTo("Spread", true, out subEle);
-			subEle.Value = Spread.ToString();
+			subEle.Value = Spread.ToString("G15");
 
 			ele.TryPathTo("Unknown", true, out subEle);
 			subEle.Value = Unknown.ToHex();
 
 			ele.TryPathTo("SightFOV", true, out subEle);
-			subEle.Value = SightFOV.ToString();
+			subEle.Value = SightFOV.ToString("G15");
 
 			ele.TryPathTo("Unknown2", true, out subEle);
-			subEle.Value = Unknown2.ToString();
+			subEle.Value = Unknown2.ToString("G15");
 
 			ele.TryPathTo("Projectile", true, out subEle);
 			Projectile.WriteXML(subEle, master);
@@ -464,10 +464,10 @@ namespace ESPSharp.Subrecords
 			subEle.Value = EmbeddedWeaponActorValue.ToString();
 
 			ele.TryPathTo("Range/Min", true, out subEle);
-			subEle.Value = MinRange.ToString();
+			subEle.Value = MinRange.ToString("G15");
 
 			ele.TryPathTo("Range/Max", true, out subEle);
-			subEle.Value = MaxRange.ToString();
+			subEle.Value = MaxRange.ToString("G15");
 
 			ele.TryPathTo("LimbKillBehavior", true, out subEle);
 			subEle.Value = LimbKillBehavior.ToString();
@@ -476,37 +476,37 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags2.ToString();
 
 			ele.TryPathTo("AttackAnimationMultiplier", true, out subEle);
-			subEle.Value = AttackAnimationMultiplier.ToString();
+			subEle.Value = AttackAnimationMultiplier.ToString("G15");
 
 			ele.TryPathTo("FireRate", true, out subEle);
-			subEle.Value = FireRate.ToString();
+			subEle.Value = FireRate.ToString("G15");
 
 			ele.TryPathTo("ActionPointCost", true, out subEle);
-			subEle.Value = ActionPointCost.ToString();
+			subEle.Value = ActionPointCost.ToString("G15");
 
 			ele.TryPathTo("Rumble/LeftMotorStrength", true, out subEle);
-			subEle.Value = RumbleLeftMotorStrength.ToString();
+			subEle.Value = RumbleLeftMotorStrength.ToString("G15");
 
 			ele.TryPathTo("Rumble/RightMotorStrength", true, out subEle);
-			subEle.Value = RumbleRightMotorStrength.ToString();
+			subEle.Value = RumbleRightMotorStrength.ToString("G15");
 
 			ele.TryPathTo("Rumble/Duration", true, out subEle);
-			subEle.Value = RumbleDuration.ToString();
+			subEle.Value = RumbleDuration.ToString("G15");
 
 			ele.TryPathTo("DamageToWeaponMult", true, out subEle);
-			subEle.Value = DamageToWeaponMult.ToString();
+			subEle.Value = DamageToWeaponMult.ToString("G15");
 
 			ele.TryPathTo("AttackShotsPerSecond", true, out subEle);
-			subEle.Value = AttackShotsPerSecond.ToString();
+			subEle.Value = AttackShotsPerSecond.ToString("G15");
 
 			ele.TryPathTo("ReloadTime", true, out subEle);
-			subEle.Value = ReloadTime.ToString();
+			subEle.Value = ReloadTime.ToString("G15");
 
 			ele.TryPathTo("JamTime", true, out subEle);
-			subEle.Value = JamTime.ToString();
+			subEle.Value = JamTime.ToString("G15");
 
 			ele.TryPathTo("AimArc", true, out subEle);
-			subEle.Value = AimArc.ToString();
+			subEle.Value = AimArc.ToString("G15");
 
 			ele.TryPathTo("Skill", true, out subEle);
 			subEle.Value = Skill.ToString();
@@ -515,25 +515,25 @@ namespace ESPSharp.Subrecords
 			subEle.Value = RumblePattern.ToString();
 
 			ele.TryPathTo("Rumble/Wavelength", true, out subEle);
-			subEle.Value = RumbleWavelength.ToString();
+			subEle.Value = RumbleWavelength.ToString("G15");
 
 			ele.TryPathTo("LimbDamageMult", true, out subEle);
-			subEle.Value = LimbDamageMult.ToString();
+			subEle.Value = LimbDamageMult.ToString("G15");
 
 			ele.TryPathTo("ResistanceType", true, out subEle);
 			subEle.Value = ResistanceType.ToString();
 
 			ele.TryPathTo("SightUsage", true, out subEle);
-			subEle.Value = SightUsage.ToString();
+			subEle.Value = SightUsage.ToString("G15");
 
 			ele.TryPathTo("SemiAutomaticFireDelay/Min", true, out subEle);
-			subEle.Value = SemiAutomaticFireDelayMin.ToString();
+			subEle.Value = SemiAutomaticFireDelayMin.ToString("G15");
 
 			ele.TryPathTo("SemiAutomaticFireDelay/Max", true, out subEle);
-			subEle.Value = SemiAutomaticFireDelayMax.ToString();
+			subEle.Value = SemiAutomaticFireDelayMax.ToString("G15");
 
 			ele.TryPathTo("Unknown3", true, out subEle);
-			subEle.Value = Unknown3.ToString();
+			subEle.Value = Unknown3.ToString("G15");
 
 			ele.TryPathTo("Mods/Mod1/Effect", true, out subEle);
 			subEle.Value = Mod1Effect.ToString();
@@ -545,13 +545,13 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Mod3Effect.ToString();
 
 			ele.TryPathTo("Mods/Mod1/ValueA", true, out subEle);
-			subEle.Value = Mod1ValueA.ToString();
+			subEle.Value = Mod1ValueA.ToString("G15");
 
 			ele.TryPathTo("Mods/Mod2/ValueA", true, out subEle);
-			subEle.Value = Mod2ValueA.ToString();
+			subEle.Value = Mod2ValueA.ToString("G15");
 
 			ele.TryPathTo("Mods/Mod3/ValueA", true, out subEle);
-			subEle.Value = Mod3ValueA.ToString();
+			subEle.Value = Mod3ValueA.ToString("G15");
 
 			ele.TryPathTo("PowerAttackAnimation", true, out subEle);
 			subEle.Value = PowerAttackAnimation.ToString();
@@ -569,22 +569,22 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Unknown5.ToHex();
 
 			ele.TryPathTo("AmmoRegenRate", true, out subEle);
-			subEle.Value = AmmoRegenRate.ToString();
+			subEle.Value = AmmoRegenRate.ToString("G15");
 
 			ele.TryPathTo("KillImpulse", true, out subEle);
-			subEle.Value = KillImpulse.ToString();
+			subEle.Value = KillImpulse.ToString("G15");
 
 			ele.TryPathTo("Mods/Mod1/ValueB", true, out subEle);
-			subEle.Value = Mod1ValueB.ToString();
+			subEle.Value = Mod1ValueB.ToString("G15");
 
 			ele.TryPathTo("Mods/Mod2/ValueB", true, out subEle);
-			subEle.Value = Mod2ValueB.ToString();
+			subEle.Value = Mod2ValueB.ToString("G15");
 
 			ele.TryPathTo("Mods/Mod3/ValueB", true, out subEle);
-			subEle.Value = Mod3ValueB.ToString();
+			subEle.Value = Mod3ValueB.ToString("G15");
 
 			ele.TryPathTo("ImpulseDistance", true, out subEle);
-			subEle.Value = ImpulseDistance.ToString();
+			subEle.Value = ImpulseDistance.ToString("G15");
 
 			ele.TryPathTo("SkillRequirement", true, out subEle);
 			subEle.Value = SkillRequirement.ToString();

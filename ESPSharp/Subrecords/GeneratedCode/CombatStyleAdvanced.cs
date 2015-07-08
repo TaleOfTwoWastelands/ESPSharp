@@ -179,67 +179,67 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("DodgeFatigueMod/Mult", true, out subEle);
-			subEle.Value = DodgeFatigueModMult.ToString();
+			subEle.Value = DodgeFatigueModMult.ToString("G15");
 
 			ele.TryPathTo("DodgeFatigueMod/Base", true, out subEle);
-			subEle.Value = DodgeFatigueModBase.ToString();
+			subEle.Value = DodgeFatigueModBase.ToString("G15");
 
 			ele.TryPathTo("EncumbSpeedMod/Base", true, out subEle);
-			subEle.Value = EncumbSpeedModBase.ToString();
+			subEle.Value = EncumbSpeedModBase.ToString("G15");
 
 			ele.TryPathTo("EncumbSpeedMod/Mult", true, out subEle);
-			subEle.Value = EncumbSpeedModMult.ToString();
+			subEle.Value = EncumbSpeedModMult.ToString("G15");
 
 			ele.TryPathTo("DodgeWhileUnderAttackMult", true, out subEle);
-			subEle.Value = DodgeWhileUnderAttackMult.ToString();
+			subEle.Value = DodgeWhileUnderAttackMult.ToString("G15");
 
 			ele.TryPathTo("DodgeNotUnderAttackMult", true, out subEle);
-			subEle.Value = DodgeNotUnderAttackMult.ToString();
+			subEle.Value = DodgeNotUnderAttackMult.ToString("G15");
 
 			ele.TryPathTo("DodgeBackWhileUnderAttackMult", true, out subEle);
-			subEle.Value = DodgeBackWhileUnderAttackMult.ToString();
+			subEle.Value = DodgeBackWhileUnderAttackMult.ToString("G15");
 
 			ele.TryPathTo("DodgeBackNotUnderAttackMult", true, out subEle);
-			subEle.Value = DodgeBackNotUnderAttackMult.ToString();
+			subEle.Value = DodgeBackNotUnderAttackMult.ToString("G15");
 
 			ele.TryPathTo("DodgeForwardWhileAttackingMult", true, out subEle);
-			subEle.Value = DodgeForwardWhileAttackingMult.ToString();
+			subEle.Value = DodgeForwardWhileAttackingMult.ToString("G15");
 
 			ele.TryPathTo("DodgeForwardNotAttackingMult", true, out subEle);
-			subEle.Value = DodgeForwardNotAttackingMult.ToString();
+			subEle.Value = DodgeForwardNotAttackingMult.ToString("G15");
 
 			ele.TryPathTo("BlockSkillModifier/Mult", true, out subEle);
-			subEle.Value = BlockSkillModifierMult.ToString();
+			subEle.Value = BlockSkillModifierMult.ToString("G15");
 
 			ele.TryPathTo("BlockSkillModifier/Base", true, out subEle);
-			subEle.Value = BlockSkillModifierBase.ToString();
+			subEle.Value = BlockSkillModifierBase.ToString("G15");
 
 			ele.TryPathTo("BlockWhileUnderAttackMult", true, out subEle);
-			subEle.Value = BlockWhileUnderAttackMult.ToString();
+			subEle.Value = BlockWhileUnderAttackMult.ToString("G15");
 
 			ele.TryPathTo("BlockNotUnderAttackMult", true, out subEle);
-			subEle.Value = BlockNotUnderAttackMult.ToString();
+			subEle.Value = BlockNotUnderAttackMult.ToString("G15");
 
 			ele.TryPathTo("AttackSkillModifier/Mult", true, out subEle);
-			subEle.Value = AttackSkillModifierMult.ToString();
+			subEle.Value = AttackSkillModifierMult.ToString("G15");
 
 			ele.TryPathTo("AttackSkillModifier/Base", true, out subEle);
-			subEle.Value = AttackSkillModifierBase.ToString();
+			subEle.Value = AttackSkillModifierBase.ToString("G15");
 
 			ele.TryPathTo("AttackWhileUnderAttackMult", true, out subEle);
-			subEle.Value = AttackWhileUnderAttackMult.ToString();
+			subEle.Value = AttackWhileUnderAttackMult.ToString("G15");
 
 			ele.TryPathTo("AttackNotUnderAttackMult", true, out subEle);
-			subEle.Value = AttackNotUnderAttackMult.ToString();
+			subEle.Value = AttackNotUnderAttackMult.ToString("G15");
 
 			ele.TryPathTo("AttackDuringBlockMult", true, out subEle);
-			subEle.Value = AttackDuringBlockMult.ToString();
+			subEle.Value = AttackDuringBlockMult.ToString("G15");
 
 			ele.TryPathTo("PowerAttackFatigueMod/Base", true, out subEle);
-			subEle.Value = PowerAttackFatigueModBase.ToString();
+			subEle.Value = PowerAttackFatigueModBase.ToString("G15");
 
 			ele.TryPathTo("PowerAttackFatigueMod/Mult", true, out subEle);
-			subEle.Value = PowerAttackFatigueModMult.ToString();
+			subEle.Value = PowerAttackFatigueModMult.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

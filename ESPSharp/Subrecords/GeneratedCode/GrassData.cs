@@ -158,16 +158,16 @@ namespace ESPSharp.Subrecords
 			subEle.Value = UnitFromWaterType.ToString();
 
 			ele.TryPathTo("PositionRange", true, out subEle);
-			subEle.Value = PositionRange.ToString();
+			subEle.Value = PositionRange.ToString("G15");
 
 			ele.TryPathTo("HeightRange", true, out subEle);
-			subEle.Value = HeightRange.ToString();
+			subEle.Value = HeightRange.ToString("G15");
 
 			ele.TryPathTo("ColorRange", true, out subEle);
-			subEle.Value = ColorRange.ToString();
+			subEle.Value = ColorRange.ToString("G15");
 
 			ele.TryPathTo("WavePeriod", true, out subEle);
-			subEle.Value = WavePeriod.ToString();
+			subEle.Value = WavePeriod.ToString("G15");
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();

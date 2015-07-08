@@ -101,13 +101,13 @@ namespace ESPSharp.Subrecords
 			Effect.WriteXML(subEle, master);
 
 			ele.TryPathTo("SkillRequirement", true, out subEle);
-			subEle.Value = SkillRequirement.ToString();
+			subEle.Value = SkillRequirement.ToString("G15");
 
 			ele.TryPathTo("DamageMult", true, out subEle);
-			subEle.Value = DamageMult.ToString();
+			subEle.Value = DamageMult.ToString("G15");
 
 			ele.TryPathTo("APCost", true, out subEle);
-			subEle.Value = APCost.ToString();
+			subEle.Value = APCost.ToString("G15");
 
 			ele.TryPathTo("IsSilent", true, out subEle);
 			subEle.Value = IsSilent.ToString();

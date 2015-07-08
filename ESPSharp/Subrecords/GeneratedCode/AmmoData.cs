@@ -86,7 +86,7 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("Speed", true, out subEle);
-			subEle.Value = Speed.ToString();
+			subEle.Value = Speed.ToString("G15");
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();

@@ -68,7 +68,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = ActorValue.ToString();
 
 			ele.TryPathTo("Multiplier", true, out subEle);
-			subEle.Value = Multiplier.ToString();
+			subEle.Value = Multiplier.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)

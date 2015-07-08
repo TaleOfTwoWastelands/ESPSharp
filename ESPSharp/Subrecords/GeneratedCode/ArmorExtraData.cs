@@ -86,7 +86,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			ele.TryPathTo("DamageThreshold", true, out subEle);
-			subEle.Value = DamageThreshold.ToString();
+			subEle.Value = DamageThreshold.ToString("G15");
 
 			ele.TryPathTo("Unknown", true, out subEle);
 			subEle.Value = Unknown.ToHex();

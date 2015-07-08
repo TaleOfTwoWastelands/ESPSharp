@@ -65,10 +65,10 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 
 			ele.TryPathTo("Width", true, out subEle);
-			subEle.Value = Width.ToString();
+			subEle.Value = Width.ToString("G15");
 
 			ele.TryPathTo("Height", true, out subEle);
-			subEle.Value = Height.ToString();
+			subEle.Value = Height.ToString("G15");
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
