@@ -74,6 +74,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IMADTimeValue.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataTypes\GeneratedCode\NavMeshDoor.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavMeshDoor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypes\GeneratedCode\NavMeshExternalConnection.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavMeshExternalConnection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypes\GeneratedCode\NavMeshTriangle.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavMeshTriangle.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataTypes\GeneratedCode\RegionGrass.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -103,6 +118,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>XYFloat.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypes\GeneratedCode\XYZFloat.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XYZFloat.tt</DependentUpon>
     </Compile>
     <Compile Include="DataTypes\LoadOrderFormID.cs" />
     <Compile Include="DataTypes\MoonData.cs" />
@@ -140,6 +160,7 @@
     <Compile Include="Enums\DialogResponseType.cs" />
     <Compile Include="Enums\Flags\ChallengeFlags.cs" />
     <Compile Include="Enums\Flags\MediaSetEnableFlags.cs" />
+    <Compile Include="Enums\Flags\NavMeshTriangleFlags.cs" />
     <Compile Include="Enums\MediaSetType.cs" />
     <Compile Include="Enums\NextSpeaker.cs" />
     <Compile Include="Enums\DialogType.cs" />
@@ -697,6 +718,40 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MusicType.tt</DependentUpon>
     </Compile>
+    <None Include="DataTypes\GeneratedCode\NavMeshDoor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavMeshDoor.cs</LastGenOutput>
+    </None>
+    <None Include="DataTypes\GeneratedCode\NavMeshExternalConnection.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavMeshExternalConnection.cs</LastGenOutput>
+    </None>
+    <None Include="DataTypes\GeneratedCode\NavMeshTriangle.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavMeshTriangle.cs</LastGenOutput>
+    </None>
+    <None Include="DataTypes\GeneratedCode\XYZFloat.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>XYZFloat.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\NavigationMesh.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavigationMesh.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\NavigationMeshInfoMap.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavigationMeshInfoMap.cs</LastGenOutput>
+    </None>
+    <Compile Include="Records\GeneratedCode\NavigationMesh.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavigationMesh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Records\GeneratedCode\NavigationMeshInfoMap.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavigationMeshInfoMap.tt</DependentUpon>
+    </Compile>
     <Compile Include="Records\GeneratedCode\NonPlayerCharacter.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1022,6 +1077,7 @@
     </Compile>
     <Compile Include="SubrecordCollections\PerkEffect.cs" />
     <Compile Include="Subrecords\ChallengeData.cs" />
+    <Compile Include="Subrecords\ExternalConnectionList.cs" />
     <Compile Include="Subrecords\GeneratedCode\ActivateParent.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1318,6 +1374,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NavigationDoorLink.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\NavigationMapInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavigationMapInfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\NavMeshData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavMeshData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\NavMeshDoorList.cs" />
     <Compile Include="Subrecords\GeneratedCode\PerkAbilityData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1446,6 +1513,12 @@
     </Compile>
     <Compile Include="Subrecords\IMADTimeColors.cs" />
     <Compile Include="Subrecords\IMADTimeValues.cs" />
+    <Compile Include="Subrecords\NavigationConnectionInfo.cs" />
+    <Compile Include="Subrecords\NavigationMapInfo.cs" />
+    <Compile Include="Subrecords\NavMeshExternalConnectionList.cs" />
+    <Compile Include="Subrecords\NavMeshGrid.cs" />
+    <Compile Include="Subrecords\NavMeshTriangleList.cs" />
+    <Compile Include="Subrecords\NavMeshVertexList.cs" />
     <Compile Include="Subrecords\PackageData.cs" />
     <Compile Include="Subrecords\PackageLocation.cs" />
     <Compile Include="Subrecords\GeneratedCode\ClimateTiming.cs">
@@ -2590,6 +2663,14 @@
     <None Include="Subrecords\GeneratedCode\NavigationDoorLink.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NavigationDoorLink.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\NavigationMapInfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavigationMapInfo.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\NavMeshData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavMeshData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\NPCBaseStats.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -1,4 +1,4 @@
-﻿#define PARALLEL
+﻿//#define PARALLEL
 
 using System;
 using System.Collections.Generic;
@@ -69,16 +69,16 @@ namespace ESPSharp
         public void WriteXML(string destinationFolder)
         {
             Header.Record.WriteXML(Path.Combine(destinationFolder, "Header.xml"), this);
-
+//.Where(g => g.ToString() != "Interior Cells" && g.ToString() != "Worldspaces" && g.ToString() != "Dialog Topics")
 #if PARALLEL
-            Parallel.ForEach(TopGroups.Where(g => g.ToString() != "Interior Cells" && g.ToString() != "Worldspaces" && g.ToString() != "Dialog Topics"), group =>
+            Parallel.ForEach(TopGroups, group =>
             {
                 string newDir = Path.Combine(destinationFolder, group.ToString());
                 Directory.CreateDirectory(newDir);
                 group.WriteXML(newDir, this);
             });
 #else
-            foreach (Group group in TopGroups.Where(g => g.ToString() != "Interior Cells" && g.ToString() != "Worldspaces" && g.ToString() != "Dialog Topics"))
+            foreach (Group group in TopGroups)
             {
                 string newDir = Path.Combine(destinationFolder, group.ToString());
                 Directory.CreateDirectory(newDir);

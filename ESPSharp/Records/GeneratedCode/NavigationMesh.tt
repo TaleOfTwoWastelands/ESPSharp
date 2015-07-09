@@ -1,0 +1,90 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "NavigationMesh";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NVER",
+			typeof(SimpleSubrecord<uint>),
+			"Version",
+			"Version"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DATA",
+			typeof(NavMeshData),
+			"Data",
+			"Data"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NVVX",
+			typeof(SimpleSubrecord<byte[]>),
+			"Vertices",
+			"Vertices"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NVTR",
+			typeof(SimpleSubrecord<byte[]>),
+			"Triangles",
+			"Triangles"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NVCA",
+			typeof(SimpleSubrecord<byte[]>),
+			"Unknown",
+			"Unknown"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NVDP",
+			typeof(NavMeshDoorList),
+			"Doors",
+			"Doors"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NVGD",
+			typeof(SimpleSubrecord<byte[]>),
+			"Grid",
+			"Grid"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NVEX",
+			typeof(NavMeshExternalConnectionList),
+			"ExternalConnections",
+			"ExternalConnections"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

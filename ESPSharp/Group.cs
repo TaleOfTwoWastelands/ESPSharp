@@ -34,14 +34,6 @@ namespace ESPSharp
 
         public void WriteXML(string destinationFolder, ElderScrollsPlugin master)
         {
-            /*
-            if (ChildRecordViews.Count <= 0 || ChildRecordViews.First().Record is GenericRecord)
-            {
-                Directory.Delete(destinationFolder, true);
-                return;
-            }
-             */
-
             XDocument header = new XDocument();
             XElement root = new XElement("GroupInfo");
             header.Add(root);

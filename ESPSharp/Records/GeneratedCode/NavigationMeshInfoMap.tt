@@ -1,0 +1,47 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	RecordTemplate template = new RecordTemplate();
+	template.ClassName = "NavigationMeshInfoMap";
+
+	RecordField tempField;
+
+	tempField = 
+		new RecordField(
+			"EDID",
+			typeof(SimpleSubrecord<string>),
+			"EditorID",
+			"EditorID"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NVER",
+			typeof(SimpleSubrecord<uint>),
+			"Version",
+			"Version"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NVMI",
+			typeof(List<NavigationMapInfo>),
+			"NavigationMapInfoList",
+			"NavigationMapInfoList"
+			);
+    tempField.XMLSubNames = new List<string>{"NavigationMapInfo"};
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"NVCI",
+			typeof(List<NavigationConnectionInfo>),
+			"NavigationConnectionInfoList",
+			"NavigationConnectionInfoList"
+			);
+    tempField.XMLSubNames = new List<string>{"NavigationConnectionInfo"};
+	template.Fields.Add(tempField);
+#>
+<#@ include file="RecordTemplate.t4" once="true" #>

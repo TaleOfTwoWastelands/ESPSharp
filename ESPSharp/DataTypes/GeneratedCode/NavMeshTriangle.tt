@@ -1,0 +1,65 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	DataTypeTemplate template = new DataTypeTemplate();
+	template.ClassName = "NavMeshTriangle";
+
+	DataTypeField tempField;
+
+	tempField = 
+		new DataTypeField(
+			typeof(short),
+			"Vertex1",
+			"Vertices/Vertex1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(short),
+			"Vertex2",
+			"Vertices/Vertex2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(short),
+			"Vertex3",
+			"Vertices/Vertex3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(short),
+			"EdgeVertices1_2",
+			"Edges/Vertices1_2"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(short),
+			"EdgeVertices2_3",
+			"Edges/Vertices2_3"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(short),
+			"EdgeVertices3_1",
+			"Edges/Vertices3_1"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(NavMeshTriangleFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

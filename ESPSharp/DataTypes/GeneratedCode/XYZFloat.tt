@@ -1,0 +1,33 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	DataTypeTemplate template = new DataTypeTemplate();
+	template.ClassName = "XYZFloat";
+
+	DataTypeField tempField;
+
+	tempField = 
+		new DataTypeField(
+			typeof(float),
+			"X",
+			"X"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(float),
+			"Y",
+			"Y"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(float),
+			"Z",
+			"Z"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

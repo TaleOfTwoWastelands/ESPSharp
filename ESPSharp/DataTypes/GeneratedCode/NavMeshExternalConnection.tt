@@ -1,0 +1,34 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	DataTypeTemplate template = new DataTypeTemplate();
+	template.ClassName = "NavMeshExternalConnection";
+
+	DataTypeField tempField;
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte[]),
+			"Unknown",
+			"Unknown"
+			);
+	tempField.byteCount = 4;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(FormID),
+			"NavigationMesh",
+			"NavigationMesh"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(ushort),
+			"Triangle",
+			"Triangle"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

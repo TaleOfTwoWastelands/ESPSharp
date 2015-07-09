@@ -32,9 +32,6 @@ namespace ESPSharp
 
         public void WriteXML(string destinationFile, ElderScrollsPlugin master)
         {
-            if (this is GenericRecord)
-                return;
-
             XDocument doc = new XDocument();
 
             XElement root = new XElement("Record", 
@@ -362,7 +359,7 @@ namespace ESPSharp
                     outRecord = new Region();
                     break;
                 case "NAVI":
-                    outRecord = new GenericRecord();
+                    outRecord = new NavigationMeshInfoMap();
                     break;
                 case "DIAL":
                     outRecord = new DialogTopic();
@@ -518,7 +515,7 @@ namespace ESPSharp
                     outRecord = new GenericRecord();
                     break;
                 case "NAVM":
-                    outRecord = new GenericRecord();
+                    outRecord = new NavigationMesh();
                     break;
                 case "INFO":
                     outRecord = new DialogResponse();

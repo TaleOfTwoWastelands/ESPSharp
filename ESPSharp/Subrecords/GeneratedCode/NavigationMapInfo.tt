@@ -1,0 +1,60 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	SubrecordTemplate template = new SubrecordTemplate();
+	template.ClassName = "NavigationMapInfo";
+
+	SubrecordField tempField;
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unknown1",
+			"Unknown1"
+			);
+	tempField.byteCount = 4;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"NavigationMesh",
+			"NavigationMesh"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(FormID),
+			"Location",
+			"Location"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(short),
+			"GridX",
+			"Grid/X"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(short),
+			"GridY",
+			"Grid/Y"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new SubrecordField(
+			typeof(byte[]),
+			"Unknown2",
+			"Unknown2"
+			);
+	tempField.byteCount = 4;
+	tempField.implementReadData = false;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

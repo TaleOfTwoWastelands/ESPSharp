@@ -19,7 +19,7 @@ namespace ESPSharp.SubrecordCollections
 		public RegionDataHeader Header { get; set; }
 		public RegionObjectList ObjectList { get; set; }
 		public SimpleSubrecord<String> MapName { get; set; }
-		public RegionGrassList GrassList { get; set; }
+		public ExternalConnectionList GrassList { get; set; }
 		public SimpleSubrecord<RegionMusicType> MusicType { get; set; }
 		public RecordReference Music { get; set; }
 		public RecordReference IncidentalMediaSet { get; set; }
@@ -33,7 +33,7 @@ namespace ESPSharp.SubrecordCollections
 			Header = new RegionDataHeader();
 		}
 
-		public RegionDataEntry(RegionDataHeader Header, RegionObjectList ObjectList, SimpleSubrecord<String> MapName, RegionGrassList GrassList, SimpleSubrecord<RegionMusicType> MusicType, RecordReference Music, RecordReference IncidentalMediaSet, List<RecordReference> BattleMediaSets, RegionSoundList Sounds, RegionWeatherList Weathers, FormArray Imposters)
+		public RegionDataEntry(RegionDataHeader Header, RegionObjectList ObjectList, SimpleSubrecord<String> MapName, ExternalConnectionList GrassList, SimpleSubrecord<RegionMusicType> MusicType, RecordReference Music, RecordReference IncidentalMediaSet, List<RecordReference> BattleMediaSets, RegionSoundList Sounds, RegionWeatherList Weathers, FormArray Imposters)
 		{
 			this.Header = Header;
 			this.ObjectList = ObjectList;
@@ -102,7 +102,7 @@ namespace ESPSharp.SubrecordCollections
 						if (readTags.Contains("RDGS"))
 							return;
 						if (GrassList == null)
-							GrassList = new RegionGrassList();
+							GrassList = new ExternalConnectionList();
 
 						GrassList.ReadBinary(reader);
 						break;
@@ -291,7 +291,7 @@ namespace ESPSharp.SubrecordCollections
 			if (ele.TryPathTo("GrassList", false, out subEle))
 			{
 				if (GrassList == null)
-					GrassList = new RegionGrassList();
+					GrassList = new ExternalConnectionList();
 					
 				GrassList.ReadXML(subEle, master);
 			}
