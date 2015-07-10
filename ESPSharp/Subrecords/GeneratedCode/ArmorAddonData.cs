@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ArmorAddonData : Subrecord, ICloneable<ArmorAddonData>
+	public partial class ArmorAddonData : Subrecord, ICloneable<ArmorAddonData>, IComparable<ArmorAddonData>, IEquatable<ArmorAddonData>  
 	{
 		public Int16 ArmorRating { get; set; }
 		public NoYesShort ModulatesVoice { get; set; }
@@ -61,18 +62,18 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(ArmorRating);			
+			writer.Write(ArmorRating);
 			writer.Write((UInt16)ModulatesVoice);
 			if (Unknown == null)
 				writer.Write(new byte[8]);
 			else
-				writer.Write(Unknown);
+			writer.Write(Unknown);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("ArmorRating", true, out subEle);
 			subEle.Value = ArmorRating.ToString();
 
@@ -86,21 +87,15 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("ArmorRating", false, out subEle))
-			{
 				ArmorRating = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("ModulatesVoice", false, out subEle))
-			{
 				ModulatesVoice = subEle.ToEnum<NoYesShort>();
-			}
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToBytes();
-			}
 		}
 
 		public ArmorAddonData Clone()
@@ -108,5 +103,94 @@ namespace ESPSharp.Subrecords
 			return new ArmorAddonData(this);
 		}
 
+        public int CompareTo(ArmorAddonData other)
+        {
+			return ArmorRating.CompareTo(other.ArmorRating);
+        }
+
+        public static bool operator >(ArmorAddonData objA, ArmorAddonData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ArmorAddonData objA, ArmorAddonData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ArmorAddonData objA, ArmorAddonData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ArmorAddonData objA, ArmorAddonData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ArmorAddonData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return ArmorRating == other.ArmorRating &&
+				ModulatesVoice == other.ModulatesVoice &&
+				Unknown.SequenceEqual(other.Unknown);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ArmorAddonData other = obj as ArmorAddonData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return ArmorRating.GetHashCode();
+        }
+
+        public static bool operator ==(ArmorAddonData objA, ArmorAddonData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ArmorAddonData objA, ArmorAddonData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

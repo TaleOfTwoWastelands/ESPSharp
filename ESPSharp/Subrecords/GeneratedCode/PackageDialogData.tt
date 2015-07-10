@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "PackageDialogData";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"FOV",
 			"FOV"
@@ -15,15 +15,16 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Topic",
 			"Topic"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(PackageDialogFlags),
 			"Flags",
 			"Flags"
@@ -31,16 +32,18 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unused",
 			"Unused"
 			);
 	tempField.byteCount = 4;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(PackageDialogType),
 			"Type",
 			"Type"

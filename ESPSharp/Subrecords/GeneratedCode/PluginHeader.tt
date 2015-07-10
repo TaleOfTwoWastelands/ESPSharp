@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "PluginHeader";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Version",
 			"Version"
@@ -15,15 +15,16 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"RecordCount",
 			"RecordCount"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"NextObjectID",
 			"NextObjectID"

@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "CreatureBaseStats";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(CreatureFlags),
 			"Flags",
 			"Flags"
@@ -15,7 +15,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ushort),
 			"Fatigue",
 			"Fatigue"
@@ -23,7 +23,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ushort),
 			"BarterGold",
 			"BarterGold"
@@ -31,15 +31,16 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(short),
 			"Level",
 			"Level"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ushort),
 			"CalcMin",
 			"CalcMin"
@@ -47,7 +48,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ushort),
 			"CalcMax",
 			"CalcMax"
@@ -55,7 +56,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ushort),
 			"SpeedMultiplier",
 			"SpeedMultiplier"
@@ -63,7 +64,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Karma",
 			"Karma"
@@ -71,7 +72,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(short),
 			"DispositionBase",
 			"DispositionBase"
@@ -79,7 +80,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ActorTemplateFlags),
 			"TemplateFlags",
 			"TemplateFlags"

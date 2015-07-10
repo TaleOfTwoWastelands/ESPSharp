@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class GrassData : Subrecord, ICloneable<GrassData>
+	public partial class GrassData : Subrecord, ICloneable<GrassData>, IComparable<GrassData>, IEquatable<GrassData>  
 	{
 		public Byte Density { get; set; }
 		public Byte MinSlope { get; set; }
@@ -111,31 +112,31 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Density);			
-			writer.Write(MinSlope);			
-			writer.Write(MaxSlope);			
-			writer.Write(Unused1);			
-			writer.Write(UnitFromWaterAmount);			
+			writer.Write(Density);
+			writer.Write(MinSlope);
+			writer.Write(MaxSlope);
+			writer.Write(Unused1);
+			writer.Write(UnitFromWaterAmount);
 			if (Unused2 == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused2);
+			writer.Write(Unused2);
 			writer.Write((UInt32)UnitFromWaterType);
-			writer.Write(PositionRange);			
-			writer.Write(HeightRange);			
-			writer.Write(ColorRange);			
-			writer.Write(WavePeriod);			
+			writer.Write(PositionRange);
+			writer.Write(HeightRange);
+			writer.Write(ColorRange);
+			writer.Write(WavePeriod);
 			writer.Write((Byte)Flags);
 			if (Unused3 == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused3);
+			writer.Write(Unused3);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Density", true, out subEle);
 			subEle.Value = Density.ToString();
 
@@ -145,14 +146,12 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Slope/Max", true, out subEle);
 			subEle.Value = MaxSlope.ToString();
 
-			ele.TryPathTo("Unused/Unused1", true, out subEle);
-			subEle.Value = Unused1.ToString();
+			WriteUnused1XML(ele, master);
 
 			ele.TryPathTo("UnitFromWater/Amount", true, out subEle);
 			subEle.Value = UnitFromWaterAmount.ToString();
 
-			ele.TryPathTo("Unused/Unused2", true, out subEle);
-			subEle.Value = Unused2.ToHex();
+			WriteUnused2XML(ele, master);
 
 			ele.TryPathTo("UnitFromWater/Type", true, out subEle);
 			subEle.Value = UnitFromWaterType.ToString();
@@ -172,78 +171,48 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unused/Unused3", true, out subEle);
-			subEle.Value = Unused3.ToHex();
+			WriteUnused3XML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Density", false, out subEle))
-			{
 				Density = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Slope/Min", false, out subEle))
-			{
 				MinSlope = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Slope/Max", false, out subEle))
-			{
 				MaxSlope = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused/Unused1", false, out subEle))
-			{
-				Unused1 = subEle.ToByte();
-			}
+			ReadUnused1XML(ele, master);
 
 			if (ele.TryPathTo("UnitFromWater/Amount", false, out subEle))
-			{
 				UnitFromWaterAmount = subEle.ToUInt16();
-			}
 
-			if (ele.TryPathTo("Unused/Unused2", false, out subEle))
-			{
-				Unused2 = subEle.ToBytes();
-			}
+			ReadUnused2XML(ele, master);
 
 			if (ele.TryPathTo("UnitFromWater/Type", false, out subEle))
-			{
 				UnitFromWaterType = subEle.ToEnum<UnitFromWaterType>();
-			}
 
 			if (ele.TryPathTo("PositionRange", false, out subEle))
-			{
 				PositionRange = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HeightRange", false, out subEle))
-			{
 				HeightRange = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ColorRange", false, out subEle))
-			{
 				ColorRange = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WavePeriod", false, out subEle))
-			{
 				WavePeriod = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<GrassFlags>();
-			}
 
-			if (ele.TryPathTo("Unused/Unused3", false, out subEle))
-			{
-				Unused3 = subEle.ToBytes();
-			}
+			ReadUnused3XML(ele, master);
 		}
 
 		public GrassData Clone()
@@ -251,5 +220,116 @@ namespace ESPSharp.Subrecords
 			return new GrassData(this);
 		}
 
+        public int CompareTo(GrassData other)
+        {
+			return Density.CompareTo(other.Density);
+        }
+
+        public static bool operator >(GrassData objA, GrassData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(GrassData objA, GrassData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(GrassData objA, GrassData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(GrassData objA, GrassData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(GrassData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Density == other.Density &&
+				MinSlope == other.MinSlope &&
+				MaxSlope == other.MaxSlope &&
+				Unused1 == other.Unused1 &&
+				UnitFromWaterAmount == other.UnitFromWaterAmount &&
+				Unused2.SequenceEqual(other.Unused2) &&
+				UnitFromWaterType == other.UnitFromWaterType &&
+				PositionRange == other.PositionRange &&
+				HeightRange == other.HeightRange &&
+				ColorRange == other.ColorRange &&
+				WavePeriod == other.WavePeriod &&
+				Flags == other.Flags &&
+				Unused3.SequenceEqual(other.Unused3);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            GrassData other = obj as GrassData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Density.GetHashCode();
+        }
+
+        public static bool operator ==(GrassData objA, GrassData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(GrassData objA, GrassData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused3XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused3XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

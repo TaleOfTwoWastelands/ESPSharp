@@ -1,21 +1,22 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "ImpactList";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Stone",
 			"Stone"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Dirt",
 			"Dirt"
@@ -23,7 +24,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Grass",
 			"Grass"
@@ -31,7 +32,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Glass",
 			"Glass"
@@ -39,7 +40,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Metal",
 			"Metal"
@@ -47,7 +48,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Wood",
 			"Wood"
@@ -55,7 +56,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Organic",
 			"Organic"
@@ -63,7 +64,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Cloth",
 			"Cloth"
@@ -71,7 +72,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Water",
 			"Water"
@@ -79,7 +80,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"HollowMetal",
 			"HollowMetal"
@@ -87,7 +88,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"OrganicBug",
 			"OrganicBug"
@@ -95,7 +96,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"OrganicGlow",
 			"OrganicGlow"

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RecipeData : Subrecord, ICloneable<RecipeData>, IReferenceContainer
+	public partial class RecipeData : Subrecord, ICloneable<RecipeData>, IComparable<RecipeData>, IEquatable<RecipeData>  
 	{
 		public ActorValues Skill { get; set; }
 		public UInt32 Level { get; set; }
@@ -67,7 +68,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((Int32)Skill);
-			writer.Write(Level);			
+			writer.Write(Level);
 			Category.WriteBinary(writer);
 			SubCategory.WriteBinary(writer);
 		}
@@ -75,7 +76,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Skill", true, out subEle);
 			subEle.Value = Skill.ToString();
 
@@ -92,26 +93,18 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Skill", false, out subEle))
-			{
 				Skill = subEle.ToEnum<ActorValues>();
-			}
 
 			if (ele.TryPathTo("Level", false, out subEle))
-			{
 				Level = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Category", false, out subEle))
-			{
 				Category.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("SubCategory", false, out subEle))
-			{
 				SubCategory.ReadXML(subEle, master);
-			}
 		}
 
 		public RecipeData Clone()
@@ -119,5 +112,95 @@ namespace ESPSharp.Subrecords
 			return new RecipeData(this);
 		}
 
+        public int CompareTo(RecipeData other)
+        {
+			return Skill.CompareTo(other.Skill);
+        }
+
+        public static bool operator >(RecipeData objA, RecipeData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RecipeData objA, RecipeData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RecipeData objA, RecipeData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RecipeData objA, RecipeData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RecipeData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Skill == other.Skill &&
+				Level == other.Level &&
+				Category == other.Category &&
+				SubCategory == other.SubCategory;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            RecipeData other = obj as RecipeData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Skill.GetHashCode();
+        }
+
+        public static bool operator ==(RecipeData objA, RecipeData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RecipeData objA, RecipeData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

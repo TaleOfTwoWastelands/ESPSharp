@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "ExplosionData";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Force",
 			"Force"
@@ -15,15 +15,16 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Damage",
 			"Damage"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Radius",
 			"Radius"
@@ -31,7 +32,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Light",
 			"Light"
@@ -39,7 +40,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Sound1",
 			"Sound1"
@@ -47,7 +48,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ExplosionFlags),
 			"Flags",
 			"Flags"
@@ -55,7 +56,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ISRadius",
 			"ISRadius"
@@ -63,7 +64,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"ImpactDataSet",
 			"ImpactDataSet"
@@ -71,7 +72,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Sound2",
 			"Sound2"
@@ -79,7 +80,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"RadiationLevel",
 			"Radiation/Level"
@@ -87,7 +88,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"RadiationDissipationTime",
 			"Radiation/DissipationTime"
@@ -95,7 +96,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"RadiationRadius",
 			"Radiation/Radius"
@@ -103,7 +104,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(SoundLevel),
 			"SoundLevel",
 			"SoundLevel"

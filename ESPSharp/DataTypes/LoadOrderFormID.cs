@@ -14,6 +14,9 @@ namespace ESPSharp.DataTypes
             uint fileIndex = fileFormID.RawValue >> 24;
             uint recordIndex = fileFormID.RawValue & 0x00FFFFFF;
 
+            if (fileIndex >= file.Masters.Count)
+                fileIndex = (uint)(file.Masters.Count - 1);
+
             string masterName = file.Masters[(int)fileIndex];
             ElderScrollsPlugin master = ElderScrollsPlugin.LoadedPlugins.FirstOrDefault(esp => esp.Name == masterName);
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NPCSkills : Subrecord, ICloneable<NPCSkills>
+	public partial class NPCSkills : Subrecord, ICloneable<NPCSkills>, IComparable<NPCSkills>, IEquatable<NPCSkills>  
 	{
 		public Byte BarterValue { get; set; }
 		public Byte BigGunsValue { get; set; }
@@ -186,40 +187,40 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(BarterValue);			
-			writer.Write(BigGunsValue);			
-			writer.Write(EnergyWeaponsValue);			
-			writer.Write(ExplosivesValue);			
-			writer.Write(LockpickValue);			
-			writer.Write(MedicineValue);			
-			writer.Write(MeleeWeaponsValue);			
-			writer.Write(RepairValue);			
-			writer.Write(ScienceValue);			
-			writer.Write(GunsValue);			
-			writer.Write(SneakValue);			
-			writer.Write(SpeechValue);			
-			writer.Write(SurvivalValue);			
-			writer.Write(UnarmedValue);			
-			writer.Write(BarterOffset);			
-			writer.Write(BigGunsOffset);			
-			writer.Write(EnergyWeaponsOffset);			
-			writer.Write(ExplosivesOffset);			
-			writer.Write(LockpickOffset);			
-			writer.Write(MedicineOffset);			
-			writer.Write(MeleeWeaponsOffset);			
-			writer.Write(RepairOffset);			
-			writer.Write(ScienceOffset);			
-			writer.Write(GunsOffset);			
-			writer.Write(SneakOffset);			
-			writer.Write(SpeechOffset);			
-			writer.Write(SurvivalOffset);			
-			writer.Write(UnarmedOffset);			
+			writer.Write(BarterValue);
+			writer.Write(BigGunsValue);
+			writer.Write(EnergyWeaponsValue);
+			writer.Write(ExplosivesValue);
+			writer.Write(LockpickValue);
+			writer.Write(MedicineValue);
+			writer.Write(MeleeWeaponsValue);
+			writer.Write(RepairValue);
+			writer.Write(ScienceValue);
+			writer.Write(GunsValue);
+			writer.Write(SneakValue);
+			writer.Write(SpeechValue);
+			writer.Write(SurvivalValue);
+			writer.Write(UnarmedValue);
+			writer.Write(BarterOffset);
+			writer.Write(BigGunsOffset);
+			writer.Write(EnergyWeaponsOffset);
+			writer.Write(ExplosivesOffset);
+			writer.Write(LockpickOffset);
+			writer.Write(MedicineOffset);
+			writer.Write(MeleeWeaponsOffset);
+			writer.Write(RepairOffset);
+			writer.Write(ScienceOffset);
+			writer.Write(GunsOffset);
+			writer.Write(SneakOffset);
+			writer.Write(SpeechOffset);
+			writer.Write(SurvivalOffset);
+			writer.Write(UnarmedOffset);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Barter/Value", true, out subEle);
 			subEle.Value = BarterValue.ToString();
 
@@ -308,146 +309,90 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Barter/Value", false, out subEle))
-			{
 				BarterValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("BigGuns/Value", false, out subEle))
-			{
 				BigGunsValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("EnergyWeapons/Value", false, out subEle))
-			{
 				EnergyWeaponsValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Explosives/Value", false, out subEle))
-			{
 				ExplosivesValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Lockpick/Value", false, out subEle))
-			{
 				LockpickValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Medicine/Value", false, out subEle))
-			{
 				MedicineValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("MeleeWeapons/Value", false, out subEle))
-			{
 				MeleeWeaponsValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Repair/Value", false, out subEle))
-			{
 				RepairValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Science/Value", false, out subEle))
-			{
 				ScienceValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Guns/Value", false, out subEle))
-			{
 				GunsValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Sneak/Value", false, out subEle))
-			{
 				SneakValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Speech/Value", false, out subEle))
-			{
 				SpeechValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Survival/Value", false, out subEle))
-			{
 				SurvivalValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Unarmed/Value", false, out subEle))
-			{
 				UnarmedValue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Barter/Offset", false, out subEle))
-			{
 				BarterOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("BigGuns/Offset", false, out subEle))
-			{
 				BigGunsOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("EnergyWeapons/Offset", false, out subEle))
-			{
 				EnergyWeaponsOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Explosives/Offset", false, out subEle))
-			{
 				ExplosivesOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Lockpick/Offset", false, out subEle))
-			{
 				LockpickOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Medicine/Offset", false, out subEle))
-			{
 				MedicineOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("MeleeWeapons/Offset", false, out subEle))
-			{
 				MeleeWeaponsOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Repair/Offset", false, out subEle))
-			{
 				RepairOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Science/Offset", false, out subEle))
-			{
 				ScienceOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Guns/Offset", false, out subEle))
-			{
 				GunsOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Sneak/Offset", false, out subEle))
-			{
 				SneakOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Speech/Offset", false, out subEle))
-			{
 				SpeechOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Survival/Offset", false, out subEle))
-			{
 				SurvivalOffset = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Unarmed/Offset", false, out subEle))
-			{
 				UnarmedOffset = subEle.ToByte();
-			}
 		}
 
 		public NPCSkills Clone()
@@ -455,5 +400,119 @@ namespace ESPSharp.Subrecords
 			return new NPCSkills(this);
 		}
 
+        public int CompareTo(NPCSkills other)
+        {
+			return BarterValue.CompareTo(other.BarterValue);
+        }
+
+        public static bool operator >(NPCSkills objA, NPCSkills objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(NPCSkills objA, NPCSkills objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(NPCSkills objA, NPCSkills objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(NPCSkills objA, NPCSkills objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(NPCSkills other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return BarterValue == other.BarterValue &&
+				BigGunsValue == other.BigGunsValue &&
+				EnergyWeaponsValue == other.EnergyWeaponsValue &&
+				ExplosivesValue == other.ExplosivesValue &&
+				LockpickValue == other.LockpickValue &&
+				MedicineValue == other.MedicineValue &&
+				MeleeWeaponsValue == other.MeleeWeaponsValue &&
+				RepairValue == other.RepairValue &&
+				ScienceValue == other.ScienceValue &&
+				GunsValue == other.GunsValue &&
+				SneakValue == other.SneakValue &&
+				SpeechValue == other.SpeechValue &&
+				SurvivalValue == other.SurvivalValue &&
+				UnarmedValue == other.UnarmedValue &&
+				BarterOffset == other.BarterOffset &&
+				BigGunsOffset == other.BigGunsOffset &&
+				EnergyWeaponsOffset == other.EnergyWeaponsOffset &&
+				ExplosivesOffset == other.ExplosivesOffset &&
+				LockpickOffset == other.LockpickOffset &&
+				MedicineOffset == other.MedicineOffset &&
+				MeleeWeaponsOffset == other.MeleeWeaponsOffset &&
+				RepairOffset == other.RepairOffset &&
+				ScienceOffset == other.ScienceOffset &&
+				GunsOffset == other.GunsOffset &&
+				SneakOffset == other.SneakOffset &&
+				SpeechOffset == other.SpeechOffset &&
+				SurvivalOffset == other.SurvivalOffset &&
+				UnarmedOffset == other.UnarmedOffset;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            NPCSkills other = obj as NPCSkills;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return BarterValue.GetHashCode();
+        }
+
+        public static bool operator ==(NPCSkills objA, NPCSkills objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(NPCSkills objA, NPCSkills objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

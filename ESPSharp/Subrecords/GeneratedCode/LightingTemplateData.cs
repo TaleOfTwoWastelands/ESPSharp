@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LightingTemplateData : Subrecord, ICloneable<LightingTemplateData>
+	public partial class LightingTemplateData : Subrecord, ICloneable<LightingTemplateData>, IComparable<LightingTemplateData>, IEquatable<LightingTemplateData>  
 	{
 		public Color ColorAmbient { get; set; }
 		public Color ColorDirectional { get; set; }
@@ -99,19 +100,19 @@ namespace ESPSharp.Subrecords
 			ColorAmbient.WriteBinary(writer);
 			ColorDirectional.WriteBinary(writer);
 			FogColor.WriteBinary(writer);
-			writer.Write(FogNear);			
-			writer.Write(FogFar);			
-			writer.Write(DirectionalRotationXY);			
-			writer.Write(DirectionalRotationZ);			
-			writer.Write(DirectionalFade);			
-			writer.Write(FogClipDistance);			
-			writer.Write(FogPower);			
+			writer.Write(FogNear);
+			writer.Write(FogFar);
+			writer.Write(DirectionalRotationXY);
+			writer.Write(DirectionalRotationZ);
+			writer.Write(DirectionalFade);
+			writer.Write(FogClipDistance);
+			writer.Write(FogPower);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Color/Ambient", true, out subEle);
 			ColorAmbient.WriteXML(subEle, master);
 
@@ -146,56 +147,36 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Color/Ambient", false, out subEle))
-			{
 				ColorAmbient.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Color/Directional", false, out subEle))
-			{
 				ColorDirectional.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Fog/Color", false, out subEle))
-			{
 				FogColor.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Fog/Near", false, out subEle))
-			{
 				FogNear = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Fog/Far", false, out subEle))
-			{
 				FogFar = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DirectionalRotation/XY", false, out subEle))
-			{
 				DirectionalRotationXY = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("DirectionalRotation/Z", false, out subEle))
-			{
 				DirectionalRotationZ = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("DirectionalFade", false, out subEle))
-			{
 				DirectionalFade = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Fog/ClipDistance", false, out subEle))
-			{
 				FogClipDistance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Fog/Power", false, out subEle))
-			{
 				FogPower = subEle.ToSingle();
-			}
 		}
 
 		public LightingTemplateData Clone()
@@ -203,5 +184,101 @@ namespace ESPSharp.Subrecords
 			return new LightingTemplateData(this);
 		}
 
+        public int CompareTo(LightingTemplateData other)
+        {
+			return ColorAmbient.CompareTo(other.ColorAmbient);
+        }
+
+        public static bool operator >(LightingTemplateData objA, LightingTemplateData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(LightingTemplateData objA, LightingTemplateData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(LightingTemplateData objA, LightingTemplateData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(LightingTemplateData objA, LightingTemplateData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(LightingTemplateData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return ColorAmbient == other.ColorAmbient &&
+				ColorDirectional == other.ColorDirectional &&
+				FogColor == other.FogColor &&
+				FogNear == other.FogNear &&
+				FogFar == other.FogFar &&
+				DirectionalRotationXY == other.DirectionalRotationXY &&
+				DirectionalRotationZ == other.DirectionalRotationZ &&
+				DirectionalFade == other.DirectionalFade &&
+				FogClipDistance == other.FogClipDistance &&
+				FogPower == other.FogPower;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            LightingTemplateData other = obj as LightingTemplateData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return ColorAmbient.GetHashCode();
+        }
+
+        public static bool operator ==(LightingTemplateData objA, LightingTemplateData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(LightingTemplateData objA, LightingTemplateData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

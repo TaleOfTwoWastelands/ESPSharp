@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NavMeshData : Subrecord, ICloneable<NavMeshData>, IReferenceContainer
+	public partial class NavMeshData : Subrecord, ICloneable<NavMeshData>, IComparable<NavMeshData>, IEquatable<NavMeshData>  
 	{
 		public FormID Cell { get; set; }
 		public UInt32 VertexCount { get; set; }
@@ -77,17 +78,17 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			Cell.WriteBinary(writer);
-			writer.Write(VertexCount);			
-			writer.Write(TriangleCount);			
-			writer.Write(ExternalConnectionsCount);			
-			writer.Write(NVCACount);			
-			writer.Write(DoorsCount);			
+			writer.Write(VertexCount);
+			writer.Write(TriangleCount);
+			writer.Write(ExternalConnectionsCount);
+			writer.Write(NVCACount);
+			writer.Write(DoorsCount);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Cell", true, out subEle);
 			Cell.WriteXML(subEle, master);
 
@@ -110,36 +111,24 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Cell", false, out subEle))
-			{
 				Cell.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("VertexCount", false, out subEle))
-			{
 				VertexCount = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("TriangleCount", false, out subEle))
-			{
 				TriangleCount = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("ExternalConnectionsCount", false, out subEle))
-			{
 				ExternalConnectionsCount = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("NVCACount", false, out subEle))
-			{
 				NVCACount = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("DoorsCount", false, out subEle))
-			{
 				DoorsCount = subEle.ToUInt32();
-			}
 		}
 
 		public NavMeshData Clone()
@@ -147,5 +136,97 @@ namespace ESPSharp.Subrecords
 			return new NavMeshData(this);
 		}
 
+        public int CompareTo(NavMeshData other)
+        {
+			return Cell.CompareTo(other.Cell);
+        }
+
+        public static bool operator >(NavMeshData objA, NavMeshData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(NavMeshData objA, NavMeshData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(NavMeshData objA, NavMeshData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(NavMeshData objA, NavMeshData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(NavMeshData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Cell == other.Cell &&
+				VertexCount == other.VertexCount &&
+				TriangleCount == other.TriangleCount &&
+				ExternalConnectionsCount == other.ExternalConnectionsCount &&
+				NVCACount == other.NVCACount &&
+				DoorsCount == other.DoorsCount;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            NavMeshData other = obj as NavMeshData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Cell.GetHashCode();
+        }
+
+        public static bool operator ==(NavMeshData objA, NavMeshData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(NavMeshData objA, NavMeshData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

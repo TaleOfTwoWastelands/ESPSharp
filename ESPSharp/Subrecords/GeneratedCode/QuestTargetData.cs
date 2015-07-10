@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class QuestTargetData : Subrecord, ICloneable<QuestTargetData>, IReferenceContainer
+	public partial class QuestTargetData : Subrecord, ICloneable<QuestTargetData>, IComparable<QuestTargetData>, IEquatable<QuestTargetData>  
 	{
 		public FormID Target { get; set; }
 		public QuestTargetFlags Flags { get; set; }
@@ -66,41 +67,33 @@ namespace ESPSharp.Subrecords
 			if (Unused == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused);
+			writer.Write(Unused);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Target", true, out subEle);
 			Target.WriteXML(subEle, master);
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Target", false, out subEle))
-			{
 				Target.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<QuestTargetFlags>();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 		}
 
 		public QuestTargetData Clone()
@@ -108,5 +101,98 @@ namespace ESPSharp.Subrecords
 			return new QuestTargetData(this);
 		}
 
+        public int CompareTo(QuestTargetData other)
+        {
+			return Target.CompareTo(other.Target);
+        }
+
+        public static bool operator >(QuestTargetData objA, QuestTargetData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(QuestTargetData objA, QuestTargetData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(QuestTargetData objA, QuestTargetData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(QuestTargetData objA, QuestTargetData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(QuestTargetData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Target == other.Target &&
+				Flags == other.Flags &&
+				Unused.SequenceEqual(other.Unused);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            QuestTargetData other = obj as QuestTargetData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Target.GetHashCode();
+        }
+
+        public static bool operator ==(QuestTargetData objA, QuestTargetData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(QuestTargetData objA, QuestTargetData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

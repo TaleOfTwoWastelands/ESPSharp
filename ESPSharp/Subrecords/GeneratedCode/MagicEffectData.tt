@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "MagicEffectData";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(MagicEffectFlags),
 			"MagicEffectFlags",
 			"Flags"
@@ -15,7 +15,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"BaseCost",
 			"BaseCost"
@@ -23,15 +23,16 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"AssociatedItem",
 			"AssociatedItem"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(MagicSchool),
 			"MagicSchool",
 			"MagicSchool"
@@ -39,7 +40,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ActorValues),
 			"ResistanceType",
 			"ResistanceType"
@@ -47,7 +48,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ushort),
 			"Unknown",
 			"Unknown"
@@ -55,16 +56,18 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unused",
 			"Unused"
 			);
 	tempField.byteCount = 2;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Light",
 			"Light"
@@ -72,7 +75,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ProjectileSpeed",
 			"ProjectileSpeed"
@@ -80,7 +83,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"EffectShader",
 			"EffectShader"
@@ -88,7 +91,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"ObjectDisplayShader",
 			"ObjectDisplayShader"
@@ -96,7 +99,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"EffectSound",
 			"EffectSound"
@@ -104,7 +107,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"BoltSound",
 			"BoltSound"
@@ -112,7 +115,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"HitSound",
 			"HitSound"
@@ -120,7 +123,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"AreaSound",
 			"AreaSound"
@@ -128,7 +131,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ConstantEffectEnchantmentFactor",
 			"ConstantEffectEnchantmentFactor"
@@ -136,7 +139,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ConstantEffectBarterFactor",
 			"ConstantEffectBarterFactor"
@@ -144,7 +147,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(MagicEffectArchetype),
 			"Archetype",
 			"Archetype"
@@ -152,7 +155,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ActorValues),
 			"ActorValue",
 			"ActorValue"

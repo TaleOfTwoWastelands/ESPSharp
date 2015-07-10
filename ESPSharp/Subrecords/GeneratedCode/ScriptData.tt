@@ -1,22 +1,24 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "ScriptData";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unused",
 			"Unused"
 			);
 	tempField.byteCount = 4;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"ReferenceCount",
 			"ReferenceCount"
@@ -24,29 +26,30 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"CompiledSize",
 			"CompiledSize"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"VariableCount",
 			"VariableCount"
 			);
 	template.Fields.Add(tempField);
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ScriptType),
 			"Type",
 			"Type"
 			);
 	template.Fields.Add(tempField);
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ScriptFlags),
 			"Flags",
 			"Flags"

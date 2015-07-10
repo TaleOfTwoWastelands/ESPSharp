@@ -1,21 +1,22 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "NPCSkills";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"BarterValue",
 			"Barter/Value"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"BigGunsValue",
 			"BigGuns/Value"
@@ -23,7 +24,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"EnergyWeaponsValue",
 			"EnergyWeapons/Value"
@@ -31,7 +32,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"ExplosivesValue",
 			"Explosives/Value"
@@ -39,7 +40,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"LockpickValue",
 			"Lockpick/Value"
@@ -47,7 +48,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"MedicineValue",
 			"Medicine/Value"
@@ -55,7 +56,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"MeleeWeaponsValue",
 			"MeleeWeapons/Value"
@@ -63,7 +64,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"RepairValue",
 			"Repair/Value"
@@ -71,7 +72,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"ScienceValue",
 			"Science/Value"
@@ -79,7 +80,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"GunsValue",
 			"Guns/Value"
@@ -87,7 +88,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"SneakValue",
 			"Sneak/Value"
@@ -95,7 +96,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"SpeechValue",
 			"Speech/Value"
@@ -103,7 +104,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"SurvivalValue",
 			"Survival/Value"
@@ -111,7 +112,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"UnarmedValue",
 			"Unarmed/Value"
@@ -119,7 +120,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"BarterOffset",
 			"Barter/Offset"
@@ -127,7 +128,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"BigGunsOffset",
 			"BigGuns/Offset"
@@ -135,7 +136,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"EnergyWeaponsOffset",
 			"EnergyWeapons/Offset"
@@ -143,7 +144,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"ExplosivesOffset",
 			"Explosives/Offset"
@@ -151,7 +152,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"LockpickOffset",
 			"Lockpick/Offset"
@@ -159,7 +160,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"MedicineOffset",
 			"Medicine/Offset"
@@ -167,7 +168,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"MeleeWeaponsOffset",
 			"MeleeWeapons/Offset"
@@ -175,7 +176,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"RepairOffset",
 			"Repair/Offset"
@@ -183,7 +184,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"ScienceOffset",
 			"Science/Offset"
@@ -191,7 +192,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"GunsOffset",
 			"Guns/Offset"
@@ -199,7 +200,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"SneakOffset",
 			"Sneak/Offset"
@@ -207,7 +208,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"SpeechOffset",
 			"Speech/Offset"
@@ -215,7 +216,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"SurvivalOffset",
 			"Survival/Offset"
@@ -223,7 +224,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"UnarmedOffset",
 			"Unarmed/Offset"

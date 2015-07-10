@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PlaneData : Subrecord, ICloneable<PlaneData>
+	public partial class PlaneData : Subrecord, ICloneable<PlaneData>, IComparable<PlaneData>, IEquatable<PlaneData>  
 	{
 		public Single Width { get; set; }
 		public Single Height { get; set; }
@@ -91,21 +92,21 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Width);			
-			writer.Write(Height);			
-			writer.Write(PositionX);			
-			writer.Write(PositionY);			
-			writer.Write(PositionZ);			
-			writer.Write(RotationQuaternion1);			
-			writer.Write(RotationQuaternion2);			
-			writer.Write(RotationQuaternion3);			
-			writer.Write(RotationQuaternion4);			
+			writer.Write(Width);
+			writer.Write(Height);
+			writer.Write(PositionX);
+			writer.Write(PositionY);
+			writer.Write(PositionZ);
+			writer.Write(RotationQuaternion1);
+			writer.Write(RotationQuaternion2);
+			writer.Write(RotationQuaternion3);
+			writer.Write(RotationQuaternion4);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Width", true, out subEle);
 			subEle.Value = Width.ToString("G15");
 
@@ -137,51 +138,33 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Width", false, out subEle))
-			{
 				Width = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Height", false, out subEle))
-			{
 				Height = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Position/X", false, out subEle))
-			{
 				PositionX = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Position/Y", false, out subEle))
-			{
 				PositionY = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Position/Z", false, out subEle))
-			{
 				PositionZ = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Rotation/Quaternion1", false, out subEle))
-			{
 				RotationQuaternion1 = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Rotation/Quaternion2", false, out subEle))
-			{
 				RotationQuaternion2 = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Rotation/Quaternion3", false, out subEle))
-			{
 				RotationQuaternion3 = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Rotation/Quaternion4", false, out subEle))
-			{
 				RotationQuaternion4 = subEle.ToSingle();
-			}
 		}
 
 		public PlaneData Clone()
@@ -189,5 +172,100 @@ namespace ESPSharp.Subrecords
 			return new PlaneData(this);
 		}
 
+        public int CompareTo(PlaneData other)
+        {
+			return Width.CompareTo(other.Width);
+        }
+
+        public static bool operator >(PlaneData objA, PlaneData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(PlaneData objA, PlaneData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(PlaneData objA, PlaneData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(PlaneData objA, PlaneData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(PlaneData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Width == other.Width &&
+				Height == other.Height &&
+				PositionX == other.PositionX &&
+				PositionY == other.PositionY &&
+				PositionZ == other.PositionZ &&
+				RotationQuaternion1 == other.RotationQuaternion1 &&
+				RotationQuaternion2 == other.RotationQuaternion2 &&
+				RotationQuaternion3 == other.RotationQuaternion3 &&
+				RotationQuaternion4 == other.RotationQuaternion4;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            PlaneData other = obj as PlaneData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Width.GetHashCode();
+        }
+
+        public static bool operator ==(PlaneData objA, PlaneData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(PlaneData objA, PlaneData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

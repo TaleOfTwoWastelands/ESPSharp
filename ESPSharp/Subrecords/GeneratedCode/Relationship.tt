@@ -1,23 +1,24 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "Relationship";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	//Faction
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Faction",
 			"Faction"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	//Modifier
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(int),
 			"Modifier",
 			"Modifier"
@@ -26,7 +27,7 @@
 
 	//CombatReaction
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(RelationshipCombatReaction),
 			"CombatReaction",
 			"CombatReaction"

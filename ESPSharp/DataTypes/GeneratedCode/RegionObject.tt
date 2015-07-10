@@ -12,6 +12,7 @@
 			"Object",
 			"Object"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ImageSpaceAdapterData : Subrecord, ICloneable<ImageSpaceAdapterData>
+	public partial class ImageSpaceAdapterData : Subrecord, ICloneable<ImageSpaceAdapterData>, IComparable<ImageSpaceAdapterData>, IEquatable<ImageSpaceAdapterData>  
 	{
 		public NoYes IsAnimatable { get; set; }
 		public Single Duration { get; set; }
@@ -262,52 +263,52 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((UInt32)IsAnimatable);
-			writer.Write(Duration);			
-			writer.Write(HDREyeAdaptSpeedMult);			
-			writer.Write(HDREyeAdaptSpeedAdd);			
-			writer.Write(HDRBloomBlurRadiusMult);			
-			writer.Write(HDRBloomBlurRadiusAdd);			
-			writer.Write(HDRBloomThresholdMult);			
-			writer.Write(HDRBloomThresholdAdd);			
-			writer.Write(HDRBloomScaleMult);			
-			writer.Write(HDRBloomScaleAdd);			
-			writer.Write(HDRTargetLumMinMult);			
-			writer.Write(HDRTargetLumMinAdd);			
-			writer.Write(HDRTargetLumMaxMult);			
-			writer.Write(HDRTargetLumMaxAdd);			
-			writer.Write(HDRSunlightScaleMult);			
-			writer.Write(HDRSunlightScaleAdd);			
-			writer.Write(HDRSkyScaleMult);			
-			writer.Write(HDRSkyScaleAdd);			
+			writer.Write(Duration);
+			writer.Write(HDREyeAdaptSpeedMult);
+			writer.Write(HDREyeAdaptSpeedAdd);
+			writer.Write(HDRBloomBlurRadiusMult);
+			writer.Write(HDRBloomBlurRadiusAdd);
+			writer.Write(HDRBloomThresholdMult);
+			writer.Write(HDRBloomThresholdAdd);
+			writer.Write(HDRBloomScaleMult);
+			writer.Write(HDRBloomScaleAdd);
+			writer.Write(HDRTargetLumMinMult);
+			writer.Write(HDRTargetLumMinAdd);
+			writer.Write(HDRTargetLumMaxMult);
+			writer.Write(HDRTargetLumMaxAdd);
+			writer.Write(HDRSunlightScaleMult);
+			writer.Write(HDRSunlightScaleAdd);
+			writer.Write(HDRSkyScaleMult);
+			writer.Write(HDRSkyScaleAdd);
 			if (Unknown1 == null)
 				writer.Write(new byte[72]);
 			else
-				writer.Write(Unknown1);
-			writer.Write(CinematicSaturationMult);			
-			writer.Write(CinematicSaturationAdd);			
-			writer.Write(CinematicBrightnessMult);			
-			writer.Write(CinematicBrightnessAdd);			
-			writer.Write(CinematicContrastMult);			
-			writer.Write(CinematicContrastAdd);			
+			writer.Write(Unknown1);
+			writer.Write(CinematicSaturationMult);
+			writer.Write(CinematicSaturationAdd);
+			writer.Write(CinematicBrightnessMult);
+			writer.Write(CinematicBrightnessAdd);
+			writer.Write(CinematicContrastMult);
+			writer.Write(CinematicContrastAdd);
 			if (Unknown2 == null)
 				writer.Write(new byte[8]);
 			else
-				writer.Write(Unknown2);
+			writer.Write(Unknown2);
 			TintColor.WriteBinary(writer);
-			writer.Write(BlurRadius);			
-			writer.Write(DoubleVisionStrength);			
-			writer.Write(RadialBlurStrength);			
-			writer.Write(RadialBlurRampUp);			
-			writer.Write(RadialBlurStart);			
+			writer.Write(BlurRadius);
+			writer.Write(DoubleVisionStrength);
+			writer.Write(RadialBlurStrength);
+			writer.Write(RadialBlurRampUp);
+			writer.Write(RadialBlurStart);
 			writer.Write((UInt32)RadialBlurUseTarget);
-			writer.Write(RadialBlurCenterX);			
-			writer.Write(RadialBlurCenterY);			
-			writer.Write(DepthOfFieldStrength);			
-			writer.Write(DepthOfFieldDistance);			
-			writer.Write(DepthOfFieldRange);			
+			writer.Write(RadialBlurCenterX);
+			writer.Write(RadialBlurCenterY);
+			writer.Write(DepthOfFieldStrength);
+			writer.Write(DepthOfFieldDistance);
+			writer.Write(DepthOfFieldRange);
 			writer.Write((UInt32)DepthOfFieldUseTarget);
-			writer.Write(RadialBlurRampDown);			
-			writer.Write(RadialBlurDownStart);			
+			writer.Write(RadialBlurRampDown);
+			writer.Write(RadialBlurDownStart);
 			FadeColor.WriteBinary(writer);
 			writer.Write((UInt32)MotionBlurStrength);
 		}
@@ -315,7 +316,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("IsAnimatable", true, out subEle);
 			subEle.Value = IsAnimatable.ToString();
 
@@ -449,221 +450,135 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("IsAnimatable", false, out subEle))
-			{
 				IsAnimatable = subEle.ToEnum<NoYes>();
-			}
 
 			if (ele.TryPathTo("Duration", false, out subEle))
-			{
 				Duration = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/EyeAdaptSpeed/Mult", false, out subEle))
-			{
 				HDREyeAdaptSpeedMult = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/EyeAdaptSpeed/Add", false, out subEle))
-			{
 				HDREyeAdaptSpeedAdd = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/Bloom/BlurRadius/Mult", false, out subEle))
-			{
 				HDRBloomBlurRadiusMult = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/Bloom/BlurRadius/Add", false, out subEle))
-			{
 				HDRBloomBlurRadiusAdd = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/Bloom/Threshold/Mult", false, out subEle))
-			{
 				HDRBloomThresholdMult = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/Bloom/Threshold/Add", false, out subEle))
-			{
 				HDRBloomThresholdAdd = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/Bloom/Scale/Mult", false, out subEle))
-			{
 				HDRBloomScaleMult = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/Bloom/Scale/Add", false, out subEle))
-			{
 				HDRBloomScaleAdd = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/TargetLum/Min/Mult", false, out subEle))
-			{
 				HDRTargetLumMinMult = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/TargetLum/Min/Add", false, out subEle))
-			{
 				HDRTargetLumMinAdd = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/TargetLum/Max/Mult", false, out subEle))
-			{
 				HDRTargetLumMaxMult = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/TargetLum/Max/Add", false, out subEle))
-			{
 				HDRTargetLumMaxAdd = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/SunlightScale/Mult", false, out subEle))
-			{
 				HDRSunlightScaleMult = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/SunlightScale/Add", false, out subEle))
-			{
 				HDRSunlightScaleAdd = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/SkyScale/Mult", false, out subEle))
-			{
 				HDRSkyScaleMult = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("HDR/SkyScale/Add", false, out subEle))
-			{
 				HDRSkyScaleAdd = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Unknown1", false, out subEle))
-			{
 				Unknown1 = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("Cinematic/Saturation/Mult", false, out subEle))
-			{
 				CinematicSaturationMult = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Cinematic/Saturation/Add", false, out subEle))
-			{
 				CinematicSaturationAdd = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Cinematic/Brightness/Mult", false, out subEle))
-			{
 				CinematicBrightnessMult = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Cinematic/Brightness/Add", false, out subEle))
-			{
 				CinematicBrightnessAdd = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Cinematic/Contrast/Mult", false, out subEle))
-			{
 				CinematicContrastMult = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Cinematic/Contrast/Add", false, out subEle))
-			{
 				CinematicContrastAdd = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Unknown2", false, out subEle))
-			{
 				Unknown2 = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("TintColor", false, out subEle))
-			{
 				TintColor.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("BlurRadius", false, out subEle))
-			{
 				BlurRadius = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("DoubleVisionStrength", false, out subEle))
-			{
 				DoubleVisionStrength = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("RadialBlur/Strength", false, out subEle))
-			{
 				RadialBlurStrength = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("RadialBlur/RampUp", false, out subEle))
-			{
 				RadialBlurRampUp = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("RadialBlur/Start", false, out subEle))
-			{
 				RadialBlurStart = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("RadialBlur/UseTarget", false, out subEle))
-			{
 				RadialBlurUseTarget = subEle.ToEnum<NoYes>();
-			}
 
 			if (ele.TryPathTo("RadialBlur/Center/X", false, out subEle))
-			{
 				RadialBlurCenterX = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("RadialBlur/Center/Y", false, out subEle))
-			{
 				RadialBlurCenterY = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("DepthOfField/Strength", false, out subEle))
-			{
 				DepthOfFieldStrength = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("DepthOfField/Distance", false, out subEle))
-			{
 				DepthOfFieldDistance = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("DepthOfField/Range", false, out subEle))
-			{
 				DepthOfFieldRange = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("DepthOfField/UseTarget", false, out subEle))
-			{
 				DepthOfFieldUseTarget = subEle.ToEnum<NoYes>();
-			}
 
 			if (ele.TryPathTo("RadialBlur/RampDown", false, out subEle))
-			{
 				RadialBlurRampDown = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("RadialBlur/DownStart", false, out subEle))
-			{
 				RadialBlurDownStart = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("FadeColor", false, out subEle))
-			{
 				FadeColor.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("MotionBlurStrength", false, out subEle))
-			{
 				MotionBlurStrength = subEle.ToEnum<NoYes>();
-			}
 		}
 
 		public ImageSpaceAdapterData Clone()
@@ -671,5 +586,134 @@ namespace ESPSharp.Subrecords
 			return new ImageSpaceAdapterData(this);
 		}
 
+        public int CompareTo(ImageSpaceAdapterData other)
+        {
+			return Duration.CompareTo(other.Duration);
+        }
+
+        public static bool operator >(ImageSpaceAdapterData objA, ImageSpaceAdapterData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ImageSpaceAdapterData objA, ImageSpaceAdapterData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ImageSpaceAdapterData objA, ImageSpaceAdapterData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ImageSpaceAdapterData objA, ImageSpaceAdapterData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ImageSpaceAdapterData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return IsAnimatable == other.IsAnimatable &&
+				Duration == other.Duration &&
+				HDREyeAdaptSpeedMult == other.HDREyeAdaptSpeedMult &&
+				HDREyeAdaptSpeedAdd == other.HDREyeAdaptSpeedAdd &&
+				HDRBloomBlurRadiusMult == other.HDRBloomBlurRadiusMult &&
+				HDRBloomBlurRadiusAdd == other.HDRBloomBlurRadiusAdd &&
+				HDRBloomThresholdMult == other.HDRBloomThresholdMult &&
+				HDRBloomThresholdAdd == other.HDRBloomThresholdAdd &&
+				HDRBloomScaleMult == other.HDRBloomScaleMult &&
+				HDRBloomScaleAdd == other.HDRBloomScaleAdd &&
+				HDRTargetLumMinMult == other.HDRTargetLumMinMult &&
+				HDRTargetLumMinAdd == other.HDRTargetLumMinAdd &&
+				HDRTargetLumMaxMult == other.HDRTargetLumMaxMult &&
+				HDRTargetLumMaxAdd == other.HDRTargetLumMaxAdd &&
+				HDRSunlightScaleMult == other.HDRSunlightScaleMult &&
+				HDRSunlightScaleAdd == other.HDRSunlightScaleAdd &&
+				HDRSkyScaleMult == other.HDRSkyScaleMult &&
+				HDRSkyScaleAdd == other.HDRSkyScaleAdd &&
+				Unknown1.SequenceEqual(other.Unknown1) &&
+				CinematicSaturationMult == other.CinematicSaturationMult &&
+				CinematicSaturationAdd == other.CinematicSaturationAdd &&
+				CinematicBrightnessMult == other.CinematicBrightnessMult &&
+				CinematicBrightnessAdd == other.CinematicBrightnessAdd &&
+				CinematicContrastMult == other.CinematicContrastMult &&
+				CinematicContrastAdd == other.CinematicContrastAdd &&
+				Unknown2.SequenceEqual(other.Unknown2) &&
+				TintColor == other.TintColor &&
+				BlurRadius == other.BlurRadius &&
+				DoubleVisionStrength == other.DoubleVisionStrength &&
+				RadialBlurStrength == other.RadialBlurStrength &&
+				RadialBlurRampUp == other.RadialBlurRampUp &&
+				RadialBlurStart == other.RadialBlurStart &&
+				RadialBlurUseTarget == other.RadialBlurUseTarget &&
+				RadialBlurCenterX == other.RadialBlurCenterX &&
+				RadialBlurCenterY == other.RadialBlurCenterY &&
+				DepthOfFieldStrength == other.DepthOfFieldStrength &&
+				DepthOfFieldDistance == other.DepthOfFieldDistance &&
+				DepthOfFieldRange == other.DepthOfFieldRange &&
+				DepthOfFieldUseTarget == other.DepthOfFieldUseTarget &&
+				RadialBlurRampDown == other.RadialBlurRampDown &&
+				RadialBlurDownStart == other.RadialBlurDownStart &&
+				FadeColor == other.FadeColor &&
+				MotionBlurStrength == other.MotionBlurStrength;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ImageSpaceAdapterData other = obj as ImageSpaceAdapterData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Duration.GetHashCode();
+        }
+
+        public static bool operator ==(ImageSpaceAdapterData objA, ImageSpaceAdapterData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ImageSpaceAdapterData objA, ImageSpaceAdapterData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class BookData : Subrecord, ICloneable<BookData>
+	public partial class BookData : Subrecord, ICloneable<BookData>, IComparable<BookData>, IEquatable<BookData>  
 	{
 		public BookFlags Flags { get; set; }
 		public ActorValuesByte Skill { get; set; }
@@ -68,14 +69,14 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write((Byte)Flags);
 			writer.Write((SByte)Skill);
-			writer.Write(Value);			
-			writer.Write(Weight);			
+			writer.Write(Value);
+			writer.Write(Weight);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
@@ -92,26 +93,18 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<BookFlags>();
-			}
 
 			if (ele.TryPathTo("Skill", false, out subEle))
-			{
 				Skill = subEle.ToEnum<ActorValuesByte>();
-			}
 
 			if (ele.TryPathTo("Value", false, out subEle))
-			{
 				Value = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Weight", false, out subEle))
-			{
 				Weight = subEle.ToSingle();
-			}
 		}
 
 		public BookData Clone()
@@ -119,5 +112,95 @@ namespace ESPSharp.Subrecords
 			return new BookData(this);
 		}
 
+        public int CompareTo(BookData other)
+        {
+			return Skill.CompareTo(other.Skill);
+        }
+
+        public static bool operator >(BookData objA, BookData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(BookData objA, BookData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(BookData objA, BookData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(BookData objA, BookData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(BookData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Flags == other.Flags &&
+				Skill == other.Skill &&
+				Value == other.Value &&
+				Weight == other.Weight;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            BookData other = obj as BookData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Skill.GetHashCode();
+        }
+
+        public static bool operator ==(BookData objA, BookData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(BookData objA, BookData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

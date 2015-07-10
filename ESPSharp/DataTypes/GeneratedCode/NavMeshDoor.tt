@@ -12,6 +12,7 @@
 			"Door",
 			"Door"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 

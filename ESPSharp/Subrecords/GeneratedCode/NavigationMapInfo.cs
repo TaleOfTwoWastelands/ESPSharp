@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NavigationMapInfo : Subrecord, ICloneable<NavigationMapInfo>, IReferenceContainer
+	public partial class NavigationMapInfo : Subrecord, ICloneable<NavigationMapInfo>, IComparable<NavigationMapInfo>, IEquatable<NavigationMapInfo>  
 	{
 		public Byte[] Unknown1 { get; set; }
 		public FormID NavigationMesh { get; set; }
@@ -79,21 +80,21 @@ namespace ESPSharp.Subrecords
 			if (Unknown1 == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unknown1);
+			writer.Write(Unknown1);
 			NavigationMesh.WriteBinary(writer);
 			Location.WriteBinary(writer);
-			writer.Write(GridX);			
-			writer.Write(GridY);			
+			writer.Write(GridX);
+			writer.Write(GridY);
 			if (Unknown2 == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unknown2);
+			writer.Write(Unknown2);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Unknown1", true, out subEle);
 			subEle.Value = Unknown1.ToHex();
 
@@ -116,36 +117,24 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Unknown1", false, out subEle))
-			{
 				Unknown1 = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("NavigationMesh", false, out subEle))
-			{
 				NavigationMesh.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Location", false, out subEle))
-			{
 				Location.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Grid/X", false, out subEle))
-			{
 				GridX = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Grid/Y", false, out subEle))
-			{
 				GridY = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Unknown2", false, out subEle))
-			{
 				Unknown2 = subEle.ToBytes();
-			}
 		}
 
 		public NavigationMapInfo Clone()
@@ -153,7 +142,99 @@ namespace ESPSharp.Subrecords
 			return new NavigationMapInfo(this);
 		}
 
-		partial void ReadUnknown2Binary(ESPReader reader);
+        public int CompareTo(NavigationMapInfo other)
+        {
+			return NavigationMesh.CompareTo(other.NavigationMesh);
+        }
 
+        public static bool operator >(NavigationMapInfo objA, NavigationMapInfo objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(NavigationMapInfo objA, NavigationMapInfo objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(NavigationMapInfo objA, NavigationMapInfo objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(NavigationMapInfo objA, NavigationMapInfo objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(NavigationMapInfo other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Unknown1.SequenceEqual(other.Unknown1) &&
+				NavigationMesh == other.NavigationMesh &&
+				Location == other.Location &&
+				GridX == other.GridX &&
+				GridY == other.GridY &&
+				Unknown2.SequenceEqual(other.Unknown2);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            NavigationMapInfo other = obj as NavigationMapInfo;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return NavigationMesh.GetHashCode();
+        }
+
+        public static bool operator ==(NavigationMapInfo objA, NavigationMapInfo objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(NavigationMapInfo objA, NavigationMapInfo objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnknown2Binary(ESPReader reader);
 	}
 }

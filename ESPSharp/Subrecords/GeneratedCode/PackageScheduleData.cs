@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PackageScheduleData : Subrecord, ICloneable<PackageScheduleData>
+	public partial class PackageScheduleData : Subrecord, ICloneable<PackageScheduleData>, IComparable<PackageScheduleData>, IEquatable<PackageScheduleData>  
 	{
 		public SByte Month { get; set; }
 		public PackageScheduleDays DayOfWeek { get; set; }
@@ -71,17 +72,17 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Month);			
+			writer.Write(Month);
 			writer.Write((SByte)DayOfWeek);
-			writer.Write(Date);			
-			writer.Write(Time);			
-			writer.Write(Duration);			
+			writer.Write(Date);
+			writer.Write(Time);
+			writer.Write(Duration);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Month", true, out subEle);
 			subEle.Value = Month.ToString();
 
@@ -101,31 +102,21 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Month", false, out subEle))
-			{
 				Month = subEle.ToSByte();
-			}
 
 			if (ele.TryPathTo("DayOfWeek", false, out subEle))
-			{
 				DayOfWeek = subEle.ToEnum<PackageScheduleDays>();
-			}
 
 			if (ele.TryPathTo("Date", false, out subEle))
-			{
 				Date = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Time", false, out subEle))
-			{
 				Time = subEle.ToSByte();
-			}
 
 			if (ele.TryPathTo("Duration", false, out subEle))
-			{
 				Duration = subEle.ToInt32();
-			}
 		}
 
 		public PackageScheduleData Clone()
@@ -133,5 +124,96 @@ namespace ESPSharp.Subrecords
 			return new PackageScheduleData(this);
 		}
 
+        public int CompareTo(PackageScheduleData other)
+        {
+			return DayOfWeek.CompareTo(other.DayOfWeek);
+        }
+
+        public static bool operator >(PackageScheduleData objA, PackageScheduleData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(PackageScheduleData objA, PackageScheduleData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(PackageScheduleData objA, PackageScheduleData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(PackageScheduleData objA, PackageScheduleData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(PackageScheduleData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Month == other.Month &&
+				DayOfWeek == other.DayOfWeek &&
+				Date == other.Date &&
+				Time == other.Time &&
+				Duration == other.Duration;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            PackageScheduleData other = obj as PackageScheduleData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return DayOfWeek.GetHashCode();
+        }
+
+        public static bool operator ==(PackageScheduleData objA, PackageScheduleData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(PackageScheduleData objA, PackageScheduleData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

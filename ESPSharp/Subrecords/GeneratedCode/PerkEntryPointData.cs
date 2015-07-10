@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PerkEntryPointData : Subrecord, ICloneable<PerkEntryPointData>
+	public partial class PerkEntryPointData : Subrecord, ICloneable<PerkEntryPointData>, IComparable<PerkEntryPointData>, IEquatable<PerkEntryPointData>  
 	{
 		public EntryPoint EntryPoint { get; set; }
 		public PerkFunction Function { get; set; }
@@ -63,13 +64,13 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write((Byte)EntryPoint);
 			writer.Write((Byte)Function);
-			writer.Write(PerkConditionTabCount);			
+			writer.Write(PerkConditionTabCount);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("EntryPoint", true, out subEle);
 			subEle.Value = EntryPoint.ToString();
 
@@ -83,21 +84,15 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("EntryPoint", false, out subEle))
-			{
 				EntryPoint = subEle.ToEnum<EntryPoint>();
-			}
 
 			if (ele.TryPathTo("Function", false, out subEle))
-			{
 				Function = subEle.ToEnum<PerkFunction>();
-			}
 
 			if (ele.TryPathTo("PerkConditionTabCount", false, out subEle))
-			{
 				PerkConditionTabCount = subEle.ToByte();
-			}
 		}
 
 		public PerkEntryPointData Clone()
@@ -105,5 +100,94 @@ namespace ESPSharp.Subrecords
 			return new PerkEntryPointData(this);
 		}
 
+        public int CompareTo(PerkEntryPointData other)
+        {
+			return EntryPoint.CompareTo(other.EntryPoint);
+        }
+
+        public static bool operator >(PerkEntryPointData objA, PerkEntryPointData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(PerkEntryPointData objA, PerkEntryPointData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(PerkEntryPointData objA, PerkEntryPointData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(PerkEntryPointData objA, PerkEntryPointData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(PerkEntryPointData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return EntryPoint == other.EntryPoint &&
+				Function == other.Function &&
+				PerkConditionTabCount == other.PerkConditionTabCount;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            PerkEntryPointData other = obj as PerkEntryPointData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return EntryPoint.GetHashCode();
+        }
+
+        public static bool operator ==(PerkEntryPointData objA, PerkEntryPointData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(PerkEntryPointData objA, PerkEntryPointData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

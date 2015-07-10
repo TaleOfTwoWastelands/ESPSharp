@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class IMADTimeColor : IESPSerializable, ICloneable<IMADTimeColor>
+	public partial class IMADTimeColor : IESPSerializable, ICloneable<IMADTimeColor>, IComparable<IMADTimeColor>, IEquatable<IMADTimeColor>
 	{
 		public Single Time { get; set; }
 		public Single Red { get; set; }
@@ -128,5 +128,63 @@ namespace ESPSharp.DataTypes
 		{
 			return new IMADTimeColor(this);
 		}
+
+        public int CompareTo(IMADTimeColor other)
+        {
+            return Time.CompareTo(other.Time);
+        }
+
+        public static bool operator >(IMADTimeColor objA, IMADTimeColor objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(IMADTimeColor objA, IMADTimeColor objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(IMADTimeColor objA, IMADTimeColor objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(IMADTimeColor objA, IMADTimeColor objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(IMADTimeColor other)
+        {
+			return Time == other.Time &&
+				Red == other.Red &&
+				Green == other.Green &&
+				Blue == other.Blue &&
+				Alpha == other.Alpha;
+        }
+
+        public override bool Equals(object obj)
+        {
+            IMADTimeColor other = obj as IMADTimeColor;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Time.GetHashCode();
+        }
+
+        public static bool operator ==(IMADTimeColor objA, IMADTimeColor objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(IMADTimeColor objA, IMADTimeColor objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }

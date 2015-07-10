@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class DestructionStage : SubrecordCollection, ICloneable<DestructionStage>, IReferenceContainer
+	public partial class DestructionStage : SubrecordCollection, ICloneable<DestructionStage>
 	{
 		public DestructionStageData StageData { get; set; }
 		public SimpleSubrecord<String> ModelFilename { get; set; }

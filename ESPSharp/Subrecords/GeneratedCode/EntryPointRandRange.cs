@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EntryPointRandRange : Subrecord, ICloneable<EntryPointRandRange>
+	public partial class EntryPointRandRange : Subrecord, ICloneable<EntryPointRandRange>, IComparable<EntryPointRandRange>, IEquatable<EntryPointRandRange>  
 	{
 		public Single RandMin { get; set; }
 		public Single RandMax { get; set; }
@@ -56,14 +57,14 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(RandMin);			
-			writer.Write(RandMax);			
+			writer.Write(RandMin);
+			writer.Write(RandMax);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("RandMin", true, out subEle);
 			subEle.Value = RandMin.ToString("G15");
 
@@ -74,16 +75,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("RandMin", false, out subEle))
-			{
 				RandMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("RandMax", false, out subEle))
-			{
 				RandMax = subEle.ToSingle();
-			}
 		}
 
 		public EntryPointRandRange Clone()
@@ -91,5 +88,93 @@ namespace ESPSharp.Subrecords
 			return new EntryPointRandRange(this);
 		}
 
+        public int CompareTo(EntryPointRandRange other)
+        {
+			return RandMin.CompareTo(other.RandMin);
+        }
+
+        public static bool operator >(EntryPointRandRange objA, EntryPointRandRange objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(EntryPointRandRange objA, EntryPointRandRange objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(EntryPointRandRange objA, EntryPointRandRange objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(EntryPointRandRange objA, EntryPointRandRange objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(EntryPointRandRange other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return RandMin == other.RandMin &&
+				RandMax == other.RandMax;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            EntryPointRandRange other = obj as EntryPointRandRange;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return RandMin.GetHashCode();
+        }
+
+        public static bool operator ==(EntryPointRandRange objA, EntryPointRandRange objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(EntryPointRandRange objA, EntryPointRandRange objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

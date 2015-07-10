@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WorldMapOffsetData : Subrecord, ICloneable<WorldMapOffsetData>
+	public partial class WorldMapOffsetData : Subrecord, ICloneable<WorldMapOffsetData>, IComparable<WorldMapOffsetData>, IEquatable<WorldMapOffsetData>  
 	{
 		public Single WorldMapScale { get; set; }
 		public Single CellXOffset { get; set; }
@@ -61,15 +61,15 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(WorldMapScale);			
-			writer.Write(CellXOffset);			
-			writer.Write(CellYOffset);			
+			writer.Write(WorldMapScale);
+			writer.Write(CellXOffset);
+			writer.Write(CellYOffset);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("WorldMapScale", true, out subEle);
 			subEle.Value = WorldMapScale.ToString("G15");
 
@@ -83,21 +83,15 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("WorldMapScale", false, out subEle))
-			{
 				WorldMapScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Offset/CellX", false, out subEle))
-			{
 				CellXOffset = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Offset/CellY", false, out subEle))
-			{
 				CellYOffset = subEle.ToSingle();
-			}
 		}
 
 		public WorldMapOffsetData Clone()
@@ -105,5 +99,94 @@ namespace ESPSharp.Subrecords
 			return new WorldMapOffsetData(this);
 		}
 
+        public int CompareTo(WorldMapOffsetData other)
+        {
+			return WorldMapScale.CompareTo(other.WorldMapScale);
+        }
+
+        public static bool operator >(WorldMapOffsetData objA, WorldMapOffsetData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(WorldMapOffsetData objA, WorldMapOffsetData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(WorldMapOffsetData objA, WorldMapOffsetData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(WorldMapOffsetData objA, WorldMapOffsetData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(WorldMapOffsetData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return WorldMapScale == other.WorldMapScale &&
+				CellXOffset == other.CellXOffset &&
+				CellYOffset == other.CellYOffset;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            WorldMapOffsetData other = obj as WorldMapOffsetData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return WorldMapScale.GetHashCode();
+        }
+
+        public static bool operator ==(WorldMapOffsetData objA, WorldMapOffsetData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(WorldMapOffsetData objA, WorldMapOffsetData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

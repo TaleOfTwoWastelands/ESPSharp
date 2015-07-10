@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class Attributes : Subrecord, ICloneable<Attributes>
+	public partial class Attributes : Subrecord, ICloneable<Attributes>, IComparable<Attributes>, IEquatable<Attributes>  
 	{
 		public Byte Strength { get; set; }
 		public Byte Perception { get; set; }
@@ -81,19 +82,19 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Strength);			
-			writer.Write(Perception);			
-			writer.Write(Endurance);			
-			writer.Write(Charisma);			
-			writer.Write(Intelligence);			
-			writer.Write(Agility);			
-			writer.Write(Luck);			
+			writer.Write(Strength);
+			writer.Write(Perception);
+			writer.Write(Endurance);
+			writer.Write(Charisma);
+			writer.Write(Intelligence);
+			writer.Write(Agility);
+			writer.Write(Luck);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Strength", true, out subEle);
 			subEle.Value = Strength.ToString();
 
@@ -119,41 +120,27 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Strength", false, out subEle))
-			{
 				Strength = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Perception", false, out subEle))
-			{
 				Perception = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Endurance", false, out subEle))
-			{
 				Endurance = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Charisma", false, out subEle))
-			{
 				Charisma = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Intelligence", false, out subEle))
-			{
 				Intelligence = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Agility", false, out subEle))
-			{
 				Agility = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Luck", false, out subEle))
-			{
 				Luck = subEle.ToByte();
-			}
 		}
 
 		public Attributes Clone()
@@ -161,5 +148,98 @@ namespace ESPSharp.Subrecords
 			return new Attributes(this);
 		}
 
+        public int CompareTo(Attributes other)
+        {
+			return Strength.CompareTo(other.Strength);
+        }
+
+        public static bool operator >(Attributes objA, Attributes objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(Attributes objA, Attributes objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(Attributes objA, Attributes objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(Attributes objA, Attributes objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(Attributes other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Strength == other.Strength &&
+				Perception == other.Perception &&
+				Endurance == other.Endurance &&
+				Charisma == other.Charisma &&
+				Intelligence == other.Intelligence &&
+				Agility == other.Agility &&
+				Luck == other.Luck;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            Attributes other = obj as Attributes;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Strength.GetHashCode();
+        }
+
+        public static bool operator ==(Attributes objA, Attributes objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(Attributes objA, Attributes objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

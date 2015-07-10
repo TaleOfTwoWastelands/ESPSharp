@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class Effect : SubrecordCollection, ICloneable<Effect>, IReferenceContainer
+	public partial class Effect : SubrecordCollection, ICloneable<Effect>
 	{
 		public RecordReference BaseEffect { get; set; }
 		public EffectData EffectData { get; set; }

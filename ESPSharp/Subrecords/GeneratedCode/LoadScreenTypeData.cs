@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LoadScreenTypeData : Subrecord, ICloneable<LoadScreenTypeData>
+	public partial class LoadScreenTypeData : Subrecord, ICloneable<LoadScreenTypeData>, IComparable<LoadScreenTypeData>, IEquatable<LoadScreenTypeData>  
 	{
 		public LoadScreenTypeEnum Type { get; set; }
 		public UInt32 X { get; set; }
@@ -137,35 +138,35 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((UInt32)Type);
-			writer.Write(X);			
-			writer.Write(Y);			
-			writer.Write(Width);			
-			writer.Write(Height);			
-			writer.Write(Orientation);			
+			writer.Write(X);
+			writer.Write(Y);
+			writer.Write(Width);
+			writer.Write(Height);
+			writer.Write(Orientation);
 			writer.Write((UInt32)Font1);
-			writer.Write(Font1Red);			
-			writer.Write(Font1Green);			
-			writer.Write(Font1Blue);			
+			writer.Write(Font1Red);
+			writer.Write(Font1Green);
+			writer.Write(Font1Blue);
 			writer.Write((UInt32)Font1Alignment);
 			if (Unknown1 == null)
 				writer.Write(new byte[20]);
 			else
-				writer.Write(Unknown1);
+			writer.Write(Unknown1);
 			writer.Write((UInt32)Font2);
-			writer.Write(Font2Red);			
-			writer.Write(Font2Green);			
-			writer.Write(Font2Blue);			
+			writer.Write(Font2Red);
+			writer.Write(Font2Green);
+			writer.Write(Font2Blue);
 			if (Unknown2 == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unknown2);
-			writer.Write(Stats);			
+			writer.Write(Unknown2);
+			writer.Write(Stats);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Type", true, out subEle);
 			subEle.Value = Type.ToString();
 
@@ -224,96 +225,60 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Type", false, out subEle))
-			{
 				Type = subEle.ToEnum<LoadScreenTypeEnum>();
-			}
 
 			if (ele.TryPathTo("X", false, out subEle))
-			{
 				X = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Y", false, out subEle))
-			{
 				Y = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Width", false, out subEle))
-			{
 				Width = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Height", false, out subEle))
-			{
 				Height = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Orientation", false, out subEle))
-			{
 				Orientation = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Font1/Font", false, out subEle))
-			{
 				Font1 = subEle.ToEnum<FontType>();
-			}
 
 			if (ele.TryPathTo("Font1/Color/Red", false, out subEle))
-			{
 				Font1Red = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Font1/Color/Green", false, out subEle))
-			{
 				Font1Green = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Font1/Color/Blue", false, out subEle))
-			{
 				Font1Blue = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Font1/Alignment", false, out subEle))
-			{
 				Font1Alignment = subEle.ToEnum<FontAlignment>();
-			}
 
 			if (ele.TryPathTo("Unknown1", false, out subEle))
-			{
 				Unknown1 = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("Font2/Font", false, out subEle))
-			{
 				Font2 = subEle.ToEnum<FontType>();
-			}
 
 			if (ele.TryPathTo("Font2/Color/Red", false, out subEle))
-			{
 				Font2Red = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Font2/Color/Green", false, out subEle))
-			{
 				Font2Green = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Font2/Color/Blue", false, out subEle))
-			{
 				Font2Blue = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Unknown2", false, out subEle))
-			{
 				Unknown2 = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("Stats", false, out subEle))
-			{
 				Stats = subEle.ToUInt32();
-			}
 		}
 
 		public LoadScreenTypeData Clone()
@@ -321,5 +286,109 @@ namespace ESPSharp.Subrecords
 			return new LoadScreenTypeData(this);
 		}
 
+        public int CompareTo(LoadScreenTypeData other)
+        {
+			return Type.CompareTo(other.Type);
+        }
+
+        public static bool operator >(LoadScreenTypeData objA, LoadScreenTypeData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(LoadScreenTypeData objA, LoadScreenTypeData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(LoadScreenTypeData objA, LoadScreenTypeData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(LoadScreenTypeData objA, LoadScreenTypeData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(LoadScreenTypeData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Type == other.Type &&
+				X == other.X &&
+				Y == other.Y &&
+				Width == other.Width &&
+				Height == other.Height &&
+				Orientation == other.Orientation &&
+				Font1 == other.Font1 &&
+				Font1Red == other.Font1Red &&
+				Font1Green == other.Font1Green &&
+				Font1Blue == other.Font1Blue &&
+				Font1Alignment == other.Font1Alignment &&
+				Unknown1.SequenceEqual(other.Unknown1) &&
+				Font2 == other.Font2 &&
+				Font2Red == other.Font2Red &&
+				Font2Green == other.Font2Green &&
+				Font2Blue == other.Font2Blue &&
+				Unknown2.SequenceEqual(other.Unknown2) &&
+				Stats == other.Stats;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            LoadScreenTypeData other = obj as LoadScreenTypeData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Type.GetHashCode();
+        }
+
+        public static bool operator ==(LoadScreenTypeData objA, LoadScreenTypeData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(LoadScreenTypeData objA, LoadScreenTypeData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

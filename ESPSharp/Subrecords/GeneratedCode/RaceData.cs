@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RaceData : Subrecord, ICloneable<RaceData>
+	public partial class RaceData : Subrecord, ICloneable<RaceData>, IComparable<RaceData>, IEquatable<RaceData>  
 	{
 		public ActorValuesByte SkillBonus1 { get; set; }
 		public Byte SkillBonus1Amount { get; set; }
@@ -147,34 +148,34 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((SByte)SkillBonus1);
-			writer.Write(SkillBonus1Amount);			
+			writer.Write(SkillBonus1Amount);
 			writer.Write((SByte)SkillBonus2);
-			writer.Write(SkillBonus2Amount);			
+			writer.Write(SkillBonus2Amount);
 			writer.Write((SByte)SkillBonus3);
-			writer.Write(SkillBonus3Amount);			
+			writer.Write(SkillBonus3Amount);
 			writer.Write((SByte)SkillBonus4);
-			writer.Write(SkillBonus4Amount);			
+			writer.Write(SkillBonus4Amount);
 			writer.Write((SByte)SkillBonus5);
-			writer.Write(SkillBonus5Amount);			
+			writer.Write(SkillBonus5Amount);
 			writer.Write((SByte)SkillBonus6);
-			writer.Write(SkillBonus6Amount);			
+			writer.Write(SkillBonus6Amount);
 			writer.Write((SByte)SkillBonus7);
-			writer.Write(SkillBonus7Amount);			
+			writer.Write(SkillBonus7Amount);
 			if (Unused == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused);
-			writer.Write(MaleHeight);			
-			writer.Write(FemaleHeight);			
-			writer.Write(MaleWeight);			
-			writer.Write(FemaleWeight);			
+			writer.Write(Unused);
+			writer.Write(MaleHeight);
+			writer.Write(FemaleHeight);
+			writer.Write(MaleWeight);
+			writer.Write(FemaleWeight);
 			writer.Write((UInt32)RaceFlags);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("SkillBonuses/Bonus1/Skill", true, out subEle);
 			subEle.Value = SkillBonus1.ToString();
 
@@ -217,8 +218,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("SkillBonuses/Bonus7/Amount", true, out subEle);
 			subEle.Value = SkillBonus7Amount.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("Height/Male", true, out subEle);
 			subEle.Value = MaleHeight.ToString("G15");
@@ -239,106 +239,65 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("SkillBonuses/Bonus1/Skill", false, out subEle))
-			{
 				SkillBonus1 = subEle.ToEnum<ActorValuesByte>();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus1/Amount", false, out subEle))
-			{
 				SkillBonus1Amount = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus2/Skill", false, out subEle))
-			{
 				SkillBonus2 = subEle.ToEnum<ActorValuesByte>();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus2/Amount", false, out subEle))
-			{
 				SkillBonus2Amount = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus3/Skill", false, out subEle))
-			{
 				SkillBonus3 = subEle.ToEnum<ActorValuesByte>();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus3/Amount", false, out subEle))
-			{
 				SkillBonus3Amount = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus4/Skill", false, out subEle))
-			{
 				SkillBonus4 = subEle.ToEnum<ActorValuesByte>();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus4/Amount", false, out subEle))
-			{
 				SkillBonus4Amount = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus5/Skill", false, out subEle))
-			{
 				SkillBonus5 = subEle.ToEnum<ActorValuesByte>();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus5/Amount", false, out subEle))
-			{
 				SkillBonus5Amount = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus6/Skill", false, out subEle))
-			{
 				SkillBonus6 = subEle.ToEnum<ActorValuesByte>();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus6/Amount", false, out subEle))
-			{
 				SkillBonus6Amount = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus7/Skill", false, out subEle))
-			{
 				SkillBonus7 = subEle.ToEnum<ActorValuesByte>();
-			}
 
 			if (ele.TryPathTo("SkillBonuses/Bonus7/Amount", false, out subEle))
-			{
 				SkillBonus7Amount = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("Height/Male", false, out subEle))
-			{
 				MaleHeight = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Height/Female", false, out subEle))
-			{
 				FemaleHeight = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Weight/Male", false, out subEle))
-			{
 				MaleWeight = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Weight/Female", false, out subEle))
-			{
 				FemaleWeight = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				RaceFlags = subEle.ToEnum<RaceFlags>();
-			}
 		}
 
 		public RaceData Clone()
@@ -346,5 +305,115 @@ namespace ESPSharp.Subrecords
 			return new RaceData(this);
 		}
 
+        public int CompareTo(RaceData other)
+        {
+			return MaleHeight.CompareTo(other.MaleHeight);
+        }
+
+        public static bool operator >(RaceData objA, RaceData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RaceData objA, RaceData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RaceData objA, RaceData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RaceData objA, RaceData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RaceData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return SkillBonus1 == other.SkillBonus1 &&
+				SkillBonus1Amount == other.SkillBonus1Amount &&
+				SkillBonus2 == other.SkillBonus2 &&
+				SkillBonus2Amount == other.SkillBonus2Amount &&
+				SkillBonus3 == other.SkillBonus3 &&
+				SkillBonus3Amount == other.SkillBonus3Amount &&
+				SkillBonus4 == other.SkillBonus4 &&
+				SkillBonus4Amount == other.SkillBonus4Amount &&
+				SkillBonus5 == other.SkillBonus5 &&
+				SkillBonus5Amount == other.SkillBonus5Amount &&
+				SkillBonus6 == other.SkillBonus6 &&
+				SkillBonus6Amount == other.SkillBonus6Amount &&
+				SkillBonus7 == other.SkillBonus7 &&
+				SkillBonus7Amount == other.SkillBonus7Amount &&
+				Unused.SequenceEqual(other.Unused) &&
+				MaleHeight == other.MaleHeight &&
+				FemaleHeight == other.FemaleHeight &&
+				MaleWeight == other.MaleWeight &&
+				FemaleWeight == other.FemaleWeight &&
+				RaceFlags == other.RaceFlags;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            RaceData other = obj as RaceData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return MaleHeight.GetHashCode();
+        }
+
+        public static bool operator ==(RaceData objA, RaceData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RaceData objA, RaceData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class XYFloat : IESPSerializable, ICloneable<XYFloat>
+	public partial class XYFloat : IESPSerializable, ICloneable<XYFloat>, IComparable<XYFloat>, IEquatable<XYFloat>
 	{
 		public Single X { get; set; }
 		public Single Y { get; set; }
@@ -86,5 +86,60 @@ namespace ESPSharp.DataTypes
 		{
 			return new XYFloat(this);
 		}
+
+        public int CompareTo(XYFloat other)
+        {
+            return X.CompareTo(other.X);
+        }
+
+        public static bool operator >(XYFloat objA, XYFloat objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(XYFloat objA, XYFloat objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(XYFloat objA, XYFloat objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(XYFloat objA, XYFloat objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(XYFloat other)
+        {
+			return X == other.X &&
+				Y == other.Y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            XYFloat other = obj as XYFloat;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return X.GetHashCode();
+        }
+
+        public static bool operator ==(XYFloat objA, XYFloat objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(XYFloat objA, XYFloat objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }

@@ -30,6 +30,7 @@
 			"Index",
 			"Index"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 #>
 <#@ include file="DataTypeTemplate.t4" once="true" #>

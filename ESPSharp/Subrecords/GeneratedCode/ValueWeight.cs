@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ValueWeight : Subrecord, ICloneable<ValueWeight>
+	public partial class ValueWeight : Subrecord, ICloneable<ValueWeight>, IComparable<ValueWeight>, IEquatable<ValueWeight>  
 	{
 		public Int32 Value { get; set; }
 		public Single Weight { get; set; }
@@ -56,14 +57,14 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Value);			
-			writer.Write(Weight);			
+			writer.Write(Value);
+			writer.Write(Weight);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Value", true, out subEle);
 			subEle.Value = Value.ToString();
 
@@ -74,16 +75,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Value", false, out subEle))
-			{
 				Value = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Weight", false, out subEle))
-			{
 				Weight = subEle.ToSingle();
-			}
 		}
 
 		public ValueWeight Clone()
@@ -91,5 +88,93 @@ namespace ESPSharp.Subrecords
 			return new ValueWeight(this);
 		}
 
+        public int CompareTo(ValueWeight other)
+        {
+			return Value.CompareTo(other.Value);
+        }
+
+        public static bool operator >(ValueWeight objA, ValueWeight objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ValueWeight objA, ValueWeight objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ValueWeight objA, ValueWeight objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ValueWeight objA, ValueWeight objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ValueWeight other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Value == other.Value &&
+				Weight == other.Weight;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ValueWeight other = obj as ValueWeight;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
+
+        public static bool operator ==(ValueWeight objA, ValueWeight objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ValueWeight objA, ValueWeight objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

@@ -1,4 +1,4 @@
-﻿//#define PARALLEL
+﻿#define PARALLEL
 
 using System;
 using System.Collections.Generic;
@@ -93,17 +93,7 @@ namespace ESPSharp
             outPlug.name = Path.GetDirectoryName(sourceFolder);
             outPlug.Header = new RecordView(Path.Combine(sourceFolder, "Header.xml"));
 
-            ESPSharp.Records.Header headRec = outPlug.Header.Record as ESPSharp.Records.Header;
-
-            if (headRec.MasterFiles != null)
-            {
-                foreach (var masterData in headRec.MasterFiles)
-                {
-                    ElderScrollsPlugin master = new ElderScrollsPlugin(masterData.FileName.Value);
-                    master.Read(masterData.FileName.Value);
-                    outPlug.Masters.Add(masterData.FileName.Value);
-                }
-            }
+            outPlug.ReadMasters();
 
             outPlug.Masters.Add(outPlug.Name);
 
@@ -145,17 +135,7 @@ namespace ESPSharp
 
                 Masters = new List<string>();
 
-                ESPSharp.Records.Header headRec = Header.Record as ESPSharp.Records.Header;
-
-                if (headRec.MasterFiles != null)
-                {
-                    foreach (var masterData in headRec.MasterFiles)
-                    {
-                        ElderScrollsPlugin master = new ElderScrollsPlugin(masterData.FileName.Value);
-                        master.Read(masterData.FileName.Value);
-                        Masters.Add(masterData.FileName.Value);
-                    }
-                }
+                ReadMasters();
 
                 Masters.Add(Name);
 
@@ -205,6 +185,27 @@ namespace ESPSharp
         {
             if (mmf != null)
                 mmf.Dispose();
+        }
+
+        protected void ReadMasters()
+        {
+            ESPSharp.Records.Header headRec = Header.Record as ESPSharp.Records.Header;
+
+            if (headRec.MasterFiles != null)
+            {
+                foreach (var masterData in headRec.MasterFiles)
+                {
+                    ElderScrollsPlugin master = ElderScrollsPlugin.LoadedPlugins.FirstOrDefault(esp => esp.Name == masterData.FileName.Value);
+
+                    if (master == null)
+                    {
+                        master = new ElderScrollsPlugin(masterData.FileName.Value);
+                        master.Read(masterData.FileName.Value);
+                    }
+
+                    Masters.Add(masterData.FileName.Value);
+                }
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RagdollPoseMatching : Subrecord, ICloneable<RagdollPoseMatching>
+	public partial class RagdollPoseMatching : Subrecord, ICloneable<RagdollPoseMatching>, IComparable<RagdollPoseMatching>, IEquatable<RagdollPoseMatching>  
 	{
 		public UInt16 MatchBone1 { get; set; }
 		public UInt16 MatchBone2 { get; set; }
@@ -91,21 +92,21 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(MatchBone1);			
-			writer.Write(MatchBone2);			
-			writer.Write(MatchBone3);			
+			writer.Write(MatchBone1);
+			writer.Write(MatchBone2);
+			writer.Write(MatchBone3);
 			writer.Write((Byte)DisableOnMove);
-			writer.Write(Unused);			
-			writer.Write(MotorsStrength);			
-			writer.Write(PoseActivationDelayTime);			
-			writer.Write(MatchErrorAllowance);			
-			writer.Write(DisplacementToDisable);			
+			writer.Write(Unused);
+			writer.Write(MotorsStrength);
+			writer.Write(PoseActivationDelayTime);
+			writer.Write(MatchErrorAllowance);
+			writer.Write(DisplacementToDisable);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("MatchBone1", true, out subEle);
 			subEle.Value = MatchBone1.ToString();
 
@@ -118,8 +119,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("DisableOnMove", true, out subEle);
 			subEle.Value = DisableOnMove.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToString();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("MotorsStrength", true, out subEle);
 			subEle.Value = MotorsStrength.ToString("G15");
@@ -137,51 +137,32 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("MatchBone1", false, out subEle))
-			{
 				MatchBone1 = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("MatchBone2", false, out subEle))
-			{
 				MatchBone2 = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("MatchBone3", false, out subEle))
-			{
 				MatchBone3 = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("DisableOnMove", false, out subEle))
-			{
 				DisableOnMove = subEle.ToEnum<NoYesByte>();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToByte();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("MotorsStrength", false, out subEle))
-			{
 				MotorsStrength = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("PoseActivationDelayTime", false, out subEle))
-			{
 				PoseActivationDelayTime = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("MatchErrorAllowance", false, out subEle))
-			{
 				MatchErrorAllowance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DisplacementToDisable", false, out subEle))
-			{
 				DisplacementToDisable = subEle.ToSingle();
-			}
 		}
 
 		public RagdollPoseMatching Clone()
@@ -189,5 +170,104 @@ namespace ESPSharp.Subrecords
 			return new RagdollPoseMatching(this);
 		}
 
+        public int CompareTo(RagdollPoseMatching other)
+        {
+			return MatchBone1.CompareTo(other.MatchBone1);
+        }
+
+        public static bool operator >(RagdollPoseMatching objA, RagdollPoseMatching objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RagdollPoseMatching objA, RagdollPoseMatching objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RagdollPoseMatching objA, RagdollPoseMatching objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RagdollPoseMatching objA, RagdollPoseMatching objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RagdollPoseMatching other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return MatchBone1 == other.MatchBone1 &&
+				MatchBone2 == other.MatchBone2 &&
+				MatchBone3 == other.MatchBone3 &&
+				DisableOnMove == other.DisableOnMove &&
+				Unused == other.Unused &&
+				MotorsStrength == other.MotorsStrength &&
+				PoseActivationDelayTime == other.PoseActivationDelayTime &&
+				MatchErrorAllowance == other.MatchErrorAllowance &&
+				DisplacementToDisable == other.DisplacementToDisable;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            RagdollPoseMatching other = obj as RagdollPoseMatching;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return MatchBone1.GetHashCode();
+        }
+
+        public static bool operator ==(RagdollPoseMatching objA, RagdollPoseMatching objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RagdollPoseMatching objA, RagdollPoseMatching objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

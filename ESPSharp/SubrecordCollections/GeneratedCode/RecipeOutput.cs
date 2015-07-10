@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class RecipeOutput : SubrecordCollection, ICloneable<RecipeOutput>, IReferenceContainer
+	public partial class RecipeOutput : SubrecordCollection, ICloneable<RecipeOutput>
 	{
 		public RecordReference Item { get; set; }
 		public SimpleSubrecord<UInt32> Quantity { get; set; }

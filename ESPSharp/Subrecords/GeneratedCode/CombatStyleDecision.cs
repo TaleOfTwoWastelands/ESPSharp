@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CombatStyleDecision : Subrecord, ICloneable<CombatStyleDecision>
+	public partial class CombatStyleDecision : Subrecord, ICloneable<CombatStyleDecision>, IComparable<CombatStyleDecision>, IEquatable<CombatStyleDecision>  
 	{
 		public Byte ManeuverDodgeChance { get; set; }
 		public Byte ManeuverSidestepChance { get; set; }
@@ -216,69 +217,68 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(ManeuverDodgeChance);			
-			writer.Write(ManeuverSidestepChance);			
+			writer.Write(ManeuverDodgeChance);
+			writer.Write(ManeuverSidestepChance);
 			if (Unused1 == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused1);
-			writer.Write(ManeuverDodgeLRTimerMin);			
-			writer.Write(ManeuverDodgeLRTimerMax);			
-			writer.Write(ManeuverDodgeForwardTimerMin);			
-			writer.Write(ManeuverDodgeForwardTimerMax);			
-			writer.Write(ManeuverDodgeBackwardTimerMin);			
-			writer.Write(ManeuverDodgeBackwardTimerMax);			
-			writer.Write(ManeuverDodgeIdleTimerMin);			
-			writer.Write(ManeuverDodgeIdleTimerMax);			
-			writer.Write(MeleeBlockChance);			
-			writer.Write(MeleeAttackChance);			
+			writer.Write(Unused1);
+			writer.Write(ManeuverDodgeLRTimerMin);
+			writer.Write(ManeuverDodgeLRTimerMax);
+			writer.Write(ManeuverDodgeForwardTimerMin);
+			writer.Write(ManeuverDodgeForwardTimerMax);
+			writer.Write(ManeuverDodgeBackwardTimerMin);
+			writer.Write(ManeuverDodgeBackwardTimerMax);
+			writer.Write(ManeuverDodgeIdleTimerMin);
+			writer.Write(ManeuverDodgeIdleTimerMax);
+			writer.Write(MeleeBlockChance);
+			writer.Write(MeleeAttackChance);
 			if (Unused2 == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused2);
-			writer.Write(MeleeRecoilStaggerBonusToAttack);			
-			writer.Write(MeleeUnconsciousBonusToAttack);			
-			writer.Write(MeleeHandToHandBonusToAttack);			
-			writer.Write(MeleePowerAttackChance);			
+			writer.Write(Unused2);
+			writer.Write(MeleeRecoilStaggerBonusToAttack);
+			writer.Write(MeleeUnconsciousBonusToAttack);
+			writer.Write(MeleeHandToHandBonusToAttack);
+			writer.Write(MeleePowerAttackChance);
 			if (Unused3 == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused3);
-			writer.Write(MeleePowerAttackRecoilStaggerBonus);			
-			writer.Write(MeleePowerAttackUnconsciousBonus);			
-			writer.Write(MeleePowerAttackNormal);			
-			writer.Write(MeleePowerAttackForward);			
-			writer.Write(MeleePowerAttackBack);			
-			writer.Write(MeleePowerAttackLeft);			
-			writer.Write(MeleePowerAttackRight);			
+			writer.Write(Unused3);
+			writer.Write(MeleePowerAttackRecoilStaggerBonus);
+			writer.Write(MeleePowerAttackUnconsciousBonus);
+			writer.Write(MeleePowerAttackNormal);
+			writer.Write(MeleePowerAttackForward);
+			writer.Write(MeleePowerAttackBack);
+			writer.Write(MeleePowerAttackLeft);
+			writer.Write(MeleePowerAttackRight);
 			if (Unused4 == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused4);
-			writer.Write(MeleeHoldTimerMin);			
-			writer.Write(MeleeHoldTimerMax);			
+			writer.Write(Unused4);
+			writer.Write(MeleeHoldTimerMin);
+			writer.Write(MeleeHoldTimerMax);
 			writer.Write((UInt32)Flags);
-			writer.Write(ManeuverAcrobaticDodgeChance);			
-			writer.Write(MeleeRushingPowerAttackChance);			
+			writer.Write(ManeuverAcrobaticDodgeChance);
+			writer.Write(MeleeRushingPowerAttackChance);
 			if (Unused5 == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused5);
-			writer.Write(MeleeRushingPowerAttackDistanceMult);			
+			writer.Write(Unused5);
+			writer.Write(MeleeRushingPowerAttackDistanceMult);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Maneuver/DodgeChance", true, out subEle);
 			subEle.Value = ManeuverDodgeChance.ToString();
 
 			ele.TryPathTo("Maneuver/SidestepChance", true, out subEle);
 			subEle.Value = ManeuverSidestepChance.ToString();
 
-			ele.TryPathTo("Unused/Unused1", true, out subEle);
-			subEle.Value = Unused1.ToHex();
+			WriteUnused1XML(ele, master);
 
 			ele.TryPathTo("Maneuver/DodgeLRTimer/Min", true, out subEle);
 			subEle.Value = ManeuverDodgeLRTimerMin.ToString("G15");
@@ -310,8 +310,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Melee/AttackChance", true, out subEle);
 			subEle.Value = MeleeAttackChance.ToString();
 
-			ele.TryPathTo("Unused/Unused2", true, out subEle);
-			subEle.Value = Unused2.ToHex();
+			WriteUnused2XML(ele, master);
 
 			ele.TryPathTo("Melee/RecoilStaggerBonusToAttack", true, out subEle);
 			subEle.Value = MeleeRecoilStaggerBonusToAttack.ToString("G15");
@@ -325,8 +324,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Melee/PowerAttack/Chance", true, out subEle);
 			subEle.Value = MeleePowerAttackChance.ToString();
 
-			ele.TryPathTo("Unused/Unused3", true, out subEle);
-			subEle.Value = Unused3.ToHex();
+			WriteUnused3XML(ele, master);
 
 			ele.TryPathTo("Melee/PowerAttack/RecoilStaggerBonus", true, out subEle);
 			subEle.Value = MeleePowerAttackRecoilStaggerBonus.ToString("G15");
@@ -349,8 +347,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Melee/PowerAttack/Right", true, out subEle);
 			subEle.Value = MeleePowerAttackRight.ToString();
 
-			ele.TryPathTo("Unused/Unused4", true, out subEle);
-			subEle.Value = Unused4.ToHex();
+			WriteUnused4XML(ele, master);
 
 			ele.TryPathTo("Melee/HoldTimer/Min", true, out subEle);
 			subEle.Value = MeleeHoldTimerMin.ToString("G15");
@@ -367,8 +364,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Melee/PowerAttack/RushingChance", true, out subEle);
 			subEle.Value = MeleeRushingPowerAttackChance.ToString();
 
-			ele.TryPathTo("Unused/Unused5", true, out subEle);
-			subEle.Value = Unused5.ToHex();
+			WriteUnused5XML(ele, master);
 
 			ele.TryPathTo("Melee/PowerAttack/DistanceMult", true, out subEle);
 			subEle.Value = MeleeRushingPowerAttackDistanceMult.ToString("G15");
@@ -377,176 +373,103 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Maneuver/DodgeChance", false, out subEle))
-			{
 				ManeuverDodgeChance = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Maneuver/SidestepChance", false, out subEle))
-			{
 				ManeuverSidestepChance = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused/Unused1", false, out subEle))
-			{
-				Unused1 = subEle.ToBytes();
-			}
+			ReadUnused1XML(ele, master);
 
 			if (ele.TryPathTo("Maneuver/DodgeLRTimer/Min", false, out subEle))
-			{
 				ManeuverDodgeLRTimerMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Maneuver/DodgeLRTimer/Max", false, out subEle))
-			{
 				ManeuverDodgeLRTimerMax = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Maneuver/DodgeForwardTimer/Min", false, out subEle))
-			{
 				ManeuverDodgeForwardTimerMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Maneuver/DodgeForwardTimer/Max", false, out subEle))
-			{
 				ManeuverDodgeForwardTimerMax = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Maneuver/DodgeBackwardTimer/Min", false, out subEle))
-			{
 				ManeuverDodgeBackwardTimerMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Maneuver/DodgeBackwardTimer/Max", false, out subEle))
-			{
 				ManeuverDodgeBackwardTimerMax = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Maneuver/DodgeIdleTimer/Min", false, out subEle))
-			{
 				ManeuverDodgeIdleTimerMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Maneuver/DodgeIdleTimer/Max", false, out subEle))
-			{
 				ManeuverDodgeIdleTimerMax = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Melee/BlockChance", false, out subEle))
-			{
 				MeleeBlockChance = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Melee/AttackChance", false, out subEle))
-			{
 				MeleeAttackChance = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused/Unused2", false, out subEle))
-			{
-				Unused2 = subEle.ToBytes();
-			}
+			ReadUnused2XML(ele, master);
 
 			if (ele.TryPathTo("Melee/RecoilStaggerBonusToAttack", false, out subEle))
-			{
 				MeleeRecoilStaggerBonusToAttack = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Melee/UnconsciousBonusToAttack", false, out subEle))
-			{
 				MeleeUnconsciousBonusToAttack = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Melee/HandToHandBonusToAttack", false, out subEle))
-			{
 				MeleeHandToHandBonusToAttack = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Melee/PowerAttack/Chance", false, out subEle))
-			{
 				MeleePowerAttackChance = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused/Unused3", false, out subEle))
-			{
-				Unused3 = subEle.ToBytes();
-			}
+			ReadUnused3XML(ele, master);
 
 			if (ele.TryPathTo("Melee/PowerAttack/RecoilStaggerBonus", false, out subEle))
-			{
 				MeleePowerAttackRecoilStaggerBonus = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Melee/PowerAttack/UnconsciousBonus", false, out subEle))
-			{
 				MeleePowerAttackUnconsciousBonus = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Melee/PowerAttack/Normal", false, out subEle))
-			{
 				MeleePowerAttackNormal = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Melee/PowerAttack/Forward", false, out subEle))
-			{
 				MeleePowerAttackForward = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Melee/PowerAttack/Back", false, out subEle))
-			{
 				MeleePowerAttackBack = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Melee/PowerAttack/Left", false, out subEle))
-			{
 				MeleePowerAttackLeft = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Melee/PowerAttack/Right", false, out subEle))
-			{
 				MeleePowerAttackRight = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused/Unused4", false, out subEle))
-			{
-				Unused4 = subEle.ToBytes();
-			}
+			ReadUnused4XML(ele, master);
 
 			if (ele.TryPathTo("Melee/HoldTimer/Min", false, out subEle))
-			{
 				MeleeHoldTimerMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Melee/HoldTimer/Max", false, out subEle))
-			{
 				MeleeHoldTimerMax = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<CombatStyleFlags>();
-			}
 
 			if (ele.TryPathTo("Maneuver/AcrobaticDodgeChance", false, out subEle))
-			{
 				ManeuverAcrobaticDodgeChance = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Melee/PowerAttack/RushingChance", false, out subEle))
-			{
 				MeleeRushingPowerAttackChance = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused/Unused5", false, out subEle))
-			{
-				Unused5 = subEle.ToBytes();
-			}
+			ReadUnused5XML(ele, master);
 
 			if (ele.TryPathTo("Melee/PowerAttack/DistanceMult", false, out subEle))
-			{
 				MeleeRushingPowerAttackDistanceMult = subEle.ToSingle();
-			}
 		}
 
 		public CombatStyleDecision Clone()
@@ -554,5 +477,145 @@ namespace ESPSharp.Subrecords
 			return new CombatStyleDecision(this);
 		}
 
+        public int CompareTo(CombatStyleDecision other)
+        {
+			return ManeuverDodgeChance.CompareTo(other.ManeuverDodgeChance);
+        }
+
+        public static bool operator >(CombatStyleDecision objA, CombatStyleDecision objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(CombatStyleDecision objA, CombatStyleDecision objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(CombatStyleDecision objA, CombatStyleDecision objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(CombatStyleDecision objA, CombatStyleDecision objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(CombatStyleDecision other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return ManeuverDodgeChance == other.ManeuverDodgeChance &&
+				ManeuverSidestepChance == other.ManeuverSidestepChance &&
+				Unused1.SequenceEqual(other.Unused1) &&
+				ManeuverDodgeLRTimerMin == other.ManeuverDodgeLRTimerMin &&
+				ManeuverDodgeLRTimerMax == other.ManeuverDodgeLRTimerMax &&
+				ManeuverDodgeForwardTimerMin == other.ManeuverDodgeForwardTimerMin &&
+				ManeuverDodgeForwardTimerMax == other.ManeuverDodgeForwardTimerMax &&
+				ManeuverDodgeBackwardTimerMin == other.ManeuverDodgeBackwardTimerMin &&
+				ManeuverDodgeBackwardTimerMax == other.ManeuverDodgeBackwardTimerMax &&
+				ManeuverDodgeIdleTimerMin == other.ManeuverDodgeIdleTimerMin &&
+				ManeuverDodgeIdleTimerMax == other.ManeuverDodgeIdleTimerMax &&
+				MeleeBlockChance == other.MeleeBlockChance &&
+				MeleeAttackChance == other.MeleeAttackChance &&
+				Unused2.SequenceEqual(other.Unused2) &&
+				MeleeRecoilStaggerBonusToAttack == other.MeleeRecoilStaggerBonusToAttack &&
+				MeleeUnconsciousBonusToAttack == other.MeleeUnconsciousBonusToAttack &&
+				MeleeHandToHandBonusToAttack == other.MeleeHandToHandBonusToAttack &&
+				MeleePowerAttackChance == other.MeleePowerAttackChance &&
+				Unused3.SequenceEqual(other.Unused3) &&
+				MeleePowerAttackRecoilStaggerBonus == other.MeleePowerAttackRecoilStaggerBonus &&
+				MeleePowerAttackUnconsciousBonus == other.MeleePowerAttackUnconsciousBonus &&
+				MeleePowerAttackNormal == other.MeleePowerAttackNormal &&
+				MeleePowerAttackForward == other.MeleePowerAttackForward &&
+				MeleePowerAttackBack == other.MeleePowerAttackBack &&
+				MeleePowerAttackLeft == other.MeleePowerAttackLeft &&
+				MeleePowerAttackRight == other.MeleePowerAttackRight &&
+				Unused4.SequenceEqual(other.Unused4) &&
+				MeleeHoldTimerMin == other.MeleeHoldTimerMin &&
+				MeleeHoldTimerMax == other.MeleeHoldTimerMax &&
+				Flags == other.Flags &&
+				ManeuverAcrobaticDodgeChance == other.ManeuverAcrobaticDodgeChance &&
+				MeleeRushingPowerAttackChance == other.MeleeRushingPowerAttackChance &&
+				Unused5.SequenceEqual(other.Unused5) &&
+				MeleeRushingPowerAttackDistanceMult == other.MeleeRushingPowerAttackDistanceMult;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            CombatStyleDecision other = obj as CombatStyleDecision;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return ManeuverDodgeChance.GetHashCode();
+        }
+
+        public static bool operator ==(CombatStyleDecision objA, CombatStyleDecision objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(CombatStyleDecision objA, CombatStyleDecision objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused3XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused4XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused5XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused3XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused4XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused5XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

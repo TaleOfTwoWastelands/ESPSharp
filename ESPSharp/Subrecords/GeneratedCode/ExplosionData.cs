@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ExplosionData : Subrecord, ICloneable<ExplosionData>, IReferenceContainer
+	public partial class ExplosionData : Subrecord, ICloneable<ExplosionData>, IComparable<ExplosionData>, IEquatable<ExplosionData>  
 	{
 		public Single Force { get; set; }
 		public Single Damage { get; set; }
@@ -111,25 +112,25 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Force);			
-			writer.Write(Damage);			
-			writer.Write(Radius);			
+			writer.Write(Force);
+			writer.Write(Damage);
+			writer.Write(Radius);
 			Light.WriteBinary(writer);
 			Sound1.WriteBinary(writer);
 			writer.Write((UInt32)Flags);
-			writer.Write(ISRadius);			
+			writer.Write(ISRadius);
 			ImpactDataSet.WriteBinary(writer);
 			Sound2.WriteBinary(writer);
-			writer.Write(RadiationLevel);			
-			writer.Write(RadiationDissipationTime);			
-			writer.Write(RadiationRadius);			
+			writer.Write(RadiationLevel);
+			writer.Write(RadiationDissipationTime);
+			writer.Write(RadiationRadius);
 			writer.Write((UInt32)SoundLevel);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Force", true, out subEle);
 			subEle.Value = Force.ToString("G15");
 
@@ -173,71 +174,45 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Force", false, out subEle))
-			{
 				Force = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Damage", false, out subEle))
-			{
 				Damage = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Radius", false, out subEle))
-			{
 				Radius = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Light", false, out subEle))
-			{
 				Light.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Sound1", false, out subEle))
-			{
 				Sound1.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<ExplosionFlags>();
-			}
 
 			if (ele.TryPathTo("ISRadius", false, out subEle))
-			{
 				ISRadius = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ImpactDataSet", false, out subEle))
-			{
 				ImpactDataSet.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Sound2", false, out subEle))
-			{
 				Sound2.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Radiation/Level", false, out subEle))
-			{
 				RadiationLevel = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Radiation/DissipationTime", false, out subEle))
-			{
 				RadiationDissipationTime = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Radiation/Radius", false, out subEle))
-			{
 				RadiationRadius = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SoundLevel", false, out subEle))
-			{
 				SoundLevel = subEle.ToEnum<SoundLevel>();
-			}
 		}
 
 		public ExplosionData Clone()
@@ -245,5 +220,104 @@ namespace ESPSharp.Subrecords
 			return new ExplosionData(this);
 		}
 
+        public int CompareTo(ExplosionData other)
+        {
+			return Damage.CompareTo(other.Damage);
+        }
+
+        public static bool operator >(ExplosionData objA, ExplosionData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ExplosionData objA, ExplosionData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ExplosionData objA, ExplosionData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ExplosionData objA, ExplosionData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ExplosionData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Force == other.Force &&
+				Damage == other.Damage &&
+				Radius == other.Radius &&
+				Light == other.Light &&
+				Sound1 == other.Sound1 &&
+				Flags == other.Flags &&
+				ISRadius == other.ISRadius &&
+				ImpactDataSet == other.ImpactDataSet &&
+				Sound2 == other.Sound2 &&
+				RadiationLevel == other.RadiationLevel &&
+				RadiationDissipationTime == other.RadiationDissipationTime &&
+				RadiationRadius == other.RadiationRadius &&
+				SoundLevel == other.SoundLevel;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ExplosionData other = obj as ExplosionData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Damage.GetHashCode();
+        }
+
+        public static bool operator ==(ExplosionData objA, ExplosionData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ExplosionData objA, ExplosionData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

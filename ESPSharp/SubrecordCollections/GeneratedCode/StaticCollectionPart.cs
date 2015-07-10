@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class StaticCollectionPart : SubrecordCollection, ICloneable<StaticCollectionPart>, IReferenceContainer
+	public partial class StaticCollectionPart : SubrecordCollection, ICloneable<StaticCollectionPart>
 	{
 		public RecordReference Static { get; set; }
 		public StaticCollectionPartData Placements { get; set; }

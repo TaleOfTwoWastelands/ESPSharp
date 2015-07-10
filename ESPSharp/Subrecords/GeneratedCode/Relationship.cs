@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class Relationship : Subrecord, ICloneable<Relationship>, IReferenceContainer
+	public partial class Relationship : Subrecord, ICloneable<Relationship>, IComparable<Relationship>, IEquatable<Relationship>  
 	{
 		public FormID Faction { get; set; }
 		public Int32 Modifier { get; set; }
@@ -62,14 +63,14 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			Faction.WriteBinary(writer);
-			writer.Write(Modifier);			
+			writer.Write(Modifier);
 			writer.Write((UInt32)CombatReaction);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Faction", true, out subEle);
 			Faction.WriteXML(subEle, master);
 
@@ -83,21 +84,15 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Faction", false, out subEle))
-			{
 				Faction.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Modifier", false, out subEle))
-			{
 				Modifier = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("CombatReaction", false, out subEle))
-			{
 				CombatReaction = subEle.ToEnum<RelationshipCombatReaction>();
-			}
 		}
 
 		public Relationship Clone()
@@ -105,5 +100,94 @@ namespace ESPSharp.Subrecords
 			return new Relationship(this);
 		}
 
+        public int CompareTo(Relationship other)
+        {
+			return Faction.CompareTo(other.Faction);
+        }
+
+        public static bool operator >(Relationship objA, Relationship objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(Relationship objA, Relationship objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(Relationship objA, Relationship objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(Relationship objA, Relationship objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(Relationship other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Faction == other.Faction &&
+				Modifier == other.Modifier &&
+				CombatReaction == other.CombatReaction;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            Relationship other = obj as Relationship;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Faction.GetHashCode();
+        }
+
+        public static bool operator ==(Relationship objA, Relationship objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(Relationship objA, Relationship objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

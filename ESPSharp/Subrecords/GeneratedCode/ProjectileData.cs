@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ProjectileData : Subrecord, ICloneable<ProjectileData>, IReferenceContainer
+	public partial class ProjectileData : Subrecord, ICloneable<ProjectileData>, IComparable<ProjectileData>, IEquatable<ProjectileData>  
 	{
 		public ProjectileFlags Flags { get; set; }
 		public ProjectileType Type { get; set; }
@@ -158,32 +159,32 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write((UInt16)Flags);
 			writer.Write((UInt16)Type);
-			writer.Write(Gravity);			
-			writer.Write(Speed);			
-			writer.Write(Range);			
+			writer.Write(Gravity);
+			writer.Write(Speed);
+			writer.Write(Range);
 			Light.WriteBinary(writer);
 			MuzzleFlashLight.WriteBinary(writer);
-			writer.Write(TracerChance);			
-			writer.Write(ExplosionAltTriggerProximity);			
-			writer.Write(ExplosionAltTriggerTimer);			
+			writer.Write(TracerChance);
+			writer.Write(ExplosionAltTriggerProximity);
+			writer.Write(ExplosionAltTriggerTimer);
 			Explosion.WriteBinary(writer);
 			Sound.WriteBinary(writer);
-			writer.Write(MuzzleFlashDuration);			
-			writer.Write(FadeDuration);			
-			writer.Write(ImpactForce);			
+			writer.Write(MuzzleFlashDuration);
+			writer.Write(FadeDuration);
+			writer.Write(ImpactForce);
 			SoundCountdown.WriteBinary(writer);
 			Sounddisable.WriteBinary(writer);
 			DefaultWeaponSource.WriteBinary(writer);
-			writer.Write(XRotation);			
-			writer.Write(YRotation);			
-			writer.Write(ZRotation);			
-			writer.Write(BouncyMult);			
+			writer.Write(XRotation);
+			writer.Write(YRotation);
+			writer.Write(ZRotation);
+			writer.Write(BouncyMult);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
@@ -254,116 +255,72 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<ProjectileFlags>();
-			}
 
 			if (ele.TryPathTo("Type", false, out subEle))
-			{
 				Type = subEle.ToEnum<ProjectileType>();
-			}
 
 			if (ele.TryPathTo("Gravity", false, out subEle))
-			{
 				Gravity = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Speed", false, out subEle))
-			{
 				Speed = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Range", false, out subEle))
-			{
 				Range = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Light", false, out subEle))
-			{
 				Light.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("MuzzleFlash/Light", false, out subEle))
-			{
 				MuzzleFlashLight.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("TracerChance", false, out subEle))
-			{
 				TracerChance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Explosion/AltTrigger/Proximity", false, out subEle))
-			{
 				ExplosionAltTriggerProximity = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Explosion/AltTrigger/Timer", false, out subEle))
-			{
 				ExplosionAltTriggerTimer = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Explosion/Form", false, out subEle))
-			{
 				Explosion.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Sound", false, out subEle))
-			{
 				Sound.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("MuzzleFlash/Duration", false, out subEle))
-			{
 				MuzzleFlashDuration = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("FadeDuration", false, out subEle))
-			{
 				FadeDuration = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ImpactForce", false, out subEle))
-			{
 				ImpactForce = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Sound/Countdown", false, out subEle))
-			{
 				SoundCountdown.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Sound/Disable", false, out subEle))
-			{
 				Sounddisable.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("DefaultWeaponSource", false, out subEle))
-			{
 				DefaultWeaponSource.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("XRotation", false, out subEle))
-			{
 				XRotation = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("YRotation", false, out subEle))
-			{
 				YRotation = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ZRotation", false, out subEle))
-			{
 				ZRotation = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("BouncyMult", false, out subEle))
-			{
 				BouncyMult = subEle.ToSingle();
-			}
 		}
 
 		public ProjectileData Clone()
@@ -371,5 +328,113 @@ namespace ESPSharp.Subrecords
 			return new ProjectileData(this);
 		}
 
+        public int CompareTo(ProjectileData other)
+        {
+			return Type.CompareTo(other.Type);
+        }
+
+        public static bool operator >(ProjectileData objA, ProjectileData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ProjectileData objA, ProjectileData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ProjectileData objA, ProjectileData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ProjectileData objA, ProjectileData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ProjectileData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Flags == other.Flags &&
+				Type == other.Type &&
+				Gravity == other.Gravity &&
+				Speed == other.Speed &&
+				Range == other.Range &&
+				Light == other.Light &&
+				MuzzleFlashLight == other.MuzzleFlashLight &&
+				TracerChance == other.TracerChance &&
+				ExplosionAltTriggerProximity == other.ExplosionAltTriggerProximity &&
+				ExplosionAltTriggerTimer == other.ExplosionAltTriggerTimer &&
+				Explosion == other.Explosion &&
+				Sound == other.Sound &&
+				MuzzleFlashDuration == other.MuzzleFlashDuration &&
+				FadeDuration == other.FadeDuration &&
+				ImpactForce == other.ImpactForce &&
+				SoundCountdown == other.SoundCountdown &&
+				Sounddisable == other.Sounddisable &&
+				DefaultWeaponSource == other.DefaultWeaponSource &&
+				XRotation == other.XRotation &&
+				YRotation == other.YRotation &&
+				ZRotation == other.ZRotation &&
+				BouncyMult == other.BouncyMult;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ProjectileData other = obj as ProjectileData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Type.GetHashCode();
+        }
+
+        public static bool operator ==(ProjectileData objA, ProjectileData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ProjectileData objA, ProjectileData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

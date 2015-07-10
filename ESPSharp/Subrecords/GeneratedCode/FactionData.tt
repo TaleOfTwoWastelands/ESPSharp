@@ -1,4 +1,4 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ assembly name="System.Core" #>
 <#@ assembly name="System.Core" #>
 <#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
@@ -13,23 +13,24 @@
 <#@ import namespace="System.Collections" #>
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "FactionData";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	//flag 1
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FactionFlags1),
 			"Flags1",
 			"Flags1"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	//flag 2
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FactionFlags2),
 			"Flags2",
 			"Flags2"
@@ -38,12 +39,14 @@
 
 	//unused
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unused",
 			"Unused"
 			);
 	tempField.byteCount = 2;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 #>
 <#@ include file="SubrecordTemplate.t4" once="true" #>

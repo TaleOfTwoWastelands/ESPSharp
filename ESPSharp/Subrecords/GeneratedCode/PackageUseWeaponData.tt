@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "PackageUseWeaponData";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(PackageUseWeaponFlags),
 			"Flags",
 			"Flags"
@@ -15,7 +15,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(PackageUseWeaponFireRate),
 			"FireRate",
 			"FireRate"
@@ -23,15 +23,16 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(PackageUseWeaponFireCount),
 			"FireCount",
 			"FireCount"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ushort),
 			"NumberOfBursts",
 			"NumberOfBursts"
@@ -39,7 +40,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ushort),
 			"ShotsPerVolleyMin",
 			"ShotsPerVolley/Min"
@@ -47,7 +48,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ushort),
 			"ShotsPerVolleyMax",
 			"ShotsPerVolley/Max"
@@ -55,7 +56,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"PauseBetweenVolleysMin",
 			"PauseBetweenVolleys/Min"
@@ -63,7 +64,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"PauseBetweenVolleysMax",
 			"PauseBetweenVolleys/Max"
@@ -71,12 +72,14 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unused",
 			"Unused"
 			);
 	tempField.byteCount = 4;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 #>
 <#@ include file="SubrecordTemplate.t4" once="true" #>

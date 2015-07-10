@@ -18,9 +18,8 @@ namespace ESPSharp
         public uint Size { get; protected set; }
         public RecordFlag Flags { get; set; }
         public FormID FormID { get; set; }
-        public uint VersionControlInfo1 { get; set; }
+        public DateStamp LastModified { get; set; }
         public ushort FormVersion { get; protected set; }
-        public ushort VersionControlInfo2 { get; set; }
 
         protected bool compressionCorrupted = false;
         protected byte[] corruptedBytes;
@@ -43,9 +42,6 @@ namespace ESPSharp
                 new XElement("Flags", Flags),
                 new XElement("FormID"),
                 new XElement("FormVersion", FormVersion),
-                new XElement("VersionControlInfo",
-                    new XElement("Info1", VersionControlInfo1),
-                    new XElement("Info2", VersionControlInfo2)),
                 new XElement("CompressionCorrupted", compressionCorrupted)
                 );
 
@@ -75,8 +71,6 @@ namespace ESPSharp
             outRecord.Flags = root.Element("Flags").ToEnum<RecordFlag>();
             outRecord.FormID.ReadXML(root.Element("FormID"), master);
             outRecord.FormVersion = root.Element("FormVersion").ToUInt16();
-            outRecord.VersionControlInfo1 = root.Element("VersionControlInfo").Element("Info1").ToUInt32();
-            outRecord.VersionControlInfo2 = root.Element("VersionControlInfo").Element("Info2").ToUInt16();
             outRecord.compressionCorrupted = root.Element("CompressionCorrupted").ToBoolean();
 
             if (outRecord.compressionCorrupted)
@@ -96,9 +90,10 @@ namespace ESPSharp
             writer.Write((uint)0);
             writer.Write((uint)Flags);
             writer.Write(FormID);
-            writer.Write(VersionControlInfo1);
+            DateStamp.Now.WriteBinary(writer);
+            writer.Write((ushort)0); //padding
             writer.Write(FormVersion);
-            writer.Write(VersionControlInfo2);
+            writer.Write((ushort)0); //padding
 
             long dataStart = writer.BaseStream.Position;
 
@@ -134,9 +129,11 @@ namespace ESPSharp
             Size = reader.ReadUInt32();
             Flags = (RecordFlag)reader.ReadUInt32();
             FormID = reader.Read<FormID>();
-            VersionControlInfo1 = reader.ReadUInt32();
+            LastModified = new DateStamp();
+            LastModified.ReadBinary(reader);
+            reader.ReadBytes(2);
             FormVersion = reader.ReadUInt16();
-            VersionControlInfo2 = reader.ReadUInt16();
+            reader.ReadBytes(2);
 
             if (Flags.HasFlag(RecordFlag.Compressed))
             {

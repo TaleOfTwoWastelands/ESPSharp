@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RagdollData : Subrecord, ICloneable<RagdollData>
+	public partial class RagdollData : Subrecord, ICloneable<RagdollData>, IComparable<RagdollData>, IEquatable<RagdollData>  
 	{
 		public UInt32 DynamicBoneCount { get; set; }
 		public Byte[] Unused1 { get; set; }
@@ -86,28 +87,27 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(DynamicBoneCount);			
+			writer.Write(DynamicBoneCount);
 			if (Unused1 == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unused1);
+			writer.Write(Unused1);
 			writer.Write((Byte)FeedbackEnabled);
 			writer.Write((Byte)FootIKEnabled);
 			writer.Write((Byte)LookIKEnabled);
 			writer.Write((Byte)GrabIKEnabled);
 			writer.Write((Byte)PoseMatching);
-			writer.Write(Unused2);			
+			writer.Write(Unused2);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("DynamicBoneCount", true, out subEle);
 			subEle.Value = DynamicBoneCount.ToString();
 
-			ele.TryPathTo("Unused1", true, out subEle);
-			subEle.Value = Unused1.ToHex();
+			WriteUnused1XML(ele, master);
 
 			ele.TryPathTo("FeedbackEnabled", true, out subEle);
 			subEle.Value = FeedbackEnabled.ToString();
@@ -124,53 +124,34 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("PoseMatching", true, out subEle);
 			subEle.Value = PoseMatching.ToString();
 
-			ele.TryPathTo("Unused2", true, out subEle);
-			subEle.Value = Unused2.ToString();
+			WriteUnused2XML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("DynamicBoneCount", false, out subEle))
-			{
 				DynamicBoneCount = subEle.ToUInt32();
-			}
 
-			if (ele.TryPathTo("Unused1", false, out subEle))
-			{
-				Unused1 = subEle.ToBytes();
-			}
+			ReadUnused1XML(ele, master);
 
 			if (ele.TryPathTo("FeedbackEnabled", false, out subEle))
-			{
 				FeedbackEnabled = subEle.ToEnum<NoYesByte>();
-			}
 
 			if (ele.TryPathTo("FootIKEnabled", false, out subEle))
-			{
 				FootIKEnabled = subEle.ToEnum<NoYesByte>();
-			}
 
 			if (ele.TryPathTo("LookIKEnabled", false, out subEle))
-			{
 				LookIKEnabled = subEle.ToEnum<NoYesByte>();
-			}
 
 			if (ele.TryPathTo("GrabIKEnabled", false, out subEle))
-			{
 				GrabIKEnabled = subEle.ToEnum<NoYesByte>();
-			}
 
 			if (ele.TryPathTo("PoseMatching", false, out subEle))
-			{
 				PoseMatching = subEle.ToEnum<NoYesByte>();
-			}
 
-			if (ele.TryPathTo("Unused2", false, out subEle))
-			{
-				Unused2 = subEle.ToByte();
-			}
+			ReadUnused2XML(ele, master);
 		}
 
 		public RagdollData Clone()
@@ -178,5 +159,107 @@ namespace ESPSharp.Subrecords
 			return new RagdollData(this);
 		}
 
+        public int CompareTo(RagdollData other)
+        {
+			return DynamicBoneCount.CompareTo(other.DynamicBoneCount);
+        }
+
+        public static bool operator >(RagdollData objA, RagdollData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RagdollData objA, RagdollData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RagdollData objA, RagdollData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RagdollData objA, RagdollData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RagdollData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return DynamicBoneCount == other.DynamicBoneCount &&
+				Unused1.SequenceEqual(other.Unused1) &&
+				FeedbackEnabled == other.FeedbackEnabled &&
+				FootIKEnabled == other.FootIKEnabled &&
+				LookIKEnabled == other.LookIKEnabled &&
+				GrabIKEnabled == other.GrabIKEnabled &&
+				PoseMatching == other.PoseMatching &&
+				Unused2 == other.Unused2;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            RagdollData other = obj as RagdollData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return DynamicBoneCount.GetHashCode();
+        }
+
+        public static bool operator ==(RagdollData objA, RagdollData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RagdollData objA, RagdollData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

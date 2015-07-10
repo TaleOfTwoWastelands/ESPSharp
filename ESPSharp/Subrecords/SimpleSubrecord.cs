@@ -70,7 +70,9 @@ namespace ESPSharp.Subrecords
                     Value = (T)(object)reader.ReadBytes(size);
                     break;
                 case "System.Char[]":
-                    Value = (T)(object)reader.ReadChars(size);
+                    string tempstring = new string(reader.ReadChars(size));
+                    tempstring = tempstring.Replace("\0", "");
+                    Value = (T)(object)tempstring.ToCharArray();
                     break;
                 case "System.String":
                     string outString = new String(reader.ReadChars(size - 1));

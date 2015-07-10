@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class IngestibleData : Subrecord, ICloneable<IngestibleData>, IReferenceContainer
+	public partial class IngestibleData : Subrecord, ICloneable<IngestibleData>, IComparable<IngestibleData>, IEquatable<IngestibleData>  
 	{
 		public Int32 Value { get; set; }
 		public IngestibleFlags Flags { get; set; }
@@ -76,29 +77,28 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Value);			
+			writer.Write(Value);
 			writer.Write((Byte)Flags);
 			if (Unused == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused);
+			writer.Write(Unused);
 			WithdrawalEffect.WriteBinary(writer);
-			writer.Write(AddictionChance);			
+			writer.Write(AddictionChance);
 			SoundConsume.WriteBinary(writer);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Value", true, out subEle);
 			subEle.Value = Value.ToString();
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("WithdrawalEffect", true, out subEle);
 			WithdrawalEffect.WriteXML(subEle, master);
@@ -113,36 +113,23 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Value", false, out subEle))
-			{
 				Value = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<IngestibleFlags>();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("WithdrawalEffect", false, out subEle))
-			{
 				WithdrawalEffect.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("AddictionChance", false, out subEle))
-			{
 				AddictionChance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ConsumeSound", false, out subEle))
-			{
 				SoundConsume.ReadXML(subEle, master);
-			}
 		}
 
 		public IngestibleData Clone()
@@ -150,5 +137,101 @@ namespace ESPSharp.Subrecords
 			return new IngestibleData(this);
 		}
 
+        public int CompareTo(IngestibleData other)
+        {
+			return WithdrawalEffect.CompareTo(other.WithdrawalEffect);
+        }
+
+        public static bool operator >(IngestibleData objA, IngestibleData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(IngestibleData objA, IngestibleData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(IngestibleData objA, IngestibleData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(IngestibleData objA, IngestibleData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(IngestibleData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Value == other.Value &&
+				Flags == other.Flags &&
+				Unused.SequenceEqual(other.Unused) &&
+				WithdrawalEffect == other.WithdrawalEffect &&
+				AddictionChance == other.AddictionChance &&
+				SoundConsume == other.SoundConsume;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            IngestibleData other = obj as IngestibleData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return WithdrawalEffect.GetHashCode();
+        }
+
+        public static bool operator ==(IngestibleData objA, IngestibleData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(IngestibleData objA, IngestibleData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

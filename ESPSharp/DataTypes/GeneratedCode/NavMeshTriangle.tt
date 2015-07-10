@@ -12,6 +12,7 @@
 			"Vertex1",
 			"Vertices/Vertex1"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 

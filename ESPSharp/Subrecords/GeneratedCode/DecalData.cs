@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DecalData : Subrecord, ICloneable<DecalData>
+	public partial class DecalData : Subrecord, ICloneable<DecalData>, IComparable<DecalData>, IEquatable<DecalData>  
 	{
 		public Single MinWidth { get; set; }
 		public Single MaxWidth { get; set; }
@@ -101,26 +102,26 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(MinWidth);			
-			writer.Write(MaxWidth);			
-			writer.Write(MinHeight);			
-			writer.Write(MaxHeight);			
-			writer.Write(Depth);			
-			writer.Write(Shininess);			
-			writer.Write(ParallaxScale);			
-			writer.Write(ParallaxPasses);			
+			writer.Write(MinWidth);
+			writer.Write(MaxWidth);
+			writer.Write(MinHeight);
+			writer.Write(MaxHeight);
+			writer.Write(Depth);
+			writer.Write(Shininess);
+			writer.Write(ParallaxScale);
+			writer.Write(ParallaxPasses);
 			writer.Write((Byte)DecalFlags);
 			if (Unused == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused);
+			writer.Write(Unused);
 			Color.WriteBinary(writer);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Width/Min", true, out subEle);
 			subEle.Value = MinWidth.ToString("G15");
 
@@ -148,8 +149,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = DecalFlags.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("Color", true, out subEle);
 			Color.WriteXML(subEle, master);
@@ -158,61 +158,38 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Width/Min", false, out subEle))
-			{
 				MinWidth = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Width/Max", false, out subEle))
-			{
 				MaxWidth = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Height/Min", false, out subEle))
-			{
 				MinHeight = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Height/Max", false, out subEle))
-			{
 				MaxHeight = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Depth", false, out subEle))
-			{
 				Depth = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Shininess", false, out subEle))
-			{
 				Shininess = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Parallax/Scale", false, out subEle))
-			{
 				ParallaxScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Parallax/Passes", false, out subEle))
-			{
 				ParallaxPasses = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				DecalFlags = subEle.ToEnum<DecalDataFlags>();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("Color", false, out subEle))
-			{
 				Color.ReadXML(subEle, master);
-			}
 		}
 
 		public DecalData Clone()
@@ -220,5 +197,106 @@ namespace ESPSharp.Subrecords
 			return new DecalData(this);
 		}
 
+        public int CompareTo(DecalData other)
+        {
+			return Depth.CompareTo(other.Depth);
+        }
+
+        public static bool operator >(DecalData objA, DecalData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(DecalData objA, DecalData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(DecalData objA, DecalData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(DecalData objA, DecalData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(DecalData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return MinWidth == other.MinWidth &&
+				MaxWidth == other.MaxWidth &&
+				MinHeight == other.MinHeight &&
+				MaxHeight == other.MaxHeight &&
+				Depth == other.Depth &&
+				Shininess == other.Shininess &&
+				ParallaxScale == other.ParallaxScale &&
+				ParallaxPasses == other.ParallaxPasses &&
+				DecalFlags == other.DecalFlags &&
+				Unused.SequenceEqual(other.Unused) &&
+				Color == other.Color;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            DecalData other = obj as DecalData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Depth.GetHashCode();
+        }
+
+        public static bool operator ==(DecalData objA, DecalData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(DecalData objA, DecalData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

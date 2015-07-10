@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WaterDataAndDamage : Subrecord, ICloneable<WaterDataAndDamage>
+	public partial class WaterDataAndDamage : Subrecord, ICloneable<WaterDataAndDamage>, IComparable<WaterDataAndDamage>, IEquatable<WaterDataAndDamage>  
 	{
 		public Byte[] Unknown { get; set; }
 		public Single WaterPropertiesSunPower { get; set; }
@@ -284,65 +285,65 @@ namespace ESPSharp.Subrecords
 			if (Unknown == null)
 				writer.Write(new byte[16]);
 			else
-				writer.Write(Unknown);
-			writer.Write(WaterPropertiesSunPower);			
-			writer.Write(WaterPropertiesReflectivityAmount);			
-			writer.Write(WaterPropertiesFresnelAmount);			
+			writer.Write(Unknown);
+			writer.Write(WaterPropertiesSunPower);
+			writer.Write(WaterPropertiesReflectivityAmount);
+			writer.Write(WaterPropertiesFresnelAmount);
 			if (Unused1 == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unused1);
-			writer.Write(FogPropertiesAboveWaterFogNearPlaneDistance);			
-			writer.Write(FogPropertiesAboveWaterFogFarPlaneDistance);			
+			writer.Write(Unused1);
+			writer.Write(FogPropertiesAboveWaterFogNearPlaneDistance);
+			writer.Write(FogPropertiesAboveWaterFogFarPlaneDistance);
 			ColorShallow.WriteBinary(writer);
 			ColorDeep.WriteBinary(writer);
 			ColorReflection.WriteBinary(writer);
 			if (Unused2 == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unused2);
-			writer.Write(RainSimulatorForce);			
-			writer.Write(RainSimulatorVelocity);			
-			writer.Write(RainSimulatorFalloff);			
-			writer.Write(RainSimulatorDampener);			
-			writer.Write(DisplacementSimulatorStartingSize);			
-			writer.Write(DisplacementSimulatorForce);			
-			writer.Write(DisplacementSimulatorVelocity);			
-			writer.Write(DisplacementSimulatorFalloff);			
-			writer.Write(DisplacementSimulatorDampener);			
-			writer.Write(RainSimulatorStartingSize);			
-			writer.Write(NoisePropertiesNormalsNoiseScale);			
-			writer.Write(NoisePropertiesNoiseLayerOneWindDirection);			
-			writer.Write(NoisePropertiesNoiseLayerTwoWindDirection);			
-			writer.Write(NoisePropertiesNoiseLayerThreeWindDirection);			
-			writer.Write(NoisePropertiesNoiseLayerOneWindSpeed);			
-			writer.Write(NoisePropertiesNoiseLayerTwoWindSpeed);			
-			writer.Write(NoisePropertiesNoiseLayerThreeWindSpeed);			
-			writer.Write(NoisePropertiesNormalsDepthFalloffStart);			
-			writer.Write(NoisePropertiesNormalsDepthFalloffEnd);			
-			writer.Write(FogPropertiesAboveWaterFogAmount);			
-			writer.Write(NoisePropertiesNormalsUVScale);			
-			writer.Write(FogPropertiesUnderWaterFogAmount);			
-			writer.Write(FogPropertiesUnderWaterFogNearPlaneDistance);			
-			writer.Write(FogPropertiesUnderWaterFogFarPlaneDistance);			
-			writer.Write(WaterPropertiesDistortionAmount);			
-			writer.Write(WaterPropertiesShininess);			
-			writer.Write(WaterPropertiesReflectionHDRMult);			
-			writer.Write(WaterPropertiesLightRadius);			
-			writer.Write(WaterPropertiesLightBrightness);			
-			writer.Write(NoisePropertiesNoiseLayerOneUVScale);			
-			writer.Write(NoisePropertiesNoiseLayerTwoUVScale);			
-			writer.Write(NoisePropertiesNoiseLayerThreeUVScale);			
-			writer.Write(NoisePropertiesNoiseLayerOneAmplitudeScale);			
-			writer.Write(NoisePropertiesNoiseLayerTwoAmplitudeScale);			
-			writer.Write(NoisePropertiesNoiseLayerThreeAmplitudeScale);			
-			writer.Write(Damage);			
+			writer.Write(Unused2);
+			writer.Write(RainSimulatorForce);
+			writer.Write(RainSimulatorVelocity);
+			writer.Write(RainSimulatorFalloff);
+			writer.Write(RainSimulatorDampener);
+			writer.Write(DisplacementSimulatorStartingSize);
+			writer.Write(DisplacementSimulatorForce);
+			writer.Write(DisplacementSimulatorVelocity);
+			writer.Write(DisplacementSimulatorFalloff);
+			writer.Write(DisplacementSimulatorDampener);
+			writer.Write(RainSimulatorStartingSize);
+			writer.Write(NoisePropertiesNormalsNoiseScale);
+			writer.Write(NoisePropertiesNoiseLayerOneWindDirection);
+			writer.Write(NoisePropertiesNoiseLayerTwoWindDirection);
+			writer.Write(NoisePropertiesNoiseLayerThreeWindDirection);
+			writer.Write(NoisePropertiesNoiseLayerOneWindSpeed);
+			writer.Write(NoisePropertiesNoiseLayerTwoWindSpeed);
+			writer.Write(NoisePropertiesNoiseLayerThreeWindSpeed);
+			writer.Write(NoisePropertiesNormalsDepthFalloffStart);
+			writer.Write(NoisePropertiesNormalsDepthFalloffEnd);
+			writer.Write(FogPropertiesAboveWaterFogAmount);
+			writer.Write(NoisePropertiesNormalsUVScale);
+			writer.Write(FogPropertiesUnderWaterFogAmount);
+			writer.Write(FogPropertiesUnderWaterFogNearPlaneDistance);
+			writer.Write(FogPropertiesUnderWaterFogFarPlaneDistance);
+			writer.Write(WaterPropertiesDistortionAmount);
+			writer.Write(WaterPropertiesShininess);
+			writer.Write(WaterPropertiesReflectionHDRMult);
+			writer.Write(WaterPropertiesLightRadius);
+			writer.Write(WaterPropertiesLightBrightness);
+			writer.Write(NoisePropertiesNoiseLayerOneUVScale);
+			writer.Write(NoisePropertiesNoiseLayerTwoUVScale);
+			writer.Write(NoisePropertiesNoiseLayerThreeUVScale);
+			writer.Write(NoisePropertiesNoiseLayerOneAmplitudeScale);
+			writer.Write(NoisePropertiesNoiseLayerTwoAmplitudeScale);
+			writer.Write(NoisePropertiesNoiseLayerThreeAmplitudeScale);
+			writer.Write(Damage);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Unknown", true, out subEle);
 			subEle.Value = Unknown.ToHex();
 
@@ -355,8 +356,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("WaterProperties/FresnelAmount", true, out subEle);
 			subEle.Value = WaterPropertiesFresnelAmount.ToString("G15");
 
-			ele.TryPathTo("Unused1", true, out subEle);
-			subEle.Value = Unused1.ToHex();
+			WriteUnused1XML(ele, master);
 
 			ele.TryPathTo("FogProperties/AboveWater/FogNearPlaneDistance", true, out subEle);
 			subEle.Value = FogPropertiesAboveWaterFogNearPlaneDistance.ToString("G15");
@@ -373,8 +373,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Color/Reflection", true, out subEle);
 			ColorReflection.WriteXML(subEle, master);
 
-			ele.TryPathTo("Unused2", true, out subEle);
-			subEle.Value = Unused2.ToHex();
+			WriteUnused2XML(ele, master);
 
 			ele.TryPathTo("RainSimulator/Force", true, out subEle);
 			subEle.Value = RainSimulatorForce.ToString("G15");
@@ -488,241 +487,145 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("WaterProperties/SunPower", false, out subEle))
-			{
 				WaterPropertiesSunPower = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WaterProperties/ReflectivityAmount", false, out subEle))
-			{
 				WaterPropertiesReflectivityAmount = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WaterProperties/FresnelAmount", false, out subEle))
-			{
 				WaterPropertiesFresnelAmount = subEle.ToSingle();
-			}
 
-			if (ele.TryPathTo("Unused1", false, out subEle))
-			{
-				Unused1 = subEle.ToBytes();
-			}
+			ReadUnused1XML(ele, master);
 
 			if (ele.TryPathTo("FogProperties/AboveWater/FogNearPlaneDistance", false, out subEle))
-			{
 				FogPropertiesAboveWaterFogNearPlaneDistance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("FogProperties/AboveWater/FogFarPlaneDistance", false, out subEle))
-			{
 				FogPropertiesAboveWaterFogFarPlaneDistance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Color/Shallow", false, out subEle))
-			{
 				ColorShallow.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Color/Deep", false, out subEle))
-			{
 				ColorDeep.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Color/Reflection", false, out subEle))
-			{
 				ColorReflection.ReadXML(subEle, master);
-			}
 
-			if (ele.TryPathTo("Unused2", false, out subEle))
-			{
-				Unused2 = subEle.ToBytes();
-			}
+			ReadUnused2XML(ele, master);
 
 			if (ele.TryPathTo("RainSimulator/Force", false, out subEle))
-			{
 				RainSimulatorForce = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("RainSimulator/Velocity", false, out subEle))
-			{
 				RainSimulatorVelocity = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("RainSimulator/Falloff", false, out subEle))
-			{
 				RainSimulatorFalloff = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("RainSimulator/Dampener", false, out subEle))
-			{
 				RainSimulatorDampener = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DisplacementSimulator/StartingSize", false, out subEle))
-			{
 				DisplacementSimulatorStartingSize = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DisplacementSimulator/Force", false, out subEle))
-			{
 				DisplacementSimulatorForce = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DisplacementSimulator/Velocity", false, out subEle))
-			{
 				DisplacementSimulatorVelocity = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DisplacementSimulator/Falloff", false, out subEle))
-			{
 				DisplacementSimulatorFalloff = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DisplacementSimulator/Dampener", false, out subEle))
-			{
 				DisplacementSimulatorDampener = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("RainSimulator/StartingSize", false, out subEle))
-			{
 				RainSimulatorStartingSize = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/Normals/NoiseScale", false, out subEle))
-			{
 				NoisePropertiesNormalsNoiseScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerOne/WindDirection", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerOneWindDirection = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerTwo/WindDirection", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerTwoWindDirection = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerThree/WindDirection", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerThreeWindDirection = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerOne/WindSpeed", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerOneWindSpeed = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerTwo/WindSpeed", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerTwoWindSpeed = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerThree/WindSpeed", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerThreeWindSpeed = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/Normals/DepthFalloff/Start", false, out subEle))
-			{
 				NoisePropertiesNormalsDepthFalloffStart = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/Normals/DepthFalloff/End", false, out subEle))
-			{
 				NoisePropertiesNormalsDepthFalloffEnd = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("FogProperties/AboveWater/FogAmount", false, out subEle))
-			{
 				FogPropertiesAboveWaterFogAmount = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/Normals/UVScale", false, out subEle))
-			{
 				NoisePropertiesNormalsUVScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("FogProperties/UnderWater/FogAmount", false, out subEle))
-			{
 				FogPropertiesUnderWaterFogAmount = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("FogProperties/UnderWater/FogNearPlaneDistance", false, out subEle))
-			{
 				FogPropertiesUnderWaterFogNearPlaneDistance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("FogProperties/UnderWater/FogFarPlaneDistance", false, out subEle))
-			{
 				FogPropertiesUnderWaterFogFarPlaneDistance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WaterProperties/DistortionAmount", false, out subEle))
-			{
 				WaterPropertiesDistortionAmount = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WaterProperties/Shininess", false, out subEle))
-			{
 				WaterPropertiesShininess = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WaterProperties/ReflectionHDRMult", false, out subEle))
-			{
 				WaterPropertiesReflectionHDRMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WaterProperties/LightRadius", false, out subEle))
-			{
 				WaterPropertiesLightRadius = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WaterProperties/LightBrightness", false, out subEle))
-			{
 				WaterPropertiesLightBrightness = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerOne/UVScale", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerOneUVScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerTwo/UVScale", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerTwoUVScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerThree/UVScale", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerThreeUVScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerOne/AmplitudeScale", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerOneAmplitudeScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerTwo/AmplitudeScale", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerTwoAmplitudeScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerThree/AmplitudeScale", false, out subEle))
-			{
 				NoisePropertiesNoiseLayerThreeAmplitudeScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Damage", false, out subEle))
-			{
 				Damage = subEle.ToUInt16();
-			}
 		}
 
 		public WaterDataAndDamage Clone()
@@ -730,5 +633,146 @@ namespace ESPSharp.Subrecords
 			return new WaterDataAndDamage(this);
 		}
 
+        public int CompareTo(WaterDataAndDamage other)
+        {
+			return WaterPropertiesSunPower.CompareTo(other.WaterPropertiesSunPower);
+        }
+
+        public static bool operator >(WaterDataAndDamage objA, WaterDataAndDamage objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(WaterDataAndDamage objA, WaterDataAndDamage objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(WaterDataAndDamage objA, WaterDataAndDamage objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(WaterDataAndDamage objA, WaterDataAndDamage objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(WaterDataAndDamage other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Unknown.SequenceEqual(other.Unknown) &&
+				WaterPropertiesSunPower == other.WaterPropertiesSunPower &&
+				WaterPropertiesReflectivityAmount == other.WaterPropertiesReflectivityAmount &&
+				WaterPropertiesFresnelAmount == other.WaterPropertiesFresnelAmount &&
+				Unused1.SequenceEqual(other.Unused1) &&
+				FogPropertiesAboveWaterFogNearPlaneDistance == other.FogPropertiesAboveWaterFogNearPlaneDistance &&
+				FogPropertiesAboveWaterFogFarPlaneDistance == other.FogPropertiesAboveWaterFogFarPlaneDistance &&
+				ColorShallow == other.ColorShallow &&
+				ColorDeep == other.ColorDeep &&
+				ColorReflection == other.ColorReflection &&
+				Unused2.SequenceEqual(other.Unused2) &&
+				RainSimulatorForce == other.RainSimulatorForce &&
+				RainSimulatorVelocity == other.RainSimulatorVelocity &&
+				RainSimulatorFalloff == other.RainSimulatorFalloff &&
+				RainSimulatorDampener == other.RainSimulatorDampener &&
+				DisplacementSimulatorStartingSize == other.DisplacementSimulatorStartingSize &&
+				DisplacementSimulatorForce == other.DisplacementSimulatorForce &&
+				DisplacementSimulatorVelocity == other.DisplacementSimulatorVelocity &&
+				DisplacementSimulatorFalloff == other.DisplacementSimulatorFalloff &&
+				DisplacementSimulatorDampener == other.DisplacementSimulatorDampener &&
+				RainSimulatorStartingSize == other.RainSimulatorStartingSize &&
+				NoisePropertiesNormalsNoiseScale == other.NoisePropertiesNormalsNoiseScale &&
+				NoisePropertiesNoiseLayerOneWindDirection == other.NoisePropertiesNoiseLayerOneWindDirection &&
+				NoisePropertiesNoiseLayerTwoWindDirection == other.NoisePropertiesNoiseLayerTwoWindDirection &&
+				NoisePropertiesNoiseLayerThreeWindDirection == other.NoisePropertiesNoiseLayerThreeWindDirection &&
+				NoisePropertiesNoiseLayerOneWindSpeed == other.NoisePropertiesNoiseLayerOneWindSpeed &&
+				NoisePropertiesNoiseLayerTwoWindSpeed == other.NoisePropertiesNoiseLayerTwoWindSpeed &&
+				NoisePropertiesNoiseLayerThreeWindSpeed == other.NoisePropertiesNoiseLayerThreeWindSpeed &&
+				NoisePropertiesNormalsDepthFalloffStart == other.NoisePropertiesNormalsDepthFalloffStart &&
+				NoisePropertiesNormalsDepthFalloffEnd == other.NoisePropertiesNormalsDepthFalloffEnd &&
+				FogPropertiesAboveWaterFogAmount == other.FogPropertiesAboveWaterFogAmount &&
+				NoisePropertiesNormalsUVScale == other.NoisePropertiesNormalsUVScale &&
+				FogPropertiesUnderWaterFogAmount == other.FogPropertiesUnderWaterFogAmount &&
+				FogPropertiesUnderWaterFogNearPlaneDistance == other.FogPropertiesUnderWaterFogNearPlaneDistance &&
+				FogPropertiesUnderWaterFogFarPlaneDistance == other.FogPropertiesUnderWaterFogFarPlaneDistance &&
+				WaterPropertiesDistortionAmount == other.WaterPropertiesDistortionAmount &&
+				WaterPropertiesShininess == other.WaterPropertiesShininess &&
+				WaterPropertiesReflectionHDRMult == other.WaterPropertiesReflectionHDRMult &&
+				WaterPropertiesLightRadius == other.WaterPropertiesLightRadius &&
+				WaterPropertiesLightBrightness == other.WaterPropertiesLightBrightness &&
+				NoisePropertiesNoiseLayerOneUVScale == other.NoisePropertiesNoiseLayerOneUVScale &&
+				NoisePropertiesNoiseLayerTwoUVScale == other.NoisePropertiesNoiseLayerTwoUVScale &&
+				NoisePropertiesNoiseLayerThreeUVScale == other.NoisePropertiesNoiseLayerThreeUVScale &&
+				NoisePropertiesNoiseLayerOneAmplitudeScale == other.NoisePropertiesNoiseLayerOneAmplitudeScale &&
+				NoisePropertiesNoiseLayerTwoAmplitudeScale == other.NoisePropertiesNoiseLayerTwoAmplitudeScale &&
+				NoisePropertiesNoiseLayerThreeAmplitudeScale == other.NoisePropertiesNoiseLayerThreeAmplitudeScale &&
+				Damage == other.Damage;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            WaterDataAndDamage other = obj as WaterDataAndDamage;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return WaterPropertiesSunPower.GetHashCode();
+        }
+
+        public static bool operator ==(WaterDataAndDamage objA, WaterDataAndDamage objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(WaterDataAndDamage objA, WaterDataAndDamage objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

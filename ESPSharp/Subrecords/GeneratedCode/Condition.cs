@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class Condition : Subrecord, ICloneable<Condition>, IReferenceContainer
+	public partial class Condition : Subrecord, ICloneable<Condition>, IComparable<Condition>, IEquatable<Condition>  
 	{
 		public Comparison Comparison { get; set; }
 		public Function Function { get; set; }
@@ -75,7 +76,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Comparison", true, out subEle);
 			Comparison.WriteXML(subEle, master);
 
@@ -92,26 +93,18 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Comparison", false, out subEle))
-			{
 				Comparison.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Function", false, out subEle))
-			{
 				Function.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("RunOn", false, out subEle))
-			{
 				RunOn = subEle.ToEnum<FunctionTarget>();
-			}
 
 			if (ele.TryPathTo("RunOnReference", false, out subEle))
-			{
 				RunOnReference.ReadXML(subEle, master);
-			}
 		}
 
 		public Condition Clone()
@@ -119,5 +112,95 @@ namespace ESPSharp.Subrecords
 			return new Condition(this);
 		}
 
+        public int CompareTo(Condition other)
+        {
+			return Function.CompareTo(other.Function);
+        }
+
+        public static bool operator >(Condition objA, Condition objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(Condition objA, Condition objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(Condition objA, Condition objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(Condition objA, Condition objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(Condition other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Comparison == other.Comparison &&
+				Function == other.Function &&
+				RunOn == other.RunOn &&
+				RunOnReference == other.RunOnReference;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            Condition other = obj as Condition;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Function.GetHashCode();
+        }
+
+        public static bool operator ==(Condition objA, Condition objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(Condition objA, Condition objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

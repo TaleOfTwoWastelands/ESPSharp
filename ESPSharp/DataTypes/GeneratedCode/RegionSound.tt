@@ -12,6 +12,7 @@
 			"Sound",
 			"Sound"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 

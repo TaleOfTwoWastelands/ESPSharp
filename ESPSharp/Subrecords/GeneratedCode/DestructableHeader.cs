@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DestructableHeader : Subrecord, ICloneable<DestructableHeader>
+	public partial class DestructableHeader : Subrecord, ICloneable<DestructableHeader>, IComparable<DestructableHeader>, IEquatable<DestructableHeader>  
 	{
 		public Int32 Health { get; set; }
 		public Byte Count { get; set; }
@@ -66,19 +67,19 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Health);			
-			writer.Write(Count);			
+			writer.Write(Health);
+			writer.Write(Count);
 			writer.Write((Byte)Flags);
 			if (Unknown == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unknown);
+			writer.Write(Unknown);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Health", true, out subEle);
 			subEle.Value = Health.ToString();
 
@@ -95,26 +96,18 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Health", false, out subEle))
-			{
 				Health = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Count", false, out subEle))
-			{
 				Count = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<DestructableFlags>();
-			}
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToBytes();
-			}
 		}
 
 		public DestructableHeader Clone()
@@ -122,5 +115,95 @@ namespace ESPSharp.Subrecords
 			return new DestructableHeader(this);
 		}
 
+        public int CompareTo(DestructableHeader other)
+        {
+			return Health.CompareTo(other.Health);
+        }
+
+        public static bool operator >(DestructableHeader objA, DestructableHeader objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(DestructableHeader objA, DestructableHeader objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(DestructableHeader objA, DestructableHeader objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(DestructableHeader objA, DestructableHeader objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(DestructableHeader other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Health == other.Health &&
+				Count == other.Count &&
+				Flags == other.Flags &&
+				Unknown.SequenceEqual(other.Unknown);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            DestructableHeader other = obj as DestructableHeader;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Health.GetHashCode();
+        }
+
+        public static bool operator ==(DestructableHeader objA, DestructableHeader objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(DestructableHeader objA, DestructableHeader objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

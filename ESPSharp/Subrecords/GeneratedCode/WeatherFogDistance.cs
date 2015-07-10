@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeatherFogDistance : Subrecord, ICloneable<WeatherFogDistance>
+	public partial class WeatherFogDistance : Subrecord, ICloneable<WeatherFogDistance>, IComparable<WeatherFogDistance>, IEquatable<WeatherFogDistance>  
 	{
 		public Single DayNear { get; set; }
 		public Single DayFar { get; set; }
@@ -76,18 +77,18 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(DayNear);			
-			writer.Write(DayFar);			
-			writer.Write(NightNear);			
-			writer.Write(NightFar);			
-			writer.Write(DayPower);			
-			writer.Write(NightPower);			
+			writer.Write(DayNear);
+			writer.Write(DayFar);
+			writer.Write(NightNear);
+			writer.Write(NightFar);
+			writer.Write(DayPower);
+			writer.Write(NightPower);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Day/Near", true, out subEle);
 			subEle.Value = DayNear.ToString("G15");
 
@@ -110,36 +111,24 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Day/Near", false, out subEle))
-			{
 				DayNear = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Day/Far", false, out subEle))
-			{
 				DayFar = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Night/Near", false, out subEle))
-			{
 				NightNear = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Night/Far", false, out subEle))
-			{
 				NightFar = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Day/Power", false, out subEle))
-			{
 				DayPower = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Night/Power", false, out subEle))
-			{
 				NightPower = subEle.ToSingle();
-			}
 		}
 
 		public WeatherFogDistance Clone()
@@ -147,5 +136,97 @@ namespace ESPSharp.Subrecords
 			return new WeatherFogDistance(this);
 		}
 
+        public int CompareTo(WeatherFogDistance other)
+        {
+			return DayNear.CompareTo(other.DayNear);
+        }
+
+        public static bool operator >(WeatherFogDistance objA, WeatherFogDistance objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(WeatherFogDistance objA, WeatherFogDistance objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(WeatherFogDistance objA, WeatherFogDistance objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(WeatherFogDistance objA, WeatherFogDistance objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(WeatherFogDistance other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return DayNear == other.DayNear &&
+				DayFar == other.DayFar &&
+				NightNear == other.NightNear &&
+				NightFar == other.NightFar &&
+				DayPower == other.DayPower &&
+				NightPower == other.NightPower;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            WeatherFogDistance other = obj as WeatherFogDistance;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return DayNear.GetHashCode();
+        }
+
+        public static bool operator ==(WeatherFogDistance objA, WeatherFogDistance objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(WeatherFogDistance objA, WeatherFogDistance objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

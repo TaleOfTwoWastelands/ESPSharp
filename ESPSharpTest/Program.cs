@@ -11,48 +11,36 @@ class Program
 {
     static void Main(string[] args)
     {
-        string testFile = "FalloutNV.esm";
-        string outDir = Path.GetFileNameWithoutExtension(testFile);
-        ElderScrollsPlugin pluggy = new ElderScrollsPlugin();
-
-        DateTime startTimeAll = DateTime.Now;
-        DateTime startTime = startTimeAll;
-
-        Console.WriteLine("Loading binary...");
-
-        pluggy.ReadBinary(testFile);
-
-        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
-        startTime = DateTime.Now;
-        Console.WriteLine("Writing XML...");
-
-        Directory.CreateDirectory(outDir);
-        pluggy.WriteXML(outDir);
-
-        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
-
-        ElderScrollsPlugin.Clear();
-
-        startTime = DateTime.Now;
-        Console.WriteLine("Loading XML...");
-
-        pluggy = ElderScrollsPlugin.ReadXML(outDir);
-
-
-        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
-        startTime = DateTime.Now;
-        Console.WriteLine("Writing binary...");
-
-        using (FileStream stream = new FileStream("NEW" + testFile, FileMode.Create, FileAccess.ReadWrite))
-        using (ESPWriter writer = new ESPWriter(stream))
+        foreach (string file in args)
         {
-            pluggy.WriteBinary(writer);
+            string outDir = Path.GetFileNameWithoutExtension(file);
+            ElderScrollsPlugin plugin = new ElderScrollsPlugin();
+            if (outDir == Path.GetFileName(file))
+            {
+                plugin = ElderScrollsPlugin.ReadXML(file);
+
+                string outFile;
+                if (plugin.Header.Record.Flags.HasFlag(ESPSharp.Enums.Flags.RecordFlag.IsMasterFile))
+                    outFile = Path.ChangeExtension(file, "esm");
+                else
+                    outFile = Path.ChangeExtension(file, "esp");
+
+                using (FileStream stream = new FileStream(outFile, FileMode.Create, FileAccess.ReadWrite))
+                using (ESPWriter writer = new ESPWriter(stream))
+                {
+                    plugin.WriteBinary(writer);
+                }
+            }
+            else
+            {
+                plugin.ReadBinary(file);
+
+                if (Directory.Exists(outDir))
+                    Directory.Delete(outDir, true);
+                Directory.CreateDirectory(outDir);
+
+                plugin.WriteXML(outDir);
+            }
         }
-
-        Console.WriteLine("...Done in: " + (DateTime.Now - startTime).ToString(@"mm\:ss\.ffff"));
-
-        Console.WriteLine("Total Time: " + (DateTime.Now - startTimeAll).ToString(@"mm\:ss\.ffff"));
-
-        Console.ReadLine();
     }
 }

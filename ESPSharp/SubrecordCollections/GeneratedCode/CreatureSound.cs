@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class CreatureSound : SubrecordCollection, ICloneable<CreatureSound>, IReferenceContainer
+	public partial class CreatureSound : SubrecordCollection, ICloneable<CreatureSound>
 	{
 		public RecordReference Sound { get; set; }
 		public SimpleSubrecord<Byte> Chance { get; set; }

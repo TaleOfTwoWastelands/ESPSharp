@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class BodyPartInfo : Subrecord, ICloneable<BodyPartInfo>, IReferenceContainer
+	public partial class BodyPartInfo : Subrecord, ICloneable<BodyPartInfo>, IComparable<BodyPartInfo>, IEquatable<BodyPartInfo>  
 	{
 		public Single DamageMultiplier { get; set; }
 		public BodyPartDataFlags Flags { get; set; }
@@ -186,43 +187,43 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(DamageMultiplier);			
+			writer.Write(DamageMultiplier);
 			writer.Write((Byte)Flags);
 			writer.Write((Byte)Type);
-			writer.Write(HealthPercent);			
+			writer.Write(HealthPercent);
 			writer.Write((SByte)ActorValue);
-			writer.Write(ToHitChance);			
-			writer.Write(ExplosionChance);			
-			writer.Write(ExplosionDebrisCount);			
+			writer.Write(ToHitChance);
+			writer.Write(ExplosionChance);
+			writer.Write(ExplosionDebrisCount);
 			ExplosionDebris.WriteBinary(writer);
 			Explosion.WriteBinary(writer);
-			writer.Write(TrackingMaxAngle);			
-			writer.Write(ExplosionDebrisScale);			
-			writer.Write(SeverableDebrisCount);			
+			writer.Write(TrackingMaxAngle);
+			writer.Write(ExplosionDebrisScale);
+			writer.Write(SeverableDebrisCount);
 			SeverableDebris.WriteBinary(writer);
 			SeverableExplosion.WriteBinary(writer);
-			writer.Write(SeverableDebrisScale);			
-			writer.Write(GoreEffectsTranslateX);			
-			writer.Write(GoreEffectsTranslateY);			
-			writer.Write(GoreEffectsTranslateZ);			
-			writer.Write(GoreEffectsRotationX);			
-			writer.Write(GoreEffectsRotationY);			
-			writer.Write(GoreEffectsRotationZ);			
+			writer.Write(SeverableDebrisScale);
+			writer.Write(GoreEffectsTranslateX);
+			writer.Write(GoreEffectsTranslateY);
+			writer.Write(GoreEffectsTranslateZ);
+			writer.Write(GoreEffectsRotationX);
+			writer.Write(GoreEffectsRotationY);
+			writer.Write(GoreEffectsRotationZ);
 			SeverableImpactDataSet.WriteBinary(writer);
 			ExplosionImpactDataSet.WriteBinary(writer);
-			writer.Write(SeverableDecalCount);			
-			writer.Write(ExplosionDecalCount);			
+			writer.Write(SeverableDecalCount);
+			writer.Write(ExplosionDecalCount);
 			if (Unused == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused);
-			writer.Write(LimbReplacementScale);			
+			writer.Write(Unused);
+			writer.Write(LimbReplacementScale);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("DamageMultiplier", true, out subEle);
 			subEle.Value = DamageMultiplier.ToString("G15");
 
@@ -301,8 +302,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Explodable/DecalCount", true, out subEle);
 			subEle.Value = ExplosionDecalCount.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("LimbReplacementScale", true, out subEle);
 			subEle.Value = LimbReplacementScale.ToString("G15");
@@ -311,146 +311,89 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("DamageMultiplier", false, out subEle))
-			{
 				DamageMultiplier = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<BodyPartDataFlags>();
-			}
 
 			if (ele.TryPathTo("Type", false, out subEle))
-			{
 				Type = subEle.ToEnum<BodyPartType>();
-			}
 
 			if (ele.TryPathTo("HealthPercent", false, out subEle))
-			{
 				HealthPercent = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("ActorValue", false, out subEle))
-			{
 				ActorValue = subEle.ToEnum<ActorValuesByte>();
-			}
 
 			if (ele.TryPathTo("ToHitChance", false, out subEle))
-			{
 				ToHitChance = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Explodable/ExplosionChance", false, out subEle))
-			{
 				ExplosionChance = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Explodable/DebrisCount", false, out subEle))
-			{
 				ExplosionDebrisCount = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("Explodable/Debris", false, out subEle))
-			{
 				ExplosionDebris.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Explodable/Explosion", false, out subEle))
-			{
 				Explosion.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("TrackingMaxAngle", false, out subEle))
-			{
 				TrackingMaxAngle = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Explodable/DebrisScale", false, out subEle))
-			{
 				ExplosionDebrisScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Severable/DebrisCount", false, out subEle))
-			{
 				SeverableDebrisCount = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Severable/Debris", false, out subEle))
-			{
 				SeverableDebris.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Severable/Explosion", false, out subEle))
-			{
 				SeverableExplosion.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Severable/DebrisScale", false, out subEle))
-			{
 				SeverableDebrisScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("GoreEffects/Translate/X", false, out subEle))
-			{
 				GoreEffectsTranslateX = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("GoreEffects/Translate/Y", false, out subEle))
-			{
 				GoreEffectsTranslateY = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("GoreEffects/Translate/Z", false, out subEle))
-			{
 				GoreEffectsTranslateZ = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("GoreEffects/Rotation/X", false, out subEle))
-			{
 				GoreEffectsRotationX = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("GoreEffects/Rotation/Y", false, out subEle))
-			{
 				GoreEffectsRotationY = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("GoreEffects/Rotation/Z", false, out subEle))
-			{
 				GoreEffectsRotationZ = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Severable/ImpactDataSet", false, out subEle))
-			{
 				SeverableImpactDataSet.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Explodable/ImpactDataSet", false, out subEle))
-			{
 				ExplosionImpactDataSet.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Severable/DecalCount", false, out subEle))
-			{
 				SeverableDecalCount = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Explodable/DecalCount", false, out subEle))
-			{
 				ExplosionDecalCount = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("LimbReplacementScale", false, out subEle))
-			{
 				LimbReplacementScale = subEle.ToSingle();
-			}
 		}
 
 		public BodyPartInfo Clone()
@@ -458,5 +401,123 @@ namespace ESPSharp.Subrecords
 			return new BodyPartInfo(this);
 		}
 
+        public int CompareTo(BodyPartInfo other)
+        {
+			return Type.CompareTo(other.Type);
+        }
+
+        public static bool operator >(BodyPartInfo objA, BodyPartInfo objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(BodyPartInfo objA, BodyPartInfo objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(BodyPartInfo objA, BodyPartInfo objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(BodyPartInfo objA, BodyPartInfo objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(BodyPartInfo other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return DamageMultiplier == other.DamageMultiplier &&
+				Flags == other.Flags &&
+				Type == other.Type &&
+				HealthPercent == other.HealthPercent &&
+				ActorValue == other.ActorValue &&
+				ToHitChance == other.ToHitChance &&
+				ExplosionChance == other.ExplosionChance &&
+				ExplosionDebrisCount == other.ExplosionDebrisCount &&
+				ExplosionDebris == other.ExplosionDebris &&
+				Explosion == other.Explosion &&
+				TrackingMaxAngle == other.TrackingMaxAngle &&
+				ExplosionDebrisScale == other.ExplosionDebrisScale &&
+				SeverableDebrisCount == other.SeverableDebrisCount &&
+				SeverableDebris == other.SeverableDebris &&
+				SeverableExplosion == other.SeverableExplosion &&
+				SeverableDebrisScale == other.SeverableDebrisScale &&
+				GoreEffectsTranslateX == other.GoreEffectsTranslateX &&
+				GoreEffectsTranslateY == other.GoreEffectsTranslateY &&
+				GoreEffectsTranslateZ == other.GoreEffectsTranslateZ &&
+				GoreEffectsRotationX == other.GoreEffectsRotationX &&
+				GoreEffectsRotationY == other.GoreEffectsRotationY &&
+				GoreEffectsRotationZ == other.GoreEffectsRotationZ &&
+				SeverableImpactDataSet == other.SeverableImpactDataSet &&
+				ExplosionImpactDataSet == other.ExplosionImpactDataSet &&
+				SeverableDecalCount == other.SeverableDecalCount &&
+				ExplosionDecalCount == other.ExplosionDecalCount &&
+				Unused.SequenceEqual(other.Unused) &&
+				LimbReplacementScale == other.LimbReplacementScale;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            BodyPartInfo other = obj as BodyPartInfo;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Type.GetHashCode();
+        }
+
+        public static bool operator ==(BodyPartInfo objA, BodyPartInfo objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(BodyPartInfo objA, BodyPartInfo objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

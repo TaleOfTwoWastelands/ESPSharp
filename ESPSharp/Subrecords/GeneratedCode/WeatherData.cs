@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeatherData : Subrecord, ICloneable<WeatherData>
+	public partial class WeatherData : Subrecord, ICloneable<WeatherData>, IComparable<WeatherData>, IEquatable<WeatherData>  
 	{
 		public Byte WindSpeed { get; set; }
 		public Byte CloudSpeedLower { get; set; }
@@ -121,27 +122,27 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(WindSpeed);			
-			writer.Write(CloudSpeedLower);			
-			writer.Write(CloudSpeedUpper);			
-			writer.Write(TransitionDelta);			
-			writer.Write(SunGlare);			
-			writer.Write(SunDamage);			
-			writer.Write(PrecipitationBeginFadeIn);			
-			writer.Write(PrecipitationEndFadeOut);			
-			writer.Write(Thunder_LightningBeginFadeIn);			
-			writer.Write(Thunder_LightningEndFadeOut);			
-			writer.Write(Thunder_LightningFrequency);			
+			writer.Write(WindSpeed);
+			writer.Write(CloudSpeedLower);
+			writer.Write(CloudSpeedUpper);
+			writer.Write(TransitionDelta);
+			writer.Write(SunGlare);
+			writer.Write(SunDamage);
+			writer.Write(PrecipitationBeginFadeIn);
+			writer.Write(PrecipitationEndFadeOut);
+			writer.Write(Thunder_LightningBeginFadeIn);
+			writer.Write(Thunder_LightningEndFadeOut);
+			writer.Write(Thunder_LightningFrequency);
 			writer.Write((Byte)Classification);
-			writer.Write(LightningColorRed);			
-			writer.Write(LightningColorGreen);			
-			writer.Write(LightningColorBlue);			
+			writer.Write(LightningColorRed);
+			writer.Write(LightningColorGreen);
+			writer.Write(LightningColorBlue);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("WindSpeed", true, out subEle);
 			subEle.Value = WindSpeed.ToString();
 
@@ -191,81 +192,51 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("WindSpeed", false, out subEle))
-			{
 				WindSpeed = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("CloudSpeed/Lower", false, out subEle))
-			{
 				CloudSpeedLower = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("CloudSpeed/Upper", false, out subEle))
-			{
 				CloudSpeedUpper = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("TransitionDelta", false, out subEle))
-			{
 				TransitionDelta = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("SunGlare", false, out subEle))
-			{
 				SunGlare = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("SunDamage", false, out subEle))
-			{
 				SunDamage = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Precipitation/BeginFadeIn", false, out subEle))
-			{
 				PrecipitationBeginFadeIn = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Precipitation/EndFadeOut", false, out subEle))
-			{
 				PrecipitationEndFadeOut = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Thunder_Lightning/BeginFadeIn", false, out subEle))
-			{
 				Thunder_LightningBeginFadeIn = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Thunder_Lightning/EndFadeOut", false, out subEle))
-			{
 				Thunder_LightningEndFadeOut = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Thunder_Lightning/Frequency", false, out subEle))
-			{
 				Thunder_LightningFrequency = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Classification", false, out subEle))
-			{
 				Classification = subEle.ToEnum<WeatherClassification>();
-			}
 
 			if (ele.TryPathTo("LightningColor/Red", false, out subEle))
-			{
 				LightningColorRed = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("LightningColor/Green", false, out subEle))
-			{
 				LightningColorGreen = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("LightningColor/Blue", false, out subEle))
-			{
 				LightningColorBlue = subEle.ToByte();
-			}
 		}
 
 		public WeatherData Clone()
@@ -273,5 +244,106 @@ namespace ESPSharp.Subrecords
 			return new WeatherData(this);
 		}
 
+        public int CompareTo(WeatherData other)
+        {
+			return Classification.CompareTo(other.Classification);
+        }
+
+        public static bool operator >(WeatherData objA, WeatherData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(WeatherData objA, WeatherData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(WeatherData objA, WeatherData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(WeatherData objA, WeatherData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(WeatherData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return WindSpeed == other.WindSpeed &&
+				CloudSpeedLower == other.CloudSpeedLower &&
+				CloudSpeedUpper == other.CloudSpeedUpper &&
+				TransitionDelta == other.TransitionDelta &&
+				SunGlare == other.SunGlare &&
+				SunDamage == other.SunDamage &&
+				PrecipitationBeginFadeIn == other.PrecipitationBeginFadeIn &&
+				PrecipitationEndFadeOut == other.PrecipitationEndFadeOut &&
+				Thunder_LightningBeginFadeIn == other.Thunder_LightningBeginFadeIn &&
+				Thunder_LightningEndFadeOut == other.Thunder_LightningEndFadeOut &&
+				Thunder_LightningFrequency == other.Thunder_LightningFrequency &&
+				Classification == other.Classification &&
+				LightningColorRed == other.LightningColorRed &&
+				LightningColorGreen == other.LightningColorGreen &&
+				LightningColorBlue == other.LightningColorBlue;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            WeatherData other = obj as WeatherData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Classification.GetHashCode();
+        }
+
+        public static bool operator ==(WeatherData objA, WeatherData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(WeatherData objA, WeatherData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

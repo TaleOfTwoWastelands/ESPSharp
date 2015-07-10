@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-    public class Comparison : IESPSerializable, ICloneable<Comparison>, IReferenceContainer
+    public class Comparison : IESPSerializable, ICloneable<Comparison>, IComparable<Comparison>, IEquatable<Comparison>, IReferenceContainer
     {
         public ConditionFlags Flags { get; set; }
         public ConditionComparisonType Operator { get; set; }
@@ -132,6 +132,63 @@ namespace ESPSharp.DataTypes
         public Comparison Clone()
         {
             return new Comparison(this);
+        }
+
+        public int CompareTo(Comparison other)
+        {
+            return Operator.CompareTo(other.Operator);
+        }
+
+        public static bool operator >(Comparison objA, Comparison objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(Comparison objA, Comparison objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(Comparison objA, Comparison objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(Comparison objA, Comparison objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(Comparison other)
+        {
+            return Flags == other.Flags &&
+                Operator == other.Operator &&
+                Unused == other.Unused &&
+                ComparisonValue == other.ComparisonValue;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Comparison other = obj as Comparison;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Operator.GetHashCode();
+        }
+
+        public static bool operator ==(Comparison objA, Comparison objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(Comparison objA, Comparison objB)
+        {
+            return !objA.Equals(objB);
         }
     }
 }

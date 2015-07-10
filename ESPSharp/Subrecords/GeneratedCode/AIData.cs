@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class AIData : Subrecord, ICloneable<AIData>
+	public partial class AIData : Subrecord, ICloneable<AIData>, IComparable<AIData>, IEquatable<AIData>  
 	{
 		public AggressionType Aggression { get; set; }
 		public ConfidenceType Confidence { get; set; }
@@ -108,25 +109,25 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write((Byte)Aggression);
 			writer.Write((Byte)Confidence);
-			writer.Write(EnergyLevel);			
-			writer.Write(Responsibility);			
+			writer.Write(EnergyLevel);
+			writer.Write(Responsibility);
 			writer.Write((Byte)Mood);
 			if (Unused == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused);
+			writer.Write(Unused);
 			writer.Write((UInt32)Services);
 			writer.Write((SByte)Teaches);
-			writer.Write(MaxTrainingLevel);			
+			writer.Write(MaxTrainingLevel);
 			writer.Write((Byte)Assistance);
 			writer.Write((Byte)AggroRadiusBehavior);
-			writer.Write(AggroRadius);			
+			writer.Write(AggroRadius);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Aggression", true, out subEle);
 			subEle.Value = Aggression.ToString();
 
@@ -142,8 +143,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Mood", true, out subEle);
 			subEle.Value = Mood.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("Services", true, out subEle);
 			subEle.Value = Services.ToString();
@@ -167,66 +167,41 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Aggression", false, out subEle))
-			{
 				Aggression = subEle.ToEnum<AggressionType>();
-			}
 
 			if (ele.TryPathTo("Confidence", false, out subEle))
-			{
 				Confidence = subEle.ToEnum<ConfidenceType>();
-			}
 
 			if (ele.TryPathTo("EnergyLevel", false, out subEle))
-			{
 				EnergyLevel = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Responsibility", false, out subEle))
-			{
 				Responsibility = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Mood", false, out subEle))
-			{
 				Mood = subEle.ToEnum<MoodType>();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("Services", false, out subEle))
-			{
 				Services = subEle.ToEnum<ServicesFlag>();
-			}
 
 			if (ele.TryPathTo("Teaches", false, out subEle))
-			{
 				Teaches = subEle.ToEnum<Skills>();
-			}
 
 			if (ele.TryPathTo("MaxTrainingLevel", false, out subEle))
-			{
 				MaxTrainingLevel = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Assistance", false, out subEle))
-			{
 				Assistance = subEle.ToEnum<AssistanceType>();
-			}
 
 			if (ele.TryPathTo("AggroRadiusBehavior", false, out subEle))
-			{
 				AggroRadiusBehavior = subEle.ToEnum<AggroRadiusBehaviorFlags>();
-			}
 
 			if (ele.TryPathTo("AggroRadius", false, out subEle))
-			{
 				AggroRadius = subEle.ToInt32();
-			}
 		}
 
 		public AIData Clone()
@@ -234,5 +209,107 @@ namespace ESPSharp.Subrecords
 			return new AIData(this);
 		}
 
+        public int CompareTo(AIData other)
+        {
+			return Aggression.CompareTo(other.Aggression);
+        }
+
+        public static bool operator >(AIData objA, AIData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(AIData objA, AIData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(AIData objA, AIData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(AIData objA, AIData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(AIData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Aggression == other.Aggression &&
+				Confidence == other.Confidence &&
+				EnergyLevel == other.EnergyLevel &&
+				Responsibility == other.Responsibility &&
+				Mood == other.Mood &&
+				Unused.SequenceEqual(other.Unused) &&
+				Services == other.Services &&
+				Teaches == other.Teaches &&
+				MaxTrainingLevel == other.MaxTrainingLevel &&
+				Assistance == other.Assistance &&
+				AggroRadiusBehavior == other.AggroRadiusBehavior &&
+				AggroRadius == other.AggroRadius;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            AIData other = obj as AIData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Aggression.GetHashCode();
+        }
+
+        public static bool operator ==(AIData objA, AIData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(AIData objA, AIData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

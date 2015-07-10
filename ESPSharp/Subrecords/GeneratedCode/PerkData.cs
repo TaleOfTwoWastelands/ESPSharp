@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PerkData : Subrecord, ICloneable<PerkData>
+	public partial class PerkData : Subrecord, ICloneable<PerkData>, IComparable<PerkData>, IEquatable<PerkData>  
 	{
 		public NoYesByte IsTrait { get; set; }
 		public Byte MinLevel { get; set; }
@@ -72,8 +73,8 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((Byte)IsTrait);
-			writer.Write(MinLevel);			
-			writer.Write(Ranks);			
+			writer.Write(MinLevel);
+			writer.Write(Ranks);
 			writer.Write((Byte)IsPlayable);
 			writer.Write((Byte)IsHidden);
 		}
@@ -81,7 +82,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("IsTrait", true, out subEle);
 			subEle.Value = IsTrait.ToString();
 
@@ -101,31 +102,21 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("IsTrait", false, out subEle))
-			{
 				IsTrait = subEle.ToEnum<NoYesByte>();
-			}
 
 			if (ele.TryPathTo("MinLevel", false, out subEle))
-			{
 				MinLevel = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Ranks", false, out subEle))
-			{
 				Ranks = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("IsPlayable", false, out subEle))
-			{
 				IsPlayable = subEle.ToEnum<NoYesByte>();
-			}
 
 			if (ele.TryPathTo("IsHidden", false, out subEle))
-			{
 				IsHidden = subEle.ToEnum<NoYesByte>();
-			}
 		}
 
 		public PerkData Clone()
@@ -133,5 +124,96 @@ namespace ESPSharp.Subrecords
 			return new PerkData(this);
 		}
 
+        public int CompareTo(PerkData other)
+        {
+			return MinLevel.CompareTo(other.MinLevel);
+        }
+
+        public static bool operator >(PerkData objA, PerkData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(PerkData objA, PerkData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(PerkData objA, PerkData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(PerkData objA, PerkData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(PerkData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return IsTrait == other.IsTrait &&
+				MinLevel == other.MinLevel &&
+				Ranks == other.Ranks &&
+				IsPlayable == other.IsPlayable &&
+				IsHidden == other.IsHidden;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            PerkData other = obj as PerkData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return MinLevel.GetHashCode();
+        }
+
+        public static bool operator ==(PerkData objA, PerkData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(PerkData objA, PerkData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class ReferencePatrolData : SubrecordCollection, ICloneable<ReferencePatrolData>, IReferenceContainer
+	public partial class ReferencePatrolData : SubrecordCollection, ICloneable<ReferencePatrolData>
 	{
 		public SimpleSubrecord<Single> IdleTime { get; set; }
 		public SubMarker ScriptMarker { get; set; }

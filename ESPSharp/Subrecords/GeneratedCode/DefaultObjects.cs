@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DefaultObjects : Subrecord, ICloneable<DefaultObjects>, IReferenceContainer
+	public partial class DefaultObjects : Subrecord, ICloneable<DefaultObjects>, IComparable<DefaultObjects>, IEquatable<DefaultObjects>  
 	{
 		public FormID Stimpack { get; set; }
 		public FormID SuperStimpack { get; set; }
@@ -255,7 +256,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Stimpack", true, out subEle);
 			Stimpack.WriteXML(subEle, master);
 
@@ -362,176 +363,108 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Stimpack", false, out subEle))
-			{
 				Stimpack.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("SuperStimpack", false, out subEle))
-			{
 				SuperStimpack.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("RadX", false, out subEle))
-			{
 				RadX.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("RadAway", false, out subEle))
-			{
 				RadAway.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("MedX", false, out subEle))
-			{
 				MedX.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("PerkParalysis", false, out subEle))
-			{
 				PerkParalysis.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("PlayerFaction", false, out subEle))
-			{
 				PlayerFaction.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("MysteriousStrangerNPC", false, out subEle))
-			{
 				MysteriousStrangerNPC.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("MysteriousStrangerFaction", false, out subEle))
-			{
 				MysteriousStrangerFaction.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("DefaultMusic", false, out subEle))
-			{
 				DefaultMusic.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("BattleMusic", false, out subEle))
-			{
 				BattleMusic.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("DeathMusic", false, out subEle))
-			{
 				DeathMusic.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("SuccessMusic", false, out subEle))
-			{
 				SuccessMusic.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("LevelUpMusic", false, out subEle))
-			{
 				LevelUpMusic.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("PlayerVoice/Male", false, out subEle))
-			{
 				PlayerVoiceMale.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("PlayerVoice/MaleChild", false, out subEle))
-			{
 				PlayerVoiceMaleChild.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("PlayerVoice/Female", false, out subEle))
-			{
 				PlayerVoiceFemale.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("PlayerVoice/FemaleChild", false, out subEle))
-			{
 				PlayerVoiceFemaleChild.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("EatPackageDefaultFood", false, out subEle))
-			{
 				EatPackageDefaultFood.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("EveryActorAbility", false, out subEle))
-			{
 				EveryActorAbility.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("DrugWearsOffImageSpace", false, out subEle))
-			{
 				DrugWearsOffImageSpace.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("DoctorsBag", false, out subEle))
-			{
 				DoctorsBag.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("MissFortuneNPC", false, out subEle))
-			{
 				MissFortuneNPC.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("MissFortuneFaction", false, out subEle))
-			{
 				MissFortuneFaction.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("MeltdownExplosion", false, out subEle))
-			{
 				MeltdownExplosion.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("UnarmedPowerAttack/Forward", false, out subEle))
-			{
 				UnarmedPowerAttackForward.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("UnarmedPowerAttack/Backward", false, out subEle))
-			{
 				UnarmedPowerAttackBackward.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("UnarmedPowerAttack/Left", false, out subEle))
-			{
 				UnarmedPowerAttackLeft.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("UnarmedPowerAttack/Right", false, out subEle))
-			{
 				UnarmedPowerAttackRight.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("UnarmedPowerAttack/Crouch", false, out subEle))
-			{
 				UnarmedPowerAttackCrouch.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("UnarmedPowerAttack/Counter", false, out subEle))
-			{
 				UnarmedPowerAttackCounter.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("SpotterEffect", false, out subEle))
-			{
 				SpotterEffect.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("ItemDetectedEffect", false, out subEle))
-			{
 				ItemDetectedEffect.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("CateyeMobileEffect", false, out subEle))
-			{
 				CateyeMobileEffect.ReadXML(subEle, master);
-			}
 		}
 
 		public DefaultObjects Clone()
@@ -539,5 +472,125 @@ namespace ESPSharp.Subrecords
 			return new DefaultObjects(this);
 		}
 
+        public int CompareTo(DefaultObjects other)
+        {
+			return Stimpack.CompareTo(other.Stimpack);
+        }
+
+        public static bool operator >(DefaultObjects objA, DefaultObjects objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(DefaultObjects objA, DefaultObjects objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(DefaultObjects objA, DefaultObjects objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(DefaultObjects objA, DefaultObjects objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(DefaultObjects other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Stimpack == other.Stimpack &&
+				SuperStimpack == other.SuperStimpack &&
+				RadX == other.RadX &&
+				RadAway == other.RadAway &&
+				MedX == other.MedX &&
+				PerkParalysis == other.PerkParalysis &&
+				PlayerFaction == other.PlayerFaction &&
+				MysteriousStrangerNPC == other.MysteriousStrangerNPC &&
+				MysteriousStrangerFaction == other.MysteriousStrangerFaction &&
+				DefaultMusic == other.DefaultMusic &&
+				BattleMusic == other.BattleMusic &&
+				DeathMusic == other.DeathMusic &&
+				SuccessMusic == other.SuccessMusic &&
+				LevelUpMusic == other.LevelUpMusic &&
+				PlayerVoiceMale == other.PlayerVoiceMale &&
+				PlayerVoiceMaleChild == other.PlayerVoiceMaleChild &&
+				PlayerVoiceFemale == other.PlayerVoiceFemale &&
+				PlayerVoiceFemaleChild == other.PlayerVoiceFemaleChild &&
+				EatPackageDefaultFood == other.EatPackageDefaultFood &&
+				EveryActorAbility == other.EveryActorAbility &&
+				DrugWearsOffImageSpace == other.DrugWearsOffImageSpace &&
+				DoctorsBag == other.DoctorsBag &&
+				MissFortuneNPC == other.MissFortuneNPC &&
+				MissFortuneFaction == other.MissFortuneFaction &&
+				MeltdownExplosion == other.MeltdownExplosion &&
+				UnarmedPowerAttackForward == other.UnarmedPowerAttackForward &&
+				UnarmedPowerAttackBackward == other.UnarmedPowerAttackBackward &&
+				UnarmedPowerAttackLeft == other.UnarmedPowerAttackLeft &&
+				UnarmedPowerAttackRight == other.UnarmedPowerAttackRight &&
+				UnarmedPowerAttackCrouch == other.UnarmedPowerAttackCrouch &&
+				UnarmedPowerAttackCounter == other.UnarmedPowerAttackCounter &&
+				SpotterEffect == other.SpotterEffect &&
+				ItemDetectedEffect == other.ItemDetectedEffect &&
+				CateyeMobileEffect == other.CateyeMobileEffect;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            DefaultObjects other = obj as DefaultObjects;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Stimpack.GetHashCode();
+        }
+
+        public static bool operator ==(DefaultObjects objA, DefaultObjects objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(DefaultObjects objA, DefaultObjects objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

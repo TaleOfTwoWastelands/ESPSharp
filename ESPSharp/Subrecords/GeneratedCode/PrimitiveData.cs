@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PrimitiveData : Subrecord, ICloneable<PrimitiveData>
+	public partial class PrimitiveData : Subrecord, ICloneable<PrimitiveData>, IComparable<PrimitiveData>, IEquatable<PrimitiveData>  
 	{
 		public Single XBound { get; set; }
 		public Single YBound { get; set; }
@@ -86,23 +87,23 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(XBound);			
-			writer.Write(YBound);			
-			writer.Write(ZBound);			
-			writer.Write(Red);			
-			writer.Write(Green);			
-			writer.Write(Blue);			
+			writer.Write(XBound);
+			writer.Write(YBound);
+			writer.Write(ZBound);
+			writer.Write(Red);
+			writer.Write(Green);
+			writer.Write(Blue);
 			if (Unknown == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unknown);
+			writer.Write(Unknown);
 			writer.Write((UInt32)Type);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Bounds/X", true, out subEle);
 			subEle.Value = XBound.ToString("G15");
 
@@ -131,46 +132,30 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Bounds/X", false, out subEle))
-			{
 				XBound = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Bounds/Y", false, out subEle))
-			{
 				YBound = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Bounds/Z", false, out subEle))
-			{
 				ZBound = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Color/Red", false, out subEle))
-			{
 				Red = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Color/Green", false, out subEle))
-			{
 				Green = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Color/Blue", false, out subEle))
-			{
 				Blue = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("Type", false, out subEle))
-			{
 				Type = subEle.ToEnum<PrimitiveType>();
-			}
 		}
 
 		public PrimitiveData Clone()
@@ -178,5 +163,99 @@ namespace ESPSharp.Subrecords
 			return new PrimitiveData(this);
 		}
 
+        public int CompareTo(PrimitiveData other)
+        {
+			return XBound.CompareTo(other.XBound);
+        }
+
+        public static bool operator >(PrimitiveData objA, PrimitiveData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(PrimitiveData objA, PrimitiveData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(PrimitiveData objA, PrimitiveData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(PrimitiveData objA, PrimitiveData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(PrimitiveData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return XBound == other.XBound &&
+				YBound == other.YBound &&
+				ZBound == other.ZBound &&
+				Red == other.Red &&
+				Green == other.Green &&
+				Blue == other.Blue &&
+				Unknown.SequenceEqual(other.Unknown) &&
+				Type == other.Type;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            PrimitiveData other = obj as PrimitiveData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return XBound.GetHashCode();
+        }
+
+        public static bool operator ==(PrimitiveData objA, PrimitiveData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(PrimitiveData objA, PrimitiveData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

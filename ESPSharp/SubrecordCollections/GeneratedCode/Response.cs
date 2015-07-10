@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class Response : SubrecordCollection, ICloneable<Response>, IReferenceContainer
+	public partial class Response : SubrecordCollection, ICloneable<Response>
 	{
 		public ResponseData ResponseData { get; set; }
 		public SimpleSubrecord<String> ResponseText { get; set; }

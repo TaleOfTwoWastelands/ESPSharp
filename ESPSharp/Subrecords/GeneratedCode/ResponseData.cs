@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ResponseData : Subrecord, ICloneable<ResponseData>, IReferenceContainer
+	public partial class ResponseData : Subrecord, ICloneable<ResponseData>, IComparable<ResponseData>, IEquatable<ResponseData>  
 	{
 		public EmotionType Emotion { get; set; }
 		public Int32 EmotionValue { get; set; }
@@ -87,42 +88,40 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((UInt32)Emotion);
-			writer.Write(EmotionValue);			
+			writer.Write(EmotionValue);
 			if (Unused1 == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unused1);
-			writer.Write(ResponseNumber);			
+			writer.Write(Unused1);
+			writer.Write(ResponseNumber);
 			if (Unused2 == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused2);
+			writer.Write(Unused2);
 			Sound.WriteBinary(writer);
 			writer.Write((Byte)UseEmotionAnimation);
 			if (Unused3 == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused3);
+			writer.Write(Unused3);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Emotion", true, out subEle);
 			subEle.Value = Emotion.ToString();
 
 			ele.TryPathTo("EmotionValue", true, out subEle);
 			subEle.Value = EmotionValue.ToString();
 
-			ele.TryPathTo("Unused1", true, out subEle);
-			subEle.Value = Unused1.ToHex();
+			WriteUnused1XML(ele, master);
 
 			ele.TryPathTo("ResponseNumber", true, out subEle);
 			subEle.Value = ResponseNumber.ToString();
 
-			ele.TryPathTo("Unused2", true, out subEle);
-			subEle.Value = Unused2.ToHex();
+			WriteUnused2XML(ele, master);
 
 			ele.TryPathTo("Sound", true, out subEle);
 			Sound.WriteXML(subEle, master);
@@ -130,53 +129,33 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("UseEmotionAnimation", true, out subEle);
 			subEle.Value = UseEmotionAnimation.ToString();
 
-			ele.TryPathTo("Unused3", true, out subEle);
-			subEle.Value = Unused3.ToHex();
+			WriteUnused3XML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Emotion", false, out subEle))
-			{
 				Emotion = subEle.ToEnum<EmotionType>();
-			}
 
 			if (ele.TryPathTo("EmotionValue", false, out subEle))
-			{
 				EmotionValue = subEle.ToInt32();
-			}
 
-			if (ele.TryPathTo("Unused1", false, out subEle))
-			{
-				Unused1 = subEle.ToBytes();
-			}
+			ReadUnused1XML(ele, master);
 
 			if (ele.TryPathTo("ResponseNumber", false, out subEle))
-			{
 				ResponseNumber = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused2", false, out subEle))
-			{
-				Unused2 = subEle.ToBytes();
-			}
+			ReadUnused2XML(ele, master);
 
 			if (ele.TryPathTo("Sound", false, out subEle))
-			{
 				Sound.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("UseEmotionAnimation", false, out subEle))
-			{
 				UseEmotionAnimation = subEle.ToEnum<NoYesByte>();
-			}
 
-			if (ele.TryPathTo("Unused3", false, out subEle))
-			{
-				Unused3 = subEle.ToBytes();
-			}
+			ReadUnused3XML(ele, master);
 		}
 
 		public ResponseData Clone()
@@ -184,5 +163,111 @@ namespace ESPSharp.Subrecords
 			return new ResponseData(this);
 		}
 
+        public int CompareTo(ResponseData other)
+        {
+			return ResponseNumber.CompareTo(other.ResponseNumber);
+        }
+
+        public static bool operator >(ResponseData objA, ResponseData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ResponseData objA, ResponseData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ResponseData objA, ResponseData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ResponseData objA, ResponseData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ResponseData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Emotion == other.Emotion &&
+				EmotionValue == other.EmotionValue &&
+				Unused1.SequenceEqual(other.Unused1) &&
+				ResponseNumber == other.ResponseNumber &&
+				Unused2.SequenceEqual(other.Unused2) &&
+				Sound == other.Sound &&
+				UseEmotionAnimation == other.UseEmotionAnimation &&
+				Unused3.SequenceEqual(other.Unused3);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ResponseData other = obj as ResponseData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return ResponseNumber.GetHashCode();
+        }
+
+        public static bool operator ==(ResponseData objA, ResponseData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ResponseData objA, ResponseData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused3XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused3XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

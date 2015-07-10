@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-    public class MoonData : IESPSerializable, ICloneable<MoonData>, IReferenceContainer
+    public class MoonData : IESPSerializable, ICloneable<MoonData>, IComparable<MoonData>, IEquatable<MoonData>
     {
         public MoonFlags Moons { get; set; }
         public byte PhaseLength { get; set; }
@@ -79,6 +79,61 @@ namespace ESPSharp.DataTypes
         public MoonData Clone()
         {
             return new MoonData(this);
+        }
+
+        public int CompareTo(MoonData other)
+        {
+            return Moons.CompareTo(other.Moons);
+        }
+
+        public static bool operator >(MoonData objA, MoonData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(MoonData objA, MoonData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(MoonData objA, MoonData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(MoonData objA, MoonData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(MoonData other)
+        {
+            return Moons == other.Moons &&
+                PhaseLength == other.PhaseLength;
+        }
+
+        public override bool Equals(object obj)
+        {
+            MoonData other = obj as MoonData;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Moons.GetHashCode();
+        }
+
+        public static bool operator ==(MoonData objA, MoonData objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(MoonData objA, MoonData objB)
+        {
+            return !objA.Equals(objB);
         }
     }
 }

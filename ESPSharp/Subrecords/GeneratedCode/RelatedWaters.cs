@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RelatedWaters : Subrecord, ICloneable<RelatedWaters>, IReferenceContainer
+	public partial class RelatedWaters : Subrecord, ICloneable<RelatedWaters>, IComparable<RelatedWaters>, IEquatable<RelatedWaters>  
 	{
 		public FormID Daytime { get; set; }
 		public FormID Nighttime { get; set; }
@@ -69,7 +70,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Daytime", true, out subEle);
 			Daytime.WriteXML(subEle, master);
 
@@ -83,21 +84,15 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Daytime", false, out subEle))
-			{
 				Daytime.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Nighttime", false, out subEle))
-			{
 				Nighttime.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Underwater", false, out subEle))
-			{
 				Underwater.ReadXML(subEle, master);
-			}
 		}
 
 		public RelatedWaters Clone()
@@ -105,5 +100,94 @@ namespace ESPSharp.Subrecords
 			return new RelatedWaters(this);
 		}
 
+        public int CompareTo(RelatedWaters other)
+        {
+			return Daytime.CompareTo(other.Daytime);
+        }
+
+        public static bool operator >(RelatedWaters objA, RelatedWaters objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RelatedWaters objA, RelatedWaters objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RelatedWaters objA, RelatedWaters objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RelatedWaters objA, RelatedWaters objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RelatedWaters other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Daytime == other.Daytime &&
+				Nighttime == other.Nighttime &&
+				Underwater == other.Underwater;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            RelatedWaters other = obj as RelatedWaters;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Daytime.GetHashCode();
+        }
+
+        public static bool operator ==(RelatedWaters objA, RelatedWaters objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RelatedWaters objA, RelatedWaters objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

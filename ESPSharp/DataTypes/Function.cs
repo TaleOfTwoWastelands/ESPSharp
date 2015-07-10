@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-    public class Function : IESPSerializable, ICloneable<Function>, IReferenceContainer
+    public class Function : IESPSerializable, ICloneable<Function>, IComparable<Function>, IEquatable<Function>, IReferenceContainer
     {
         #region Dictionary
         private static Dictionary<FunctionType, TypeStringArgData> Metadata = new Dictionary<FunctionType, TypeStringArgData>()
@@ -505,6 +505,66 @@ namespace ESPSharp.DataTypes
         public Function Clone()
         {
             return new Function(this);
+        }
+
+        public int CompareTo(Function other)
+        {
+            return Type.CompareTo(other.Type);
+        }
+
+        public static bool operator >(Function objA, Function objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(Function objA, Function objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(Function objA, Function objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(Function objA, Function objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(Function other)
+        {
+            return Type == other.Type &&
+                Argument1 == other.Argument1 &&
+                Arg1Label == other.Arg1Label &&
+                Arg1Type == other.Arg1Type &&
+                Argument2 == other.Argument2 &&
+                Arg2Label == other.Arg2Label &&
+                Arg2Type == other.Arg2Type;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Function other = obj as Function;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Type.GetHashCode();
+        }
+
+        public static bool operator ==(Function objA, Function objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(Function objA, Function objB)
+        {
+            return !objA.Equals(objB);
         }
     }
 }

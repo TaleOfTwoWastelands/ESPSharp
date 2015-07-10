@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DialogTopicData : Subrecord, ICloneable<DialogTopicData>
+	public partial class DialogTopicData : Subrecord, ICloneable<DialogTopicData>, IComparable<DialogTopicData>, IEquatable<DialogTopicData>  
 	{
 		public DialogType Type { get; set; }
 		public DialogFlags Flags { get; set; }
@@ -63,7 +64,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Type", true, out subEle);
 			subEle.Value = Type.ToString();
 
@@ -74,16 +75,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Type", false, out subEle))
-			{
 				Type = subEle.ToEnum<DialogType>();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<DialogFlags>();
-			}
 		}
 
 		public DialogTopicData Clone()
@@ -91,5 +88,93 @@ namespace ESPSharp.Subrecords
 			return new DialogTopicData(this);
 		}
 
+        public int CompareTo(DialogTopicData other)
+        {
+			return Type.CompareTo(other.Type);
+        }
+
+        public static bool operator >(DialogTopicData objA, DialogTopicData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(DialogTopicData objA, DialogTopicData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(DialogTopicData objA, DialogTopicData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(DialogTopicData objA, DialogTopicData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(DialogTopicData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Type == other.Type &&
+				Flags == other.Flags;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            DialogTopicData other = obj as DialogTopicData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Type.GetHashCode();
+        }
+
+        public static bool operator ==(DialogTopicData objA, DialogTopicData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(DialogTopicData objA, DialogTopicData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

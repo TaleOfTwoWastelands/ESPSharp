@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ActivateParent : Subrecord, ICloneable<ActivateParent>, IReferenceContainer
+	public partial class ActivateParent : Subrecord, ICloneable<ActivateParent>, IComparable<ActivateParent>, IEquatable<ActivateParent>  
 	{
 		public FormID Parent { get; set; }
 		public Single Delay { get; set; }
@@ -57,13 +57,13 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			Parent.WriteBinary(writer);
-			writer.Write(Delay);			
+			writer.Write(Delay);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Parent", true, out subEle);
 			Parent.WriteXML(subEle, master);
 
@@ -74,16 +74,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Parent", false, out subEle))
-			{
 				Parent.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Delay", false, out subEle))
-			{
 				Delay = subEle.ToSingle();
-			}
 		}
 
 		public ActivateParent Clone()
@@ -91,5 +87,93 @@ namespace ESPSharp.Subrecords
 			return new ActivateParent(this);
 		}
 
+        public int CompareTo(ActivateParent other)
+        {
+			return Parent.CompareTo(other.Parent);
+        }
+
+        public static bool operator >(ActivateParent objA, ActivateParent objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ActivateParent objA, ActivateParent objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ActivateParent objA, ActivateParent objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ActivateParent objA, ActivateParent objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ActivateParent other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Parent == other.Parent &&
+				Delay == other.Delay;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ActivateParent other = obj as ActivateParent;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Parent.GetHashCode();
+        }
+
+        public static bool operator ==(ActivateParent objA, ActivateParent objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ActivateParent objA, ActivateParent objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

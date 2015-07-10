@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class AddedQuest : SubrecordCollection, ICloneable<AddedQuest>, IReferenceContainer
+	public partial class AddedQuest : SubrecordCollection, ICloneable<AddedQuest>
 	{
 		public RecordReference Quest { get; set; }
 		public List<SharedInfo> SharedInfos { get; set; }

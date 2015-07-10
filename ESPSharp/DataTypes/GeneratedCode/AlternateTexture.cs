@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class AlternateTexture : IESPSerializable, ICloneable<AlternateTexture>, IReferenceContainer
+	public partial class AlternateTexture : IESPSerializable, ICloneable<AlternateTexture>, IComparable<AlternateTexture>, IEquatable<AlternateTexture>, IReferenceContainer
 	{
 		public String Name { get; set; }
 		public FormID TextureSet { get; set; }
@@ -92,13 +92,69 @@ namespace ESPSharp.DataTypes
 			}
 		}
 
-		partial void ReadData(ESPReader reader);
-
-		partial void WriteData(ESPWriter writer);
-
 		public AlternateTexture Clone()
 		{
 			return new AlternateTexture(this);
 		}
+
+        public int CompareTo(AlternateTexture other)
+        {
+            return Index.CompareTo(other.Index);
+        }
+
+        public static bool operator >(AlternateTexture objA, AlternateTexture objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(AlternateTexture objA, AlternateTexture objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(AlternateTexture objA, AlternateTexture objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(AlternateTexture objA, AlternateTexture objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(AlternateTexture other)
+        {
+			return Name == other.Name &&
+				TextureSet == other.TextureSet &&
+				Index == other.Index;
+        }
+
+        public override bool Equals(object obj)
+        {
+            AlternateTexture other = obj as AlternateTexture;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Index.GetHashCode();
+        }
+
+        public static bool operator ==(AlternateTexture objA, AlternateTexture objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(AlternateTexture objA, AlternateTexture objB)
+        {
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadData(ESPReader reader);
+
+		partial void WriteData(ESPWriter writer);
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DestructionStageData : Subrecord, ICloneable<DestructionStageData>, IReferenceContainer
+	public partial class DestructionStageData : Subrecord, ICloneable<DestructionStageData>, IComparable<DestructionStageData>, IEquatable<DestructionStageData>  
 	{
 		public Byte HealthPercentage { get; set; }
 		public Byte Index { get; set; }
@@ -86,20 +87,20 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(HealthPercentage);			
-			writer.Write(Index);			
-			writer.Write(Stage);			
+			writer.Write(HealthPercentage);
+			writer.Write(Index);
+			writer.Write(Stage);
 			writer.Write((Byte)Flags);
-			writer.Write(SelfDamagePerSecond);			
+			writer.Write(SelfDamagePerSecond);
 			Explosion.WriteBinary(writer);
 			Debris.WriteBinary(writer);
-			writer.Write(DebrisCount);			
+			writer.Write(DebrisCount);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("HealthPercentage", true, out subEle);
 			subEle.Value = HealthPercentage.ToString();
 
@@ -128,46 +129,30 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("HealthPercentage", false, out subEle))
-			{
 				HealthPercentage = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Index", false, out subEle))
-			{
 				Index = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Stage", false, out subEle))
-			{
 				Stage = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<DestructionStageFlags>();
-			}
 
 			if (ele.TryPathTo("SelfDamagePerSecond", false, out subEle))
-			{
 				SelfDamagePerSecond = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Explosion", false, out subEle))
-			{
 				Explosion.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Debris", false, out subEle))
-			{
 				Debris.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("DebrisCount", false, out subEle))
-			{
 				DebrisCount = subEle.ToInt32();
-			}
 		}
 
 		public DestructionStageData Clone()
@@ -175,5 +160,99 @@ namespace ESPSharp.Subrecords
 			return new DestructionStageData(this);
 		}
 
+        public int CompareTo(DestructionStageData other)
+        {
+			return HealthPercentage.CompareTo(other.HealthPercentage);
+        }
+
+        public static bool operator >(DestructionStageData objA, DestructionStageData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(DestructionStageData objA, DestructionStageData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(DestructionStageData objA, DestructionStageData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(DestructionStageData objA, DestructionStageData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(DestructionStageData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return HealthPercentage == other.HealthPercentage &&
+				Index == other.Index &&
+				Stage == other.Stage &&
+				Flags == other.Flags &&
+				SelfDamagePerSecond == other.SelfDamagePerSecond &&
+				Explosion == other.Explosion &&
+				Debris == other.Debris &&
+				DebrisCount == other.DebrisCount;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            DestructionStageData other = obj as DestructionStageData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HealthPercentage.GetHashCode();
+        }
+
+        public static bool operator ==(DestructionStageData objA, DestructionStageData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(DestructionStageData objA, DestructionStageData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

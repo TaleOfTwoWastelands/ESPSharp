@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "SoundData";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"MinAttenuationDistance",
 			"Attenuation/Distance/Min"
@@ -15,7 +15,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"MaxAttenuationDistance",
 			"Attenuation/Distance/Max"
@@ -23,7 +23,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(sbyte),
 			"FrequencyAdjustmentPercentage",
 			"FrequencyAdjustmentPercentage"
@@ -31,15 +31,17 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"Unused",
 			"Unused"
 			);
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(SoundDataFlags),
 			"SoundDataFlags",
 			"Flags"
@@ -47,7 +49,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(short),
 			"StaticAttenuationcdB",
 			"Attenuation/StaticAttenuationcdB"
@@ -55,7 +57,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"StopTime",
 			"Time/Stop"
@@ -63,7 +65,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"StartTime",
 			"Time/Start"
@@ -71,7 +73,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(short),
 			"AttenuationCurvePoint1",
 			"Attenuation/Curve/Point1"
@@ -79,7 +81,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(short),
 			"AttenuationCurvePoint2",
 			"Attenuation/Curve/Point2"
@@ -87,7 +89,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(short),
 			"AttenuationCurvePoint3",
 			"Attenuation/Curve/Point3"
@@ -95,7 +97,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(short),
 			"AttenuationCurvePoint4",
 			"Attenuation/Curve/Point4"
@@ -103,7 +105,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(short),
 			"AttenuationCurvePoint5",
 			"Attenuation/Curve/Point5"
@@ -111,7 +113,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(short),
 			"ReverbAttenuationControl",
 			"Attenuation/ReverbAttenuationControl"
@@ -119,15 +121,16 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(int),
 			"Priority",
 			"Priority"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unknown",
 			"Unknown"

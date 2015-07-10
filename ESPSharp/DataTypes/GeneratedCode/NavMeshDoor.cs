@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class NavMeshDoor : IESPSerializable, ICloneable<NavMeshDoor>, IReferenceContainer
+	public partial class NavMeshDoor : IESPSerializable, ICloneable<NavMeshDoor>, IComparable<NavMeshDoor>, IEquatable<NavMeshDoor>, IReferenceContainer
 	{
 		public FormID Door { get; set; }
 		public UInt16 Triangle { get; set; }
@@ -103,5 +103,61 @@ namespace ESPSharp.DataTypes
 		{
 			return new NavMeshDoor(this);
 		}
+
+        public int CompareTo(NavMeshDoor other)
+        {
+            return Door.CompareTo(other.Door);
+        }
+
+        public static bool operator >(NavMeshDoor objA, NavMeshDoor objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(NavMeshDoor objA, NavMeshDoor objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(NavMeshDoor objA, NavMeshDoor objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(NavMeshDoor objA, NavMeshDoor objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(NavMeshDoor other)
+        {
+			return Door == other.Door &&
+				Triangle == other.Triangle &&
+				Unused == other.Unused;
+        }
+
+        public override bool Equals(object obj)
+        {
+            NavMeshDoor other = obj as NavMeshDoor;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Door.GetHashCode();
+        }
+
+        public static bool operator ==(NavMeshDoor objA, NavMeshDoor objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(NavMeshDoor objA, NavMeshDoor objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }

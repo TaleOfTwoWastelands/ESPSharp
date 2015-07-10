@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class RegionGrass : IESPSerializable, ICloneable<RegionGrass>, IReferenceContainer
+	public partial class RegionGrass : IESPSerializable, ICloneable<RegionGrass>, IComparable<RegionGrass>, IEquatable<RegionGrass>, IReferenceContainer
 	{
 		public FormID Form { get; set; }
 		public Byte[] Unknown { get; set; }
@@ -89,5 +89,60 @@ namespace ESPSharp.DataTypes
 		{
 			return new RegionGrass(this);
 		}
+
+        public int CompareTo(RegionGrass other)
+        {
+            return Form.CompareTo(other.Form);
+        }
+
+        public static bool operator >(RegionGrass objA, RegionGrass objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RegionGrass objA, RegionGrass objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RegionGrass objA, RegionGrass objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RegionGrass objA, RegionGrass objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RegionGrass other)
+        {
+			return Form == other.Form &&
+				Unknown == other.Unknown;
+        }
+
+        public override bool Equals(object obj)
+        {
+            RegionGrass other = obj as RegionGrass;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Form.GetHashCode();
+        }
+
+        public static bool operator ==(RegionGrass objA, RegionGrass objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RegionGrass objA, RegionGrass objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class IdleAnimationData : Subrecord, ICloneable<IdleAnimationData>
+	public partial class IdleAnimationData : Subrecord, ICloneable<IdleAnimationData>, IComparable<IdleAnimationData>, IEquatable<IdleAnimationData>  
 	{
 		public AnimationGroupSection AnimationGroupSection { get; set; }
 		public Byte LoopingMin { get; set; }
@@ -82,18 +83,18 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((Byte)AnimationGroupSection);
-			writer.Write(LoopingMin);			
-			writer.Write(LoopingMax);			
-			writer.Write(Unused1);			
-			writer.Write(ReplayDelay);			
+			writer.Write(LoopingMin);
+			writer.Write(LoopingMax);
+			writer.Write(Unused1);
+			writer.Write(ReplayDelay);
 			writer.Write((Byte)Flags);
-			writer.Write(Unused2);			
+			writer.Write(Unused2);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("AnimationGroupSection", true, out subEle);
 			subEle.Value = AnimationGroupSection.ToString();
 
@@ -103,8 +104,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Looping/Max", true, out subEle);
 			subEle.Value = LoopingMax.ToString();
 
-			ele.TryPathTo("Unused1", true, out subEle);
-			subEle.Value = Unused1.ToString();
+			WriteUnused1XML(ele, master);
 
 			ele.TryPathTo("ReplayDelay", true, out subEle);
 			subEle.Value = ReplayDelay.ToString();
@@ -112,48 +112,31 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unused2", true, out subEle);
-			subEle.Value = Unused2.ToString();
+			WriteUnused2XML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("AnimationGroupSection", false, out subEle))
-			{
 				AnimationGroupSection = subEle.ToEnum<AnimationGroupSection>();
-			}
 
 			if (ele.TryPathTo("Looping/Min", false, out subEle))
-			{
 				LoopingMin = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Looping/Max", false, out subEle))
-			{
 				LoopingMax = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused1", false, out subEle))
-			{
-				Unused1 = subEle.ToByte();
-			}
+			ReadUnused1XML(ele, master);
 
 			if (ele.TryPathTo("ReplayDelay", false, out subEle))
-			{
 				ReplayDelay = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<IdleAnimationFlags>();
-			}
 
-			if (ele.TryPathTo("Unused2", false, out subEle))
-			{
-				Unused2 = subEle.ToByte();
-			}
+			ReadUnused2XML(ele, master);
 		}
 
 		public IdleAnimationData Clone()
@@ -161,5 +144,106 @@ namespace ESPSharp.Subrecords
 			return new IdleAnimationData(this);
 		}
 
+        public int CompareTo(IdleAnimationData other)
+        {
+			return AnimationGroupSection.CompareTo(other.AnimationGroupSection);
+        }
+
+        public static bool operator >(IdleAnimationData objA, IdleAnimationData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(IdleAnimationData objA, IdleAnimationData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(IdleAnimationData objA, IdleAnimationData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(IdleAnimationData objA, IdleAnimationData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(IdleAnimationData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return AnimationGroupSection == other.AnimationGroupSection &&
+				LoopingMin == other.LoopingMin &&
+				LoopingMax == other.LoopingMax &&
+				Unused1 == other.Unused1 &&
+				ReplayDelay == other.ReplayDelay &&
+				Flags == other.Flags &&
+				Unused2 == other.Unused2;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            IdleAnimationData other = obj as IdleAnimationData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return AnimationGroupSection.GetHashCode();
+        }
+
+        public static bool operator ==(IdleAnimationData objA, IdleAnimationData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(IdleAnimationData objA, IdleAnimationData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

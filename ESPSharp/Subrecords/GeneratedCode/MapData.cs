@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class MapData : Subrecord, ICloneable<MapData>
+	public partial class MapData : Subrecord, ICloneable<MapData>, IComparable<MapData>, IEquatable<MapData>  
 	{
 		public Int32 UsableXSize { get; set; }
 		public Int32 UsableYSize { get; set; }
@@ -76,18 +77,18 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(UsableXSize);			
-			writer.Write(UsableYSize);			
-			writer.Write(MinX);			
-			writer.Write(MinY);			
-			writer.Write(MaxX);			
-			writer.Write(MaxY);			
+			writer.Write(UsableXSize);
+			writer.Write(UsableYSize);
+			writer.Write(MinX);
+			writer.Write(MinY);
+			writer.Write(MaxX);
+			writer.Write(MaxY);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("UsableSize/X", true, out subEle);
 			subEle.Value = UsableXSize.ToString();
 
@@ -110,36 +111,24 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("UsableSize/X", false, out subEle))
-			{
 				UsableXSize = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("UsableSize/Y", false, out subEle))
-			{
 				UsableYSize = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("MinX", false, out subEle))
-			{
 				MinX = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("MinY", false, out subEle))
-			{
 				MinY = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("MaxX", false, out subEle))
-			{
 				MaxX = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("MaxY", false, out subEle))
-			{
 				MaxY = subEle.ToInt16();
-			}
 		}
 
 		public MapData Clone()
@@ -147,5 +136,97 @@ namespace ESPSharp.Subrecords
 			return new MapData(this);
 		}
 
+        public int CompareTo(MapData other)
+        {
+			return UsableXSize.CompareTo(other.UsableXSize);
+        }
+
+        public static bool operator >(MapData objA, MapData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(MapData objA, MapData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(MapData objA, MapData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(MapData objA, MapData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(MapData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return UsableXSize == other.UsableXSize &&
+				UsableYSize == other.UsableYSize &&
+				MinX == other.MinX &&
+				MinY == other.MinY &&
+				MaxX == other.MaxX &&
+				MaxY == other.MaxY;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            MapData other = obj as MapData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return UsableXSize.GetHashCode();
+        }
+
+        public static bool operator ==(MapData objA, MapData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(MapData objA, MapData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

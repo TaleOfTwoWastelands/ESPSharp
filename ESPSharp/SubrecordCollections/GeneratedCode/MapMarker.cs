@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class MapMarker : SubrecordCollection, ICloneable<MapMarker>, IReferenceContainer
+	public partial class MapMarker : SubrecordCollection, ICloneable<MapMarker>
 	{
 		public SubMarker Marker { get; set; }
 		public SimpleSubrecord<MapMarkerFlags> Flags { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CombatStyleAdvanced : Subrecord, ICloneable<CombatStyleAdvanced>
+	public partial class CombatStyleAdvanced : Subrecord, ICloneable<CombatStyleAdvanced>, IComparable<CombatStyleAdvanced>, IEquatable<CombatStyleAdvanced>  
 	{
 		public Single DodgeFatigueModMult { get; set; }
 		public Single DodgeFatigueModBase { get; set; }
@@ -151,33 +152,33 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(DodgeFatigueModMult);			
-			writer.Write(DodgeFatigueModBase);			
-			writer.Write(EncumbSpeedModBase);			
-			writer.Write(EncumbSpeedModMult);			
-			writer.Write(DodgeWhileUnderAttackMult);			
-			writer.Write(DodgeNotUnderAttackMult);			
-			writer.Write(DodgeBackWhileUnderAttackMult);			
-			writer.Write(DodgeBackNotUnderAttackMult);			
-			writer.Write(DodgeForwardWhileAttackingMult);			
-			writer.Write(DodgeForwardNotAttackingMult);			
-			writer.Write(BlockSkillModifierMult);			
-			writer.Write(BlockSkillModifierBase);			
-			writer.Write(BlockWhileUnderAttackMult);			
-			writer.Write(BlockNotUnderAttackMult);			
-			writer.Write(AttackSkillModifierMult);			
-			writer.Write(AttackSkillModifierBase);			
-			writer.Write(AttackWhileUnderAttackMult);			
-			writer.Write(AttackNotUnderAttackMult);			
-			writer.Write(AttackDuringBlockMult);			
-			writer.Write(PowerAttackFatigueModBase);			
-			writer.Write(PowerAttackFatigueModMult);			
+			writer.Write(DodgeFatigueModMult);
+			writer.Write(DodgeFatigueModBase);
+			writer.Write(EncumbSpeedModBase);
+			writer.Write(EncumbSpeedModMult);
+			writer.Write(DodgeWhileUnderAttackMult);
+			writer.Write(DodgeNotUnderAttackMult);
+			writer.Write(DodgeBackWhileUnderAttackMult);
+			writer.Write(DodgeBackNotUnderAttackMult);
+			writer.Write(DodgeForwardWhileAttackingMult);
+			writer.Write(DodgeForwardNotAttackingMult);
+			writer.Write(BlockSkillModifierMult);
+			writer.Write(BlockSkillModifierBase);
+			writer.Write(BlockWhileUnderAttackMult);
+			writer.Write(BlockNotUnderAttackMult);
+			writer.Write(AttackSkillModifierMult);
+			writer.Write(AttackSkillModifierBase);
+			writer.Write(AttackWhileUnderAttackMult);
+			writer.Write(AttackNotUnderAttackMult);
+			writer.Write(AttackDuringBlockMult);
+			writer.Write(PowerAttackFatigueModBase);
+			writer.Write(PowerAttackFatigueModMult);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("DodgeFatigueMod/Mult", true, out subEle);
 			subEle.Value = DodgeFatigueModMult.ToString("G15");
 
@@ -245,111 +246,69 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("DodgeFatigueMod/Mult", false, out subEle))
-			{
 				DodgeFatigueModMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DodgeFatigueMod/Base", false, out subEle))
-			{
 				DodgeFatigueModBase = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("EncumbSpeedMod/Base", false, out subEle))
-			{
 				EncumbSpeedModBase = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("EncumbSpeedMod/Mult", false, out subEle))
-			{
 				EncumbSpeedModMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DodgeWhileUnderAttackMult", false, out subEle))
-			{
 				DodgeWhileUnderAttackMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DodgeNotUnderAttackMult", false, out subEle))
-			{
 				DodgeNotUnderAttackMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DodgeBackWhileUnderAttackMult", false, out subEle))
-			{
 				DodgeBackWhileUnderAttackMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DodgeBackNotUnderAttackMult", false, out subEle))
-			{
 				DodgeBackNotUnderAttackMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DodgeForwardWhileAttackingMult", false, out subEle))
-			{
 				DodgeForwardWhileAttackingMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DodgeForwardNotAttackingMult", false, out subEle))
-			{
 				DodgeForwardNotAttackingMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("BlockSkillModifier/Mult", false, out subEle))
-			{
 				BlockSkillModifierMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("BlockSkillModifier/Base", false, out subEle))
-			{
 				BlockSkillModifierBase = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("BlockWhileUnderAttackMult", false, out subEle))
-			{
 				BlockWhileUnderAttackMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("BlockNotUnderAttackMult", false, out subEle))
-			{
 				BlockNotUnderAttackMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("AttackSkillModifier/Mult", false, out subEle))
-			{
 				AttackSkillModifierMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("AttackSkillModifier/Base", false, out subEle))
-			{
 				AttackSkillModifierBase = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("AttackWhileUnderAttackMult", false, out subEle))
-			{
 				AttackWhileUnderAttackMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("AttackNotUnderAttackMult", false, out subEle))
-			{
 				AttackNotUnderAttackMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("AttackDuringBlockMult", false, out subEle))
-			{
 				AttackDuringBlockMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("PowerAttackFatigueMod/Base", false, out subEle))
-			{
 				PowerAttackFatigueModBase = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("PowerAttackFatigueMod/Mult", false, out subEle))
-			{
 				PowerAttackFatigueModMult = subEle.ToSingle();
-			}
 		}
 
 		public CombatStyleAdvanced Clone()
@@ -357,5 +316,112 @@ namespace ESPSharp.Subrecords
 			return new CombatStyleAdvanced(this);
 		}
 
+        public int CompareTo(CombatStyleAdvanced other)
+        {
+			return DodgeFatigueModMult.CompareTo(other.DodgeFatigueModMult);
+        }
+
+        public static bool operator >(CombatStyleAdvanced objA, CombatStyleAdvanced objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(CombatStyleAdvanced objA, CombatStyleAdvanced objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(CombatStyleAdvanced objA, CombatStyleAdvanced objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(CombatStyleAdvanced objA, CombatStyleAdvanced objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(CombatStyleAdvanced other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return DodgeFatigueModMult == other.DodgeFatigueModMult &&
+				DodgeFatigueModBase == other.DodgeFatigueModBase &&
+				EncumbSpeedModBase == other.EncumbSpeedModBase &&
+				EncumbSpeedModMult == other.EncumbSpeedModMult &&
+				DodgeWhileUnderAttackMult == other.DodgeWhileUnderAttackMult &&
+				DodgeNotUnderAttackMult == other.DodgeNotUnderAttackMult &&
+				DodgeBackWhileUnderAttackMult == other.DodgeBackWhileUnderAttackMult &&
+				DodgeBackNotUnderAttackMult == other.DodgeBackNotUnderAttackMult &&
+				DodgeForwardWhileAttackingMult == other.DodgeForwardWhileAttackingMult &&
+				DodgeForwardNotAttackingMult == other.DodgeForwardNotAttackingMult &&
+				BlockSkillModifierMult == other.BlockSkillModifierMult &&
+				BlockSkillModifierBase == other.BlockSkillModifierBase &&
+				BlockWhileUnderAttackMult == other.BlockWhileUnderAttackMult &&
+				BlockNotUnderAttackMult == other.BlockNotUnderAttackMult &&
+				AttackSkillModifierMult == other.AttackSkillModifierMult &&
+				AttackSkillModifierBase == other.AttackSkillModifierBase &&
+				AttackWhileUnderAttackMult == other.AttackWhileUnderAttackMult &&
+				AttackNotUnderAttackMult == other.AttackNotUnderAttackMult &&
+				AttackDuringBlockMult == other.AttackDuringBlockMult &&
+				PowerAttackFatigueModBase == other.PowerAttackFatigueModBase &&
+				PowerAttackFatigueModMult == other.PowerAttackFatigueModMult;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            CombatStyleAdvanced other = obj as CombatStyleAdvanced;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return DodgeFatigueModMult.GetHashCode();
+        }
+
+        public static bool operator ==(CombatStyleAdvanced objA, CombatStyleAdvanced objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(CombatStyleAdvanced objA, CombatStyleAdvanced objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

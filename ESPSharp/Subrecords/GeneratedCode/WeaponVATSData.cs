@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeaponVATSData : Subrecord, ICloneable<WeaponVATSData>, IReferenceContainer
+	public partial class WeaponVATSData : Subrecord, ICloneable<WeaponVATSData>, IComparable<WeaponVATSData>, IEquatable<WeaponVATSData>  
 	{
 		public FormID Effect { get; set; }
 		public Single SkillRequirement { get; set; }
@@ -82,21 +83,21 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			Effect.WriteBinary(writer);
-			writer.Write(SkillRequirement);			
-			writer.Write(DamageMult);			
-			writer.Write(APCost);			
+			writer.Write(SkillRequirement);
+			writer.Write(DamageMult);
+			writer.Write(APCost);
 			writer.Write((Byte)IsSilent);
 			writer.Write((Byte)RequiresMod);
 			if (Unused == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused);
+			writer.Write(Unused);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Effect", true, out subEle);
 			Effect.WriteXML(subEle, master);
 
@@ -115,48 +116,32 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("RequiresMod", true, out subEle);
 			subEle.Value = RequiresMod.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Effect", false, out subEle))
-			{
 				Effect.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("SkillRequirement", false, out subEle))
-			{
 				SkillRequirement = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DamageMult", false, out subEle))
-			{
 				DamageMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("APCost", false, out subEle))
-			{
 				APCost = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("IsSilent", false, out subEle))
-			{
 				IsSilent = subEle.ToEnum<NoYesByte>();
-			}
 
 			if (ele.TryPathTo("RequiresMod", false, out subEle))
-			{
 				RequiresMod = subEle.ToEnum<NoYesByte>();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 		}
 
 		public WeaponVATSData Clone()
@@ -164,5 +149,102 @@ namespace ESPSharp.Subrecords
 			return new WeaponVATSData(this);
 		}
 
+        public int CompareTo(WeaponVATSData other)
+        {
+			return Effect.CompareTo(other.Effect);
+        }
+
+        public static bool operator >(WeaponVATSData objA, WeaponVATSData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(WeaponVATSData objA, WeaponVATSData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(WeaponVATSData objA, WeaponVATSData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(WeaponVATSData objA, WeaponVATSData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(WeaponVATSData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Effect == other.Effect &&
+				SkillRequirement == other.SkillRequirement &&
+				DamageMult == other.DamageMult &&
+				APCost == other.APCost &&
+				IsSilent == other.IsSilent &&
+				RequiresMod == other.RequiresMod &&
+				Unused.SequenceEqual(other.Unused);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            WeaponVATSData other = obj as WeaponVATSData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Effect.GetHashCode();
+        }
+
+        public static bool operator ==(WeaponVATSData objA, WeaponVATSData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(WeaponVATSData objA, WeaponVATSData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

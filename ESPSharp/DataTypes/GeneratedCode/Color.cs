@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class Color : IESPSerializable, ICloneable<Color>
+	public partial class Color : IESPSerializable, ICloneable<Color>, IComparable<Color>, IEquatable<Color>
 	{
 		public Byte Red { get; set; }
 		public Byte Green { get; set; }
@@ -114,5 +114,62 @@ namespace ESPSharp.DataTypes
 		{
 			return new Color(this);
 		}
+
+        public int CompareTo(Color other)
+        {
+            return Red.CompareTo(other.Red);
+        }
+
+        public static bool operator >(Color objA, Color objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(Color objA, Color objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(Color objA, Color objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(Color objA, Color objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(Color other)
+        {
+			return Red == other.Red &&
+				Green == other.Green &&
+				Blue == other.Blue &&
+				Alpha_Unused == other.Alpha_Unused;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Color other = obj as Color;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Red.GetHashCode();
+        }
+
+        public static bool operator ==(Color objA, Color objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(Color objA, Color objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }

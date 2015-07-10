@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WorldLandData : Subrecord, ICloneable<WorldLandData>
+	public partial class WorldLandData : Subrecord, ICloneable<WorldLandData>, IComparable<WorldLandData>, IEquatable<WorldLandData>  
 	{
 		public Single DefaultLandHeight { get; set; }
 		public Single DefaultWaterHeight { get; set; }
@@ -56,14 +56,14 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(DefaultLandHeight);			
-			writer.Write(DefaultWaterHeight);			
+			writer.Write(DefaultLandHeight);
+			writer.Write(DefaultWaterHeight);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("DefaultLandHeight", true, out subEle);
 			subEle.Value = DefaultLandHeight.ToString("G15");
 
@@ -74,16 +74,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("DefaultLandHeight", false, out subEle))
-			{
 				DefaultLandHeight = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DefaultWaterHeight", false, out subEle))
-			{
 				DefaultWaterHeight = subEle.ToSingle();
-			}
 		}
 
 		public WorldLandData Clone()
@@ -91,5 +87,93 @@ namespace ESPSharp.Subrecords
 			return new WorldLandData(this);
 		}
 
+        public int CompareTo(WorldLandData other)
+        {
+			return DefaultLandHeight.CompareTo(other.DefaultLandHeight);
+        }
+
+        public static bool operator >(WorldLandData objA, WorldLandData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(WorldLandData objA, WorldLandData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(WorldLandData objA, WorldLandData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(WorldLandData objA, WorldLandData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(WorldLandData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return DefaultLandHeight == other.DefaultLandHeight &&
+				DefaultWaterHeight == other.DefaultWaterHeight;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            WorldLandData other = obj as WorldLandData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return DefaultLandHeight.GetHashCode();
+        }
+
+        public static bool operator ==(WorldLandData objA, WorldLandData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(WorldLandData objA, WorldLandData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

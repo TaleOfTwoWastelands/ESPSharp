@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "BodyPartInfo";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"DamageMultiplier",
 			"DamageMultiplier"
@@ -15,7 +15,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(BodyPartDataFlags),
 			"Flags",
 			"Flags"
@@ -23,15 +23,16 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(BodyPartType),
 			"Type",
 			"Type"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"HealthPercent",
 			"HealthPercent"
@@ -39,7 +40,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ActorValuesByte),
 			"ActorValue",
 			"ActorValue"
@@ -47,7 +48,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"ToHitChance",
 			"ToHitChance"
@@ -55,7 +56,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"ExplosionChance",
 			"Explodable/ExplosionChance"
@@ -63,7 +64,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ushort),
 			"ExplosionDebrisCount",
 			"Explodable/DebrisCount"
@@ -71,7 +72,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"ExplosionDebris",
 			"Explodable/Debris"
@@ -79,7 +80,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Explosion",
 			"Explodable/Explosion"
@@ -87,7 +88,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"TrackingMaxAngle",
 			"TrackingMaxAngle"
@@ -95,7 +96,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ExplosionDebrisScale",
 			"Explodable/DebrisScale"
@@ -103,7 +104,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(int),
 			"SeverableDebrisCount",
 			"Severable/DebrisCount"
@@ -111,7 +112,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"SeverableDebris",
 			"Severable/Debris"
@@ -119,7 +120,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"SeverableExplosion",
 			"Severable/Explosion"
@@ -127,7 +128,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"SeverableDebrisScale",
 			"Severable/DebrisScale"
@@ -135,7 +136,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"GoreEffectsTranslateX",
 			"GoreEffects/Translate/X"
@@ -143,7 +144,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"GoreEffectsTranslateY",
 			"GoreEffects/Translate/Y"
@@ -151,7 +152,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"GoreEffectsTranslateZ",
 			"GoreEffects/Translate/Z"
@@ -159,7 +160,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"GoreEffectsRotationX",
 			"GoreEffects/Rotation/X"
@@ -167,7 +168,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"GoreEffectsRotationY",
 			"GoreEffects/Rotation/Y"
@@ -175,7 +176,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"GoreEffectsRotationZ",
 			"GoreEffects/Rotation/Z"
@@ -183,7 +184,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"SeverableImpactDataSet",
 			"Severable/ImpactDataSet"
@@ -191,7 +192,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"ExplosionImpactDataSet",
 			"Explodable/ImpactDataSet"
@@ -199,7 +200,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"SeverableDecalCount",
 			"Severable/DecalCount"
@@ -207,7 +208,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"ExplosionDecalCount",
 			"Explodable/DecalCount"
@@ -215,16 +216,18 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unused",
 			"Unused"
 			);
 	tempField.byteCount = 2;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"LimbReplacementScale",
 			"LimbReplacementScale"

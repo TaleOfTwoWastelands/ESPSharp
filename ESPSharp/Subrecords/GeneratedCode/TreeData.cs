@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class TreeData : Subrecord, ICloneable<TreeData>
+	public partial class TreeData : Subrecord, ICloneable<TreeData>, IComparable<TreeData>, IEquatable<TreeData>  
 	{
 		public Single LeafCurvature { get; set; }
 		public Single MinLeafAngle { get; set; }
@@ -86,20 +87,20 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(LeafCurvature);			
-			writer.Write(MinLeafAngle);			
-			writer.Write(MaxLeafAngle);			
-			writer.Write(BranchDimmingValue);			
-			writer.Write(LeafDimmingValue);			
-			writer.Write(ShadowRadius);			
-			writer.Write(RockSpeed);			
-			writer.Write(RustleSpeed);			
+			writer.Write(LeafCurvature);
+			writer.Write(MinLeafAngle);
+			writer.Write(MaxLeafAngle);
+			writer.Write(BranchDimmingValue);
+			writer.Write(LeafDimmingValue);
+			writer.Write(ShadowRadius);
+			writer.Write(RockSpeed);
+			writer.Write(RustleSpeed);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Leaf/Curvature", true, out subEle);
 			subEle.Value = LeafCurvature.ToString("G15");
 
@@ -128,46 +129,30 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Leaf/Curvature", false, out subEle))
-			{
 				LeafCurvature = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Leaf/Angle/Min", false, out subEle))
-			{
 				MinLeafAngle = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Leaf/Angle/Max", false, out subEle))
-			{
 				MaxLeafAngle = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("BranchDimmingValue", false, out subEle))
-			{
 				BranchDimmingValue = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Leaf/DimmingValue", false, out subEle))
-			{
 				LeafDimmingValue = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ShadowRadius", false, out subEle))
-			{
 				ShadowRadius = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("RockSpeed", false, out subEle))
-			{
 				RockSpeed = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("RustleSpeed", false, out subEle))
-			{
 				RustleSpeed = subEle.ToSingle();
-			}
 		}
 
 		public TreeData Clone()
@@ -175,5 +160,99 @@ namespace ESPSharp.Subrecords
 			return new TreeData(this);
 		}
 
+        public int CompareTo(TreeData other)
+        {
+			return LeafCurvature.CompareTo(other.LeafCurvature);
+        }
+
+        public static bool operator >(TreeData objA, TreeData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(TreeData objA, TreeData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(TreeData objA, TreeData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(TreeData objA, TreeData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(TreeData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return LeafCurvature == other.LeafCurvature &&
+				MinLeafAngle == other.MinLeafAngle &&
+				MaxLeafAngle == other.MaxLeafAngle &&
+				BranchDimmingValue == other.BranchDimmingValue &&
+				LeafDimmingValue == other.LeafDimmingValue &&
+				ShadowRadius == other.ShadowRadius &&
+				RockSpeed == other.RockSpeed &&
+				RustleSpeed == other.RustleSpeed;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            TreeData other = obj as TreeData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return LeafCurvature.GetHashCode();
+        }
+
+        public static bool operator ==(TreeData objA, TreeData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(TreeData objA, TreeData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

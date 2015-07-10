@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class RegionSound : IESPSerializable, ICloneable<RegionSound>, IReferenceContainer
+	public partial class RegionSound : IESPSerializable, ICloneable<RegionSound>, IComparable<RegionSound>, IEquatable<RegionSound>, IReferenceContainer
 	{
 		public FormID Sound { get; set; }
 		public RegionSoundFlags Flags { get; set; }
@@ -100,5 +100,61 @@ namespace ESPSharp.DataTypes
 		{
 			return new RegionSound(this);
 		}
+
+        public int CompareTo(RegionSound other)
+        {
+            return Sound.CompareTo(other.Sound);
+        }
+
+        public static bool operator >(RegionSound objA, RegionSound objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RegionSound objA, RegionSound objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RegionSound objA, RegionSound objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RegionSound objA, RegionSound objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RegionSound other)
+        {
+			return Sound == other.Sound &&
+				Flags == other.Flags &&
+				Chance == other.Chance;
+        }
+
+        public override bool Equals(object obj)
+        {
+            RegionSound other = obj as RegionSound;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Sound.GetHashCode();
+        }
+
+        public static bool operator ==(RegionSound objA, RegionSound objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RegionSound objA, RegionSound objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }

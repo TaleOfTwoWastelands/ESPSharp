@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class QuestData : Subrecord, ICloneable<QuestData>
+	public partial class QuestData : Subrecord, ICloneable<QuestData>, IComparable<QuestData>, IEquatable<QuestData>  
 	{
 		public QuestFlags Flags { get; set; }
 		public Byte Priority { get; set; }
@@ -67,26 +68,25 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((Byte)Flags);
-			writer.Write(Priority);			
+			writer.Write(Priority);
 			if (Unused == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused);
-			writer.Write(QuestDelay);			
+			writer.Write(Unused);
+			writer.Write(QuestDelay);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
 			ele.TryPathTo("Priority", true, out subEle);
 			subEle.Value = Priority.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("QuestDelay", true, out subEle);
 			subEle.Value = QuestDelay.ToString("G15");
@@ -95,26 +95,17 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<QuestFlags>();
-			}
 
 			if (ele.TryPathTo("Priority", false, out subEle))
-			{
 				Priority = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("QuestDelay", false, out subEle))
-			{
 				QuestDelay = subEle.ToSingle();
-			}
 		}
 
 		public QuestData Clone()
@@ -122,5 +113,99 @@ namespace ESPSharp.Subrecords
 			return new QuestData(this);
 		}
 
+        public int CompareTo(QuestData other)
+        {
+			return Priority.CompareTo(other.Priority);
+        }
+
+        public static bool operator >(QuestData objA, QuestData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(QuestData objA, QuestData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(QuestData objA, QuestData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(QuestData objA, QuestData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(QuestData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Flags == other.Flags &&
+				Priority == other.Priority &&
+				Unused.SequenceEqual(other.Unused) &&
+				QuestDelay == other.QuestDelay;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            QuestData other = obj as QuestData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Priority.GetHashCode();
+        }
+
+        public static bool operator ==(QuestData objA, QuestData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(QuestData objA, QuestData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

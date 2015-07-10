@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class BillboardDimensions : Subrecord, ICloneable<BillboardDimensions>
+	public partial class BillboardDimensions : Subrecord, ICloneable<BillboardDimensions>, IComparable<BillboardDimensions>, IEquatable<BillboardDimensions>  
 	{
 		public Single Width { get; set; }
 		public Single Height { get; set; }
@@ -56,14 +57,14 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Width);			
-			writer.Write(Height);			
+			writer.Write(Width);
+			writer.Write(Height);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Width", true, out subEle);
 			subEle.Value = Width.ToString("G15");
 
@@ -74,16 +75,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Width", false, out subEle))
-			{
 				Width = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Height", false, out subEle))
-			{
 				Height = subEle.ToSingle();
-			}
 		}
 
 		public BillboardDimensions Clone()
@@ -91,5 +88,93 @@ namespace ESPSharp.Subrecords
 			return new BillboardDimensions(this);
 		}
 
+        public int CompareTo(BillboardDimensions other)
+        {
+			return Width.CompareTo(other.Width);
+        }
+
+        public static bool operator >(BillboardDimensions objA, BillboardDimensions objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(BillboardDimensions objA, BillboardDimensions objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(BillboardDimensions objA, BillboardDimensions objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(BillboardDimensions objA, BillboardDimensions objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(BillboardDimensions other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Width == other.Width &&
+				Height == other.Height;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            BillboardDimensions other = obj as BillboardDimensions;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Width.GetHashCode();
+        }
+
+        public static bool operator ==(BillboardDimensions objA, BillboardDimensions objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(BillboardDimensions objA, BillboardDimensions objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

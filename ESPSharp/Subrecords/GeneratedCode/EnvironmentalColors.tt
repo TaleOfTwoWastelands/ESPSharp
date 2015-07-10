@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "EnvironmentalColors";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(TimeOfDayColors),
 			"SkyUpper",
 			"Sky/Upper"
@@ -15,7 +15,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(TimeOfDayColors),
 			"Fog",
 			"Fog"
@@ -23,23 +23,26 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(TimeOfDayColors),
 			"Unused1",
 			"Unused1"
 			);
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(TimeOfDayColors),
 			"Ambient",
 			"Ambient"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(TimeOfDayColors),
 			"Sunlight",
 			"Sunlight"
@@ -47,7 +50,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(TimeOfDayColors),
 			"Sun",
 			"Sun"
@@ -55,7 +58,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(TimeOfDayColors),
 			"Stars",
 			"Stars"
@@ -63,7 +66,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(TimeOfDayColors),
 			"SkyLower",
 			"Sky/Lower"
@@ -71,7 +74,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(TimeOfDayColors),
 			"Horizon",
 			"Horizon"
@@ -79,11 +82,13 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(TimeOfDayColors),
 			"Unused2",
 			"Unused2"
 			);
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 #>
 <#@ include file="SubrecordTemplate.t4" once="true" #>

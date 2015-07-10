@@ -12,6 +12,7 @@
 			"Weather",
 			"Weather"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 

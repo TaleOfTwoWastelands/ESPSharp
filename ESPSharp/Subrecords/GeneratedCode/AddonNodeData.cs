@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class AddonNodeData : Subrecord, ICloneable<AddonNodeData>
+	public partial class AddonNodeData : Subrecord, ICloneable<AddonNodeData>, IComparable<AddonNodeData>, IEquatable<AddonNodeData>  
 	{
 		public UInt16 MasterParticleSystemCap { get; set; }
 		public Byte[] Unknown { get; set; }
@@ -56,17 +57,17 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(MasterParticleSystemCap);			
+			writer.Write(MasterParticleSystemCap);
 			if (Unknown == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unknown);
+			writer.Write(Unknown);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("MasterParticleSystemCap", true, out subEle);
 			subEle.Value = MasterParticleSystemCap.ToString();
 
@@ -77,16 +78,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("MasterParticleSystemCap", false, out subEle))
-			{
 				MasterParticleSystemCap = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToBytes();
-			}
 		}
 
 		public AddonNodeData Clone()
@@ -94,5 +91,93 @@ namespace ESPSharp.Subrecords
 			return new AddonNodeData(this);
 		}
 
+        public int CompareTo(AddonNodeData other)
+        {
+			return MasterParticleSystemCap.CompareTo(other.MasterParticleSystemCap);
+        }
+
+        public static bool operator >(AddonNodeData objA, AddonNodeData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(AddonNodeData objA, AddonNodeData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(AddonNodeData objA, AddonNodeData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(AddonNodeData objA, AddonNodeData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(AddonNodeData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return MasterParticleSystemCap == other.MasterParticleSystemCap &&
+				Unknown.SequenceEqual(other.Unknown);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            AddonNodeData other = obj as AddonNodeData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return MasterParticleSystemCap.GetHashCode();
+        }
+
+        public static bool operator ==(AddonNodeData objA, AddonNodeData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(AddonNodeData objA, AddonNodeData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LightData : Subrecord, ICloneable<LightData>
+	public partial class LightData : Subrecord, ICloneable<LightData>, IComparable<LightData>, IEquatable<LightData>  
 	{
 		public Int32 Time { get; set; }
 		public UInt32 Radius { get; set; }
@@ -86,20 +87,20 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Time);			
-			writer.Write(Radius);			
+			writer.Write(Time);
+			writer.Write(Radius);
 			Color.WriteBinary(writer);
 			writer.Write((UInt32)Flags);
-			writer.Write(FalloffExponent);			
-			writer.Write(FOV);			
-			writer.Write(Value);			
-			writer.Write(Weight);			
+			writer.Write(FalloffExponent);
+			writer.Write(FOV);
+			writer.Write(Value);
+			writer.Write(Weight);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Time", true, out subEle);
 			subEle.Value = Time.ToString();
 
@@ -128,46 +129,30 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Time", false, out subEle))
-			{
 				Time = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Radius", false, out subEle))
-			{
 				Radius = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Color", false, out subEle))
-			{
 				Color.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<LightFlags>();
-			}
 
 			if (ele.TryPathTo("FalloffExponent", false, out subEle))
-			{
 				FalloffExponent = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("FOV", false, out subEle))
-			{
 				FOV = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Value", false, out subEle))
-			{
 				Value = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Weight", false, out subEle))
-			{
 				Weight = subEle.ToSingle();
-			}
 		}
 
 		public LightData Clone()
@@ -175,5 +160,99 @@ namespace ESPSharp.Subrecords
 			return new LightData(this);
 		}
 
+        public int CompareTo(LightData other)
+        {
+			return Radius.CompareTo(other.Radius);
+        }
+
+        public static bool operator >(LightData objA, LightData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(LightData objA, LightData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(LightData objA, LightData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(LightData objA, LightData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(LightData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Time == other.Time &&
+				Radius == other.Radius &&
+				Color == other.Color &&
+				Flags == other.Flags &&
+				FalloffExponent == other.FalloffExponent &&
+				FOV == other.FOV &&
+				Value == other.Value &&
+				Weight == other.Weight;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            LightData other = obj as LightData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Radius.GetHashCode();
+        }
+
+        public static bool operator ==(LightData objA, LightData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(LightData objA, LightData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

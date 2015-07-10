@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class AmmoEffectData : Subrecord, ICloneable<AmmoEffectData>
+	public partial class AmmoEffectData : Subrecord, ICloneable<AmmoEffectData>, IComparable<AmmoEffectData>, IEquatable<AmmoEffectData>  
 	{
 		public AmmoEffectType Type { get; set; }
 		public AmmoEffectOperation Operation { get; set; }
@@ -63,13 +64,13 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write((UInt32)Type);
 			writer.Write((UInt32)Operation);
-			writer.Write(Value);			
+			writer.Write(Value);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Type", true, out subEle);
 			subEle.Value = Type.ToString();
 
@@ -83,21 +84,15 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Type", false, out subEle))
-			{
 				Type = subEle.ToEnum<AmmoEffectType>();
-			}
 
 			if (ele.TryPathTo("Operation", false, out subEle))
-			{
 				Operation = subEle.ToEnum<AmmoEffectOperation>();
-			}
 
 			if (ele.TryPathTo("Value", false, out subEle))
-			{
 				Value = subEle.ToSingle();
-			}
 		}
 
 		public AmmoEffectData Clone()
@@ -105,5 +100,94 @@ namespace ESPSharp.Subrecords
 			return new AmmoEffectData(this);
 		}
 
+        public int CompareTo(AmmoEffectData other)
+        {
+			return Type.CompareTo(other.Type);
+        }
+
+        public static bool operator >(AmmoEffectData objA, AmmoEffectData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(AmmoEffectData objA, AmmoEffectData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(AmmoEffectData objA, AmmoEffectData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(AmmoEffectData objA, AmmoEffectData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(AmmoEffectData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Type == other.Type &&
+				Operation == other.Operation &&
+				Value == other.Value;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            AmmoEffectData other = obj as AmmoEffectData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Type.GetHashCode();
+        }
+
+        public static bool operator ==(AmmoEffectData objA, AmmoEffectData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(AmmoEffectData objA, AmmoEffectData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

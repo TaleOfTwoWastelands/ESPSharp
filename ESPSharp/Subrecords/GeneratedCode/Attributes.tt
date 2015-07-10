@@ -1,4 +1,4 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ assembly name="System.Core" #>
 <#@ assembly name="System.Core" #>
 <#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
@@ -13,70 +13,71 @@
 <#@ import namespace="System.Collections" #>
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "Attributes";
 
 	//strength
-	SubrecordField strengthField = 
-		new SubrecordField(
+	ClassField tempField = 
+		new ClassField(
 			typeof(byte),
 			"Strength",
 			"Strength"
 			);
-	template.Fields.Add(strengthField);
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
 
 	//Perception
-	SubrecordField perceptionField = 
-		new SubrecordField(
+	tempField = 
+		new ClassField(
 			typeof(byte),
 			"Perception",
 			"Perception"
 			);
-	template.Fields.Add(perceptionField);
+	template.Fields.Add(tempField);
 
 	//Endurance
-	SubrecordField enduranceField = 
-		new SubrecordField(
+	tempField = 
+		new ClassField(
 			typeof(byte),
 			"Endurance",
 			"Endurance"
 			);
-	template.Fields.Add(enduranceField);
+	template.Fields.Add(tempField);
 
 	//Charisma
-	SubrecordField charismaField = 
-		new SubrecordField(
+	tempField = 
+		new ClassField(
 			typeof(byte),
 			"Charisma",
 			"Charisma"
 			);
-	template.Fields.Add(charismaField);
+	template.Fields.Add(tempField);
 
 	//Intelligence
-	SubrecordField intelligenceField = 
-		new SubrecordField(
+	tempField = 
+		new ClassField(
 			typeof(byte),
 			"Intelligence",
 			"Intelligence"
 			);
-	template.Fields.Add(intelligenceField);
+	template.Fields.Add(tempField);
 
 	//Agility
-	SubrecordField agilityField = 
-		new SubrecordField(
+	tempField = 
+		new ClassField(
 			typeof(byte),
 			"Agility",
 			"Agility"
 			);
-	template.Fields.Add(agilityField);
+	template.Fields.Add(tempField);
 
 	//Luck
-	SubrecordField luckField = 
-		new SubrecordField(
+	tempField = 
+		new ClassField(
 			typeof(byte),
 			"Luck",
 			"Luck"
 			);
-	template.Fields.Add(luckField);
+	template.Fields.Add(tempField);
 #>
 <#@ include file="SubrecordTemplate.t4" once="true" #>

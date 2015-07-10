@@ -1,30 +1,33 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "RagdollData";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"DynamicBoneCount",
 			"DynamicBoneCount"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unused1",
 			"Unused1"
 			);
 	tempField.byteCount = 4;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(NoYesByte),
 			"FeedbackEnabled",
 			"FeedbackEnabled"
@@ -32,7 +35,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(NoYesByte),
 			"FootIKEnabled",
 			"FootIKEnabled"
@@ -40,7 +43,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(NoYesByte),
 			"LookIKEnabled",
 			"LookIKEnabled"
@@ -48,7 +51,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(NoYesByte),
 			"GrabIKEnabled",
 			"GrabIKEnabled"
@@ -56,7 +59,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(NoYesByte),
 			"PoseMatching",
 			"PoseMatching"
@@ -64,11 +67,13 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"Unused2",
 			"Unused2"
 			);
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 #>
 <#@ include file="SubrecordTemplate.t4" once="true" #>

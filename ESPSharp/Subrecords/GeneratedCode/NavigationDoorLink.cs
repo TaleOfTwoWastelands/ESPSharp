@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NavigationDoorLink : Subrecord, ICloneable<NavigationDoorLink>, IReferenceContainer
+	public partial class NavigationDoorLink : Subrecord, ICloneable<NavigationDoorLink>, IComparable<NavigationDoorLink>, IEquatable<NavigationDoorLink>  
 	{
 		public FormID NavigationMesh { get; set; }
 		public Byte[] Unknown { get; set; }
@@ -60,13 +61,13 @@ namespace ESPSharp.Subrecords
 			if (Unknown == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unknown);
+			writer.Write(Unknown);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("NavigationMesh", true, out subEle);
 			NavigationMesh.WriteXML(subEle, master);
 
@@ -77,16 +78,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("NavigationMesh", false, out subEle))
-			{
 				NavigationMesh.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToBytes();
-			}
 		}
 
 		public NavigationDoorLink Clone()
@@ -94,5 +91,93 @@ namespace ESPSharp.Subrecords
 			return new NavigationDoorLink(this);
 		}
 
+        public int CompareTo(NavigationDoorLink other)
+        {
+			return NavigationMesh.CompareTo(other.NavigationMesh);
+        }
+
+        public static bool operator >(NavigationDoorLink objA, NavigationDoorLink objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(NavigationDoorLink objA, NavigationDoorLink objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(NavigationDoorLink objA, NavigationDoorLink objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(NavigationDoorLink objA, NavigationDoorLink objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(NavigationDoorLink other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return NavigationMesh == other.NavigationMesh &&
+				Unknown.SequenceEqual(other.Unknown);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            NavigationDoorLink other = obj as NavigationDoorLink;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return NavigationMesh.GetHashCode();
+        }
+
+        public static bool operator ==(NavigationDoorLink objA, NavigationDoorLink objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(NavigationDoorLink objA, NavigationDoorLink objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RadioData : Subrecord, ICloneable<RadioData>, IReferenceContainer
+	public partial class RadioData : Subrecord, ICloneable<RadioData>, IComparable<RadioData>, IEquatable<RadioData>  
 	{
 		public Single RangeRadius { get; set; }
 		public BroadcastRangeType BroadcastRange { get; set; }
@@ -66,16 +67,16 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(RangeRadius);			
+			writer.Write(RangeRadius);
 			writer.Write((UInt32)BroadcastRange);
-			writer.Write(StaticPercentage);			
+			writer.Write(StaticPercentage);
 			PositionReference.WriteBinary(writer);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("RangeRadius", true, out subEle);
 			subEle.Value = RangeRadius.ToString("G15");
 
@@ -92,26 +93,18 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("RangeRadius", false, out subEle))
-			{
 				RangeRadius = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("BroadcastRange", false, out subEle))
-			{
 				BroadcastRange = subEle.ToEnum<BroadcastRangeType>();
-			}
 
 			if (ele.TryPathTo("StaticPercentage", false, out subEle))
-			{
 				StaticPercentage = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("PositionReference", false, out subEle))
-			{
 				PositionReference.ReadXML(subEle, master);
-			}
 		}
 
 		public RadioData Clone()
@@ -119,5 +112,95 @@ namespace ESPSharp.Subrecords
 			return new RadioData(this);
 		}
 
+        public int CompareTo(RadioData other)
+        {
+			return PositionReference.CompareTo(other.PositionReference);
+        }
+
+        public static bool operator >(RadioData objA, RadioData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RadioData objA, RadioData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RadioData objA, RadioData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RadioData objA, RadioData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RadioData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return RangeRadius == other.RangeRadius &&
+				BroadcastRange == other.BroadcastRange &&
+				StaticPercentage == other.StaticPercentage &&
+				PositionReference == other.PositionReference;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            RadioData other = obj as RadioData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return PositionReference.GetHashCode();
+        }
+
+        public static bool operator ==(RadioData objA, RadioData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RadioData objA, RadioData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

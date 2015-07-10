@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class BoundHalfExtents : Subrecord, ICloneable<BoundHalfExtents>
+	public partial class BoundHalfExtents : Subrecord, ICloneable<BoundHalfExtents>, IComparable<BoundHalfExtents>, IEquatable<BoundHalfExtents>  
 	{
 		public Single X { get; set; }
 		public Single Y { get; set; }
@@ -61,15 +62,15 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(X);			
-			writer.Write(Y);			
-			writer.Write(Z);			
+			writer.Write(X);
+			writer.Write(Y);
+			writer.Write(Z);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("X", true, out subEle);
 			subEle.Value = X.ToString("G15");
 
@@ -83,21 +84,15 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("X", false, out subEle))
-			{
 				X = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Y", false, out subEle))
-			{
 				Y = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Z", false, out subEle))
-			{
 				Z = subEle.ToSingle();
-			}
 		}
 
 		public BoundHalfExtents Clone()
@@ -105,5 +100,94 @@ namespace ESPSharp.Subrecords
 			return new BoundHalfExtents(this);
 		}
 
+        public int CompareTo(BoundHalfExtents other)
+        {
+			return X.CompareTo(other.X);
+        }
+
+        public static bool operator >(BoundHalfExtents objA, BoundHalfExtents objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(BoundHalfExtents objA, BoundHalfExtents objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(BoundHalfExtents objA, BoundHalfExtents objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(BoundHalfExtents objA, BoundHalfExtents objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(BoundHalfExtents other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return X == other.X &&
+				Y == other.Y &&
+				Z == other.Z;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            BoundHalfExtents other = obj as BoundHalfExtents;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return X.GetHashCode();
+        }
+
+        public static bool operator ==(BoundHalfExtents objA, BoundHalfExtents objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(BoundHalfExtents objA, BoundHalfExtents objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

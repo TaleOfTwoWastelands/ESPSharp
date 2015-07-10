@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NPCData : Subrecord, ICloneable<NPCData>
+	public partial class NPCData : Subrecord, ICloneable<NPCData>, IComparable<NPCData>, IEquatable<NPCData>  
 	{
 		public Int32 BaseHealth { get; set; }
 		public Byte Strength { get; set; }
@@ -86,20 +87,20 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(BaseHealth);			
-			writer.Write(Strength);			
-			writer.Write(Perception);			
-			writer.Write(Endurance);			
-			writer.Write(Charisma);			
-			writer.Write(Intelligence);			
-			writer.Write(Agility);			
-			writer.Write(Luck);			
+			writer.Write(BaseHealth);
+			writer.Write(Strength);
+			writer.Write(Perception);
+			writer.Write(Endurance);
+			writer.Write(Charisma);
+			writer.Write(Intelligence);
+			writer.Write(Agility);
+			writer.Write(Luck);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("BaseHealth", true, out subEle);
 			subEle.Value = BaseHealth.ToString();
 
@@ -128,46 +129,30 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("BaseHealth", false, out subEle))
-			{
 				BaseHealth = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Strength", false, out subEle))
-			{
 				Strength = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Perception", false, out subEle))
-			{
 				Perception = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Endurance", false, out subEle))
-			{
 				Endurance = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Charisma", false, out subEle))
-			{
 				Charisma = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Intelligence", false, out subEle))
-			{
 				Intelligence = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Agility", false, out subEle))
-			{
 				Agility = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Luck", false, out subEle))
-			{
 				Luck = subEle.ToByte();
-			}
 		}
 
 		public NPCData Clone()
@@ -175,5 +160,99 @@ namespace ESPSharp.Subrecords
 			return new NPCData(this);
 		}
 
+        public int CompareTo(NPCData other)
+        {
+			return BaseHealth.CompareTo(other.BaseHealth);
+        }
+
+        public static bool operator >(NPCData objA, NPCData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(NPCData objA, NPCData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(NPCData objA, NPCData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(NPCData objA, NPCData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(NPCData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return BaseHealth == other.BaseHealth &&
+				Strength == other.Strength &&
+				Perception == other.Perception &&
+				Endurance == other.Endurance &&
+				Charisma == other.Charisma &&
+				Intelligence == other.Intelligence &&
+				Agility == other.Agility &&
+				Luck == other.Luck;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            NPCData other = obj as NPCData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return BaseHealth.GetHashCode();
+        }
+
+        public static bool operator ==(NPCData objA, NPCData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(NPCData objA, NPCData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

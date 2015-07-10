@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RelatedIdleAnims : Subrecord, ICloneable<RelatedIdleAnims>, IReferenceContainer
+	public partial class RelatedIdleAnims : Subrecord, ICloneable<RelatedIdleAnims>, IComparable<RelatedIdleAnims>, IEquatable<RelatedIdleAnims>  
 	{
 		public FormID Parent { get; set; }
 		public FormID Sibling { get; set; }
@@ -63,7 +64,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Parent", true, out subEle);
 			Parent.WriteXML(subEle, master);
 
@@ -74,16 +75,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Parent", false, out subEle))
-			{
 				Parent.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Sibling", false, out subEle))
-			{
 				Sibling.ReadXML(subEle, master);
-			}
 		}
 
 		public RelatedIdleAnims Clone()
@@ -91,5 +88,93 @@ namespace ESPSharp.Subrecords
 			return new RelatedIdleAnims(this);
 		}
 
+        public int CompareTo(RelatedIdleAnims other)
+        {
+			return Parent.CompareTo(other.Parent);
+        }
+
+        public static bool operator >(RelatedIdleAnims objA, RelatedIdleAnims objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RelatedIdleAnims objA, RelatedIdleAnims objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RelatedIdleAnims objA, RelatedIdleAnims objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RelatedIdleAnims objA, RelatedIdleAnims objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RelatedIdleAnims other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Parent == other.Parent &&
+				Sibling == other.Sibling;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            RelatedIdleAnims other = obj as RelatedIdleAnims;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Parent.GetHashCode();
+        }
+
+        public static bool operator ==(RelatedIdleAnims objA, RelatedIdleAnims objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RelatedIdleAnims objA, RelatedIdleAnims objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LocalVariableData : Subrecord, ICloneable<LocalVariableData>
+	public partial class LocalVariableData : Subrecord, ICloneable<LocalVariableData>, IComparable<LocalVariableData>, IEquatable<LocalVariableData>  
 	{
 		public UInt32 Index { get; set; }
 		public Byte[] Unused1 { get; set; }
@@ -66,58 +67,46 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Index);			
+			writer.Write(Index);
 			if (Unused1 == null)
 				writer.Write(new byte[12]);
 			else
-				writer.Write(Unused1);
+			writer.Write(Unused1);
 			writer.Write((Byte)Flags);
 			if (Unused2 == null)
 				writer.Write(new byte[7]);
 			else
-				writer.Write(Unused2);
+			writer.Write(Unused2);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Index", true, out subEle);
 			subEle.Value = Index.ToString();
 
-			ele.TryPathTo("Unused1", true, out subEle);
-			subEle.Value = Unused1.ToHex();
+			WriteUnused1XML(ele, master);
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unused2", true, out subEle);
-			subEle.Value = Unused2.ToHex();
+			WriteUnused2XML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Index", false, out subEle))
-			{
 				Index = subEle.ToUInt32();
-			}
 
-			if (ele.TryPathTo("Unused1", false, out subEle))
-			{
-				Unused1 = subEle.ToBytes();
-			}
+			ReadUnused1XML(ele, master);
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<LocalVariableFlag>();
-			}
 
-			if (ele.TryPathTo("Unused2", false, out subEle))
-			{
-				Unused2 = subEle.ToBytes();
-			}
+			ReadUnused2XML(ele, master);
 		}
 
 		public LocalVariableData Clone()
@@ -125,5 +114,103 @@ namespace ESPSharp.Subrecords
 			return new LocalVariableData(this);
 		}
 
+        public int CompareTo(LocalVariableData other)
+        {
+			return Index.CompareTo(other.Index);
+        }
+
+        public static bool operator >(LocalVariableData objA, LocalVariableData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(LocalVariableData objA, LocalVariableData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(LocalVariableData objA, LocalVariableData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(LocalVariableData objA, LocalVariableData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(LocalVariableData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Index == other.Index &&
+				Unused1.SequenceEqual(other.Unused1) &&
+				Flags == other.Flags &&
+				Unused2.SequenceEqual(other.Unused2);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            LocalVariableData other = obj as LocalVariableData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Index.GetHashCode();
+        }
+
+        public static bool operator ==(LocalVariableData objA, LocalVariableData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(LocalVariableData objA, LocalVariableData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

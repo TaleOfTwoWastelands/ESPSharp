@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class NavMeshExternalConnection : IESPSerializable, ICloneable<NavMeshExternalConnection>, IReferenceContainer
+	public partial class NavMeshExternalConnection : IESPSerializable, ICloneable<NavMeshExternalConnection>, IComparable<NavMeshExternalConnection>, IEquatable<NavMeshExternalConnection>, IReferenceContainer
 	{
 		public Byte[] Unknown { get; set; }
 		public FormID NavigationMesh { get; set; }
@@ -103,5 +103,61 @@ namespace ESPSharp.DataTypes
 		{
 			return new NavMeshExternalConnection(this);
 		}
+
+        public int CompareTo(NavMeshExternalConnection other)
+        {
+            return NavigationMesh.CompareTo(other.NavigationMesh);
+        }
+
+        public static bool operator >(NavMeshExternalConnection objA, NavMeshExternalConnection objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(NavMeshExternalConnection objA, NavMeshExternalConnection objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(NavMeshExternalConnection objA, NavMeshExternalConnection objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(NavMeshExternalConnection objA, NavMeshExternalConnection objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(NavMeshExternalConnection other)
+        {
+			return Unknown == other.Unknown &&
+				NavigationMesh == other.NavigationMesh &&
+				Triangle == other.Triangle;
+        }
+
+        public override bool Equals(object obj)
+        {
+            NavMeshExternalConnection other = obj as NavMeshExternalConnection;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return NavigationMesh.GetHashCode();
+        }
+
+        public static bool operator ==(NavMeshExternalConnection objA, NavMeshExternalConnection objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(NavMeshExternalConnection objA, NavMeshExternalConnection objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }

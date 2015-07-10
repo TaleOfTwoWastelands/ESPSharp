@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ImageSpaceData : Subrecord, ICloneable<ImageSpaceData>
+	public partial class ImageSpaceData : Subrecord, ICloneable<ImageSpaceData>, IComparable<ImageSpaceData>, IEquatable<ImageSpaceData>  
 	{
 		public Single HDREyeAdaptSpeed { get; set; }
 		public Single HDRBlurRadius { get; set; }
@@ -216,52 +217,52 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(HDREyeAdaptSpeed);			
-			writer.Write(HDRBlurRadius);			
-			writer.Write(HDRBlurPasses);			
-			writer.Write(HDREmissiveMult);			
-			writer.Write(HDRLUMTarget);			
-			writer.Write(HDRLUMUpperClamp);			
-			writer.Write(HDRBrightScale);			
-			writer.Write(HDRBrightClamp);			
-			writer.Write(HDRLUMRampNoTex);			
-			writer.Write(HDRLUMRampMin);			
-			writer.Write(HDRLUMRampMax);			
-			writer.Write(HDRSunlightDimmer);			
-			writer.Write(HDRGrassDimmer);			
-			writer.Write(HDRTreeDimmer);			
-			writer.Write(HDRSkinDimmer);			
-			writer.Write(BloomBlurRadius);			
-			writer.Write(BloomAlphaMultInterior);			
-			writer.Write(BloomAlphaMultExterior);			
-			writer.Write(GetHitBlurRadius);			
-			writer.Write(GetHitBlurDampingConstant);			
-			writer.Write(NightEyeTintColorRed);			
-			writer.Write(NightEyeTintColorGreen);			
-			writer.Write(NightEyeTintColorBlue);			
-			writer.Write(Brightness);			
-			writer.Write(CinematicSaturation);			
-			writer.Write(CinematicContrastAvgLUMValue);			
-			writer.Write(CinematicContrastValue);			
-			writer.Write(CinematicBrightnessTintColorRed);			
-			writer.Write(CinematicBrightnessTintColorGreen);			
-			writer.Write(CinematicBrightnessTintColorBlue);			
-			writer.Write(CinematicBrightnessTintValue);			
+			writer.Write(HDREyeAdaptSpeed);
+			writer.Write(HDRBlurRadius);
+			writer.Write(HDRBlurPasses);
+			writer.Write(HDREmissiveMult);
+			writer.Write(HDRLUMTarget);
+			writer.Write(HDRLUMUpperClamp);
+			writer.Write(HDRBrightScale);
+			writer.Write(HDRBrightClamp);
+			writer.Write(HDRLUMRampNoTex);
+			writer.Write(HDRLUMRampMin);
+			writer.Write(HDRLUMRampMax);
+			writer.Write(HDRSunlightDimmer);
+			writer.Write(HDRGrassDimmer);
+			writer.Write(HDRTreeDimmer);
+			writer.Write(HDRSkinDimmer);
+			writer.Write(BloomBlurRadius);
+			writer.Write(BloomAlphaMultInterior);
+			writer.Write(BloomAlphaMultExterior);
+			writer.Write(GetHitBlurRadius);
+			writer.Write(GetHitBlurDampingConstant);
+			writer.Write(NightEyeTintColorRed);
+			writer.Write(NightEyeTintColorGreen);
+			writer.Write(NightEyeTintColorBlue);
+			writer.Write(Brightness);
+			writer.Write(CinematicSaturation);
+			writer.Write(CinematicContrastAvgLUMValue);
+			writer.Write(CinematicContrastValue);
+			writer.Write(CinematicBrightnessTintColorRed);
+			writer.Write(CinematicBrightnessTintColorGreen);
+			writer.Write(CinematicBrightnessTintColorBlue);
+			writer.Write(CinematicBrightnessTintValue);
 			if (Unused1 == null)
 				writer.Write(new byte[16]);
 			else
-				writer.Write(Unused1);
+			writer.Write(Unused1);
 			writer.Write((Byte)Flags);
 			if (Unused2 == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused2);
+			writer.Write(Unused2);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("HDR/EyeAdaptSpeed", true, out subEle);
 			subEle.Value = HDREyeAdaptSpeed.ToString("G15");
 
@@ -368,176 +369,108 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("HDR/EyeAdaptSpeed", false, out subEle))
-			{
 				HDREyeAdaptSpeed = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/Blur/Radius", false, out subEle))
-			{
 				HDRBlurRadius = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/Blur/Passes", false, out subEle))
-			{
 				HDRBlurPasses = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/EmissiveMult", false, out subEle))
-			{
 				HDREmissiveMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/LUM/Target", false, out subEle))
-			{
 				HDRLUMTarget = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/LUM/UpperClamp", false, out subEle))
-			{
 				HDRLUMUpperClamp = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/Bright/Scale", false, out subEle))
-			{
 				HDRBrightScale = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/Bright/Clamp", false, out subEle))
-			{
 				HDRBrightClamp = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/LUM/RampNoTex", false, out subEle))
-			{
 				HDRLUMRampNoTex = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/LUM/RampMin", false, out subEle))
-			{
 				HDRLUMRampMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/LUM/RampMax", false, out subEle))
-			{
 				HDRLUMRampMax = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/SunlightDimmer", false, out subEle))
-			{
 				HDRSunlightDimmer = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/GrassDimmer", false, out subEle))
-			{
 				HDRGrassDimmer = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/TreeDimmer", false, out subEle))
-			{
 				HDRTreeDimmer = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HDR/SkinDimmer", false, out subEle))
-			{
 				HDRSkinDimmer = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Bloom/BlurRadius", false, out subEle))
-			{
 				BloomBlurRadius = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Bloom/AlphaMult/Interior", false, out subEle))
-			{
 				BloomAlphaMultInterior = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Bloom/AlphaMult/Exterior", false, out subEle))
-			{
 				BloomAlphaMultExterior = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("GetHit/Blur/Radius", false, out subEle))
-			{
 				GetHitBlurRadius = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("GetHit/Blur/DampingConstant", false, out subEle))
-			{
 				GetHitBlurDampingConstant = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NightEyeTintColor/Red", false, out subEle))
-			{
 				NightEyeTintColorRed = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NightEyeTintColor/Green", false, out subEle))
-			{
 				NightEyeTintColorGreen = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("NightEyeTintColor/Blue", false, out subEle))
-			{
 				NightEyeTintColorBlue = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Brightness", false, out subEle))
-			{
 				Brightness = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Cinematic/Saturation", false, out subEle))
-			{
 				CinematicSaturation = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Cinematic/Contrast/AvgLUMValue", false, out subEle))
-			{
 				CinematicContrastAvgLUMValue = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Cinematic/Contrast/Value", false, out subEle))
-			{
 				CinematicContrastValue = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Cinematic/BrightnessTint/Color/Red", false, out subEle))
-			{
 				CinematicBrightnessTintColorRed = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Cinematic/BrightnessTint/Color/Green", false, out subEle))
-			{
 				CinematicBrightnessTintColorGreen = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Cinematic/BrightnessTint/Color/Blue", false, out subEle))
-			{
 				CinematicBrightnessTintColorBlue = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Cinematic/BrightnessTint/Value", false, out subEle))
-			{
 				CinematicBrightnessTintValue = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Unused1", false, out subEle))
-			{
 				Unused1 = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<ImageSpaceFlags>();
-			}
 
 			if (ele.TryPathTo("Unused2", false, out subEle))
-			{
 				Unused2 = subEle.ToBytes();
-			}
 		}
 
 		public ImageSpaceData Clone()
@@ -545,5 +478,125 @@ namespace ESPSharp.Subrecords
 			return new ImageSpaceData(this);
 		}
 
+        public int CompareTo(ImageSpaceData other)
+        {
+			return Brightness.CompareTo(other.Brightness);
+        }
+
+        public static bool operator >(ImageSpaceData objA, ImageSpaceData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ImageSpaceData objA, ImageSpaceData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ImageSpaceData objA, ImageSpaceData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ImageSpaceData objA, ImageSpaceData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ImageSpaceData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return HDREyeAdaptSpeed == other.HDREyeAdaptSpeed &&
+				HDRBlurRadius == other.HDRBlurRadius &&
+				HDRBlurPasses == other.HDRBlurPasses &&
+				HDREmissiveMult == other.HDREmissiveMult &&
+				HDRLUMTarget == other.HDRLUMTarget &&
+				HDRLUMUpperClamp == other.HDRLUMUpperClamp &&
+				HDRBrightScale == other.HDRBrightScale &&
+				HDRBrightClamp == other.HDRBrightClamp &&
+				HDRLUMRampNoTex == other.HDRLUMRampNoTex &&
+				HDRLUMRampMin == other.HDRLUMRampMin &&
+				HDRLUMRampMax == other.HDRLUMRampMax &&
+				HDRSunlightDimmer == other.HDRSunlightDimmer &&
+				HDRGrassDimmer == other.HDRGrassDimmer &&
+				HDRTreeDimmer == other.HDRTreeDimmer &&
+				HDRSkinDimmer == other.HDRSkinDimmer &&
+				BloomBlurRadius == other.BloomBlurRadius &&
+				BloomAlphaMultInterior == other.BloomAlphaMultInterior &&
+				BloomAlphaMultExterior == other.BloomAlphaMultExterior &&
+				GetHitBlurRadius == other.GetHitBlurRadius &&
+				GetHitBlurDampingConstant == other.GetHitBlurDampingConstant &&
+				NightEyeTintColorRed == other.NightEyeTintColorRed &&
+				NightEyeTintColorGreen == other.NightEyeTintColorGreen &&
+				NightEyeTintColorBlue == other.NightEyeTintColorBlue &&
+				Brightness == other.Brightness &&
+				CinematicSaturation == other.CinematicSaturation &&
+				CinematicContrastAvgLUMValue == other.CinematicContrastAvgLUMValue &&
+				CinematicContrastValue == other.CinematicContrastValue &&
+				CinematicBrightnessTintColorRed == other.CinematicBrightnessTintColorRed &&
+				CinematicBrightnessTintColorGreen == other.CinematicBrightnessTintColorGreen &&
+				CinematicBrightnessTintColorBlue == other.CinematicBrightnessTintColorBlue &&
+				CinematicBrightnessTintValue == other.CinematicBrightnessTintValue &&
+				Unused1.SequenceEqual(other.Unused1) &&
+				Flags == other.Flags &&
+				Unused2.SequenceEqual(other.Unused2);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ImageSpaceData other = obj as ImageSpaceData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Brightness.GetHashCode();
+        }
+
+        public static bool operator ==(ImageSpaceData objA, ImageSpaceData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ImageSpaceData objA, ImageSpaceData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

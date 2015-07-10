@@ -1,9 +1,12 @@
 ﻿<#@ assembly name="System.Core" #>
 <#@ assembly name="System.Core" #>
 <#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+<#@ template debug="false" hostspecific="false" language="C#" inherits="ESPSharpCustomT4" #>
+<#@ output extension=".cs" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="ESPSharp" #>
+<#@ import namespace="ESPSharp.T4" #>
 <#@ import namespace="ESPSharp.Enums" #>
 <#@ import namespace="ESPSharp.DataTypes" #>
 <#@ import namespace="ESPSharp.Interfaces" #>
@@ -12,18 +15,6 @@
 <#@ import namespace="ESPSharp.SubrecordCollections" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Collections" #>
-<#
-	bool isReferenceContainer = false;
-
-	foreach (var field in template.Fields)
-    {
-		if (field.Type == typeof(FormID) || field.Type.GetInterface("IReferenceContainer") != null)
-        {
-			isReferenceContainer = true;
-			break;
-        }
-    }
-#>
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,47 +31,23 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class <#= template.ClassName #> : Subrecord, ICloneable<<#= template.ClassName#>><# if (isReferenceContainer) { #>, IReferenceContainer<#}Write("\n");#>
+	public partial class <#= template.ClassName #> : Subrecord, ICloneable<<#= template.ClassName#>><# WriteInterfaces(template); #>  
 	{
-<# foreach (var field in template.Fields) { #>
-		<#= field.PropertyDeclaration #>
-<#}#>
+		<# foreach (var field in template.Fields) WritePropertyDeclaration(field); #>
 
 		public <#= template.ClassName #>()
 		{
-<# foreach (var field in template.Fields) { #>
-<# if (field.DefaultValue != null) { #>
-			<#= field.Name #> = <#= field.DefaultValue #>;
-<# } else if (field.Type == typeof(string)) { #>
-			<#= field.Name #> = "";
-<# } else if (field.Type != typeof(byte[])) { #>
-			<#= field.Name #> = new <#= GetFriendlyName(field.Type)#>();
-<# } else { #>
-			<#= field.Name #> = new byte[<#= field.byteCount#>];
-<# } #>
-<# } #>
+			<# foreach (var field in template.Fields) WritePropertyInitializer(field); #>
 		}
 
-		public <#= template.ClassName #>(<#= string.Join(", ", template.Fields.Select<SubrecordField, string>(s => string.Format("{0} {1}", GetFriendlyName(s.Type), s.Name)))#>)
+		public <#= template.ClassName #>(<# WriteParamsConstructorArgs(template);#>)
 		{
-<# foreach (var field in template.Fields) { #>
-			this.<#= field.Name #> = <#= field.Name #>;
-<# } #>
+			<# foreach (var field in template.Fields) WriteParamsConstructorAssignment(field);#>
 		}
 
 		public <#= template.ClassName #>(<#= template.ClassName #> copyObject)
 		{
-<# foreach (var field in template.Fields) { #>
-<# if (field.Type.IsValueType) { #>
-			<#= field.Name #> = copyObject.<#= field.Name #>;
-<# } else if (field.Type.GetInterface("ICloneable`1") != null){ #>
-			<#= field.Name #> = copyObject.<#= field.Name #>.Clone();
-<# } else if (field.Type.GetInterface("ICloneable") != null){ #>
-			<#= field.Name #> = (<#= GetFriendlyName(field.Type)#>)copyObject.<#= field.Name #>.Clone();
-<# } else { #>
-			<# throw new Exception(field.Name); #>
-<# } #>
-<# } #>
+			<# foreach (var field in template.Fields) WriteCopyConstructorAssignment(field); #>
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -90,21 +57,7 @@ namespace ESPSharp.Subrecords
 			{
 				try
 				{
-<# foreach (var field in template.Fields) { #>
-<# if (field.implementReadData) { #>
-<# if (field.Type.IsEnum) { #>
-					<#= field.Name #> = subReader.ReadEnum<<#= GetFriendlyName(field.Type)#>>();
-<# } else if (field.Type == typeof(byte[])){ #>
-					<#= field.Name #> = subReader.ReadBytes(<#= field.byteCount #>);
-<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
-					<#= field.Name#>.ReadBinary(subReader);
-<# } else { #>
-					<#= field.Name #> = subReader.Read<#= GetFriendlyName(field.Type)#>();
-<# } #>
-<# } else {#>
-					Read<#= field.Name #>Binary(subReader);
-<# } #>
-<# } #>
+					<# foreach (var field in template.Fields) WriteReadBinaryCommand(field); #>
 				}
 				catch
 				{
@@ -115,78 +68,125 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-<# foreach (var field in template.Fields) { #>
-<# if (field.implementWriteData) { #>
-<# if (field.Type.IsEnum) { #>
-			writer.Write((<#= GetFriendlyName(Enum.GetUnderlyingType(field.Type))#>)<#= field.Name #>);
-<# } else if (field.Type == typeof(byte[])){ #>
-			if (<#= field.Name #> == null)
-				writer.Write(new byte[<#= field.byteCount #>]);
-			else
-				writer.Write(<#= field.Name #>);
-<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
-			<#= field.Name#>.WriteBinary(writer);
-<# } else { #>
-			writer.Write(<#= field.Name #>);			
-<# } #>
-<# } else {#>
-			Write<#= field.Name #>Binary(writer);
-<# } #>
-<# } #>
+			<# foreach (var field in template.Fields) WriteWriteBinaryCommand(field); #>
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-<# foreach (var field in template.Fields) { #>
-<# if (field.implementWriteXML) { #>
-
-			ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
-<# if (field.Type == typeof(byte[])){ #>
-			subEle.Value = <#= field.Name#>.ToHex();
-<# } else if (field.Type == typeof(Single)){ #>
-			subEle.Value = <#= field.Name#>.ToString("G15");
-<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
-			<#= field.Name#>.WriteXML(subEle, master);
-<# } else { #>
-			subEle.Value = <#= field.Name#>.ToString();
-<# } #>
-<# } else {#>
-			Write<#= field.Name #>XML(ele, master);
-<# } #>
-<# } #>
+			<# foreach (var field in template.Fields)
+			{ 
+				WriteLine(""); 
+				WriteWriteXMLCommand(field); 
+			}#>
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-<# foreach (var field in template.Fields) { #>
-<# if (field.implementReadXML) { #>
-
-			if (ele.TryPathTo("<#= field.XMLPath#>", false, out subEle))
+			<# foreach (var field in template.Fields)
 			{
-<# if (field.Type.IsEnum) { #>
-				<#= field.Name #> = subEle.ToEnum<<#= GetFriendlyName(field.Type)#>>();
-<# } else if (field.Type == typeof(byte[])){ #>
-				<#= field.Name #> = subEle.ToBytes();
-<# } else if (field.Type == typeof(string)){ #>
-				<#= field.Name #> = subEle.Value;
-<# } else if (field.Type.GetInterface("IESPSerializable") != null){ #>
-				<#= field.Name#>.ReadXML(subEle, master);
-<# } else { #>
-				<#= field.Name #> = subEle.To<#= GetFriendlyName(field.Type)#>();
-<# } #>
-			}
-<# } else {#>
-			Read<#= field.Name #>XML(ele, master);
-<# } #>
-<# } #>
+				WriteLine("");
+				WriteReadXMLCommand(field); 
+			}#>
 		}
 
 		public <#= template.ClassName #> Clone()
 		{
 			return new <#= template.ClassName #>(this);
 		}
+
+<# if(template.isComparable) { #>
+        public int CompareTo(<#= template.ClassName #> other)
+        {
+			<# WriteCompareHashKeyCommand(template); #>
+        }
+
+        public static bool operator >(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+<#}#>
+<# if(template.isEquatable) { #>
+        public bool Equals(<#= template.ClassName #> other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return <#= string.Join(" &&\n\t\t\t\t", template.Fields.Select<ClassField, string>(s => s.EqualString))#>;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            <#= template.ClassName #> other = obj as <#= template.ClassName #>;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return <#= template.hashKey.Name#>.GetHashCode();
+        }
+
+        public static bool operator ==(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+<#}#>
 <# foreach (var field in template.Fields.Where(f => f.implementReadData == false)) {#>
 
 		partial void Read<#= field.Name #>Binary(ESPReader reader);
@@ -203,89 +203,5 @@ namespace ESPSharp.Subrecords
 
 		partial void Write<#= field.Name #>XML(XElement ele, ElderScrollsPlugin master);
 <# } #>
-
 	}
 }
-<#+
-public class SubrecordTemplate
-{
-    public string ClassName;
-	public List<SubrecordField> Fields = new List<SubrecordField>();
-}
-
-public class SubrecordField
-{
-	public Type Type;
-	public string Name;
-	public string XMLPath;
-	public string XMLSubName;
-	public string DefaultValue;
-
-	public bool isReadOnly = false;
-	public bool implementReadData = true;
-	public bool implementWriteData = true;
-	public bool implementReadXML = true;
-	public bool implementWriteXML = true;
-
-	public uint byteCount = 0;
-
-	public SubrecordField()
-    {
-    }
-
-	public SubrecordField(Type Type, string Name, string XMLPath)
-    {
-		this.Type = Type;
-		this.Name = Name;
-		this.XMLPath = XMLPath;
-    }
-
-	public string TypeString
-    {
-        get 
-        {
-			return GetFriendlyName(Type);
-        }
-    }
-
-	public string PropertyDeclaration
-    {
-		get
-        {
-			string declare = "public " + GetFriendlyName(Type) + " " + Name;
-
-			if (isReadOnly)
-				declare += " { get; }";
-			else				
-				declare += " { get; set; }";
-
-			return declare;
-        }
-    }
-}
-
-public static string ToPrivateCase(string inString)
-{
-	return string.Format("{0}{1}", inString.Substring(0, 1).ToLowerInvariant(), inString.Substring(1));
-}
-
-public static string ToPropertyCase(string inString)
-{
-	return string.Format("{0}{1}", inString.Substring(0, 1).ToUpperInvariant(), inString.Substring(1));
-}
-
-public static string GetFriendlyName(Type inType)
-{
-	if (inType.IsConstructedGenericType)
-    {
-		string name = inType.Name.Substring(0, inType.Name.IndexOf('`'));
-		string args = string.Join(", ", inType.GenericTypeArguments.Select<Type, string>(t => t.Name));
-
-		return name + "<" + args + ">";
-    }
-	else if (inType == typeof(object))
-		return "dynamic";
-	else
-		return inType.Name;
-}
-#>

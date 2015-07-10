@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "EffectShaderData";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(EffectShaderFlags),
 			"Flags",
 			"Flags"
@@ -15,24 +15,27 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unused",
 			"Unused"
 			);
 	tempField.byteCount = 3;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(BlendMode),
 			"MembraneShaderSourceBlendMode",
 			"MembraneShader/SourceBlendMode"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(BlendOperation),
 			"MembraneShaderBlendOperation",
 			"MembraneShader/BlendOperation"
@@ -40,7 +43,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ZTestFunction),
 			"MembraneShaderZTestFunction",
 			"MembraneShader/ZTestFunction"
@@ -48,7 +51,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(Color),
 			"Fill_TextureEffectColor",
 			"Fill_TextureEffect/Color"
@@ -56,7 +59,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Fill_TextureEffectAlphaFadeTimeIn",
 			"Fill_TextureEffect/Alpha/FadeTime/In"
@@ -64,7 +67,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Fill_TextureEffectAlphaFadeTimeFull",
 			"Fill_TextureEffect/Alpha/FadeTime/Full"
@@ -72,7 +75,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Fill_TextureEffectAlphaFadeTimeOut",
 			"Fill_TextureEffect/Alpha/FadeTime/Out"
@@ -80,7 +83,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Fill_TextureEffectAlphaPersistentRatio",
 			"Fill_TextureEffect/Alpha/PersistentRatio"
@@ -88,7 +91,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Fill_TextureEffectAlphaPulseAmplitude",
 			"Fill_TextureEffect/Alpha/Pulse/Amplitude"
@@ -96,7 +99,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Fill_TextureEffectAlphaPulseFrequency",
 			"Fill_TextureEffect/Alpha/Pulse/Frequency"
@@ -104,7 +107,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Fill_TextureEffectTextureAnimationSpeedU",
 			"Fill_TextureEffect/TextureAnimationSpeed/U"
@@ -112,7 +115,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Fill_TextureEffectTextureAnimationSpeedV",
 			"Fill_TextureEffect/TextureAnimationSpeed/V"
@@ -120,7 +123,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"EdgeEffectFallOff",
 			"EdgeEffect/FallOff"
@@ -128,7 +131,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(Color),
 			"EdgeEffectColor",
 			"EdgeEffect/Color"
@@ -136,7 +139,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"EdgeEffectAlphaFadeTimeIn",
 			"EdgeEffect/Alpha/FadeTime/In"
@@ -144,7 +147,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"EdgeEffectAlphaFadeTimeFull",
 			"EdgeEffect/Alpha/FadeTime/Full"
@@ -152,7 +155,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"EdgeEffectAlphaFadeTimeOut",
 			"EdgeEffect/Alpha/FadeTime/Out"
@@ -160,7 +163,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"EdgeEffectAlphaPersistentRatio",
 			"EdgeEffect/Alpha/PersistentRatio"
@@ -168,7 +171,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"EdgeEffectAlphaPulseAmplitude",
 			"EdgeEffect/Alpha/Pulse/Amplitude"
@@ -176,7 +179,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"EdgeEffectAlphaPulseFrequency",
 			"EdgeEffect/Alpha/Pulse/Frequency"
@@ -184,7 +187,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"EdgeEffectFill_TextureEffectFullAlphaRatio",
 			"EdgeEffect/Fill_TextureEffect/FullAlphaRatio"
@@ -192,7 +195,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"EdgeEffectFullAlphaRatio",
 			"EdgeEffect/FullAlphaRatio"
@@ -200,7 +203,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(BlendMode),
 			"MembraneShaderDestBlendMode",
 			"MembraneShader/DestBlendMode"
@@ -208,7 +211,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(BlendMode),
 			"ParticleShaderSourceBlendMode",
 			"ParticleShader/SourceBlendMode"
@@ -216,7 +219,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(BlendOperation),
 			"ParticleShaderBlendOperation",
 			"ParticleShader/BlendOperation"
@@ -224,7 +227,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ZTestFunction),
 			"ParticleShaderZTestFunction",
 			"ParticleShader/ZTestFunction"
@@ -232,7 +235,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(BlendMode),
 			"ParticleShaderDestBlendMode",
 			"ParticleShader/DestBlendMode"
@@ -240,7 +243,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderBirthTimeRampUp",
 			"ParticleShader/BirthTime/RampUp"
@@ -248,7 +251,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderBirthTimeFull",
 			"ParticleShader/BirthTime/Full"
@@ -256,7 +259,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderBirthTimeRampDown",
 			"ParticleShader/BirthTime/RampDown"
@@ -264,7 +267,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderFullBirthRatio",
 			"ParticleShader/FullBirthRatio"
@@ -272,7 +275,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderPersistentBirthRatio",
 			"ParticleShader/PersistentBirthRatio"
@@ -280,7 +283,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderLifetimeBase",
 			"ParticleShader/Lifetime/Base"
@@ -288,7 +291,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderLifetimeVariance",
 			"ParticleShader/Lifetime/Variance"
@@ -296,7 +299,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderNormalMovementInitialSpeed",
 			"ParticleShader/NormalMovement/InitialSpeed"
@@ -304,7 +307,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderNormalMovementAcceleration",
 			"ParticleShader/NormalMovement/Acceleration"
@@ -312,7 +315,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderInitialVelocity1",
 			"ParticleShader/InitialVelocity/Velocity1"
@@ -320,7 +323,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderInitialVelocity2",
 			"ParticleShader/InitialVelocity/Velocity2"
@@ -328,7 +331,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderInitialVelocity3",
 			"ParticleShader/InitialVelocity/Velocity3"
@@ -336,7 +339,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderAcceleration1",
 			"ParticleShader/Acceleration/Acceleration1"
@@ -344,7 +347,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderAcceleration2",
 			"ParticleShader/Acceleration/Acceleration2"
@@ -352,7 +355,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderAcceleration3",
 			"ParticleShader/Acceleration/Acceleration3"
@@ -360,7 +363,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderScaleKey1",
 			"ParticleShader/ScaleKey/Key1/Value"
@@ -368,7 +371,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderScaleKey2",
 			"ParticleShader/ScaleKey/Key2/Value"
@@ -376,7 +379,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderScaleKey1Time",
 			"ParticleShader/ScaleKey/Key1/Time"
@@ -384,7 +387,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderScaleKey2Time",
 			"ParticleShader/ScaleKey/Key2/Time"
@@ -392,7 +395,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(Color),
 			"ParticleShaderColorKey1",
 			"ParticleShader/ColorKey/Key1/Color"
@@ -400,7 +403,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(Color),
 			"ParticleShaderColorKey2",
 			"ParticleShader/ColorKey/Key2/Color"
@@ -408,7 +411,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(Color),
 			"ParticleShaderColorKey3",
 			"ParticleShader/ColorKey/Key3/Color"
@@ -416,7 +419,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderColorKey1Alpha",
 			"ParticleShader/ColorKey/Key1/Alpha"
@@ -424,7 +427,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderColorKey2Alpha",
 			"ParticleShader/ColorKey/Key2/Alpha"
@@ -432,7 +435,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderColorKey3Alpha",
 			"ParticleShader/ColorKey/Key3/Alpha"
@@ -440,7 +443,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderColorKey1Time",
 			"ParticleShader/ColorKey/Key1/Time"
@@ -448,7 +451,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderColorKey2Time",
 			"ParticleShader/ColorKey/Key2/Time"
@@ -456,7 +459,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderColorKey3Time",
 			"ParticleShader/ColorKey/Key3/Time"
@@ -464,7 +467,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderInitSpeedAlongNormalVariance",
 			"ParticleShader/InitSpeedAlongNormal/Variance"
@@ -472,7 +475,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderInitialRotationValue",
 			"ParticleShader/InitialRotation/Value"
@@ -480,7 +483,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderInitialRotationVariance",
 			"ParticleShader/InitialRotation/Variance"
@@ -488,7 +491,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderRotationSpeedValue",
 			"ParticleShader/RotationSpeed/Value"
@@ -496,7 +499,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ParticleShaderRotationSpeedVariance",
 			"ParticleShader/RotationSpeed/Variance"
@@ -504,7 +507,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"AddonModelsModel",
 			"AddonModels/Model"
@@ -512,7 +515,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"HolesTimeStart",
 			"Holes/Time/Start"
@@ -520,7 +523,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"HolesTimeEnd",
 			"Holes/Time/End"
@@ -528,7 +531,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"HolesValueStart",
 			"Holes/Value/Start"
@@ -536,7 +539,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"HolesValueEnd",
 			"Holes/Value/End"
@@ -544,7 +547,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"EdgeWidth",
 			"EdgeWidth"
@@ -552,7 +555,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(Color),
 			"EdgeColor",
 			"EdgeColor"
@@ -560,7 +563,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ExplosionWindSpeed",
 			"ExplosionWindSpeed"
@@ -568,7 +571,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"TextureCountU",
 			"TextureCount/U"
@@ -576,7 +579,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"TextureCountV",
 			"TextureCount/V"
@@ -584,7 +587,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"AddonModelsFadeTimeIn",
 			"AddonModels/FadeTime/In"
@@ -592,7 +595,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"AddonModelsFadeTimeOut",
 			"AddonModels/FadeTime/Out"
@@ -600,7 +603,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"AddonModelsScaleIn",
 			"AddonModels/Scale/In"
@@ -608,7 +611,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"AddonModelsScaleOut",
 			"AddonModels/Scale/Out"
@@ -616,7 +619,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"AddonModelsScaleTimeIn",
 			"AddonModels/ScaleTime/In"
@@ -624,7 +627,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"AddonModelsScaleTimeOut",
 			"AddonModels/ScaleTime/Out"

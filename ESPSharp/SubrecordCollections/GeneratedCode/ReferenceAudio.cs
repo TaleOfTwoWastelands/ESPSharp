@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class ReferenceAudio : SubrecordCollection, ICloneable<ReferenceAudio>, IReferenceContainer
+	public partial class ReferenceAudio : SubrecordCollection, ICloneable<ReferenceAudio>
 	{
 		public SubMarker Marker { get; set; }
 		public SimpleSubrecord<Byte[]> Unknown1 { get; set; }

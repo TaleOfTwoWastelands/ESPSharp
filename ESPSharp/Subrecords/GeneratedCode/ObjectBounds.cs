@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ObjectBounds : Subrecord, ICloneable<ObjectBounds>
+	public partial class ObjectBounds : Subrecord, ICloneable<ObjectBounds>, IComparable<ObjectBounds>, IEquatable<ObjectBounds>  
 	{
 		public Int16 X1 { get; set; }
 		public Int16 Y1 { get; set; }
@@ -76,18 +77,18 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(X1);			
-			writer.Write(Y1);			
-			writer.Write(Z1);			
-			writer.Write(X2);			
-			writer.Write(Y2);			
-			writer.Write(Z2);			
+			writer.Write(X1);
+			writer.Write(Y1);
+			writer.Write(Z1);
+			writer.Write(X2);
+			writer.Write(Y2);
+			writer.Write(Z2);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Point1/X", true, out subEle);
 			subEle.Value = X1.ToString();
 
@@ -110,36 +111,24 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Point1/X", false, out subEle))
-			{
 				X1 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Point1/Y", false, out subEle))
-			{
 				Y1 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Point1/Z", false, out subEle))
-			{
 				Z1 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Point2/X", false, out subEle))
-			{
 				X2 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Point2/Y", false, out subEle))
-			{
 				Y2 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Point2/Z", false, out subEle))
-			{
 				Z2 = subEle.ToInt16();
-			}
 		}
 
 		public ObjectBounds Clone()
@@ -147,5 +136,97 @@ namespace ESPSharp.Subrecords
 			return new ObjectBounds(this);
 		}
 
+        public int CompareTo(ObjectBounds other)
+        {
+			return X1.CompareTo(other.X1);
+        }
+
+        public static bool operator >(ObjectBounds objA, ObjectBounds objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ObjectBounds objA, ObjectBounds objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ObjectBounds objA, ObjectBounds objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ObjectBounds objA, ObjectBounds objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ObjectBounds other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return X1 == other.X1 &&
+				Y1 == other.Y1 &&
+				Z1 == other.Z1 &&
+				X2 == other.X2 &&
+				Y2 == other.Y2 &&
+				Z2 == other.Z2;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ObjectBounds other = obj as ObjectBounds;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return X1.GetHashCode();
+        }
+
+        public static bool operator ==(ObjectBounds objA, ObjectBounds objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ObjectBounds objA, ObjectBounds objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

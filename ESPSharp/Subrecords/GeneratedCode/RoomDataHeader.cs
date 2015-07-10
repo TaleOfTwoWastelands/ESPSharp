@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RoomDataHeader : Subrecord, ICloneable<RoomDataHeader>
+	public partial class RoomDataHeader : Subrecord, ICloneable<RoomDataHeader>, IComparable<RoomDataHeader>, IEquatable<RoomDataHeader>  
 	{
 		public UInt16 LinkedRoomsCount { get; set; }
 		public Byte[] Unknown { get; set; }
@@ -56,17 +57,17 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(LinkedRoomsCount);			
+			writer.Write(LinkedRoomsCount);
 			if (Unknown == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unknown);
+			writer.Write(Unknown);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("LinkedRoomsCount", true, out subEle);
 			subEle.Value = LinkedRoomsCount.ToString();
 
@@ -77,16 +78,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("LinkedRoomsCount", false, out subEle))
-			{
 				LinkedRoomsCount = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToBytes();
-			}
 		}
 
 		public RoomDataHeader Clone()
@@ -94,5 +91,93 @@ namespace ESPSharp.Subrecords
 			return new RoomDataHeader(this);
 		}
 
+        public int CompareTo(RoomDataHeader other)
+        {
+			return LinkedRoomsCount.CompareTo(other.LinkedRoomsCount);
+        }
+
+        public static bool operator >(RoomDataHeader objA, RoomDataHeader objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RoomDataHeader objA, RoomDataHeader objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RoomDataHeader objA, RoomDataHeader objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RoomDataHeader objA, RoomDataHeader objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RoomDataHeader other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return LinkedRoomsCount == other.LinkedRoomsCount &&
+				Unknown.SequenceEqual(other.Unknown);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            RoomDataHeader other = obj as RoomDataHeader;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return LinkedRoomsCount.GetHashCode();
+        }
+
+        public static bool operator ==(RoomDataHeader objA, RoomDataHeader objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RoomDataHeader objA, RoomDataHeader objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

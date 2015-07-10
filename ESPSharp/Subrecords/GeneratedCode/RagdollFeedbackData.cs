@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RagdollFeedbackData : Subrecord, ICloneable<RagdollFeedbackData>
+	public partial class RagdollFeedbackData : Subrecord, ICloneable<RagdollFeedbackData>, IComparable<RagdollFeedbackData>, IEquatable<RagdollFeedbackData>  
 	{
 		public Single Dynamic_KeyframeBlendAmount { get; set; }
 		public Single HierarchyGain { get; set; }
@@ -121,27 +122,27 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Dynamic_KeyframeBlendAmount);			
-			writer.Write(HierarchyGain);			
-			writer.Write(PositionGain);			
-			writer.Write(VelocityGain);			
-			writer.Write(AccelerationGain);			
-			writer.Write(SnapGain);			
-			writer.Write(VelocityDamping);			
-			writer.Write(SnapMaxLinearVelocity);			
-			writer.Write(SnapMaxAngularVelocity);			
-			writer.Write(SnapMaxLinearDistance);			
-			writer.Write(SnapMaxAngularDistance);			
-			writer.Write(PositionMaxLinearVelocity);			
-			writer.Write(PositionMaxAngularVelocity);			
-			writer.Write(ProjectilePositionMaxVelocity);			
-			writer.Write(MeleePositionMaxVelocity);			
+			writer.Write(Dynamic_KeyframeBlendAmount);
+			writer.Write(HierarchyGain);
+			writer.Write(PositionGain);
+			writer.Write(VelocityGain);
+			writer.Write(AccelerationGain);
+			writer.Write(SnapGain);
+			writer.Write(VelocityDamping);
+			writer.Write(SnapMaxLinearVelocity);
+			writer.Write(SnapMaxAngularVelocity);
+			writer.Write(SnapMaxLinearDistance);
+			writer.Write(SnapMaxAngularDistance);
+			writer.Write(PositionMaxLinearVelocity);
+			writer.Write(PositionMaxAngularVelocity);
+			writer.Write(ProjectilePositionMaxVelocity);
+			writer.Write(MeleePositionMaxVelocity);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Dynamic_KeyframeBlendAmount", true, out subEle);
 			subEle.Value = Dynamic_KeyframeBlendAmount.ToString("G15");
 
@@ -191,81 +192,51 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Dynamic_KeyframeBlendAmount", false, out subEle))
-			{
 				Dynamic_KeyframeBlendAmount = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("HierarchyGain", false, out subEle))
-			{
 				HierarchyGain = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("PositionGain", false, out subEle))
-			{
 				PositionGain = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("VelocityGain", false, out subEle))
-			{
 				VelocityGain = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("AccelerationGain", false, out subEle))
-			{
 				AccelerationGain = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SnapGain", false, out subEle))
-			{
 				SnapGain = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("VelocityDamping", false, out subEle))
-			{
 				VelocityDamping = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SnapMax/LinearVelocity", false, out subEle))
-			{
 				SnapMaxLinearVelocity = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SnapMax/AngularVelocity", false, out subEle))
-			{
 				SnapMaxAngularVelocity = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SnapMax/LinearDistance", false, out subEle))
-			{
 				SnapMaxLinearDistance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SnapMax/AngularDistance", false, out subEle))
-			{
 				SnapMaxAngularDistance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("PositionMax/LinearVelocity", false, out subEle))
-			{
 				PositionMaxLinearVelocity = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("PositionMax/AngularVelocity", false, out subEle))
-			{
 				PositionMaxAngularVelocity = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ProjectilePositionMaxVelocity", false, out subEle))
-			{
 				ProjectilePositionMaxVelocity = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("MeleePositionMaxVelocity", false, out subEle))
-			{
 				MeleePositionMaxVelocity = subEle.ToSingle();
-			}
 		}
 
 		public RagdollFeedbackData Clone()
@@ -273,5 +244,106 @@ namespace ESPSharp.Subrecords
 			return new RagdollFeedbackData(this);
 		}
 
+        public int CompareTo(RagdollFeedbackData other)
+        {
+			return Dynamic_KeyframeBlendAmount.CompareTo(other.Dynamic_KeyframeBlendAmount);
+        }
+
+        public static bool operator >(RagdollFeedbackData objA, RagdollFeedbackData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RagdollFeedbackData objA, RagdollFeedbackData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RagdollFeedbackData objA, RagdollFeedbackData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RagdollFeedbackData objA, RagdollFeedbackData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RagdollFeedbackData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Dynamic_KeyframeBlendAmount == other.Dynamic_KeyframeBlendAmount &&
+				HierarchyGain == other.HierarchyGain &&
+				PositionGain == other.PositionGain &&
+				VelocityGain == other.VelocityGain &&
+				AccelerationGain == other.AccelerationGain &&
+				SnapGain == other.SnapGain &&
+				VelocityDamping == other.VelocityDamping &&
+				SnapMaxLinearVelocity == other.SnapMaxLinearVelocity &&
+				SnapMaxAngularVelocity == other.SnapMaxAngularVelocity &&
+				SnapMaxLinearDistance == other.SnapMaxLinearDistance &&
+				SnapMaxAngularDistance == other.SnapMaxAngularDistance &&
+				PositionMaxLinearVelocity == other.PositionMaxLinearVelocity &&
+				PositionMaxAngularVelocity == other.PositionMaxAngularVelocity &&
+				ProjectilePositionMaxVelocity == other.ProjectilePositionMaxVelocity &&
+				MeleePositionMaxVelocity == other.MeleePositionMaxVelocity;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            RagdollFeedbackData other = obj as RagdollFeedbackData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Dynamic_KeyframeBlendAmount.GetHashCode();
+        }
+
+        public static bool operator ==(RagdollFeedbackData objA, RagdollFeedbackData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RagdollFeedbackData objA, RagdollFeedbackData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

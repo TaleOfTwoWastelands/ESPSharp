@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class SoundData : Subrecord, ICloneable<SoundData>
+	public partial class SoundData : Subrecord, ICloneable<SoundData>, IComparable<SoundData>, IEquatable<SoundData>  
 	{
 		public Byte MinAttenuationDistance { get; set; }
 		public Byte MaxAttenuationDistance { get; set; }
@@ -126,31 +127,31 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(MinAttenuationDistance);			
-			writer.Write(MaxAttenuationDistance);			
-			writer.Write(FrequencyAdjustmentPercentage);			
-			writer.Write(Unused);			
+			writer.Write(MinAttenuationDistance);
+			writer.Write(MaxAttenuationDistance);
+			writer.Write(FrequencyAdjustmentPercentage);
+			writer.Write(Unused);
 			writer.Write((UInt32)SoundDataFlags);
-			writer.Write(StaticAttenuationcdB);			
-			writer.Write(StopTime);			
-			writer.Write(StartTime);			
-			writer.Write(AttenuationCurvePoint1);			
-			writer.Write(AttenuationCurvePoint2);			
-			writer.Write(AttenuationCurvePoint3);			
-			writer.Write(AttenuationCurvePoint4);			
-			writer.Write(AttenuationCurvePoint5);			
-			writer.Write(ReverbAttenuationControl);			
-			writer.Write(Priority);			
+			writer.Write(StaticAttenuationcdB);
+			writer.Write(StopTime);
+			writer.Write(StartTime);
+			writer.Write(AttenuationCurvePoint1);
+			writer.Write(AttenuationCurvePoint2);
+			writer.Write(AttenuationCurvePoint3);
+			writer.Write(AttenuationCurvePoint4);
+			writer.Write(AttenuationCurvePoint5);
+			writer.Write(ReverbAttenuationControl);
+			writer.Write(Priority);
 			if (Unknown == null)
 				writer.Write(new byte[8]);
 			else
-				writer.Write(Unknown);
+			writer.Write(Unknown);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Attenuation/Distance/Min", true, out subEle);
 			subEle.Value = MinAttenuationDistance.ToString();
 
@@ -160,8 +161,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("FrequencyAdjustmentPercentage", true, out subEle);
 			subEle.Value = FrequencyAdjustmentPercentage.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToString();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = SoundDataFlags.ToString();
@@ -203,86 +203,53 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Attenuation/Distance/Min", false, out subEle))
-			{
 				MinAttenuationDistance = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Attenuation/Distance/Max", false, out subEle))
-			{
 				MaxAttenuationDistance = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("FrequencyAdjustmentPercentage", false, out subEle))
-			{
 				FrequencyAdjustmentPercentage = subEle.ToSByte();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToByte();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				SoundDataFlags = subEle.ToEnum<SoundDataFlags>();
-			}
 
 			if (ele.TryPathTo("Attenuation/StaticAttenuationcdB", false, out subEle))
-			{
 				StaticAttenuationcdB = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Time/Stop", false, out subEle))
-			{
 				StopTime = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Time/Start", false, out subEle))
-			{
 				StartTime = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Attenuation/Curve/Point1", false, out subEle))
-			{
 				AttenuationCurvePoint1 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Attenuation/Curve/Point2", false, out subEle))
-			{
 				AttenuationCurvePoint2 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Attenuation/Curve/Point3", false, out subEle))
-			{
 				AttenuationCurvePoint3 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Attenuation/Curve/Point4", false, out subEle))
-			{
 				AttenuationCurvePoint4 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Attenuation/Curve/Point5", false, out subEle))
-			{
 				AttenuationCurvePoint5 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Attenuation/ReverbAttenuationControl", false, out subEle))
-			{
 				ReverbAttenuationControl = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Priority", false, out subEle))
-			{
 				Priority = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToBytes();
-			}
 		}
 
 		public SoundData Clone()
@@ -290,5 +257,111 @@ namespace ESPSharp.Subrecords
 			return new SoundData(this);
 		}
 
+        public int CompareTo(SoundData other)
+        {
+			return Priority.CompareTo(other.Priority);
+        }
+
+        public static bool operator >(SoundData objA, SoundData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(SoundData objA, SoundData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(SoundData objA, SoundData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(SoundData objA, SoundData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(SoundData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return MinAttenuationDistance == other.MinAttenuationDistance &&
+				MaxAttenuationDistance == other.MaxAttenuationDistance &&
+				FrequencyAdjustmentPercentage == other.FrequencyAdjustmentPercentage &&
+				Unused == other.Unused &&
+				SoundDataFlags == other.SoundDataFlags &&
+				StaticAttenuationcdB == other.StaticAttenuationcdB &&
+				StopTime == other.StopTime &&
+				StartTime == other.StartTime &&
+				AttenuationCurvePoint1 == other.AttenuationCurvePoint1 &&
+				AttenuationCurvePoint2 == other.AttenuationCurvePoint2 &&
+				AttenuationCurvePoint3 == other.AttenuationCurvePoint3 &&
+				AttenuationCurvePoint4 == other.AttenuationCurvePoint4 &&
+				AttenuationCurvePoint5 == other.AttenuationCurvePoint5 &&
+				ReverbAttenuationControl == other.ReverbAttenuationControl &&
+				Priority == other.Priority &&
+				Unknown.SequenceEqual(other.Unknown);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            SoundData other = obj as SoundData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Priority.GetHashCode();
+        }
+
+        public static bool operator ==(SoundData objA, SoundData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(SoundData objA, SoundData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

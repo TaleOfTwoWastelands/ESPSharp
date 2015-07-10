@@ -130,5 +130,17 @@ namespace ESPSharp
         {
             return bytes.ToBase64();
         }
+
+        public static string GetCloneText(this Type type, string name)
+        {
+            if (type.IsValueType)
+                return name;
+            else if (type.GetInterface("ICloneable`1") != null)
+                return String.Format("{0}.Clone()", name);
+            else if (type.GetInterface("ICloneable") != null)
+                return String.Format("({0}){1}.Clone()", Utility.GetFriendlyName(type), name);
+            else
+                throw new Exception();
+        }
     }
 }

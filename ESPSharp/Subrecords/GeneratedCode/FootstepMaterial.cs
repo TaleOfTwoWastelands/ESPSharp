@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class FootstepMaterial : Subrecord, ICloneable<FootstepMaterial>
+	public partial class FootstepMaterial : Subrecord, ICloneable<FootstepMaterial>, IComparable<FootstepMaterial>, IEquatable<FootstepMaterial>  
 	{
 		public Byte[] ConcreteSolid { get; set; }
 		public Byte[] ConcreteBroken { get; set; }
@@ -99,49 +100,49 @@ namespace ESPSharp.Subrecords
 			if (ConcreteSolid == null)
 				writer.Write(new byte[30]);
 			else
-				writer.Write(ConcreteSolid);
+			writer.Write(ConcreteSolid);
 			if (ConcreteBroken == null)
 				writer.Write(new byte[30]);
 			else
-				writer.Write(ConcreteBroken);
+			writer.Write(ConcreteBroken);
 			if (MetalSolid == null)
 				writer.Write(new byte[30]);
 			else
-				writer.Write(MetalSolid);
+			writer.Write(MetalSolid);
 			if (MetalHollow == null)
 				writer.Write(new byte[30]);
 			else
-				writer.Write(MetalHollow);
+			writer.Write(MetalHollow);
 			if (MetalSheet == null)
 				writer.Write(new byte[30]);
 			else
-				writer.Write(MetalSheet);
+			writer.Write(MetalSheet);
 			if (Wood == null)
 				writer.Write(new byte[30]);
 			else
-				writer.Write(Wood);
+			writer.Write(Wood);
 			if (Sand == null)
 				writer.Write(new byte[30]);
 			else
-				writer.Write(Sand);
+			writer.Write(Sand);
 			if (Dirt == null)
 				writer.Write(new byte[30]);
 			else
-				writer.Write(Dirt);
+			writer.Write(Dirt);
 			if (Grass == null)
 				writer.Write(new byte[30]);
 			else
-				writer.Write(Grass);
+			writer.Write(Grass);
 			if (Water == null)
 				writer.Write(new byte[30]);
 			else
-				writer.Write(Water);
+			writer.Write(Water);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("ConcreteSolid", true, out subEle);
 			subEle.Value = ConcreteSolid.ToHex();
 
@@ -176,56 +177,36 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("ConcreteSolid", false, out subEle))
-			{
 				ConcreteSolid = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("ConcreteBroken", false, out subEle))
-			{
 				ConcreteBroken = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("MetalSolid", false, out subEle))
-			{
 				MetalSolid = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("MetalHollow", false, out subEle))
-			{
 				MetalHollow = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("MetalSheet", false, out subEle))
-			{
 				MetalSheet = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("Wood", false, out subEle))
-			{
 				Wood = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("Sand", false, out subEle))
-			{
 				Sand = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("Dirt", false, out subEle))
-			{
 				Dirt = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("Grass", false, out subEle))
-			{
 				Grass = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("Water", false, out subEle))
-			{
 				Water = subEle.ToBytes();
-			}
 		}
 
 		public FootstepMaterial Clone()
@@ -233,5 +214,101 @@ namespace ESPSharp.Subrecords
 			return new FootstepMaterial(this);
 		}
 
+        public int CompareTo(FootstepMaterial other)
+        {
+			return ConcreteSolid.GetHashCode().CompareTo(other.ConcreteSolid.GetHashCode());
+        }
+
+        public static bool operator >(FootstepMaterial objA, FootstepMaterial objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(FootstepMaterial objA, FootstepMaterial objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(FootstepMaterial objA, FootstepMaterial objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(FootstepMaterial objA, FootstepMaterial objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(FootstepMaterial other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return ConcreteSolid.SequenceEqual(other.ConcreteSolid) &&
+				ConcreteBroken.SequenceEqual(other.ConcreteBroken) &&
+				MetalSolid.SequenceEqual(other.MetalSolid) &&
+				MetalHollow.SequenceEqual(other.MetalHollow) &&
+				MetalSheet.SequenceEqual(other.MetalSheet) &&
+				Wood.SequenceEqual(other.Wood) &&
+				Sand.SequenceEqual(other.Sand) &&
+				Dirt.SequenceEqual(other.Dirt) &&
+				Grass.SequenceEqual(other.Grass) &&
+				Water.SequenceEqual(other.Water);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            FootstepMaterial other = obj as FootstepMaterial;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return ConcreteSolid.GetHashCode();
+        }
+
+        public static bool operator ==(FootstepMaterial objA, FootstepMaterial objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(FootstepMaterial objA, FootstepMaterial objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

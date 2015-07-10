@@ -9,6 +9,7 @@ using System.Diagnostics;
 using ESPSharp.Records;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
+using ESPSharp.DataTypes;
 
 namespace ESPSharp
 {
@@ -16,7 +17,7 @@ namespace ESPSharp
     {
         public string Tag { get; protected set; }
         public uint Size { get; protected set; }
-        public ushort DateStamp { get; protected set; }
+        public DateStamp LastModified { get; protected set; }
         public byte[] Unknown { get; protected set; }
 
         public HashSet<RecordView> ChildRecordViews = new HashSet<RecordView>();
@@ -40,9 +41,7 @@ namespace ESPSharp
 
             root.Add(
                 new XElement("Type", type.ToString()),
-                WriteTypeDataXML(master),
-                new XElement("DateStamp", DateStamp),
-                new XElement("Unknown", Unknown.ToBase64())
+                WriteTypeDataXML(master)
                 );
 
             header.Save(Path.Combine(destinationFolder, "GroupHeader.metadata"));
@@ -68,8 +67,6 @@ namespace ESPSharp
 
             Tag = "GRUP";
             ReadTypeDataXML(headerRoot, master);
-            DateStamp = headerRoot.Element("DateStamp").ToUInt16();
-            Unknown = headerRoot.Element("Unknown").ToBytes();
 
             foreach (var folder in Directory.EnumerateDirectories(sourceFolder, "*.*", SearchOption.TopDirectoryOnly))
             {
@@ -119,8 +116,8 @@ namespace ESPSharp
             writer.Write((uint)0);
             WriteTypeData(writer);
             writer.Write((uint)type);
-            writer.Write(DateStamp);
-            writer.Write(Unknown);
+            DateStamp.Now.WriteBinary(writer);
+            writer.Write(new byte[6]);
 
             long dataStart = writer.BaseStream.Position;
 
@@ -156,7 +153,8 @@ namespace ESPSharp
             ReadTypeData(reader);
             GroupType thisType = (GroupType)reader.ReadUInt32();
             Debug.Assert(thisType == type);
-            DateStamp = reader.ReadUInt16();
+            LastModified = new DateStamp();
+            LastModified.ReadBinary(reader);
             Unknown = reader.ReadBytes(6);
 
             long offset = reader.BaseStream.Position;

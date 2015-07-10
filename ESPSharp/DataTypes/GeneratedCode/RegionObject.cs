@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class RegionObject : IESPSerializable, ICloneable<RegionObject>, IReferenceContainer
+	public partial class RegionObject : IESPSerializable, ICloneable<RegionObject>, IComparable<RegionObject>, IEquatable<RegionObject>, IReferenceContainer
 	{
 		public FormID Object { get; set; }
 		public UInt16 ParentIndex { get; set; }
@@ -333,5 +333,77 @@ namespace ESPSharp.DataTypes
 		{
 			return new RegionObject(this);
 		}
+
+        public int CompareTo(RegionObject other)
+        {
+            return Object.CompareTo(other.Object);
+        }
+
+        public static bool operator >(RegionObject objA, RegionObject objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RegionObject objA, RegionObject objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RegionObject objA, RegionObject objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RegionObject objA, RegionObject objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RegionObject other)
+        {
+			return Object == other.Object &&
+				ParentIndex == other.ParentIndex &&
+				Unused == other.Unused &&
+				Density == other.Density &&
+				Clustering == other.Clustering &&
+				MinSlope == other.MinSlope &&
+				MaxSlope == other.MaxSlope &&
+				Flags == other.Flags &&
+				RadiusWithRespectToParent == other.RadiusWithRespectToParent &&
+				Radius == other.Radius &&
+				Unknown1 == other.Unknown1 &&
+				MaxHeight == other.MaxHeight &&
+				Sink == other.Sink &&
+				SinkVariance == other.SinkVariance &&
+				SizeVariance == other.SizeVariance &&
+				XAngleVariance == other.XAngleVariance &&
+				YAngleVariance == other.YAngleVariance &&
+				ZAngleVariance == other.ZAngleVariance &&
+				Unknown2 == other.Unknown2;
+        }
+
+        public override bool Equals(object obj)
+        {
+            RegionObject other = obj as RegionObject;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Object.GetHashCode();
+        }
+
+        public static bool operator ==(RegionObject objA, RegionObject objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RegionObject objA, RegionObject objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }

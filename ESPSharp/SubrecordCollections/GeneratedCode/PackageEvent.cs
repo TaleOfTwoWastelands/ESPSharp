@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class PackageEvent : SubrecordCollection, ICloneable<PackageEvent>, IReferenceContainer
+	public partial class PackageEvent : SubrecordCollection, ICloneable<PackageEvent>
 	{
 		public SubMarker Marker { get; set; }
 		public RecordReference Idle { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class IngredientData : Subrecord, ICloneable<IngredientData>
+	public partial class IngredientData : Subrecord, ICloneable<IngredientData>, IComparable<IngredientData>, IEquatable<IngredientData>  
 	{
 		public Int32 Value { get; set; }
 		public IngredientFlags Flags { get; set; }
@@ -61,46 +62,38 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Value);			
+			writer.Write(Value);
 			writer.Write((Byte)Flags);
 			if (Unused == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused);
+			writer.Write(Unused);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Value", true, out subEle);
 			subEle.Value = Value.ToString();
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Value", false, out subEle))
-			{
 				Value = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<IngredientFlags>();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 		}
 
 		public IngredientData Clone()
@@ -108,5 +101,98 @@ namespace ESPSharp.Subrecords
 			return new IngredientData(this);
 		}
 
+        public int CompareTo(IngredientData other)
+        {
+			return Value.CompareTo(other.Value);
+        }
+
+        public static bool operator >(IngredientData objA, IngredientData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(IngredientData objA, IngredientData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(IngredientData objA, IngredientData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(IngredientData objA, IngredientData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(IngredientData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Value == other.Value &&
+				Flags == other.Flags &&
+				Unused.SequenceEqual(other.Unused);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            IngredientData other = obj as IngredientData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
+
+        public static bool operator ==(IngredientData objA, IngredientData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(IngredientData objA, IngredientData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

@@ -34,6 +34,10 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.VisualStudio.TextTemplating.12.0\v4.0_12.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.TextTemplating.12.0.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -47,6 +51,7 @@
   <ItemGroup>
     <Compile Include="DataTypes\AlternateTexture.cs" />
     <Compile Include="DataTypes\Comparison.cs" />
+    <Compile Include="DataTypes\DateStamp.cs" />
     <Compile Include="DataTypes\FormID.cs" />
     <Compile Include="DataTypes\Function.cs" />
     <Compile Include="DataTypes\GeneratedCode\AlternateTexture.cs">
@@ -58,6 +63,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Color.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataTypes\GeneratedCode\DateStamp.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DateStamp.tt</DependentUpon>
     </Compile>
     <Compile Include="DataTypes\GeneratedCode\FormID.cs">
       <AutoGen>True</AutoGen>
@@ -718,6 +728,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MusicType.tt</DependentUpon>
     </Compile>
+    <None Include="DataTypes\GeneratedCode\DateStamp.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DateStamp.cs</LastGenOutput>
+    </None>
     <None Include="DataTypes\GeneratedCode\NavMeshDoor.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NavMeshDoor.cs</LastGenOutput>
@@ -1435,7 +1449,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RagdollData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Subrecords\GeneratedCode\RagdollDynamicBones.cs" />
+    <Compile Include="Subrecords\RagdollDynamicBones.cs" />
     <Compile Include="Subrecords\GeneratedCode\RagdollFeedbackData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2478,6 +2492,7 @@
     <Compile Include="Subrecords\SubNullStringList.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="Subrecords\WeatherList.cs" />
+    <Compile Include="T4\ClassTemplate.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Zlib.cs" />
     <None Include="SubrecordCollections\GeneratedCode\StaticCollectionPart.tt">
@@ -3059,6 +3074,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

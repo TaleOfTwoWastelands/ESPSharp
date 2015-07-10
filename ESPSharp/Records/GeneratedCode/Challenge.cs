@@ -88,7 +88,7 @@ namespace ESPSharp.Records
 		}
 
 		public override void WriteData(ESPWriter writer)
-        {
+		{
 			if (EditorID != null)
 				EditorID.WriteBinary(writer);
 			if (Name != null)
@@ -154,7 +154,7 @@ namespace ESPSharp.Records
 		}
 
 		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
-        {
+		{
 			XElement subEle;
 
 			if (ele.TryPathTo("EditorID", false, out subEle))
@@ -163,7 +163,7 @@ namespace ESPSharp.Records
 					EditorID = new SimpleSubrecord<String>();
 					
 				EditorID.ReadXML(subEle, master);
-            }
+			}
 			if (ele.TryPathTo("Name", false, out subEle))
 			{
 				if (Name == null)

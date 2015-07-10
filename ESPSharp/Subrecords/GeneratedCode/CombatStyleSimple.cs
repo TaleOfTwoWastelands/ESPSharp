@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CombatStyleSimple : Subrecord, ICloneable<CombatStyleSimple>
+	public partial class CombatStyleSimple : Subrecord, ICloneable<CombatStyleSimple>, IComparable<CombatStyleSimple>, IEquatable<CombatStyleSimple>  
 	{
 		public Single CoverSearchRadius { get; set; }
 		public Single TakeCoverChance { get; set; }
@@ -126,31 +127,31 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(CoverSearchRadius);			
-			writer.Write(TakeCoverChance);			
-			writer.Write(WaitTimerMin);			
-			writer.Write(WaitTimerMax);			
-			writer.Write(WaitToFireTimerMin);			
-			writer.Write(WaitToFireTimerMax);			
-			writer.Write(FireTimerMin);			
-			writer.Write(FireTimerMax);			
-			writer.Write(RangedWeaponRangeMultMin);			
+			writer.Write(CoverSearchRadius);
+			writer.Write(TakeCoverChance);
+			writer.Write(WaitTimerMin);
+			writer.Write(WaitTimerMax);
+			writer.Write(WaitToFireTimerMin);
+			writer.Write(WaitToFireTimerMax);
+			writer.Write(FireTimerMin);
+			writer.Write(FireTimerMax);
+			writer.Write(RangedWeaponRangeMultMin);
 			if (Unused == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unused);
+			writer.Write(Unused);
 			writer.Write((UInt32)WeaponRestrictions);
-			writer.Write(RangedWeaponRangeMultMax);			
-			writer.Write(MaxTargetingFOV);			
-			writer.Write(CombatRadius);			
-			writer.Write(SemiAutoFiringDelayMultMin);			
-			writer.Write(SemiAutoFiringDelayMultMax);			
+			writer.Write(RangedWeaponRangeMultMax);
+			writer.Write(MaxTargetingFOV);
+			writer.Write(CombatRadius);
+			writer.Write(SemiAutoFiringDelayMultMin);
+			writer.Write(SemiAutoFiringDelayMultMax);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("CoverSearchRadius", true, out subEle);
 			subEle.Value = CoverSearchRadius.ToString("G15");
 
@@ -178,8 +179,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("RangedWeaponRangeMult/Min", true, out subEle);
 			subEle.Value = RangedWeaponRangeMultMin.ToString("G15");
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("WeaponRestrictions", true, out subEle);
 			subEle.Value = WeaponRestrictions.ToString();
@@ -203,86 +203,53 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("CoverSearchRadius", false, out subEle))
-			{
 				CoverSearchRadius = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("TakeCoverChance", false, out subEle))
-			{
 				TakeCoverChance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WaitTimer/Min", false, out subEle))
-			{
 				WaitTimerMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WaitTimer/Max", false, out subEle))
-			{
 				WaitTimerMax = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WaitToFireTimer/Min", false, out subEle))
-			{
 				WaitToFireTimerMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("WaitToFireTimer/Max", false, out subEle))
-			{
 				WaitToFireTimerMax = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("FireTimer/Min", false, out subEle))
-			{
 				FireTimerMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("FireTimer/Max", false, out subEle))
-			{
 				FireTimerMax = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("RangedWeaponRangeMult/Min", false, out subEle))
-			{
 				RangedWeaponRangeMultMin = subEle.ToSingle();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("WeaponRestrictions", false, out subEle))
-			{
 				WeaponRestrictions = subEle.ToEnum<WeaponRestrictions>();
-			}
 
 			if (ele.TryPathTo("RangedWeaponRangeMult/Max", false, out subEle))
-			{
 				RangedWeaponRangeMultMax = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("MaxTargetingFOV", false, out subEle))
-			{
 				MaxTargetingFOV = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("CombatRadius", false, out subEle))
-			{
 				CombatRadius = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SemiAutoFiringDelayMult/Min", false, out subEle))
-			{
 				SemiAutoFiringDelayMultMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SemiAutoFiringDelayMult/Max", false, out subEle))
-			{
 				SemiAutoFiringDelayMultMax = subEle.ToSingle();
-			}
 		}
 
 		public CombatStyleSimple Clone()
@@ -290,5 +257,111 @@ namespace ESPSharp.Subrecords
 			return new CombatStyleSimple(this);
 		}
 
+        public int CompareTo(CombatStyleSimple other)
+        {
+			return CoverSearchRadius.CompareTo(other.CoverSearchRadius);
+        }
+
+        public static bool operator >(CombatStyleSimple objA, CombatStyleSimple objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(CombatStyleSimple objA, CombatStyleSimple objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(CombatStyleSimple objA, CombatStyleSimple objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(CombatStyleSimple objA, CombatStyleSimple objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(CombatStyleSimple other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return CoverSearchRadius == other.CoverSearchRadius &&
+				TakeCoverChance == other.TakeCoverChance &&
+				WaitTimerMin == other.WaitTimerMin &&
+				WaitTimerMax == other.WaitTimerMax &&
+				WaitToFireTimerMin == other.WaitToFireTimerMin &&
+				WaitToFireTimerMax == other.WaitToFireTimerMax &&
+				FireTimerMin == other.FireTimerMin &&
+				FireTimerMax == other.FireTimerMax &&
+				RangedWeaponRangeMultMin == other.RangedWeaponRangeMultMin &&
+				Unused.SequenceEqual(other.Unused) &&
+				WeaponRestrictions == other.WeaponRestrictions &&
+				RangedWeaponRangeMultMax == other.RangedWeaponRangeMultMax &&
+				MaxTargetingFOV == other.MaxTargetingFOV &&
+				CombatRadius == other.CombatRadius &&
+				SemiAutoFiringDelayMultMin == other.SemiAutoFiringDelayMultMin &&
+				SemiAutoFiringDelayMultMax == other.SemiAutoFiringDelayMultMax;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            CombatStyleSimple other = obj as CombatStyleSimple;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return CoverSearchRadius.GetHashCode();
+        }
+
+        public static bool operator ==(CombatStyleSimple objA, CombatStyleSimple objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(CombatStyleSimple objA, CombatStyleSimple objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class TimeOfDayColors : IESPSerializable, ICloneable<TimeOfDayColors>
+	public partial class TimeOfDayColors : IESPSerializable, ICloneable<TimeOfDayColors>, IComparable<TimeOfDayColors>, IEquatable<TimeOfDayColors>
 	{
 		public Color Sunrise { get; set; }
 		public Color Day { get; set; }
@@ -142,5 +142,64 @@ namespace ESPSharp.DataTypes
 		{
 			return new TimeOfDayColors(this);
 		}
+
+        public int CompareTo(TimeOfDayColors other)
+        {
+            return Sunrise.CompareTo(other.Sunrise);
+        }
+
+        public static bool operator >(TimeOfDayColors objA, TimeOfDayColors objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(TimeOfDayColors objA, TimeOfDayColors objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(TimeOfDayColors objA, TimeOfDayColors objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(TimeOfDayColors objA, TimeOfDayColors objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(TimeOfDayColors other)
+        {
+			return Sunrise == other.Sunrise &&
+				Day == other.Day &&
+				Sunset == other.Sunset &&
+				Night == other.Night &&
+				HighNoon == other.HighNoon &&
+				Midnight == other.Midnight;
+        }
+
+        public override bool Equals(object obj)
+        {
+            TimeOfDayColors other = obj as TimeOfDayColors;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Sunrise.GetHashCode();
+        }
+
+        public static bool operator ==(TimeOfDayColors objA, TimeOfDayColors objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(TimeOfDayColors objA, TimeOfDayColors objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }

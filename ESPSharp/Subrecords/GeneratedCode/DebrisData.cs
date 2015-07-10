@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DebrisData : Subrecord, ICloneable<DebrisData>
+	public partial class DebrisData : Subrecord, ICloneable<DebrisData>, IComparable<DebrisData>, IEquatable<DebrisData>  
 	{
 		public Byte Percentage { get; set; }
 		public String Model { get; set; }
@@ -61,15 +62,15 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Percentage);			
-			writer.Write(Model);			
+			writer.Write(Percentage);
+			writer.Write(Model);
 			writer.Write((Byte)HasCollisionData);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Percentage", true, out subEle);
 			subEle.Value = Percentage.ToString();
 
@@ -83,21 +84,15 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Percentage", false, out subEle))
-			{
 				Percentage = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Model", false, out subEle))
-			{
 				Model = subEle.Value;
-			}
 
 			if (ele.TryPathTo("HasCollisionData", false, out subEle))
-			{
 				HasCollisionData = subEle.ToEnum<NoYesByte>();
-			}
 		}
 
 		public DebrisData Clone()
@@ -105,5 +100,94 @@ namespace ESPSharp.Subrecords
 			return new DebrisData(this);
 		}
 
+        public int CompareTo(DebrisData other)
+        {
+			return Percentage.CompareTo(other.Percentage);
+        }
+
+        public static bool operator >(DebrisData objA, DebrisData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(DebrisData objA, DebrisData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(DebrisData objA, DebrisData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(DebrisData objA, DebrisData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(DebrisData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Percentage == other.Percentage &&
+				Model == other.Model &&
+				HasCollisionData == other.HasCollisionData;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            DebrisData other = obj as DebrisData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Percentage.GetHashCode();
+        }
+
+        public static bool operator ==(DebrisData objA, DebrisData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(DebrisData objA, DebrisData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

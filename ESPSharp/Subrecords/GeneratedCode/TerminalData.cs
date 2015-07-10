@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class TerminalData : Subrecord, ICloneable<TerminalData>
+	public partial class TerminalData : Subrecord, ICloneable<TerminalData>, IComparable<TerminalData>, IEquatable<TerminalData>  
 	{
 		public HackingDifficulty HackingDifficulty { get; set; }
 		public TerminalFlags Flags { get; set; }
@@ -72,13 +73,13 @@ namespace ESPSharp.Subrecords
 			if (Unused == null)
 				writer.Write(new byte[1]);
 			else
-				writer.Write(Unused);
+			writer.Write(Unused);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("HackingDifficulty", true, out subEle);
 			subEle.Value = HackingDifficulty.ToString();
 
@@ -88,33 +89,23 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("ServerType", true, out subEle);
 			subEle.Value = ServerType.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("HackingDifficulty", false, out subEle))
-			{
 				HackingDifficulty = subEle.ToEnum<HackingDifficulty>();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<TerminalFlags>();
-			}
 
 			if (ele.TryPathTo("ServerType", false, out subEle))
-			{
 				ServerType = subEle.ToEnum<TerminalServerType>();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 		}
 
 		public TerminalData Clone()
@@ -122,5 +113,99 @@ namespace ESPSharp.Subrecords
 			return new TerminalData(this);
 		}
 
+        public int CompareTo(TerminalData other)
+        {
+			return HackingDifficulty.CompareTo(other.HackingDifficulty);
+        }
+
+        public static bool operator >(TerminalData objA, TerminalData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(TerminalData objA, TerminalData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(TerminalData objA, TerminalData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(TerminalData objA, TerminalData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(TerminalData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return HackingDifficulty == other.HackingDifficulty &&
+				Flags == other.Flags &&
+				ServerType == other.ServerType &&
+				Unused.SequenceEqual(other.Unused);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            TerminalData other = obj as TerminalData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HackingDifficulty.GetHashCode();
+        }
+
+        public static bool operator ==(TerminalData objA, TerminalData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(TerminalData objA, TerminalData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

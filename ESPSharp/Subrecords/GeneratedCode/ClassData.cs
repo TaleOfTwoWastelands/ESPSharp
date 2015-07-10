@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ClassData : Subrecord, ICloneable<ClassData>
+	public partial class ClassData : Subrecord, ICloneable<ClassData>, IComparable<ClassData>, IEquatable<ClassData>  
 	{
 		public ActorValues TagSkill1 { get; set; }
 		public ActorValues TagSkill2 { get; set; }
@@ -98,17 +99,17 @@ namespace ESPSharp.Subrecords
 			writer.Write((UInt32)ClassDataFlags);
 			writer.Write((UInt32)Services);
 			writer.Write((SByte)TrainingSkill);
-			writer.Write(MaxTrainingLevel);			
+			writer.Write(MaxTrainingLevel);
 			if (Unused == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused);
+			writer.Write(Unused);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("TagSkills/Skill1", true, out subEle);
 			subEle.Value = TagSkill1.ToString();
 
@@ -133,58 +134,38 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Training/MaxLevel", true, out subEle);
 			subEle.Value = MaxTrainingLevel.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("TagSkills/Skill1", false, out subEle))
-			{
 				TagSkill1 = subEle.ToEnum<ActorValues>();
-			}
 
 			if (ele.TryPathTo("TagSkills/Skill2", false, out subEle))
-			{
 				TagSkill2 = subEle.ToEnum<ActorValues>();
-			}
 
 			if (ele.TryPathTo("TagSkills/Skill3", false, out subEle))
-			{
 				TagSkill3 = subEle.ToEnum<ActorValues>();
-			}
 
 			if (ele.TryPathTo("TagSkills/Skill4", false, out subEle))
-			{
 				TagSkill4 = subEle.ToEnum<ActorValues>();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				ClassDataFlags = subEle.ToEnum<ClassDataFlag>();
-			}
 
 			if (ele.TryPathTo("Services", false, out subEle))
-			{
 				Services = subEle.ToEnum<ServicesFlag>();
-			}
 
 			if (ele.TryPathTo("Training/Skill", false, out subEle))
-			{
 				TrainingSkill = subEle.ToEnum<Skills>();
-			}
 
 			if (ele.TryPathTo("Training/MaxLevel", false, out subEle))
-			{
 				MaxTrainingLevel = subEle.ToByte();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 		}
 
 		public ClassData Clone()
@@ -192,5 +173,104 @@ namespace ESPSharp.Subrecords
 			return new ClassData(this);
 		}
 
+        public int CompareTo(ClassData other)
+        {
+			return TagSkill1.CompareTo(other.TagSkill1);
+        }
+
+        public static bool operator >(ClassData objA, ClassData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ClassData objA, ClassData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ClassData objA, ClassData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ClassData objA, ClassData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ClassData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return TagSkill1 == other.TagSkill1 &&
+				TagSkill2 == other.TagSkill2 &&
+				TagSkill3 == other.TagSkill3 &&
+				TagSkill4 == other.TagSkill4 &&
+				ClassDataFlags == other.ClassDataFlags &&
+				Services == other.Services &&
+				TrainingSkill == other.TrainingSkill &&
+				MaxTrainingLevel == other.MaxTrainingLevel &&
+				Unused.SequenceEqual(other.Unused);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ClassData other = obj as ClassData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return TagSkill1.GetHashCode();
+        }
+
+        public static bool operator ==(ClassData objA, ClassData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ClassData objA, ClassData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

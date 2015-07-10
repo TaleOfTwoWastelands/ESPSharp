@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class WeatherChance : IESPSerializable, ICloneable<WeatherChance>, IReferenceContainer
+	public partial class WeatherChance : IESPSerializable, ICloneable<WeatherChance>, IComparable<WeatherChance>, IEquatable<WeatherChance>, IReferenceContainer
 	{
 		public FormID Weather { get; set; }
 		public Int32 Chance { get; set; }
@@ -100,5 +100,61 @@ namespace ESPSharp.DataTypes
 		{
 			return new WeatherChance(this);
 		}
+
+        public int CompareTo(WeatherChance other)
+        {
+            return Weather.CompareTo(other.Weather);
+        }
+
+        public static bool operator >(WeatherChance objA, WeatherChance objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(WeatherChance objA, WeatherChance objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(WeatherChance objA, WeatherChance objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(WeatherChance objA, WeatherChance objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(WeatherChance other)
+        {
+			return Weather == other.Weather &&
+				Chance == other.Chance &&
+				Global == other.Global;
+        }
+
+        public override bool Equals(object obj)
+        {
+            WeatherChance other = obj as WeatherChance;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Weather.GetHashCode();
+        }
+
+        public static bool operator ==(WeatherChance objA, WeatherChance objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(WeatherChance objA, WeatherChance objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }

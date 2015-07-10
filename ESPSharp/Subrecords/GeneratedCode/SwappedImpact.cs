@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class SwappedImpact : Subrecord, ICloneable<SwappedImpact>, IReferenceContainer
+	public partial class SwappedImpact : Subrecord, ICloneable<SwappedImpact>, IComparable<SwappedImpact>, IEquatable<SwappedImpact>  
 	{
 		public MaterialTypeUInt MaterialType { get; set; }
 		public FormID OldImpact { get; set; }
@@ -69,7 +70,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("MaterialType", true, out subEle);
 			subEle.Value = MaterialType.ToString();
 
@@ -83,21 +84,15 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("MaterialType", false, out subEle))
-			{
 				MaterialType = subEle.ToEnum<MaterialTypeUInt>();
-			}
 
 			if (ele.TryPathTo("OldImpact", false, out subEle))
-			{
 				OldImpact.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("NewImpact", false, out subEle))
-			{
 				NewImpact.ReadXML(subEle, master);
-			}
 		}
 
 		public SwappedImpact Clone()
@@ -105,5 +100,94 @@ namespace ESPSharp.Subrecords
 			return new SwappedImpact(this);
 		}
 
+        public int CompareTo(SwappedImpact other)
+        {
+			return MaterialType.CompareTo(other.MaterialType);
+        }
+
+        public static bool operator >(SwappedImpact objA, SwappedImpact objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(SwappedImpact objA, SwappedImpact objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(SwappedImpact objA, SwappedImpact objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(SwappedImpact objA, SwappedImpact objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(SwappedImpact other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return MaterialType == other.MaterialType &&
+				OldImpact == other.OldImpact &&
+				NewImpact == other.NewImpact;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            SwappedImpact other = obj as SwappedImpact;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return MaterialType.GetHashCode();
+        }
+
+        public static bool operator ==(SwappedImpact objA, SwappedImpact objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(SwappedImpact objA, SwappedImpact objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

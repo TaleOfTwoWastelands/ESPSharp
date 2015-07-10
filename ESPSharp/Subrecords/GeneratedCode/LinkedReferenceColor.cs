@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LinkedReferenceColor : Subrecord, ICloneable<LinkedReferenceColor>
+	public partial class LinkedReferenceColor : Subrecord, ICloneable<LinkedReferenceColor>, IComparable<LinkedReferenceColor>, IEquatable<LinkedReferenceColor>  
 	{
 		public Color Start { get; set; }
 		public Color End { get; set; }
@@ -63,7 +64,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Start", true, out subEle);
 			Start.WriteXML(subEle, master);
 
@@ -74,16 +75,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Start", false, out subEle))
-			{
 				Start.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("End", false, out subEle))
-			{
 				End.ReadXML(subEle, master);
-			}
 		}
 
 		public LinkedReferenceColor Clone()
@@ -91,5 +88,93 @@ namespace ESPSharp.Subrecords
 			return new LinkedReferenceColor(this);
 		}
 
+        public int CompareTo(LinkedReferenceColor other)
+        {
+			return Start.CompareTo(other.Start);
+        }
+
+        public static bool operator >(LinkedReferenceColor objA, LinkedReferenceColor objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(LinkedReferenceColor objA, LinkedReferenceColor objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(LinkedReferenceColor objA, LinkedReferenceColor objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(LinkedReferenceColor objA, LinkedReferenceColor objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(LinkedReferenceColor other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Start == other.Start &&
+				End == other.End;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            LinkedReferenceColor other = obj as LinkedReferenceColor;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Start.GetHashCode();
+        }
+
+        public static bool operator ==(LinkedReferenceColor objA, LinkedReferenceColor objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(LinkedReferenceColor objA, LinkedReferenceColor objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

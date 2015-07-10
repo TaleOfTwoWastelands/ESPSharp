@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RecordReference : Subrecord, ICloneable<RecordReference>, IReferenceContainer
+	public partial class RecordReference : Subrecord, ICloneable<RecordReference>, IComparable<RecordReference>, IEquatable<RecordReference>  
 	{
 		public FormID Reference { get; set; }
 
@@ -57,7 +58,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Reference", true, out subEle);
 			Reference.WriteXML(subEle, master);
 		}
@@ -65,11 +66,9 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Reference", false, out subEle))
-			{
 				Reference.ReadXML(subEle, master);
-			}
 		}
 
 		public RecordReference Clone()
@@ -77,5 +76,92 @@ namespace ESPSharp.Subrecords
 			return new RecordReference(this);
 		}
 
+        public int CompareTo(RecordReference other)
+        {
+			return Reference.CompareTo(other.Reference);
+        }
+
+        public static bool operator >(RecordReference objA, RecordReference objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(RecordReference objA, RecordReference objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(RecordReference objA, RecordReference objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(RecordReference objA, RecordReference objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(RecordReference other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Reference == other.Reference;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            RecordReference other = obj as RecordReference;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Reference.GetHashCode();
+        }
+
+        public static bool operator ==(RecordReference objA, RecordReference objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(RecordReference objA, RecordReference objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

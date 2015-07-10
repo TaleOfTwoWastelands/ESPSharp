@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeaponCriticalHitData : Subrecord, ICloneable<WeaponCriticalHitData>, IReferenceContainer
+	public partial class WeaponCriticalHitData : Subrecord, ICloneable<WeaponCriticalHitData>, IComparable<WeaponCriticalHitData>, IEquatable<WeaponCriticalHitData>  
 	{
 		public UInt16 Damage { get; set; }
 		public Byte[] Unused1 { get; set; }
@@ -76,29 +77,28 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Damage);			
+			writer.Write(Damage);
 			if (Unused1 == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused1);
-			writer.Write(ChanceMult);			
+			writer.Write(Unused1);
+			writer.Write(ChanceMult);
 			writer.Write((Byte)Flags);
 			if (Unused2 == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused2);
+			writer.Write(Unused2);
 			Effect.WriteBinary(writer);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Damage", true, out subEle);
 			subEle.Value = Damage.ToString();
 
-			ele.TryPathTo("Unused1", true, out subEle);
-			subEle.Value = Unused1.ToHex();
+			WriteUnused1XML(ele, master);
 
 			ele.TryPathTo("ChanceMult", true, out subEle);
 			subEle.Value = ChanceMult.ToString("G15");
@@ -106,8 +106,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unused2", true, out subEle);
-			subEle.Value = Unused2.ToHex();
+			WriteUnused2XML(ele, master);
 
 			ele.TryPathTo("Effect", true, out subEle);
 			Effect.WriteXML(subEle, master);
@@ -116,36 +115,22 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Damage", false, out subEle))
-			{
 				Damage = subEle.ToUInt16();
-			}
 
-			if (ele.TryPathTo("Unused1", false, out subEle))
-			{
-				Unused1 = subEle.ToBytes();
-			}
+			ReadUnused1XML(ele, master);
 
 			if (ele.TryPathTo("ChanceMult", false, out subEle))
-			{
 				ChanceMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<WeaponCritFlags>();
-			}
 
-			if (ele.TryPathTo("Unused2", false, out subEle))
-			{
-				Unused2 = subEle.ToBytes();
-			}
+			ReadUnused2XML(ele, master);
 
 			if (ele.TryPathTo("Effect", false, out subEle))
-			{
 				Effect.ReadXML(subEle, master);
-			}
 		}
 
 		public WeaponCriticalHitData Clone()
@@ -153,5 +138,105 @@ namespace ESPSharp.Subrecords
 			return new WeaponCriticalHitData(this);
 		}
 
+        public int CompareTo(WeaponCriticalHitData other)
+        {
+			return Damage.CompareTo(other.Damage);
+        }
+
+        public static bool operator >(WeaponCriticalHitData objA, WeaponCriticalHitData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(WeaponCriticalHitData objA, WeaponCriticalHitData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(WeaponCriticalHitData objA, WeaponCriticalHitData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(WeaponCriticalHitData objA, WeaponCriticalHitData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(WeaponCriticalHitData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Damage == other.Damage &&
+				Unused1.SequenceEqual(other.Unused1) &&
+				ChanceMult == other.ChanceMult &&
+				Flags == other.Flags &&
+				Unused2.SequenceEqual(other.Unused2) &&
+				Effect == other.Effect;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            WeaponCriticalHitData other = obj as WeaponCriticalHitData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Damage.GetHashCode();
+        }
+
+        public static bool operator ==(WeaponCriticalHitData objA, WeaponCriticalHitData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(WeaponCriticalHitData objA, WeaponCriticalHitData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

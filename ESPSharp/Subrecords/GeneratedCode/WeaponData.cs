@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeaponData : Subrecord, ICloneable<WeaponData>
+	public partial class WeaponData : Subrecord, ICloneable<WeaponData>, IComparable<WeaponData>, IEquatable<WeaponData>  
 	{
 		public Int32 Value { get; set; }
 		public Int32 Health { get; set; }
@@ -71,17 +72,17 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Value);			
-			writer.Write(Health);			
-			writer.Write(Weight);			
-			writer.Write(BaseDamage);			
-			writer.Write(ClipSize);			
+			writer.Write(Value);
+			writer.Write(Health);
+			writer.Write(Weight);
+			writer.Write(BaseDamage);
+			writer.Write(ClipSize);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Value", true, out subEle);
 			subEle.Value = Value.ToString();
 
@@ -101,31 +102,21 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Value", false, out subEle))
-			{
 				Value = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Health", false, out subEle))
-			{
 				Health = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Weight", false, out subEle))
-			{
 				Weight = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("BaseDamage", false, out subEle))
-			{
 				BaseDamage = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("ClipSize", false, out subEle))
-			{
 				ClipSize = subEle.ToByte();
-			}
 		}
 
 		public WeaponData Clone()
@@ -133,5 +124,96 @@ namespace ESPSharp.Subrecords
 			return new WeaponData(this);
 		}
 
+        public int CompareTo(WeaponData other)
+        {
+			return BaseDamage.CompareTo(other.BaseDamage);
+        }
+
+        public static bool operator >(WeaponData objA, WeaponData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(WeaponData objA, WeaponData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(WeaponData objA, WeaponData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(WeaponData objA, WeaponData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(WeaponData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Value == other.Value &&
+				Health == other.Health &&
+				Weight == other.Weight &&
+				BaseDamage == other.BaseDamage &&
+				ClipSize == other.ClipSize;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            WeaponData other = obj as WeaponData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return BaseDamage.GetHashCode();
+        }
+
+        public static bool operator ==(WeaponData objA, WeaponData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(WeaponData objA, WeaponData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

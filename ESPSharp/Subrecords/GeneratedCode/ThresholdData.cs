@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ThresholdData : Subrecord, ICloneable<ThresholdData>, IReferenceContainer
+	public partial class ThresholdData : Subrecord, ICloneable<ThresholdData>, IComparable<ThresholdData>, IEquatable<ThresholdData>  
 	{
 		public UInt32 TriggerThreshold { get; set; }
 		public FormID Effect { get; set; }
@@ -56,14 +57,14 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(TriggerThreshold);			
+			writer.Write(TriggerThreshold);
 			Effect.WriteBinary(writer);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("TriggerThreshold", true, out subEle);
 			subEle.Value = TriggerThreshold.ToString();
 
@@ -74,16 +75,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("TriggerThreshold", false, out subEle))
-			{
 				TriggerThreshold = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Effect", false, out subEle))
-			{
 				Effect.ReadXML(subEle, master);
-			}
 		}
 
 		public ThresholdData Clone()
@@ -91,5 +88,93 @@ namespace ESPSharp.Subrecords
 			return new ThresholdData(this);
 		}
 
+        public int CompareTo(ThresholdData other)
+        {
+			return TriggerThreshold.CompareTo(other.TriggerThreshold);
+        }
+
+        public static bool operator >(ThresholdData objA, ThresholdData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ThresholdData objA, ThresholdData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ThresholdData objA, ThresholdData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ThresholdData objA, ThresholdData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ThresholdData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return TriggerThreshold == other.TriggerThreshold &&
+				Effect == other.Effect;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ThresholdData other = obj as ThresholdData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return TriggerThreshold.GetHashCode();
+        }
+
+        public static bool operator ==(ThresholdData objA, ThresholdData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ThresholdData objA, ThresholdData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

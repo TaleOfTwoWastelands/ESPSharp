@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class QuestTarget : SubrecordCollection, ICloneable<QuestTarget>, IReferenceContainer
+	public partial class QuestTarget : SubrecordCollection, ICloneable<QuestTarget>
 	{
 		public QuestTargetData Target { get; set; }
 		public List<Condition> Conditions { get; set; }

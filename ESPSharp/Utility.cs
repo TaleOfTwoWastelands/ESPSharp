@@ -42,7 +42,32 @@ namespace ESPSharp
 
         public static List<string> PathToStrings(string path)
         {
-            return path.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).ToList<string>(); 
+            return path.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).ToList<string>();
+        }
+
+        public static string ToPrivateCase(string inString)
+        {
+            return string.Format("{0}{1}", inString.Substring(0, 1).ToLowerInvariant(), inString.Substring(1));
+        }
+
+        public static string ToPropertyCase(string inString)
+        {
+            return string.Format("{0}{1}", inString.Substring(0, 1).ToUpperInvariant(), inString.Substring(1));
+        }
+
+        public static string GetFriendlyName(Type inType)
+        {
+            if (inType.IsConstructedGenericType)
+            {
+                string name = inType.Name.Substring(0, inType.Name.IndexOf('`'));
+                string args = string.Join(", ", inType.GenericTypeArguments.Select<Type, string>(t => GetFriendlyName(t)));
+
+                return name + "<" + args + ">";
+            }
+            else if (inType == typeof(object))
+                return "dynamic";
+            else
+                return inType.Name;
         }
     }
 }

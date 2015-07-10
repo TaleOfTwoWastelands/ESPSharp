@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CellGrid : Subrecord, ICloneable<CellGrid>
+	public partial class CellGrid : Subrecord, ICloneable<CellGrid>, IComparable<CellGrid>, IEquatable<CellGrid>  
 	{
 		public Int32 X { get; set; }
 		public Int32 Y { get; set; }
@@ -61,15 +62,15 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(X);			
-			writer.Write(Y);			
+			writer.Write(X);
+			writer.Write(Y);
 			writer.Write((UInt32)ForceHideLand);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("X", true, out subEle);
 			subEle.Value = X.ToString();
 
@@ -83,21 +84,15 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("X", false, out subEle))
-			{
 				X = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Y", false, out subEle))
-			{
 				Y = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("ForceHideLand", false, out subEle))
-			{
 				ForceHideLand = subEle.ToEnum<ForceHideLandFlags>();
-			}
 		}
 
 		public CellGrid Clone()
@@ -105,5 +100,94 @@ namespace ESPSharp.Subrecords
 			return new CellGrid(this);
 		}
 
+        public int CompareTo(CellGrid other)
+        {
+			return X.CompareTo(other.X);
+        }
+
+        public static bool operator >(CellGrid objA, CellGrid objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(CellGrid objA, CellGrid objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(CellGrid objA, CellGrid objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(CellGrid objA, CellGrid objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(CellGrid other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return X == other.X &&
+				Y == other.Y &&
+				ForceHideLand == other.ForceHideLand;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            CellGrid other = obj as CellGrid;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return X.GetHashCode();
+        }
+
+        public static bool operator ==(CellGrid objA, CellGrid objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(CellGrid objA, CellGrid objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class SharedInfo : SubrecordCollection, ICloneable<SharedInfo>, IReferenceContainer
+	public partial class SharedInfo : SubrecordCollection, ICloneable<SharedInfo>
 	{
 		public RecordReference InfoConnection { get; set; }
 		public SimpleSubrecord<Int32> InfoIndex { get; set; }

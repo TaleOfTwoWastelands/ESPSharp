@@ -1,0 +1,26 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#	
+	DataTypeTemplate template = new DataTypeTemplate();
+	template.ClassName = "DateStamp";
+
+	DataTypeField tempField;
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte),
+			"DayOfMonth",
+			"DayOfMonth"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new DataTypeField(
+			typeof(byte),
+			"MonthsSince2001",
+			"MonthsSince2001"
+			);
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

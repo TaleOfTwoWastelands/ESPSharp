@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class InventoryItem : SubrecordCollection, ICloneable<InventoryItem>, IReferenceContainer
+	public partial class InventoryItem : SubrecordCollection, ICloneable<InventoryItem>
 	{
 		public InventoryItemData Data { get; set; }
 		public InventoryItemExtraData ExtraData { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class MagicEffectData : Subrecord, ICloneable<MagicEffectData>, IReferenceContainer
+	public partial class MagicEffectData : Subrecord, ICloneable<MagicEffectData>, IComparable<MagicEffectData>, IEquatable<MagicEffectData>  
 	{
 		public MagicEffectFlags MagicEffectFlags { get; set; }
 		public Single BaseCost { get; set; }
@@ -142,25 +143,25 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((UInt32)MagicEffectFlags);
-			writer.Write(BaseCost);			
+			writer.Write(BaseCost);
 			AssociatedItem.WriteBinary(writer);
 			writer.Write((Int32)MagicSchool);
 			writer.Write((Int32)ResistanceType);
-			writer.Write(Unknown);			
+			writer.Write(Unknown);
 			if (Unused == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused);
+			writer.Write(Unused);
 			Light.WriteBinary(writer);
-			writer.Write(ProjectileSpeed);			
+			writer.Write(ProjectileSpeed);
 			EffectShader.WriteBinary(writer);
 			ObjectDisplayShader.WriteBinary(writer);
 			EffectSound.WriteBinary(writer);
 			BoltSound.WriteBinary(writer);
 			HitSound.WriteBinary(writer);
 			AreaSound.WriteBinary(writer);
-			writer.Write(ConstantEffectEnchantmentFactor);			
-			writer.Write(ConstantEffectBarterFactor);			
+			writer.Write(ConstantEffectEnchantmentFactor);
+			writer.Write(ConstantEffectBarterFactor);
 			writer.Write((UInt32)Archetype);
 			writer.Write((Int32)ActorValue);
 		}
@@ -168,7 +169,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = MagicEffectFlags.ToString();
 
@@ -187,8 +188,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Unknown", true, out subEle);
 			subEle.Value = Unknown.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("Light", true, out subEle);
 			Light.WriteXML(subEle, master);
@@ -230,101 +230,62 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				MagicEffectFlags = subEle.ToEnum<MagicEffectFlags>();
-			}
 
 			if (ele.TryPathTo("BaseCost", false, out subEle))
-			{
 				BaseCost = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("AssociatedItem", false, out subEle))
-			{
 				AssociatedItem.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("MagicSchool", false, out subEle))
-			{
 				MagicSchool = subEle.ToEnum<MagicSchool>();
-			}
 
 			if (ele.TryPathTo("ResistanceType", false, out subEle))
-			{
 				ResistanceType = subEle.ToEnum<ActorValues>();
-			}
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToUInt16();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("Light", false, out subEle))
-			{
 				Light.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("ProjectileSpeed", false, out subEle))
-			{
 				ProjectileSpeed = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("EffectShader", false, out subEle))
-			{
 				EffectShader.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("ObjectDisplayShader", false, out subEle))
-			{
 				ObjectDisplayShader.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("EffectSound", false, out subEle))
-			{
 				EffectSound.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("BoltSound", false, out subEle))
-			{
 				BoltSound.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("HitSound", false, out subEle))
-			{
 				HitSound.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("AreaSound", false, out subEle))
-			{
 				AreaSound.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("ConstantEffectEnchantmentFactor", false, out subEle))
-			{
 				ConstantEffectEnchantmentFactor = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ConstantEffectBarterFactor", false, out subEle))
-			{
 				ConstantEffectBarterFactor = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Archetype", false, out subEle))
-			{
 				Archetype = subEle.ToEnum<MagicEffectArchetype>();
-			}
 
 			if (ele.TryPathTo("ActorValue", false, out subEle))
-			{
 				ActorValue = subEle.ToEnum<ActorValues>();
-			}
 		}
 
 		public MagicEffectData Clone()
@@ -332,5 +293,114 @@ namespace ESPSharp.Subrecords
 			return new MagicEffectData(this);
 		}
 
+        public int CompareTo(MagicEffectData other)
+        {
+			return AssociatedItem.CompareTo(other.AssociatedItem);
+        }
+
+        public static bool operator >(MagicEffectData objA, MagicEffectData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(MagicEffectData objA, MagicEffectData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(MagicEffectData objA, MagicEffectData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(MagicEffectData objA, MagicEffectData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(MagicEffectData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return MagicEffectFlags == other.MagicEffectFlags &&
+				BaseCost == other.BaseCost &&
+				AssociatedItem == other.AssociatedItem &&
+				MagicSchool == other.MagicSchool &&
+				ResistanceType == other.ResistanceType &&
+				Unknown == other.Unknown &&
+				Unused.SequenceEqual(other.Unused) &&
+				Light == other.Light &&
+				ProjectileSpeed == other.ProjectileSpeed &&
+				EffectShader == other.EffectShader &&
+				ObjectDisplayShader == other.ObjectDisplayShader &&
+				EffectSound == other.EffectSound &&
+				BoltSound == other.BoltSound &&
+				HitSound == other.HitSound &&
+				AreaSound == other.AreaSound &&
+				ConstantEffectEnchantmentFactor == other.ConstantEffectEnchantmentFactor &&
+				ConstantEffectBarterFactor == other.ConstantEffectBarterFactor &&
+				Archetype == other.Archetype &&
+				ActorValue == other.ActorValue;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            MagicEffectData other = obj as MagicEffectData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return AssociatedItem.GetHashCode();
+        }
+
+        public static bool operator ==(MagicEffectData objA, MagicEffectData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(MagicEffectData objA, MagicEffectData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

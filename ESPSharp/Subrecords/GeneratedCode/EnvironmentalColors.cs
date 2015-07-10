@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EnvironmentalColors : Subrecord, ICloneable<EnvironmentalColors>
+	public partial class EnvironmentalColors : Subrecord, ICloneable<EnvironmentalColors>, IComparable<EnvironmentalColors>, IEquatable<EnvironmentalColors>  
 	{
 		public TimeOfDayColors SkyUpper { get; set; }
 		public TimeOfDayColors Fog { get; set; }
@@ -111,15 +112,14 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Sky/Upper", true, out subEle);
 			SkyUpper.WriteXML(subEle, master);
 
 			ele.TryPathTo("Fog", true, out subEle);
 			Fog.WriteXML(subEle, master);
 
-			ele.TryPathTo("Unused1", true, out subEle);
-			Unused1.WriteXML(subEle, master);
+			WriteUnused1XML(ele, master);
 
 			ele.TryPathTo("Ambient", true, out subEle);
 			Ambient.WriteXML(subEle, master);
@@ -139,63 +139,40 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Horizon", true, out subEle);
 			Horizon.WriteXML(subEle, master);
 
-			ele.TryPathTo("Unused2", true, out subEle);
-			Unused2.WriteXML(subEle, master);
+			WriteUnused2XML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Sky/Upper", false, out subEle))
-			{
 				SkyUpper.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Fog", false, out subEle))
-			{
 				Fog.ReadXML(subEle, master);
-			}
 
-			if (ele.TryPathTo("Unused1", false, out subEle))
-			{
-				Unused1.ReadXML(subEle, master);
-			}
+			ReadUnused1XML(ele, master);
 
 			if (ele.TryPathTo("Ambient", false, out subEle))
-			{
 				Ambient.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Sunlight", false, out subEle))
-			{
 				Sunlight.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Sun", false, out subEle))
-			{
 				Sun.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Stars", false, out subEle))
-			{
 				Stars.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Sky/Lower", false, out subEle))
-			{
 				SkyLower.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Horizon", false, out subEle))
-			{
 				Horizon.ReadXML(subEle, master);
-			}
 
-			if (ele.TryPathTo("Unused2", false, out subEle))
-			{
-				Unused2.ReadXML(subEle, master);
-			}
+			ReadUnused2XML(ele, master);
 		}
 
 		public EnvironmentalColors Clone()
@@ -203,5 +180,109 @@ namespace ESPSharp.Subrecords
 			return new EnvironmentalColors(this);
 		}
 
+        public int CompareTo(EnvironmentalColors other)
+        {
+			return Ambient.CompareTo(other.Ambient);
+        }
+
+        public static bool operator >(EnvironmentalColors objA, EnvironmentalColors objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(EnvironmentalColors objA, EnvironmentalColors objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(EnvironmentalColors objA, EnvironmentalColors objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(EnvironmentalColors objA, EnvironmentalColors objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(EnvironmentalColors other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return SkyUpper == other.SkyUpper &&
+				Fog == other.Fog &&
+				Unused1 == other.Unused1 &&
+				Ambient == other.Ambient &&
+				Sunlight == other.Sunlight &&
+				Sun == other.Sun &&
+				Stars == other.Stars &&
+				SkyLower == other.SkyLower &&
+				Horizon == other.Horizon &&
+				Unused2 == other.Unused2;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            EnvironmentalColors other = obj as EnvironmentalColors;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Ambient.GetHashCode();
+        }
+
+        public static bool operator ==(EnvironmentalColors objA, EnvironmentalColors objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(EnvironmentalColors objA, EnvironmentalColors objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

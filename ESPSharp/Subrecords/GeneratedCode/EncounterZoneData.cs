@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EncounterZoneData : Subrecord, ICloneable<EncounterZoneData>, IReferenceContainer
+	public partial class EncounterZoneData : Subrecord, ICloneable<EncounterZoneData>, IComparable<EncounterZoneData>, IEquatable<EncounterZoneData>  
 	{
 		public FormID Owner { get; set; }
 		public Byte OwnerRank { get; set; }
@@ -72,16 +73,16 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			Owner.WriteBinary(writer);
-			writer.Write(OwnerRank);			
-			writer.Write(MinimumLevel);			
+			writer.Write(OwnerRank);
+			writer.Write(MinimumLevel);
 			writer.Write((Byte)Flags);
-			writer.Write(Unused);			
+			writer.Write(Unused);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Ownership/Owner", true, out subEle);
 			Owner.WriteXML(subEle, master);
 
@@ -94,38 +95,26 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToString();
+			WriteUnusedXML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Ownership/Owner", false, out subEle))
-			{
 				Owner.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Ownership/Rank", false, out subEle))
-			{
 				OwnerRank = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("MinimumLevel", false, out subEle))
-			{
 				MinimumLevel = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<EncounterZoneFlags>();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToByte();
-			}
+			ReadUnusedXML(ele, master);
 		}
 
 		public EncounterZoneData Clone()
@@ -133,5 +122,100 @@ namespace ESPSharp.Subrecords
 			return new EncounterZoneData(this);
 		}
 
+        public int CompareTo(EncounterZoneData other)
+        {
+			return MinimumLevel.CompareTo(other.MinimumLevel);
+        }
+
+        public static bool operator >(EncounterZoneData objA, EncounterZoneData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(EncounterZoneData objA, EncounterZoneData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(EncounterZoneData objA, EncounterZoneData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(EncounterZoneData objA, EncounterZoneData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(EncounterZoneData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Owner == other.Owner &&
+				OwnerRank == other.OwnerRank &&
+				MinimumLevel == other.MinimumLevel &&
+				Flags == other.Flags &&
+				Unused == other.Unused;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            EncounterZoneData other = obj as EncounterZoneData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return MinimumLevel.GetHashCode();
+        }
+
+        public static bool operator ==(EncounterZoneData objA, EncounterZoneData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(EncounterZoneData objA, EncounterZoneData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

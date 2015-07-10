@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EffectData : Subrecord, ICloneable<EffectData>
+	public partial class EffectData : Subrecord, ICloneable<EffectData>, IComparable<EffectData>, IEquatable<EffectData>  
 	{
 		public UInt32 Magnitude { get; set; }
 		public UInt32 Area { get; set; }
@@ -71,9 +72,9 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Magnitude);			
-			writer.Write(Area);			
-			writer.Write(Duration);			
+			writer.Write(Magnitude);
+			writer.Write(Area);
+			writer.Write(Duration);
 			writer.Write((UInt32)Type);
 			writer.Write((Int32)ActorValue);
 		}
@@ -81,7 +82,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Magnitude", true, out subEle);
 			subEle.Value = Magnitude.ToString();
 
@@ -101,31 +102,21 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Magnitude", false, out subEle))
-			{
 				Magnitude = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Area", false, out subEle))
-			{
 				Area = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Duration", false, out subEle))
-			{
 				Duration = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Type", false, out subEle))
-			{
 				Type = subEle.ToEnum<EffectType>();
-			}
 
 			if (ele.TryPathTo("ActorValue", false, out subEle))
-			{
 				ActorValue = subEle.ToEnum<ActorValues>();
-			}
 		}
 
 		public EffectData Clone()
@@ -133,5 +124,96 @@ namespace ESPSharp.Subrecords
 			return new EffectData(this);
 		}
 
+        public int CompareTo(EffectData other)
+        {
+			return Magnitude.CompareTo(other.Magnitude);
+        }
+
+        public static bool operator >(EffectData objA, EffectData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(EffectData objA, EffectData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(EffectData objA, EffectData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(EffectData objA, EffectData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(EffectData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Magnitude == other.Magnitude &&
+				Area == other.Area &&
+				Duration == other.Duration &&
+				Type == other.Type &&
+				ActorValue == other.ActorValue;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            EffectData other = obj as EffectData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Magnitude.GetHashCode();
+        }
+
+        public static bool operator ==(EffectData objA, EffectData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(EffectData objA, EffectData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

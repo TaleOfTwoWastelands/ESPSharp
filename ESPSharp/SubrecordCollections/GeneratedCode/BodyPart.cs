@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class BodyPart : SubrecordCollection, ICloneable<BodyPart>, IReferenceContainer
+	public partial class BodyPart : SubrecordCollection, ICloneable<BodyPart>
 	{
 		public SimpleSubrecord<String> PartNode { get; set; }
 		public SimpleSubrecord<String> VATSTarget { get; set; }

@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "ImageSpaceAdapterData";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(NoYes),
 			"IsAnimatable",
 			"IsAnimatable"
@@ -15,15 +15,16 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Duration",
 			"Duration"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDREyeAdaptSpeedMult",
 			"HDR/EyeAdaptSpeed/Mult"
@@ -31,7 +32,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDREyeAdaptSpeedAdd",
 			"HDR/EyeAdaptSpeed/Add"
@@ -39,7 +40,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRBloomBlurRadiusMult",
 			"HDR/Bloom/BlurRadius/Mult"
@@ -47,7 +48,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRBloomBlurRadiusAdd",
 			"HDR/Bloom/BlurRadius/Add"
@@ -55,7 +56,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRBloomThresholdMult",
 			"HDR/Bloom/Threshold/Mult"
@@ -63,7 +64,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRBloomThresholdAdd",
 			"HDR/Bloom/Threshold/Add"
@@ -71,7 +72,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRBloomScaleMult",
 			"HDR/Bloom/Scale/Mult"
@@ -79,7 +80,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRBloomScaleAdd",
 			"HDR/Bloom/Scale/Add"
@@ -87,7 +88,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRTargetLumMinMult",
 			"HDR/TargetLum/Min/Mult"
@@ -95,7 +96,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRTargetLumMinAdd",
 			"HDR/TargetLum/Min/Add"
@@ -103,7 +104,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRTargetLumMaxMult",
 			"HDR/TargetLum/Max/Mult"
@@ -111,7 +112,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRTargetLumMaxAdd",
 			"HDR/TargetLum/Max/Add"
@@ -119,7 +120,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRSunlightScaleMult",
 			"HDR/SunlightScale/Mult"
@@ -127,7 +128,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRSunlightScaleAdd",
 			"HDR/SunlightScale/Add"
@@ -135,7 +136,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRSkyScaleMult",
 			"HDR/SkyScale/Mult"
@@ -143,7 +144,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"HDRSkyScaleAdd",
 			"HDR/SkyScale/Add"
@@ -151,7 +152,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unknown1",
 			"Unknown1"
@@ -160,7 +161,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"CinematicSaturationMult",
 			"Cinematic/Saturation/Mult"
@@ -168,7 +169,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"CinematicSaturationAdd",
 			"Cinematic/Saturation/Add"
@@ -176,7 +177,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"CinematicBrightnessMult",
 			"Cinematic/Brightness/Mult"
@@ -184,7 +185,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"CinematicBrightnessAdd",
 			"Cinematic/Brightness/Add"
@@ -192,7 +193,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"CinematicContrastMult",
 			"Cinematic/Contrast/Mult"
@@ -200,7 +201,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"CinematicContrastAdd",
 			"Cinematic/Contrast/Add"
@@ -208,7 +209,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unknown2",
 			"Unknown2"
@@ -217,7 +218,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(Color),
 			"TintColor",
 			"TintColor"
@@ -225,7 +226,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"BlurRadius",
 			"BlurRadius"
@@ -233,7 +234,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"DoubleVisionStrength",
 			"DoubleVisionStrength"
@@ -241,7 +242,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"RadialBlurStrength",
 			"RadialBlur/Strength"
@@ -249,7 +250,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"RadialBlurRampUp",
 			"RadialBlur/RampUp"
@@ -257,7 +258,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"RadialBlurStart",
 			"RadialBlur/Start"
@@ -265,7 +266,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(NoYes),
 			"RadialBlurUseTarget",
 			"RadialBlur/UseTarget"
@@ -273,7 +274,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"RadialBlurCenterX",
 			"RadialBlur/Center/X"
@@ -281,7 +282,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"RadialBlurCenterY",
 			"RadialBlur/Center/Y"
@@ -289,7 +290,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"DepthOfFieldStrength",
 			"DepthOfField/Strength"
@@ -297,7 +298,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"DepthOfFieldDistance",
 			"DepthOfField/Distance"
@@ -305,7 +306,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"DepthOfFieldRange",
 			"DepthOfField/Range"
@@ -313,7 +314,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(NoYes),
 			"DepthOfFieldUseTarget",
 			"DepthOfField/UseTarget"
@@ -321,7 +322,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"RadialBlurRampDown",
 			"RadialBlur/RampDown"
@@ -329,7 +330,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"RadialBlurDownStart",
 			"RadialBlur/DownStart"
@@ -337,7 +338,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(Color),
 			"FadeColor",
 			"FadeColor"
@@ -345,7 +346,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(NoYes),
 			"MotionBlurStrength",
 			"MotionBlurStrength"

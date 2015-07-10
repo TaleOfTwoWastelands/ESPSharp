@@ -12,6 +12,7 @@
 			"Form",
 			"Form"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 

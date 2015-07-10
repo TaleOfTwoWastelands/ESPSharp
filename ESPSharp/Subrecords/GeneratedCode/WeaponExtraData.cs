@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeaponExtraData : Subrecord, ICloneable<WeaponExtraData>, IReferenceContainer
+	public partial class WeaponExtraData : Subrecord, ICloneable<WeaponExtraData>, IComparable<WeaponExtraData>, IEquatable<WeaponExtraData>  
 	{
 		public WeaponAnimationType AnimationType { get; set; }
 		public Single AnimationMultiplier { get; set; }
@@ -342,76 +343,76 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((UInt32)AnimationType);
-			writer.Write(AnimationMultiplier);			
-			writer.Write(Reach);			
+			writer.Write(AnimationMultiplier);
+			writer.Write(Reach);
 			writer.Write((Byte)Flags1);
 			writer.Write((Byte)GripAnimation);
-			writer.Write(AmmoUse);			
+			writer.Write(AmmoUse);
 			writer.Write((Byte)ReloadAnimation);
-			writer.Write(MinSpread);			
-			writer.Write(Spread);			
+			writer.Write(MinSpread);
+			writer.Write(Spread);
 			if (Unknown == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unknown);
-			writer.Write(SightFOV);			
-			writer.Write(Unknown2);			
+			writer.Write(Unknown);
+			writer.Write(SightFOV);
+			writer.Write(Unknown2);
 			Projectile.WriteBinary(writer);
-			writer.Write(BaseVATSToHitChance);			
+			writer.Write(BaseVATSToHitChance);
 			writer.Write((Byte)AttackAnimation);
-			writer.Write(ProjectileCount);			
+			writer.Write(ProjectileCount);
 			writer.Write((Byte)EmbeddedWeaponActorValue);
-			writer.Write(MinRange);			
-			writer.Write(MaxRange);			
+			writer.Write(MinRange);
+			writer.Write(MaxRange);
 			writer.Write((UInt32)LimbKillBehavior);
 			writer.Write((UInt32)Flags2);
-			writer.Write(AttackAnimationMultiplier);			
-			writer.Write(FireRate);			
-			writer.Write(ActionPointCost);			
-			writer.Write(RumbleLeftMotorStrength);			
-			writer.Write(RumbleRightMotorStrength);			
-			writer.Write(RumbleDuration);			
-			writer.Write(DamageToWeaponMult);			
-			writer.Write(AttackShotsPerSecond);			
-			writer.Write(ReloadTime);			
-			writer.Write(JamTime);			
-			writer.Write(AimArc);			
+			writer.Write(AttackAnimationMultiplier);
+			writer.Write(FireRate);
+			writer.Write(ActionPointCost);
+			writer.Write(RumbleLeftMotorStrength);
+			writer.Write(RumbleRightMotorStrength);
+			writer.Write(RumbleDuration);
+			writer.Write(DamageToWeaponMult);
+			writer.Write(AttackShotsPerSecond);
+			writer.Write(ReloadTime);
+			writer.Write(JamTime);
+			writer.Write(AimArc);
 			writer.Write((Int32)Skill);
 			writer.Write((UInt32)RumblePattern);
-			writer.Write(RumbleWavelength);			
-			writer.Write(LimbDamageMult);			
+			writer.Write(RumbleWavelength);
+			writer.Write(LimbDamageMult);
 			writer.Write((Int32)ResistanceType);
-			writer.Write(SightUsage);			
-			writer.Write(SemiAutomaticFireDelayMin);			
-			writer.Write(SemiAutomaticFireDelayMax);			
-			writer.Write(Unknown3);			
+			writer.Write(SightUsage);
+			writer.Write(SemiAutomaticFireDelayMin);
+			writer.Write(SemiAutomaticFireDelayMax);
+			writer.Write(Unknown3);
 			writer.Write((UInt32)Mod1Effect);
 			writer.Write((UInt32)Mod2Effect);
 			writer.Write((UInt32)Mod3Effect);
-			writer.Write(Mod1ValueA);			
-			writer.Write(Mod2ValueA);			
-			writer.Write(Mod3ValueA);			
+			writer.Write(Mod1ValueA);
+			writer.Write(Mod2ValueA);
+			writer.Write(Mod3ValueA);
 			writer.Write((UInt32)PowerAttackAnimation);
-			writer.Write(StrengthRequirement);			
-			writer.Write(Unknown4);			
+			writer.Write(StrengthRequirement);
+			writer.Write(Unknown4);
 			writer.Write((Byte)Mod1ReloadAnimation);
 			if (Unknown5 == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unknown5);
-			writer.Write(AmmoRegenRate);			
-			writer.Write(KillImpulse);			
-			writer.Write(Mod1ValueB);			
-			writer.Write(Mod2ValueB);			
-			writer.Write(Mod3ValueB);			
-			writer.Write(ImpulseDistance);			
-			writer.Write(SkillRequirement);			
+			writer.Write(Unknown5);
+			writer.Write(AmmoRegenRate);
+			writer.Write(KillImpulse);
+			writer.Write(Mod1ValueB);
+			writer.Write(Mod2ValueB);
+			writer.Write(Mod3ValueB);
+			writer.Write(ImpulseDistance);
+			writer.Write(SkillRequirement);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("AnimationType", true, out subEle);
 			subEle.Value = AnimationType.ToString();
 
@@ -593,301 +594,183 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("AnimationType", false, out subEle))
-			{
 				AnimationType = subEle.ToEnum<WeaponAnimationType>();
-			}
 
 			if (ele.TryPathTo("AnimationMultiplier", false, out subEle))
-			{
 				AnimationMultiplier = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Reach", false, out subEle))
-			{
 				Reach = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Flags1", false, out subEle))
-			{
 				Flags1 = subEle.ToEnum<WeaponDataFlags1>();
-			}
 
 			if (ele.TryPathTo("GripAnimation", false, out subEle))
-			{
 				GripAnimation = subEle.ToEnum<WeaponGripAnimationType>();
-			}
 
 			if (ele.TryPathTo("AmmoUse", false, out subEle))
-			{
 				AmmoUse = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("ReloadAnimation", false, out subEle))
-			{
 				ReloadAnimation = subEle.ToEnum<WeaponReloadAnimationType>();
-			}
 
 			if (ele.TryPathTo("MinSpread", false, out subEle))
-			{
 				MinSpread = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Spread", false, out subEle))
-			{
 				Spread = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("SightFOV", false, out subEle))
-			{
 				SightFOV = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Unknown2", false, out subEle))
-			{
 				Unknown2 = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Projectile", false, out subEle))
-			{
 				Projectile.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("BaseVATSToHitChance", false, out subEle))
-			{
 				BaseVATSToHitChance = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("AttackAnimation", false, out subEle))
-			{
 				AttackAnimation = subEle.ToEnum<WeaponAttackAnimationType>();
-			}
 
 			if (ele.TryPathTo("ProjectileCount", false, out subEle))
-			{
 				ProjectileCount = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("EmbeddedWeaponActorValue", false, out subEle))
-			{
 				EmbeddedWeaponActorValue = subEle.ToEnum<EmbeddedWeaponActorValue>();
-			}
 
 			if (ele.TryPathTo("Range/Min", false, out subEle))
-			{
 				MinRange = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Range/Max", false, out subEle))
-			{
 				MaxRange = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("LimbKillBehavior", false, out subEle))
-			{
 				LimbKillBehavior = subEle.ToEnum<LimbKillBehavior>();
-			}
 
 			if (ele.TryPathTo("Flags2", false, out subEle))
-			{
 				Flags2 = subEle.ToEnum<WeaponDataFlags2>();
-			}
 
 			if (ele.TryPathTo("AttackAnimationMultiplier", false, out subEle))
-			{
 				AttackAnimationMultiplier = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("FireRate", false, out subEle))
-			{
 				FireRate = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ActionPointCost", false, out subEle))
-			{
 				ActionPointCost = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Rumble/LeftMotorStrength", false, out subEle))
-			{
 				RumbleLeftMotorStrength = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Rumble/RightMotorStrength", false, out subEle))
-			{
 				RumbleRightMotorStrength = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Rumble/Duration", false, out subEle))
-			{
 				RumbleDuration = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DamageToWeaponMult", false, out subEle))
-			{
 				DamageToWeaponMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("AttackShotsPerSecond", false, out subEle))
-			{
 				AttackShotsPerSecond = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ReloadTime", false, out subEle))
-			{
 				ReloadTime = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("JamTime", false, out subEle))
-			{
 				JamTime = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("AimArc", false, out subEle))
-			{
 				AimArc = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Skill", false, out subEle))
-			{
 				Skill = subEle.ToEnum<ActorValues>();
-			}
 
 			if (ele.TryPathTo("Rumble/Pattern", false, out subEle))
-			{
 				RumblePattern = subEle.ToEnum<WeaponRumblePattern>();
-			}
 
 			if (ele.TryPathTo("Rumble/Wavelength", false, out subEle))
-			{
 				RumbleWavelength = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("LimbDamageMult", false, out subEle))
-			{
 				LimbDamageMult = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ResistanceType", false, out subEle))
-			{
 				ResistanceType = subEle.ToEnum<ActorValues>();
-			}
 
 			if (ele.TryPathTo("SightUsage", false, out subEle))
-			{
 				SightUsage = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SemiAutomaticFireDelay/Min", false, out subEle))
-			{
 				SemiAutomaticFireDelayMin = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SemiAutomaticFireDelay/Max", false, out subEle))
-			{
 				SemiAutomaticFireDelayMax = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Unknown3", false, out subEle))
-			{
 				Unknown3 = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Mods/Mod1/Effect", false, out subEle))
-			{
 				Mod1Effect = subEle.ToEnum<WeaponModEffect>();
-			}
 
 			if (ele.TryPathTo("Mods/Mod2/Effect", false, out subEle))
-			{
 				Mod2Effect = subEle.ToEnum<WeaponModEffect>();
-			}
 
 			if (ele.TryPathTo("Mods/Mod3/Effect", false, out subEle))
-			{
 				Mod3Effect = subEle.ToEnum<WeaponModEffect>();
-			}
 
 			if (ele.TryPathTo("Mods/Mod1/ValueA", false, out subEle))
-			{
 				Mod1ValueA = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Mods/Mod2/ValueA", false, out subEle))
-			{
 				Mod2ValueA = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Mods/Mod3/ValueA", false, out subEle))
-			{
 				Mod3ValueA = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("PowerAttackAnimation", false, out subEle))
-			{
 				PowerAttackAnimation = subEle.ToEnum<WeaponPowerAttackAnimation>();
-			}
 
 			if (ele.TryPathTo("StrengthRequirement", false, out subEle))
-			{
 				StrengthRequirement = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Unknown4", false, out subEle))
-			{
 				Unknown4 = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Mods/Mod1/ReloadAnimation", false, out subEle))
-			{
 				Mod1ReloadAnimation = subEle.ToEnum<WeaponReloadAnimationType>();
-			}
 
 			if (ele.TryPathTo("Unknown5", false, out subEle))
-			{
 				Unknown5 = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("AmmoRegenRate", false, out subEle))
-			{
 				AmmoRegenRate = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("KillImpulse", false, out subEle))
-			{
 				KillImpulse = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Mods/Mod1/ValueB", false, out subEle))
-			{
 				Mod1ValueB = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Mods/Mod2/ValueB", false, out subEle))
-			{
 				Mod2ValueB = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Mods/Mod3/ValueB", false, out subEle))
-			{
 				Mod3ValueB = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("ImpulseDistance", false, out subEle))
-			{
 				ImpulseDistance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SkillRequirement", false, out subEle))
-			{
 				SkillRequirement = subEle.ToUInt32();
-			}
 		}
 
 		public WeaponExtraData Clone()
@@ -895,5 +778,150 @@ namespace ESPSharp.Subrecords
 			return new WeaponExtraData(this);
 		}
 
+        public int CompareTo(WeaponExtraData other)
+        {
+			return Skill.CompareTo(other.Skill);
+        }
+
+        public static bool operator >(WeaponExtraData objA, WeaponExtraData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(WeaponExtraData objA, WeaponExtraData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(WeaponExtraData objA, WeaponExtraData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(WeaponExtraData objA, WeaponExtraData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(WeaponExtraData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return AnimationType == other.AnimationType &&
+				AnimationMultiplier == other.AnimationMultiplier &&
+				Reach == other.Reach &&
+				Flags1 == other.Flags1 &&
+				GripAnimation == other.GripAnimation &&
+				AmmoUse == other.AmmoUse &&
+				ReloadAnimation == other.ReloadAnimation &&
+				MinSpread == other.MinSpread &&
+				Spread == other.Spread &&
+				Unknown.SequenceEqual(other.Unknown) &&
+				SightFOV == other.SightFOV &&
+				Unknown2 == other.Unknown2 &&
+				Projectile == other.Projectile &&
+				BaseVATSToHitChance == other.BaseVATSToHitChance &&
+				AttackAnimation == other.AttackAnimation &&
+				ProjectileCount == other.ProjectileCount &&
+				EmbeddedWeaponActorValue == other.EmbeddedWeaponActorValue &&
+				MinRange == other.MinRange &&
+				MaxRange == other.MaxRange &&
+				LimbKillBehavior == other.LimbKillBehavior &&
+				Flags2 == other.Flags2 &&
+				AttackAnimationMultiplier == other.AttackAnimationMultiplier &&
+				FireRate == other.FireRate &&
+				ActionPointCost == other.ActionPointCost &&
+				RumbleLeftMotorStrength == other.RumbleLeftMotorStrength &&
+				RumbleRightMotorStrength == other.RumbleRightMotorStrength &&
+				RumbleDuration == other.RumbleDuration &&
+				DamageToWeaponMult == other.DamageToWeaponMult &&
+				AttackShotsPerSecond == other.AttackShotsPerSecond &&
+				ReloadTime == other.ReloadTime &&
+				JamTime == other.JamTime &&
+				AimArc == other.AimArc &&
+				Skill == other.Skill &&
+				RumblePattern == other.RumblePattern &&
+				RumbleWavelength == other.RumbleWavelength &&
+				LimbDamageMult == other.LimbDamageMult &&
+				ResistanceType == other.ResistanceType &&
+				SightUsage == other.SightUsage &&
+				SemiAutomaticFireDelayMin == other.SemiAutomaticFireDelayMin &&
+				SemiAutomaticFireDelayMax == other.SemiAutomaticFireDelayMax &&
+				Unknown3 == other.Unknown3 &&
+				Mod1Effect == other.Mod1Effect &&
+				Mod2Effect == other.Mod2Effect &&
+				Mod3Effect == other.Mod3Effect &&
+				Mod1ValueA == other.Mod1ValueA &&
+				Mod2ValueA == other.Mod2ValueA &&
+				Mod3ValueA == other.Mod3ValueA &&
+				PowerAttackAnimation == other.PowerAttackAnimation &&
+				StrengthRequirement == other.StrengthRequirement &&
+				Unknown4 == other.Unknown4 &&
+				Mod1ReloadAnimation == other.Mod1ReloadAnimation &&
+				Unknown5.SequenceEqual(other.Unknown5) &&
+				AmmoRegenRate == other.AmmoRegenRate &&
+				KillImpulse == other.KillImpulse &&
+				Mod1ValueB == other.Mod1ValueB &&
+				Mod2ValueB == other.Mod2ValueB &&
+				Mod3ValueB == other.Mod3ValueB &&
+				ImpulseDistance == other.ImpulseDistance &&
+				SkillRequirement == other.SkillRequirement;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            WeaponExtraData other = obj as WeaponExtraData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Skill.GetHashCode();
+        }
+
+        public static bool operator ==(WeaponExtraData objA, WeaponExtraData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(WeaponExtraData objA, WeaponExtraData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

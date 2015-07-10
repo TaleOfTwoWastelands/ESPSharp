@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PositionRotation : Subrecord, ICloneable<PositionRotation>
+	public partial class PositionRotation : Subrecord, ICloneable<PositionRotation>, IComparable<PositionRotation>, IEquatable<PositionRotation>  
 	{
 		public Single PositionX { get; set; }
 		public Single PositionY { get; set; }
@@ -76,18 +77,18 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(PositionX);			
-			writer.Write(PositionY);			
-			writer.Write(PositionZ);			
-			writer.Write(RotationX);			
-			writer.Write(RotationY);			
-			writer.Write(RotationZ);			
+			writer.Write(PositionX);
+			writer.Write(PositionY);
+			writer.Write(PositionZ);
+			writer.Write(RotationX);
+			writer.Write(RotationY);
+			writer.Write(RotationZ);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Position/X", true, out subEle);
 			subEle.Value = PositionX.ToString("G15");
 
@@ -110,36 +111,24 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Position/X", false, out subEle))
-			{
 				PositionX = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Position/Y", false, out subEle))
-			{
 				PositionY = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Position/Z", false, out subEle))
-			{
 				PositionZ = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Rotation/X", false, out subEle))
-			{
 				RotationX = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Rotation/Y", false, out subEle))
-			{
 				RotationY = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Rotation/Z", false, out subEle))
-			{
 				RotationZ = subEle.ToSingle();
-			}
 		}
 
 		public PositionRotation Clone()
@@ -147,5 +136,97 @@ namespace ESPSharp.Subrecords
 			return new PositionRotation(this);
 		}
 
+        public int CompareTo(PositionRotation other)
+        {
+			return PositionX.CompareTo(other.PositionX);
+        }
+
+        public static bool operator >(PositionRotation objA, PositionRotation objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(PositionRotation objA, PositionRotation objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(PositionRotation objA, PositionRotation objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(PositionRotation objA, PositionRotation objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(PositionRotation other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return PositionX == other.PositionX &&
+				PositionY == other.PositionY &&
+				PositionZ == other.PositionZ &&
+				RotationX == other.RotationX &&
+				RotationY == other.RotationY &&
+				RotationZ == other.RotationZ;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            PositionRotation other = obj as PositionRotation;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return PositionX.GetHashCode();
+        }
+
+        public static bool operator ==(PositionRotation objA, PositionRotation objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(PositionRotation objA, PositionRotation objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

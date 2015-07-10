@@ -18,6 +18,22 @@ namespace ESPSharp.Subrecords
     {
         public List<AlternateTexture> Textures { get; set; }
 
+		public AlternateTextures()
+		{
+            Textures = new List<AlternateTexture>();
+		}
+
+		public AlternateTextures(List<AlternateTexture> Textures)
+		{
+            this.Textures = Textures;
+		}
+
+        public AlternateTextures(AlternateTextures copyObject)
+		{
+            foreach (var altTex in Textures)
+                Textures.Add(altTex);
+		}
+
         protected override void ReadData(ESPReader reader)
         {
             Textures = new List<AlternateTexture>();
@@ -28,6 +44,7 @@ namespace ESPSharp.Subrecords
 
         protected override void WriteData(ESPWriter writer)
         {
+            Textures.Sort();
             writer.Write(Textures.Count);
             foreach (var texture in Textures)
                 writer.Write(texture);
@@ -35,6 +52,7 @@ namespace ESPSharp.Subrecords
 
         protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
         {
+            Textures.Sort();
             foreach (var texture in Textures)
             {
                 XElement subEle = new XElement("AlternateTexture");
@@ -57,7 +75,7 @@ namespace ESPSharp.Subrecords
 
         public AlternateTextures Clone()
         {
-            throw new NotImplementedException();
+            return new AlternateTextures(this);
         }
     }
 }

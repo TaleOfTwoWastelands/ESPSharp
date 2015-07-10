@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class IMADTimeValue : IESPSerializable, ICloneable<IMADTimeValue>
+	public partial class IMADTimeValue : IESPSerializable, ICloneable<IMADTimeValue>, IComparable<IMADTimeValue>, IEquatable<IMADTimeValue>
 	{
 		public Single Time { get; set; }
 		public Single Value { get; set; }
@@ -86,5 +86,60 @@ namespace ESPSharp.DataTypes
 		{
 			return new IMADTimeValue(this);
 		}
+
+        public int CompareTo(IMADTimeValue other)
+        {
+            return Time.CompareTo(other.Time);
+        }
+
+        public static bool operator >(IMADTimeValue objA, IMADTimeValue objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(IMADTimeValue objA, IMADTimeValue objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(IMADTimeValue objA, IMADTimeValue objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(IMADTimeValue objA, IMADTimeValue objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(IMADTimeValue other)
+        {
+			return Time == other.Time &&
+				Value == other.Value;
+        }
+
+        public override bool Equals(object obj)
+        {
+            IMADTimeValue other = obj as IMADTimeValue;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Time.GetHashCode();
+        }
+
+        public static bool operator ==(IMADTimeValue objA, IMADTimeValue objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(IMADTimeValue objA, IMADTimeValue objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }

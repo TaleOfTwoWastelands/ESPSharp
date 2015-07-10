@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ArmorExtraData : Subrecord, ICloneable<ArmorExtraData>
+	public partial class ArmorExtraData : Subrecord, ICloneable<ArmorExtraData>, IComparable<ArmorExtraData>, IEquatable<ArmorExtraData>  
 	{
 		public Int16 DamageResistance { get; set; }
 		public ArmorFlags Flags { get; set; }
@@ -66,19 +67,19 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(DamageResistance);			
+			writer.Write(DamageResistance);
 			writer.Write((UInt16)Flags);
-			writer.Write(DamageThreshold);			
+			writer.Write(DamageThreshold);
 			if (Unknown == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unknown);
+			writer.Write(Unknown);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("DamageResistance", true, out subEle);
 			subEle.Value = DamageResistance.ToString();
 
@@ -95,26 +96,18 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("DamageResistance", false, out subEle))
-			{
 				DamageResistance = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<ArmorFlags>();
-			}
 
 			if (ele.TryPathTo("DamageThreshold", false, out subEle))
-			{
 				DamageThreshold = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToBytes();
-			}
 		}
 
 		public ArmorExtraData Clone()
@@ -122,5 +115,95 @@ namespace ESPSharp.Subrecords
 			return new ArmorExtraData(this);
 		}
 
+        public int CompareTo(ArmorExtraData other)
+        {
+			return DamageResistance.CompareTo(other.DamageResistance);
+        }
+
+        public static bool operator >(ArmorExtraData objA, ArmorExtraData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ArmorExtraData objA, ArmorExtraData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ArmorExtraData objA, ArmorExtraData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ArmorExtraData objA, ArmorExtraData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ArmorExtraData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return DamageResistance == other.DamageResistance &&
+				Flags == other.Flags &&
+				DamageThreshold == other.DamageThreshold &&
+				Unknown.SequenceEqual(other.Unknown);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ArmorExtraData other = obj as ArmorExtraData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return DamageResistance.GetHashCode();
+        }
+
+        public static bool operator ==(ArmorExtraData objA, ArmorExtraData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ArmorExtraData objA, ArmorExtraData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class InventoryItemData : Subrecord, ICloneable<InventoryItemData>, IReferenceContainer
+	public partial class InventoryItemData : Subrecord, ICloneable<InventoryItemData>, IComparable<InventoryItemData>, IEquatable<InventoryItemData>  
 	{
 		public FormID Item { get; set; }
 		public Int32 Count { get; set; }
@@ -57,13 +58,13 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			Item.WriteBinary(writer);
-			writer.Write(Count);			
+			writer.Write(Count);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Item", true, out subEle);
 			Item.WriteXML(subEle, master);
 
@@ -74,16 +75,12 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Item", false, out subEle))
-			{
 				Item.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Count", false, out subEle))
-			{
 				Count = subEle.ToInt32();
-			}
 		}
 
 		public InventoryItemData Clone()
@@ -91,5 +88,93 @@ namespace ESPSharp.Subrecords
 			return new InventoryItemData(this);
 		}
 
+        public int CompareTo(InventoryItemData other)
+        {
+			return Item.CompareTo(other.Item);
+        }
+
+        public static bool operator >(InventoryItemData objA, InventoryItemData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(InventoryItemData objA, InventoryItemData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(InventoryItemData objA, InventoryItemData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(InventoryItemData objA, InventoryItemData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(InventoryItemData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Item == other.Item &&
+				Count == other.Count;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            InventoryItemData other = obj as InventoryItemData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Item.GetHashCode();
+        }
+
+        public static bool operator ==(InventoryItemData objA, InventoryItemData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(InventoryItemData objA, InventoryItemData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

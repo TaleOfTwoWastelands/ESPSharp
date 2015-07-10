@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EnchantData : Subrecord, ICloneable<EnchantData>
+	public partial class EnchantData : Subrecord, ICloneable<EnchantData>, IComparable<EnchantData>, IEquatable<EnchantData>  
 	{
 		public EnchantType Type { get; set; }
 		public Byte[] Unused1 { get; set; }
@@ -75,66 +76,50 @@ namespace ESPSharp.Subrecords
 			if (Unused1 == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unused1);
+			writer.Write(Unused1);
 			if (Unused2 == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unused2);
+			writer.Write(Unused2);
 			writer.Write((Byte)Flags);
 			if (Unused3 == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused3);
+			writer.Write(Unused3);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Type", true, out subEle);
 			subEle.Value = Type.ToString();
 
-			ele.TryPathTo("Unused/Unused1", true, out subEle);
-			subEle.Value = Unused1.ToHex();
+			WriteUnused1XML(ele, master);
 
-			ele.TryPathTo("Unused/Unused2", true, out subEle);
-			subEle.Value = Unused2.ToHex();
+			WriteUnused2XML(ele, master);
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unused/Unused3", true, out subEle);
-			subEle.Value = Unused3.ToHex();
+			WriteUnused3XML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Type", false, out subEle))
-			{
 				Type = subEle.ToEnum<EnchantType>();
-			}
 
-			if (ele.TryPathTo("Unused/Unused1", false, out subEle))
-			{
-				Unused1 = subEle.ToBytes();
-			}
+			ReadUnused1XML(ele, master);
 
-			if (ele.TryPathTo("Unused/Unused2", false, out subEle))
-			{
-				Unused2 = subEle.ToBytes();
-			}
+			ReadUnused2XML(ele, master);
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<EnchantFlags>();
-			}
 
-			if (ele.TryPathTo("Unused/Unused3", false, out subEle))
-			{
-				Unused3 = subEle.ToBytes();
-			}
+			ReadUnused3XML(ele, master);
 		}
 
 		public EnchantData Clone()
@@ -142,5 +127,108 @@ namespace ESPSharp.Subrecords
 			return new EnchantData(this);
 		}
 
+        public int CompareTo(EnchantData other)
+        {
+			return Type.CompareTo(other.Type);
+        }
+
+        public static bool operator >(EnchantData objA, EnchantData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(EnchantData objA, EnchantData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(EnchantData objA, EnchantData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(EnchantData objA, EnchantData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(EnchantData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Type == other.Type &&
+				Unused1.SequenceEqual(other.Unused1) &&
+				Unused2.SequenceEqual(other.Unused2) &&
+				Flags == other.Flags &&
+				Unused3.SequenceEqual(other.Unused3);
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            EnchantData other = obj as EnchantData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Type.GetHashCode();
+        }
+
+        public static bool operator ==(EnchantData objA, EnchantData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(EnchantData objA, EnchantData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void ReadUnused3XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnused3XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

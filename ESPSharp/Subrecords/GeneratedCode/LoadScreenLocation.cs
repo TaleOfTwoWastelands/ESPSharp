@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LoadScreenLocation : Subrecord, ICloneable<LoadScreenLocation>, IReferenceContainer
+	public partial class LoadScreenLocation : Subrecord, ICloneable<LoadScreenLocation>, IComparable<LoadScreenLocation>, IEquatable<LoadScreenLocation>  
 	{
 		public FormID Direct { get; set; }
 		public FormID IndirectWorld { get; set; }
@@ -68,14 +69,14 @@ namespace ESPSharp.Subrecords
 		{
 			Direct.WriteBinary(writer);
 			IndirectWorld.WriteBinary(writer);
-			writer.Write(IndirectGridY);			
-			writer.Write(IndirectGridX);			
+			writer.Write(IndirectGridY);
+			writer.Write(IndirectGridX);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Direct", true, out subEle);
 			Direct.WriteXML(subEle, master);
 
@@ -92,26 +93,18 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Direct", false, out subEle))
-			{
 				Direct.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Indirect/World", false, out subEle))
-			{
 				IndirectWorld.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Indirect/GridY", false, out subEle))
-			{
 				IndirectGridY = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Indirect/GridX", false, out subEle))
-			{
 				IndirectGridX = subEle.ToInt16();
-			}
 		}
 
 		public LoadScreenLocation Clone()
@@ -119,5 +112,95 @@ namespace ESPSharp.Subrecords
 			return new LoadScreenLocation(this);
 		}
 
+        public int CompareTo(LoadScreenLocation other)
+        {
+			return Direct.CompareTo(other.Direct);
+        }
+
+        public static bool operator >(LoadScreenLocation objA, LoadScreenLocation objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(LoadScreenLocation objA, LoadScreenLocation objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(LoadScreenLocation objA, LoadScreenLocation objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(LoadScreenLocation objA, LoadScreenLocation objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(LoadScreenLocation other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Direct == other.Direct &&
+				IndirectWorld == other.IndirectWorld &&
+				IndirectGridY == other.IndirectGridY &&
+				IndirectGridX == other.IndirectGridX;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            LoadScreenLocation other = obj as LoadScreenLocation;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Direct.GetHashCode();
+        }
+
+        public static bool operator ==(LoadScreenLocation objA, LoadScreenLocation objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(LoadScreenLocation objA, LoadScreenLocation objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

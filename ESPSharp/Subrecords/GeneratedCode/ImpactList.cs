@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ImpactList : Subrecord, ICloneable<ImpactList>, IReferenceContainer
+	public partial class ImpactList : Subrecord, ICloneable<ImpactList>, IComparable<ImpactList>, IEquatable<ImpactList>  
 	{
 		public FormID Stone { get; set; }
 		public FormID Dirt { get; set; }
@@ -123,7 +124,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Stone", true, out subEle);
 			Stone.WriteXML(subEle, master);
 
@@ -164,66 +165,42 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Stone", false, out subEle))
-			{
 				Stone.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Dirt", false, out subEle))
-			{
 				Dirt.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Grass", false, out subEle))
-			{
 				Grass.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Glass", false, out subEle))
-			{
 				Glass.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Metal", false, out subEle))
-			{
 				Metal.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Wood", false, out subEle))
-			{
 				Wood.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Organic", false, out subEle))
-			{
 				Organic.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Cloth", false, out subEle))
-			{
 				Cloth.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Water", false, out subEle))
-			{
 				Water.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("HollowMetal", false, out subEle))
-			{
 				HollowMetal.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("OrganicBug", false, out subEle))
-			{
 				OrganicBug.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("OrganicGlow", false, out subEle))
-			{
 				OrganicGlow.ReadXML(subEle, master);
-			}
 		}
 
 		public ImpactList Clone()
@@ -231,5 +208,103 @@ namespace ESPSharp.Subrecords
 			return new ImpactList(this);
 		}
 
+        public int CompareTo(ImpactList other)
+        {
+			return Stone.CompareTo(other.Stone);
+        }
+
+        public static bool operator >(ImpactList objA, ImpactList objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ImpactList objA, ImpactList objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ImpactList objA, ImpactList objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ImpactList objA, ImpactList objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ImpactList other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Stone == other.Stone &&
+				Dirt == other.Dirt &&
+				Grass == other.Grass &&
+				Glass == other.Glass &&
+				Metal == other.Metal &&
+				Wood == other.Wood &&
+				Organic == other.Organic &&
+				Cloth == other.Cloth &&
+				Water == other.Water &&
+				HollowMetal == other.HollowMetal &&
+				OrganicBug == other.OrganicBug &&
+				OrganicGlow == other.OrganicGlow;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ImpactList other = obj as ImpactList;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Stone.GetHashCode();
+        }
+
+        public static bool operator ==(ImpactList objA, ImpactList objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ImpactList objA, ImpactList objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NPCBaseStats : Subrecord, ICloneable<NPCBaseStats>
+	public partial class NPCBaseStats : Subrecord, ICloneable<NPCBaseStats>, IComparable<NPCBaseStats>, IEquatable<NPCBaseStats>  
 	{
 		public NPCFlags Flags { get; set; }
 		public UInt16 Fatigue { get; set; }
@@ -97,21 +98,21 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((UInt32)Flags);
-			writer.Write(Fatigue);			
-			writer.Write(BarterGold);			
-			writer.Write(Level);			
-			writer.Write(CalcMin);			
-			writer.Write(CalcMax);			
-			writer.Write(SpeedMultiplier);			
-			writer.Write(Karma);			
-			writer.Write(DispositionBase);			
+			writer.Write(Fatigue);
+			writer.Write(BarterGold);
+			writer.Write(Level);
+			writer.Write(CalcMin);
+			writer.Write(CalcMax);
+			writer.Write(SpeedMultiplier);
+			writer.Write(Karma);
+			writer.Write(DispositionBase);
 			writer.Write((UInt16)TemplateFlags);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
@@ -146,56 +147,36 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<NPCFlags>();
-			}
 
 			if (ele.TryPathTo("Fatigue", false, out subEle))
-			{
 				Fatigue = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("BarterGold", false, out subEle))
-			{
 				BarterGold = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("Level", false, out subEle))
-			{
 				Level = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("CalcMin", false, out subEle))
-			{
 				CalcMin = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("CalcMax", false, out subEle))
-			{
 				CalcMax = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("SpeedMultiplier", false, out subEle))
-			{
 				SpeedMultiplier = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("Karma", false, out subEle))
-			{
 				Karma = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("DispositionBase", false, out subEle))
-			{
 				DispositionBase = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("TemplateFlags", false, out subEle))
-			{
 				TemplateFlags = subEle.ToEnum<ActorTemplateFlags>();
-			}
 		}
 
 		public NPCBaseStats Clone()
@@ -203,5 +184,101 @@ namespace ESPSharp.Subrecords
 			return new NPCBaseStats(this);
 		}
 
+        public int CompareTo(NPCBaseStats other)
+        {
+			return Level.CompareTo(other.Level);
+        }
+
+        public static bool operator >(NPCBaseStats objA, NPCBaseStats objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(NPCBaseStats objA, NPCBaseStats objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(NPCBaseStats objA, NPCBaseStats objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(NPCBaseStats objA, NPCBaseStats objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(NPCBaseStats other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Flags == other.Flags &&
+				Fatigue == other.Fatigue &&
+				BarterGold == other.BarterGold &&
+				Level == other.Level &&
+				CalcMin == other.CalcMin &&
+				CalcMax == other.CalcMax &&
+				SpeedMultiplier == other.SpeedMultiplier &&
+				Karma == other.Karma &&
+				DispositionBase == other.DispositionBase &&
+				TemplateFlags == other.TemplateFlags;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            NPCBaseStats other = obj as NPCBaseStats;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Level.GetHashCode();
+        }
+
+        public static bool operator ==(NPCBaseStats objA, NPCBaseStats objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(NPCBaseStats objA, NPCBaseStats objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

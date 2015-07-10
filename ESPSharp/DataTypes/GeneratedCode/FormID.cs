@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class FormID : IESPSerializable, ICloneable<FormID>
+	public partial class FormID : IESPSerializable, ICloneable<FormID>, IComparable<FormID>, IEquatable<FormID>
 	{
 		public UInt32 RawValue { get; protected set; }
 
@@ -60,13 +60,67 @@ namespace ESPSharp.DataTypes
 			ReadDataXML(ele, master);
 		}
 
-		partial void ReadDataXML(XElement ele, ElderScrollsPlugin master);
-
-		partial void WriteDataXML(XElement ele, ElderScrollsPlugin master);
-
 		public FormID Clone()
 		{
 			return new FormID(this);
 		}
+
+        public int CompareTo(FormID other)
+        {
+            return RawValue.CompareTo(other.RawValue);
+        }
+
+        public static bool operator >(FormID objA, FormID objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(FormID objA, FormID objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(FormID objA, FormID objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(FormID objA, FormID objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(FormID other)
+        {
+			return RawValue == other.RawValue;
+        }
+
+        public override bool Equals(object obj)
+        {
+            FormID other = obj as FormID;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return RawValue.GetHashCode();
+        }
+
+        public static bool operator ==(FormID objA, FormID objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(FormID objA, FormID objB)
+        {
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadDataXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteDataXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

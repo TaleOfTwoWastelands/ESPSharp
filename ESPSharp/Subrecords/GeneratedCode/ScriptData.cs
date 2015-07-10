@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ScriptData : Subrecord, ICloneable<ScriptData>
+	public partial class ScriptData : Subrecord, ICloneable<ScriptData>, IComparable<ScriptData>, IEquatable<ScriptData>  
 	{
 		public Byte[] Unused { get; set; }
 		public UInt32 ReferenceCount { get; set; }
@@ -79,10 +80,10 @@ namespace ESPSharp.Subrecords
 			if (Unused == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unused);
-			writer.Write(ReferenceCount);			
-			writer.Write(CompiledSize);			
-			writer.Write(VariableCount);			
+			writer.Write(Unused);
+			writer.Write(ReferenceCount);
+			writer.Write(CompiledSize);
+			writer.Write(VariableCount);
 			writer.Write((UInt16)Type);
 			writer.Write((UInt16)Flags);
 		}
@@ -90,9 +91,8 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("ReferenceCount", true, out subEle);
 			subEle.Value = ReferenceCount.ToString();
@@ -113,36 +113,23 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("ReferenceCount", false, out subEle))
-			{
 				ReferenceCount = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("CompiledSize", false, out subEle))
-			{
 				CompiledSize = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("VariableCount", false, out subEle))
-			{
 				VariableCount = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("Type", false, out subEle))
-			{
 				Type = subEle.ToEnum<ScriptType>();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<ScriptFlags>();
-			}
 		}
 
 		public ScriptData Clone()
@@ -150,5 +137,101 @@ namespace ESPSharp.Subrecords
 			return new ScriptData(this);
 		}
 
+        public int CompareTo(ScriptData other)
+        {
+			return CompiledSize.CompareTo(other.CompiledSize);
+        }
+
+        public static bool operator >(ScriptData objA, ScriptData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(ScriptData objA, ScriptData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(ScriptData objA, ScriptData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(ScriptData objA, ScriptData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(ScriptData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Unused.SequenceEqual(other.Unused) &&
+				ReferenceCount == other.ReferenceCount &&
+				CompiledSize == other.CompiledSize &&
+				VariableCount == other.VariableCount &&
+				Type == other.Type &&
+				Flags == other.Flags;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            ScriptData other = obj as ScriptData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return CompiledSize.GetHashCode();
+        }
+
+        public static bool operator ==(ScriptData objA, ScriptData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(ScriptData objA, ScriptData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

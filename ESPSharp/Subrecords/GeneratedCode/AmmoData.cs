@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class AmmoData : Subrecord, ICloneable<AmmoData>
+	public partial class AmmoData : Subrecord, ICloneable<AmmoData>, IComparable<AmmoData>, IEquatable<AmmoData>  
 	{
 		public Single Speed { get; set; }
 		public WeaponFlags Flags { get; set; }
@@ -71,28 +72,27 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Speed);			
+			writer.Write(Speed);
 			writer.Write((Byte)Flags);
 			if (Unused == null)
 				writer.Write(new byte[3]);
 			else
-				writer.Write(Unused);
-			writer.Write(Value);			
-			writer.Write(ClipRounds);			
+			writer.Write(Unused);
+			writer.Write(Value);
+			writer.Write(ClipRounds);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Speed", true, out subEle);
 			subEle.Value = Speed.ToString("G15");
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("Value", true, out subEle);
 			subEle.Value = Value.ToString();
@@ -104,31 +104,20 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Speed", false, out subEle))
-			{
 				Speed = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<WeaponFlags>();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("Value", false, out subEle))
-			{
 				Value = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("ClipRounds", false, out subEle))
-			{
 				ClipRounds = subEle.ToByte();
-			}
 		}
 
 		public AmmoData Clone()
@@ -136,5 +125,100 @@ namespace ESPSharp.Subrecords
 			return new AmmoData(this);
 		}
 
+        public int CompareTo(AmmoData other)
+        {
+			return Speed.CompareTo(other.Speed);
+        }
+
+        public static bool operator >(AmmoData objA, AmmoData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(AmmoData objA, AmmoData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(AmmoData objA, AmmoData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(AmmoData objA, AmmoData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(AmmoData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Speed == other.Speed &&
+				Flags == other.Flags &&
+				Unused.SequenceEqual(other.Unused) &&
+				Value == other.Value &&
+				ClipRounds == other.ClipRounds;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            AmmoData other = obj as AmmoData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Speed.GetHashCode();
+        }
+
+        public static bool operator ==(AmmoData objA, AmmoData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(AmmoData objA, AmmoData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

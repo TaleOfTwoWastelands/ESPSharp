@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CreatureData : Subrecord, ICloneable<CreatureData>
+	public partial class CreatureData : Subrecord, ICloneable<CreatureData>, IComparable<CreatureData>, IEquatable<CreatureData>  
 	{
 		public CreatureType CreatureType { get; set; }
 		public Byte CombatSkill { get; set; }
@@ -117,28 +118,28 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			writer.Write((Byte)CreatureType);
-			writer.Write(CombatSkill);			
-			writer.Write(MagicSkill);			
-			writer.Write(StealthSkill);			
-			writer.Write(Health);			
+			writer.Write(CombatSkill);
+			writer.Write(MagicSkill);
+			writer.Write(StealthSkill);
+			writer.Write(Health);
 			if (Unused == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused);
-			writer.Write(Damage);			
-			writer.Write(Strength);			
-			writer.Write(Perception);			
-			writer.Write(Endurance);			
-			writer.Write(Charisma);			
-			writer.Write(Intelligence);			
-			writer.Write(Agility);			
-			writer.Write(Luck);			
+			writer.Write(Unused);
+			writer.Write(Damage);
+			writer.Write(Strength);
+			writer.Write(Perception);
+			writer.Write(Endurance);
+			writer.Write(Charisma);
+			writer.Write(Intelligence);
+			writer.Write(Agility);
+			writer.Write(Luck);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("CreatureType", true, out subEle);
 			subEle.Value = CreatureType.ToString();
 
@@ -154,8 +155,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Health", true, out subEle);
 			subEle.Value = Health.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 
 			ele.TryPathTo("Damage", true, out subEle);
 			subEle.Value = Damage.ToString();
@@ -185,76 +185,47 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("CreatureType", false, out subEle))
-			{
 				CreatureType = subEle.ToEnum<CreatureType>();
-			}
 
 			if (ele.TryPathTo("Skill/Combat", false, out subEle))
-			{
 				CombatSkill = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Skill/Magic", false, out subEle))
-			{
 				MagicSkill = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Skill/Stealth", false, out subEle))
-			{
 				StealthSkill = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Health", false, out subEle))
-			{
 				Health = subEle.ToInt16();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 
 			if (ele.TryPathTo("Damage", false, out subEle))
-			{
 				Damage = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Strength", false, out subEle))
-			{
 				Strength = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Perception", false, out subEle))
-			{
 				Perception = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Endurance", false, out subEle))
-			{
 				Endurance = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Charisma", false, out subEle))
-			{
 				Charisma = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Intelligence", false, out subEle))
-			{
 				Intelligence = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Agility", false, out subEle))
-			{
 				Agility = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Luck", false, out subEle))
-			{
 				Luck = subEle.ToByte();
-			}
 		}
 
 		public CreatureData Clone()
@@ -262,5 +233,109 @@ namespace ESPSharp.Subrecords
 			return new CreatureData(this);
 		}
 
+        public int CompareTo(CreatureData other)
+        {
+			return CreatureType.CompareTo(other.CreatureType);
+        }
+
+        public static bool operator >(CreatureData objA, CreatureData objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(CreatureData objA, CreatureData objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(CreatureData objA, CreatureData objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(CreatureData objA, CreatureData objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(CreatureData other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return CreatureType == other.CreatureType &&
+				CombatSkill == other.CombatSkill &&
+				MagicSkill == other.MagicSkill &&
+				StealthSkill == other.StealthSkill &&
+				Health == other.Health &&
+				Unused.SequenceEqual(other.Unused) &&
+				Damage == other.Damage &&
+				Strength == other.Strength &&
+				Perception == other.Perception &&
+				Endurance == other.Endurance &&
+				Charisma == other.Charisma &&
+				Intelligence == other.Intelligence &&
+				Agility == other.Agility &&
+				Luck == other.Luck;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            CreatureData other = obj as CreatureData;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return CreatureType.GetHashCode();
+        }
+
+        public static bool operator ==(CreatureData objA, CreatureData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(CreatureData objA, CreatureData objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

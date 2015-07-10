@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class TerminalMenu : SubrecordCollection, ICloneable<TerminalMenu>, IReferenceContainer
+	public partial class TerminalMenu : SubrecordCollection, ICloneable<TerminalMenu>
 	{
 		public SimpleSubrecord<String> ItemText { get; set; }
 		public SimpleSubrecord<String> ResultText { get; set; }

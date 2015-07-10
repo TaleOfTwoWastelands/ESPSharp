@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LinkedOcclusionPlanes : Subrecord, ICloneable<LinkedOcclusionPlanes>, IReferenceContainer
+	public partial class LinkedOcclusionPlanes : Subrecord, ICloneable<LinkedOcclusionPlanes>, IComparable<LinkedOcclusionPlanes>, IEquatable<LinkedOcclusionPlanes>  
 	{
 		public FormID Right { get; set; }
 		public FormID Left { get; set; }
@@ -75,7 +76,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Right", true, out subEle);
 			Right.WriteXML(subEle, master);
 
@@ -92,26 +93,18 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Right", false, out subEle))
-			{
 				Right.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Left", false, out subEle))
-			{
 				Left.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Bottom", false, out subEle))
-			{
 				Bottom.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Top", false, out subEle))
-			{
 				Top.ReadXML(subEle, master);
-			}
 		}
 
 		public LinkedOcclusionPlanes Clone()
@@ -119,5 +112,95 @@ namespace ESPSharp.Subrecords
 			return new LinkedOcclusionPlanes(this);
 		}
 
+        public int CompareTo(LinkedOcclusionPlanes other)
+        {
+			return Right.CompareTo(other.Right);
+        }
+
+        public static bool operator >(LinkedOcclusionPlanes objA, LinkedOcclusionPlanes objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(LinkedOcclusionPlanes objA, LinkedOcclusionPlanes objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(LinkedOcclusionPlanes objA, LinkedOcclusionPlanes objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(LinkedOcclusionPlanes objA, LinkedOcclusionPlanes objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(LinkedOcclusionPlanes other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Right == other.Right &&
+				Left == other.Left &&
+				Bottom == other.Bottom &&
+				Top == other.Top;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            LinkedOcclusionPlanes other = obj as LinkedOcclusionPlanes;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Right.GetHashCode();
+        }
+
+        public static bool operator ==(LinkedOcclusionPlanes objA, LinkedOcclusionPlanes objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(LinkedOcclusionPlanes objA, LinkedOcclusionPlanes objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

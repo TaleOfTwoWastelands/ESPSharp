@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class QuestLogEntry : SubrecordCollection, ICloneable<QuestLogEntry>, IReferenceContainer
+	public partial class QuestLogEntry : SubrecordCollection, ICloneable<QuestLogEntry>
 	{
 		public SimpleSubrecord<QuestStageFlags> StageFlags { get; set; }
 		public List<Condition> Conditions { get; set; }

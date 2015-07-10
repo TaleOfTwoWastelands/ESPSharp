@@ -40,7 +40,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class <#= template.ClassName #> : IESPSerializable, ICloneable<<#= template.ClassName#>><# if (isReferenceContainer) { #>, IReferenceContainer<#}Write("\n");#>
+	public partial class <#= template.ClassName #> : IESPSerializable, ICloneable<<#= template.ClassName#>>, IComparable<<#= template.ClassName#>>, IEquatable<<#= template.ClassName#>><# if (isReferenceContainer) { #>, IReferenceContainer<#}Write("\n");#>
 	{
 <# foreach (var field in template.Fields) { #>
 		<#= field.PropertyDeclaration #>
@@ -172,6 +172,65 @@ namespace ESPSharp.DataTypes
 			ReadDataXML(ele, master);
 <# } #>
 		}
+
+		public <#= template.ClassName #> Clone()
+		{
+			return new <#= template.ClassName #>(this);
+		}
+
+        public int CompareTo(<#= template.ClassName #> other)
+        {
+            return <#= template.hashKey.Name#>.CompareTo(other.<#= template.hashKey.Name#>);
+        }
+
+        public static bool operator >(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(<#= template.ClassName #> other)
+        {
+			return <#= string.Join(" &&\n\t\t\t\t", template.Fields.Select<DataTypeField, string>(s => string.Format("{0} == other.{0}", s.Name)))#>;
+        }
+
+        public override bool Equals(object obj)
+        {
+            <#= template.ClassName #> other = obj as <#= template.ClassName #>;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return <#= template.hashKey.Name#>.GetHashCode();
+        }
+
+        public static bool operator ==(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return !objA.Equals(objB);
+        }
 <# if (!template.implementReadXML) { #>
 
 		partial void ReadDataXML(XElement ele, ElderScrollsPlugin master);
@@ -188,11 +247,6 @@ namespace ESPSharp.DataTypes
 
 		partial void WriteData(ESPWriter writer);
 <# } #>
-
-		public <#= template.ClassName #> Clone()
-		{
-			return new <#= template.ClassName #>(this);
-		}
 	}
 }
 <#+
@@ -200,6 +254,7 @@ public class DataTypeTemplate
 {
     public string ClassName;
 	public List<DataTypeField> Fields = new List<DataTypeField>();
+	public DataTypeField hashKey;
 	
 	public bool implementReadData = true;
 	public bool implementWriteData = true;

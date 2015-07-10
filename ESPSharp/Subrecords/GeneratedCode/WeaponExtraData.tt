@@ -1,13 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	SubrecordTemplate template = new SubrecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "WeaponExtraData";
 
-	SubrecordField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponAnimationType),
 			"AnimationType",
 			"AnimationType"
@@ -15,7 +15,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"AnimationMultiplier",
 			"AnimationMultiplier"
@@ -23,7 +23,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Reach",
 			"Reach"
@@ -31,7 +31,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponDataFlags1),
 			"Flags1",
 			"Flags1"
@@ -39,7 +39,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponGripAnimationType),
 			"GripAnimation",
 			"GripAnimation"
@@ -47,7 +47,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"AmmoUse",
 			"AmmoUse"
@@ -55,7 +55,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponReloadAnimationType),
 			"ReloadAnimation",
 			"ReloadAnimation"
@@ -63,7 +63,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"MinSpread",
 			"MinSpread"
@@ -71,7 +71,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Spread",
 			"Spread"
@@ -79,7 +79,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unknown",
 			"Unknown"
@@ -88,7 +88,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"SightFOV",
 			"SightFOV"
@@ -96,7 +96,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Unknown2",
 			"Unknown2"
@@ -104,7 +104,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(FormID),
 			"Projectile",
 			"Projectile"
@@ -112,7 +112,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"BaseVATSToHitChance",
 			"BaseVATSToHitChance"
@@ -120,7 +120,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponAttackAnimationType),
 			"AttackAnimation",
 			"AttackAnimation"
@@ -128,7 +128,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"ProjectileCount",
 			"ProjectileCount"
@@ -136,7 +136,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(EmbeddedWeaponActorValue),
 			"EmbeddedWeaponActorValue",
 			"EmbeddedWeaponActorValue"
@@ -144,7 +144,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"MinRange",
 			"Range/Min"
@@ -152,7 +152,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"MaxRange",
 			"Range/Max"
@@ -160,7 +160,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(LimbKillBehavior),
 			"LimbKillBehavior",
 			"LimbKillBehavior"
@@ -168,7 +168,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponDataFlags2),
 			"Flags2",
 			"Flags2"
@@ -176,7 +176,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"AttackAnimationMultiplier",
 			"AttackAnimationMultiplier"
@@ -184,7 +184,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"FireRate",
 			"FireRate"
@@ -192,7 +192,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ActionPointCost",
 			"ActionPointCost"
@@ -200,7 +200,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"RumbleLeftMotorStrength",
 			"Rumble/LeftMotorStrength"
@@ -208,7 +208,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"RumbleRightMotorStrength",
 			"Rumble/RightMotorStrength"
@@ -216,7 +216,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"RumbleDuration",
 			"Rumble/Duration"
@@ -224,7 +224,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"DamageToWeaponMult",
 			"DamageToWeaponMult"
@@ -232,7 +232,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"AttackShotsPerSecond",
 			"AttackShotsPerSecond"
@@ -240,7 +240,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ReloadTime",
 			"ReloadTime"
@@ -248,7 +248,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"JamTime",
 			"JamTime"
@@ -256,7 +256,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"AimArc",
 			"AimArc"
@@ -264,15 +264,16 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ActorValues),
 			"Skill",
 			"Skill"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponRumblePattern),
 			"RumblePattern",
 			"Rumble/Pattern"
@@ -280,7 +281,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"RumbleWavelength",
 			"Rumble/Wavelength"
@@ -288,7 +289,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"LimbDamageMult",
 			"LimbDamageMult"
@@ -296,7 +297,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(ActorValues),
 			"ResistanceType",
 			"ResistanceType"
@@ -304,7 +305,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"SightUsage",
 			"SightUsage"
@@ -312,7 +313,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"SemiAutomaticFireDelayMin",
 			"SemiAutomaticFireDelay/Min"
@@ -320,7 +321,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"SemiAutomaticFireDelayMax",
 			"SemiAutomaticFireDelay/Max"
@@ -328,7 +329,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Unknown3",
 			"Unknown3"
@@ -336,7 +337,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponModEffect),
 			"Mod1Effect",
 			"Mods/Mod1/Effect"
@@ -344,7 +345,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponModEffect),
 			"Mod2Effect",
 			"Mods/Mod2/Effect"
@@ -352,7 +353,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponModEffect),
 			"Mod3Effect",
 			"Mods/Mod3/Effect"
@@ -360,7 +361,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Mod1ValueA",
 			"Mods/Mod1/ValueA"
@@ -368,7 +369,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Mod2ValueA",
 			"Mods/Mod2/ValueA"
@@ -376,7 +377,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Mod3ValueA",
 			"Mods/Mod3/ValueA"
@@ -384,7 +385,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponPowerAttackAnimation),
 			"PowerAttackAnimation",
 			"PowerAttackAnimation"
@@ -392,7 +393,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"StrengthRequirement",
 			"StrengthRequirement"
@@ -400,7 +401,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte),
 			"Unknown4",
 			"Unknown4"
@@ -408,7 +409,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(WeaponReloadAnimationType),
 			"Mod1ReloadAnimation",
 			"Mods/Mod1/ReloadAnimation"
@@ -416,7 +417,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(byte[]),
 			"Unknown5",
 			"Unknown5"
@@ -425,7 +426,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"AmmoRegenRate",
 			"AmmoRegenRate"
@@ -433,7 +434,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"KillImpulse",
 			"KillImpulse"
@@ -441,7 +442,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Mod1ValueB",
 			"Mods/Mod1/ValueB"
@@ -449,7 +450,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Mod2ValueB",
 			"Mods/Mod2/ValueB"
@@ -457,7 +458,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"Mod3ValueB",
 			"Mods/Mod3/ValueB"
@@ -465,7 +466,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(float),
 			"ImpulseDistance",
 			"ImpulseDistance"
@@ -473,7 +474,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new SubrecordField(
+		new ClassField(
 			typeof(uint),
 			"SkillRequirement",
 			"SkillRequirement"

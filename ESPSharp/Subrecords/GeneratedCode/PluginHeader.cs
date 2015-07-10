@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PluginHeader : Subrecord, ICloneable<PluginHeader>
+	public partial class PluginHeader : Subrecord, ICloneable<PluginHeader>, IComparable<PluginHeader>, IEquatable<PluginHeader>  
 	{
 		public Single Version { get; set; }
 		public UInt32 RecordCount { get; set; }
@@ -61,15 +62,15 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
-			writer.Write(Version);			
-			writer.Write(RecordCount);			
-			writer.Write(NextObjectID);			
+			writer.Write(Version);
+			writer.Write(RecordCount);
+			writer.Write(NextObjectID);
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Version", true, out subEle);
 			subEle.Value = Version.ToString("G15");
 
@@ -83,21 +84,15 @@ namespace ESPSharp.Subrecords
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Version", false, out subEle))
-			{
 				Version = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("RecordCount", false, out subEle))
-			{
 				RecordCount = subEle.ToUInt32();
-			}
 
 			if (ele.TryPathTo("NextObjectID", false, out subEle))
-			{
 				NextObjectID = subEle.ToUInt32();
-			}
 		}
 
 		public PluginHeader Clone()
@@ -105,5 +100,94 @@ namespace ESPSharp.Subrecords
 			return new PluginHeader(this);
 		}
 
+        public int CompareTo(PluginHeader other)
+        {
+			return RecordCount.CompareTo(other.RecordCount);
+        }
+
+        public static bool operator >(PluginHeader objA, PluginHeader objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(PluginHeader objA, PluginHeader objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(PluginHeader objA, PluginHeader objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(PluginHeader objA, PluginHeader objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(PluginHeader other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Version == other.Version &&
+				RecordCount == other.RecordCount &&
+				NextObjectID == other.NextObjectID;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            PluginHeader other = obj as PluginHeader;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return RecordCount.GetHashCode();
+        }
+
+        public static bool operator ==(PluginHeader objA, PluginHeader objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(PluginHeader objA, PluginHeader objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
 	}
 }

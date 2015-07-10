@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class NavMeshTriangle : IESPSerializable, ICloneable<NavMeshTriangle>
+	public partial class NavMeshTriangle : IESPSerializable, ICloneable<NavMeshTriangle>, IComparable<NavMeshTriangle>, IEquatable<NavMeshTriangle>
 	{
 		public Int16 Vertex1 { get; set; }
 		public Int16 Vertex2 { get; set; }
@@ -156,5 +156,65 @@ namespace ESPSharp.DataTypes
 		{
 			return new NavMeshTriangle(this);
 		}
+
+        public int CompareTo(NavMeshTriangle other)
+        {
+            return Vertex1.CompareTo(other.Vertex1);
+        }
+
+        public static bool operator >(NavMeshTriangle objA, NavMeshTriangle objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(NavMeshTriangle objA, NavMeshTriangle objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(NavMeshTriangle objA, NavMeshTriangle objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(NavMeshTriangle objA, NavMeshTriangle objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+        public bool Equals(NavMeshTriangle other)
+        {
+			return Vertex1 == other.Vertex1 &&
+				Vertex2 == other.Vertex2 &&
+				Vertex3 == other.Vertex3 &&
+				EdgeVertices1_2 == other.EdgeVertices1_2 &&
+				EdgeVertices2_3 == other.EdgeVertices2_3 &&
+				EdgeVertices3_1 == other.EdgeVertices3_1 &&
+				Flags == other.Flags;
+        }
+
+        public override bool Equals(object obj)
+        {
+            NavMeshTriangle other = obj as NavMeshTriangle;
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Vertex1.GetHashCode();
+        }
+
+        public static bool operator ==(NavMeshTriangle objA, NavMeshTriangle objB)
+        {
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(NavMeshTriangle objA, NavMeshTriangle objB)
+        {
+            return !objA.Equals(objB);
+        }
 	}
 }
