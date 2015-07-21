@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,29 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class CameraPath : Record, IEditorID	{
+	public partial class CameraPath : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public List<Condition> Conditions { get; set; }
 		public RelatedCameraPaths RelatedCameraPaths { get; set; }
 		public SimpleSubrecord<CameraPathZoom> CameraZoom { get; set; }
 		public List<RecordReference> CameraShots { get; set; }
+
+		public CameraPath()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			CameraZoom = new SimpleSubrecord<CameraPathZoom>("DATA");
+		}
+
+		public CameraPath(SimpleSubrecord<String> EditorID, List<Condition> Conditions, RelatedCameraPaths RelatedCameraPaths, SimpleSubrecord<CameraPathZoom> CameraZoom, List<RecordReference> CameraShots)
+		{
+			this.EditorID = EditorID;
+			this.CameraZoom = CameraZoom;
+		}
+
+		public CameraPath(CameraPath copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -182,6 +200,11 @@ namespace ESPSharp.Records
 					CameraShots.Add(tempSNAM);
 				}
 			}
+		}		
+
+		public CameraPath Clone()
+		{
+			return new CameraPath(this);
 		}
 
 	}

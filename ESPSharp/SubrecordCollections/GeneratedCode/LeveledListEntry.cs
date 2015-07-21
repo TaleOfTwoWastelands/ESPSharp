@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class LeveledListEntry : SubrecordCollection, ICloneable<LeveledListEntry>
-	{
+	public partial class LeveledListEntry : SubrecordCollection	{
 		public LeveledObjectData Data { get; set; }
 		public InventoryItemExtraData ExtraData { get; set; }
 
@@ -32,9 +31,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public LeveledListEntry(LeveledListEntry copyObject)
 		{
-			Data = copyObject.Data.Clone();
-			ExtraData = copyObject.ExtraData.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

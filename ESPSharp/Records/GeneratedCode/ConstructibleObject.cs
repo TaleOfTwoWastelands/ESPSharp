@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class ConstructibleObject : Record, IEditorID	{
+	public partial class ConstructibleObject : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -25,6 +27,18 @@ namespace ESPSharp.Records
 		public RecordReference PickUpSound { get; set; }
 		public RecordReference DropSound { get; set; }
 		public ValueWeight Data { get; set; }
+
+		public ConstructibleObject()
+		{
+					}
+
+		public ConstructibleObject(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference Script, RecordReference PickUpSound, RecordReference DropSound, ValueWeight Data)
+		{
+					}
+
+		public ConstructibleObject(ConstructibleObject copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -253,6 +267,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public ConstructibleObject Clone()
+		{
+			return new ConstructibleObject(this);
 		}
 
 	}

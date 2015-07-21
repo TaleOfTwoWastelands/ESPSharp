@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Quest : Record, IEditorID	{
+	public partial class Quest : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public RecordReference Script { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -24,6 +26,22 @@ namespace ESPSharp.Records
 		public List<Condition> Conditions { get; set; }
 		public List<QuestStage> Stages { get; set; }
 		public List<QuestObjective> Objectives { get; set; }
+
+		public Quest()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new QuestData("DATA");
+		}
+
+		public Quest(SimpleSubrecord<String> EditorID, RecordReference Script, SimpleSubrecord<String> Name, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, QuestData Data, List<Condition> Conditions, List<QuestStage> Stages, List<QuestObjective> Objectives)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public Quest(Quest copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -283,6 +301,11 @@ namespace ESPSharp.Records
 					Objectives.Add(tempQOBJ);
 				}
 			}
+		}		
+
+		public Quest Clone()
+		{
+			return new Quest(this);
 		}
 
 	}

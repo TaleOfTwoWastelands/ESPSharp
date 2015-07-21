@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,33 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class HeadPart : Record, IEditorID	{
+	public partial class HeadPart : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public Model Model { get; set; }
 		public SimpleSubrecord<HeadPartFlags> HeadPartFlags { get; set; }
 		public List<RecordReference> ExtraParts { get; set; }
+
+		public HeadPart()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Name = new SimpleSubrecord<String>("FULL");
+			HeadPartFlags = new SimpleSubrecord<HeadPartFlags>("DATA");
+			ExtraParts = new List<RecordReference>();
+		}
+
+		public HeadPart(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<HeadPartFlags> HeadPartFlags, List<RecordReference> ExtraParts)
+		{
+			this.EditorID = EditorID;
+			this.Name = Name;
+			this.HeadPartFlags = HeadPartFlags;
+			this.ExtraParts = ExtraParts;
+		}
+
+		public HeadPart(HeadPart copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -165,6 +187,11 @@ namespace ESPSharp.Records
 					ExtraParts.Add(tempHNAM);
 				}
 			}
+		}		
+
+		public HeadPart Clone()
+		{
+			return new HeadPart(this);
 		}
 
 	}

@@ -14,12 +14,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ActivateParent : Subrecord, ICloneable<ActivateParent>, IComparable<ActivateParent>, IEquatable<ActivateParent>  
+	public partial class ActivateParent : Subrecord, ICloneable, IComparable<ActivateParent>, IEquatable<ActivateParent>  
 	{
 		public FormID Parent { get; set; }
 		public Single Delay { get; set; }
 
-		public ActivateParent()
+		public ActivateParent(string Tag = null)
+			:base(Tag)
 		{
 			Parent = new FormID();
 			Delay = new Single();
@@ -33,7 +34,8 @@ namespace ESPSharp.Subrecords
 
 		public ActivateParent(ActivateParent copyObject)
 		{
-			Parent = copyObject.Parent.Clone();
+			if (copyObject.Parent != null)
+				Parent = (FormID)copyObject.Parent.Clone();
 			Delay = copyObject.Delay;
 		}
 	
@@ -82,7 +84,7 @@ namespace ESPSharp.Subrecords
 				Delay = subEle.ToSingle();
 		}
 
-		public ActivateParent Clone()
+		public override object Clone()
 		{
 			return new ActivateParent(this);
 		}

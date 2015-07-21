@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EffectShaderData : Subrecord, ICloneable<EffectShaderData>, IComparable<EffectShaderData>, IEquatable<EffectShaderData>  
+	public partial class EffectShaderData : Subrecord, ICloneable, IComparable<EffectShaderData>, IEquatable<EffectShaderData>  
 	{
 		public EffectShaderFlags Flags { get; set; }
 		public Byte[] Unused { get; set; }
@@ -96,7 +96,8 @@ namespace ESPSharp.Subrecords
 		public Single AddonModelsScaleTimeIn { get; set; }
 		public Single AddonModelsScaleTimeOut { get; set; }
 
-		public EffectShaderData()
+		public EffectShaderData(string Tag = null)
+			:base(Tag)
 		{
 			Flags = new EffectShaderFlags();
 			Unused = new byte[3];
@@ -263,11 +264,13 @@ namespace ESPSharp.Subrecords
 		public EffectShaderData(EffectShaderData copyObject)
 		{
 			Flags = copyObject.Flags;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			MembraneShaderSourceBlendMode = copyObject.MembraneShaderSourceBlendMode;
 			MembraneShaderBlendOperation = copyObject.MembraneShaderBlendOperation;
 			MembraneShaderZTestFunction = copyObject.MembraneShaderZTestFunction;
-			Fill_TextureEffectColor = copyObject.Fill_TextureEffectColor.Clone();
+			if (copyObject.Fill_TextureEffectColor != null)
+				Fill_TextureEffectColor = (Color)copyObject.Fill_TextureEffectColor.Clone();
 			Fill_TextureEffectAlphaFadeTimeIn = copyObject.Fill_TextureEffectAlphaFadeTimeIn;
 			Fill_TextureEffectAlphaFadeTimeFull = copyObject.Fill_TextureEffectAlphaFadeTimeFull;
 			Fill_TextureEffectAlphaFadeTimeOut = copyObject.Fill_TextureEffectAlphaFadeTimeOut;
@@ -277,7 +280,8 @@ namespace ESPSharp.Subrecords
 			Fill_TextureEffectTextureAnimationSpeedU = copyObject.Fill_TextureEffectTextureAnimationSpeedU;
 			Fill_TextureEffectTextureAnimationSpeedV = copyObject.Fill_TextureEffectTextureAnimationSpeedV;
 			EdgeEffectFallOff = copyObject.EdgeEffectFallOff;
-			EdgeEffectColor = copyObject.EdgeEffectColor.Clone();
+			if (copyObject.EdgeEffectColor != null)
+				EdgeEffectColor = (Color)copyObject.EdgeEffectColor.Clone();
 			EdgeEffectAlphaFadeTimeIn = copyObject.EdgeEffectAlphaFadeTimeIn;
 			EdgeEffectAlphaFadeTimeFull = copyObject.EdgeEffectAlphaFadeTimeFull;
 			EdgeEffectAlphaFadeTimeOut = copyObject.EdgeEffectAlphaFadeTimeOut;
@@ -310,9 +314,12 @@ namespace ESPSharp.Subrecords
 			ParticleShaderScaleKey2 = copyObject.ParticleShaderScaleKey2;
 			ParticleShaderScaleKey1Time = copyObject.ParticleShaderScaleKey1Time;
 			ParticleShaderScaleKey2Time = copyObject.ParticleShaderScaleKey2Time;
-			ParticleShaderColorKey1 = copyObject.ParticleShaderColorKey1.Clone();
-			ParticleShaderColorKey2 = copyObject.ParticleShaderColorKey2.Clone();
-			ParticleShaderColorKey3 = copyObject.ParticleShaderColorKey3.Clone();
+			if (copyObject.ParticleShaderColorKey1 != null)
+				ParticleShaderColorKey1 = (Color)copyObject.ParticleShaderColorKey1.Clone();
+			if (copyObject.ParticleShaderColorKey2 != null)
+				ParticleShaderColorKey2 = (Color)copyObject.ParticleShaderColorKey2.Clone();
+			if (copyObject.ParticleShaderColorKey3 != null)
+				ParticleShaderColorKey3 = (Color)copyObject.ParticleShaderColorKey3.Clone();
 			ParticleShaderColorKey1Alpha = copyObject.ParticleShaderColorKey1Alpha;
 			ParticleShaderColorKey2Alpha = copyObject.ParticleShaderColorKey2Alpha;
 			ParticleShaderColorKey3Alpha = copyObject.ParticleShaderColorKey3Alpha;
@@ -324,13 +331,15 @@ namespace ESPSharp.Subrecords
 			ParticleShaderInitialRotationVariance = copyObject.ParticleShaderInitialRotationVariance;
 			ParticleShaderRotationSpeedValue = copyObject.ParticleShaderRotationSpeedValue;
 			ParticleShaderRotationSpeedVariance = copyObject.ParticleShaderRotationSpeedVariance;
-			AddonModelsModel = copyObject.AddonModelsModel.Clone();
+			if (copyObject.AddonModelsModel != null)
+				AddonModelsModel = (FormID)copyObject.AddonModelsModel.Clone();
 			HolesTimeStart = copyObject.HolesTimeStart;
 			HolesTimeEnd = copyObject.HolesTimeEnd;
 			HolesValueStart = copyObject.HolesValueStart;
 			HolesValueEnd = copyObject.HolesValueEnd;
 			EdgeWidth = copyObject.EdgeWidth;
-			EdgeColor = copyObject.EdgeColor.Clone();
+			if (copyObject.EdgeColor != null)
+				EdgeColor = (Color)copyObject.EdgeColor.Clone();
 			ExplosionWindSpeed = copyObject.ExplosionWindSpeed;
 			TextureCountU = copyObject.TextureCountU;
 			TextureCountV = copyObject.TextureCountV;
@@ -996,7 +1005,7 @@ namespace ESPSharp.Subrecords
 				AddonModelsScaleTimeOut = subEle.ToSingle();
 		}
 
-		public EffectShaderData Clone()
+		public override object Clone()
 		{
 			return new EffectShaderData(this);
 		}

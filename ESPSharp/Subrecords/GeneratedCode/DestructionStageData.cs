@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DestructionStageData : Subrecord, ICloneable<DestructionStageData>, IComparable<DestructionStageData>, IEquatable<DestructionStageData>  
+	public partial class DestructionStageData : Subrecord, ICloneable, IComparable<DestructionStageData>, IEquatable<DestructionStageData>  
 	{
 		public Byte HealthPercentage { get; set; }
 		public Byte Index { get; set; }
@@ -26,7 +26,8 @@ namespace ESPSharp.Subrecords
 		public FormID Debris { get; set; }
 		public Int32 DebrisCount { get; set; }
 
-		public DestructionStageData()
+		public DestructionStageData(string Tag = null)
+			:base(Tag)
 		{
 			HealthPercentage = new Byte();
 			Index = new Byte();
@@ -57,8 +58,10 @@ namespace ESPSharp.Subrecords
 			Stage = copyObject.Stage;
 			Flags = copyObject.Flags;
 			SelfDamagePerSecond = copyObject.SelfDamagePerSecond;
-			Explosion = copyObject.Explosion.Clone();
-			Debris = copyObject.Debris.Clone();
+			if (copyObject.Explosion != null)
+				Explosion = (FormID)copyObject.Explosion.Clone();
+			if (copyObject.Debris != null)
+				Debris = (FormID)copyObject.Debris.Clone();
 			DebrisCount = copyObject.DebrisCount;
 		}
 	
@@ -155,7 +158,7 @@ namespace ESPSharp.Subrecords
 				DebrisCount = subEle.ToInt32();
 		}
 
-		public DestructionStageData Clone()
+		public override object Clone()
 		{
 			return new DestructionStageData(this);
 		}

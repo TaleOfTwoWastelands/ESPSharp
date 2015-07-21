@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class RegionObject : IESPSerializable, ICloneable<RegionObject>, IComparable<RegionObject>, IEquatable<RegionObject>, IReferenceContainer
+	public partial class RegionObject : IESPSerializable, ICloneable, IComparable<RegionObject>, IEquatable<RegionObject>  
 	{
 		public FormID Object { get; set; }
 		public UInt16 ParentIndex { get; set; }
@@ -84,9 +84,11 @@ namespace ESPSharp.DataTypes
 
 		public RegionObject(RegionObject copyObject)
 		{
-			Object = copyObject.Object.Clone();
+			if (copyObject.Object != null)
+				Object = (FormID)copyObject.Object.Clone();
 			ParentIndex = copyObject.ParentIndex;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			Density = copyObject.Density;
 			Clustering = copyObject.Clustering;
 			MinSlope = copyObject.MinSlope;
@@ -94,7 +96,8 @@ namespace ESPSharp.DataTypes
 			Flags = copyObject.Flags;
 			RadiusWithRespectToParent = copyObject.RadiusWithRespectToParent;
 			Radius = copyObject.Radius;
-			Unknown1 = (Byte[])copyObject.Unknown1.Clone();
+			if (copyObject.Unknown1 != null)
+				Unknown1 = (Byte[])copyObject.Unknown1.Clone();
 			MaxHeight = copyObject.MaxHeight;
 			Sink = copyObject.Sink;
 			SinkVariance = copyObject.SinkVariance;
@@ -102,7 +105,8 @@ namespace ESPSharp.DataTypes
 			XAngleVariance = copyObject.XAngleVariance;
 			YAngleVariance = copyObject.YAngleVariance;
 			ZAngleVariance = copyObject.ZAngleVariance;
-			Unknown2 = (Byte[])copyObject.Unknown2.Clone();
+			if (copyObject.Unknown2 != null)
+				Unknown2 = (Byte[])copyObject.Unknown2.Clone();
 		}
 	
 		public void ReadBinary(ESPReader reader)
@@ -110,24 +114,24 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				Object.ReadBinary(reader);
-				ParentIndex = reader.ReadUInt16();
-				Unused = reader.ReadBytes(2);
-				Density = reader.ReadSingle();
-				Clustering = reader.ReadByte();
-				MinSlope = reader.ReadByte();
-				MaxSlope = reader.ReadByte();
-				Flags = reader.ReadEnum<RegionObjectFlags>();
-				RadiusWithRespectToParent = reader.ReadUInt16();
-				Radius = reader.ReadUInt16();
-				Unknown1 = reader.ReadBytes(4);
-				MaxHeight = reader.ReadSingle();
-				Sink = reader.ReadSingle();
-				SinkVariance = reader.ReadSingle();
-				SizeVariance = reader.ReadSingle();
-				XAngleVariance = reader.ReadUInt16();
-				YAngleVariance = reader.ReadUInt16();
-				ZAngleVariance = reader.ReadUInt16();
-				Unknown2 = reader.ReadBytes(6);
+					ParentIndex = reader.ReadUInt16();
+					Unused = reader.ReadBytes(2);
+					Density = reader.ReadSingle();
+					Clustering = reader.ReadByte();
+					MinSlope = reader.ReadByte();
+					MaxSlope = reader.ReadByte();
+					Flags = reader.ReadEnum<RegionObjectFlags>();
+					RadiusWithRespectToParent = reader.ReadUInt16();
+					Radius = reader.ReadUInt16();
+					Unknown1 = reader.ReadBytes(4);
+					MaxHeight = reader.ReadSingle();
+					Sink = reader.ReadSingle();
+					SinkVariance = reader.ReadSingle();
+					SizeVariance = reader.ReadSingle();
+					XAngleVariance = reader.ReadUInt16();
+					YAngleVariance = reader.ReadUInt16();
+					ZAngleVariance = reader.ReadUInt16();
+					Unknown2 = reader.ReadBytes(6);
 			}
 			catch
 			{
@@ -138,39 +142,39 @@ namespace ESPSharp.DataTypes
 		public void WriteBinary(ESPWriter writer)
 		{
 			Object.WriteBinary(writer);
-			writer.Write(ParentIndex);			
+			writer.Write(ParentIndex);
 			if (Unused == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused);
-			writer.Write(Density);			
-			writer.Write(Clustering);			
-			writer.Write(MinSlope);			
-			writer.Write(MaxSlope);			
+			writer.Write(Unused);
+			writer.Write(Density);
+			writer.Write(Clustering);
+			writer.Write(MinSlope);
+			writer.Write(MaxSlope);
 			writer.Write((Byte)Flags);
-			writer.Write(RadiusWithRespectToParent);			
-			writer.Write(Radius);			
+			writer.Write(RadiusWithRespectToParent);
+			writer.Write(Radius);
 			if (Unknown1 == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unknown1);
-			writer.Write(MaxHeight);			
-			writer.Write(Sink);			
-			writer.Write(SinkVariance);			
-			writer.Write(SizeVariance);			
-			writer.Write(XAngleVariance);			
-			writer.Write(YAngleVariance);			
-			writer.Write(ZAngleVariance);			
+			writer.Write(Unknown1);
+			writer.Write(MaxHeight);
+			writer.Write(Sink);
+			writer.Write(SinkVariance);
+			writer.Write(SizeVariance);
+			writer.Write(XAngleVariance);
+			writer.Write(YAngleVariance);
+			writer.Write(ZAngleVariance);
 			if (Unknown2 == null)
 				writer.Write(new byte[6]);
 			else
-				writer.Write(Unknown2);
+			writer.Write(Unknown2);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Object", true, out subEle);
 			Object.WriteXML(subEle, master);
 
@@ -232,111 +236,73 @@ namespace ESPSharp.DataTypes
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Object", false, out subEle))
-			{
 				Object.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("ParentIndex", false, out subEle))
-			{
 				ParentIndex = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("Unused", false, out subEle))
-			{
 				Unused = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("Density", false, out subEle))
-			{
 				Density = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Clustering", false, out subEle))
-			{
 				Clustering = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Slope/Min", false, out subEle))
-			{
 				MinSlope = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Slope/Max", false, out subEle))
-			{
 				MaxSlope = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<RegionObjectFlags>();
-			}
 
 			if (ele.TryPathTo("RadiusWithRespectToParent", false, out subEle))
-			{
 				RadiusWithRespectToParent = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("Radius", false, out subEle))
-			{
 				Radius = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("Unknown1", false, out subEle))
-			{
 				Unknown1 = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("MaxHeight", false, out subEle))
-			{
 				MaxHeight = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Sink", false, out subEle))
-			{
 				Sink = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SinkVariance", false, out subEle))
-			{
 				SinkVariance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("SizeVariance", false, out subEle))
-			{
 				SizeVariance = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("XAngleVariance", false, out subEle))
-			{
 				XAngleVariance = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("YAngleVariance", false, out subEle))
-			{
 				YAngleVariance = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("ZAngleVariance", false, out subEle))
-			{
 				ZAngleVariance = subEle.ToUInt16();
-			}
 
 			if (ele.TryPathTo("Unknown2", false, out subEle))
-			{
 				Unknown2 = subEle.ToBytes();
-			}
 		}
 
-		public RegionObject Clone()
+		public object Clone()
 		{
 			return new RegionObject(this);
 		}
 
         public int CompareTo(RegionObject other)
         {
-            return Object.CompareTo(other.Object);
+			return Object.CompareTo(other.Object);
         }
 
         public static bool operator >(RegionObject objA, RegionObject objB)
@@ -361,9 +327,19 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(RegionObject other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return Object == other.Object &&
 				ParentIndex == other.ParentIndex &&
-				Unused == other.Unused &&
+				Unused.SequenceEqual(other.Unused) &&
 				Density == other.Density &&
 				Clustering == other.Clustering &&
 				MinSlope == other.MinSlope &&
@@ -371,7 +347,7 @@ namespace ESPSharp.DataTypes
 				Flags == other.Flags &&
 				RadiusWithRespectToParent == other.RadiusWithRespectToParent &&
 				Radius == other.Radius &&
-				Unknown1 == other.Unknown1 &&
+				Unknown1.SequenceEqual(other.Unknown1) &&
 				MaxHeight == other.MaxHeight &&
 				Sink == other.Sink &&
 				SinkVariance == other.SinkVariance &&
@@ -379,12 +355,16 @@ namespace ESPSharp.DataTypes
 				XAngleVariance == other.XAngleVariance &&
 				YAngleVariance == other.YAngleVariance &&
 				ZAngleVariance == other.ZAngleVariance &&
-				Unknown2 == other.Unknown2;
+				Unknown2.SequenceEqual(other.Unknown2);
         }
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             RegionObject other = obj as RegionObject;
+
             if (other == null)
                 return false;
             else
@@ -398,11 +378,31 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(RegionObject objA, RegionObject objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(RegionObject objA, RegionObject objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 	}

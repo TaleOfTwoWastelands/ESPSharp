@@ -15,11 +15,12 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RecordReference : Subrecord, ICloneable<RecordReference>, IComparable<RecordReference>, IEquatable<RecordReference>  
+	public partial class RecordReference : Subrecord, ICloneable, IComparable<RecordReference>, IEquatable<RecordReference>  
 	{
 		public FormID Reference { get; set; }
 
-		public RecordReference()
+		public RecordReference(string Tag = null)
+			:base(Tag)
 		{
 			Reference = new FormID();
 		}
@@ -31,7 +32,8 @@ namespace ESPSharp.Subrecords
 
 		public RecordReference(RecordReference copyObject)
 		{
-			Reference = copyObject.Reference.Clone();
+			if (copyObject.Reference != null)
+				Reference = (FormID)copyObject.Reference.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -71,7 +73,7 @@ namespace ESPSharp.Subrecords
 				Reference.ReadXML(subEle, master);
 		}
 
-		public RecordReference Clone()
+		public override object Clone()
 		{
 			return new RecordReference(this);
 		}

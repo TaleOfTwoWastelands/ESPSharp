@@ -1,0 +1,249 @@
+﻿<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="ESPSharp" #>
+<#@ import namespace="ESPSharp.DataTypes" #>
+<#@ import namespace="ESPSharp.Enums" #>
+<#@ import namespace="ESPSharp.Enums.Flags" #>
+<#@ import namespace="ESPSharp.Subrecords" #>
+<#@ import namespace="ESPSharp.SubrecordCollections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Xml.Linq;
+using ESPSharp.Enums;
+using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
+using ESPSharp.Subrecords;
+using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
+
+namespace ESPSharp.Records
+{
+	public partial class <#= template.ClassName #> : Record<# if (template.Fields.Any(f => f.Name == "EditorID")) { #>, IEditorID<#}#>
+	{
+<# foreach (var field in template.Fields) { #>
+		<#= field.PropertyDeclaration #>
+<#}#>
+	
+		public override void ReadData(ESPReader reader, long dataEnd)
+		{
+			while (reader.BaseStream.Position < dataEnd)
+			{
+				string subTag = reader.PeekTag();
+
+				switch (subTag)
+				{
+<# foreach (var field in template.Fields) { #>
+					case "<#= field.Tag #>":
+<# if (field.implementReadData) { #>
+						if (<#= field.Name #> == null)
+							<#= field.Name #> = new <#= field.TypeString #>();
+
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
+						<#= field.Name #>.ReadBinary(reader);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){#>
+						<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp<#= field.Tag #> = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
+						temp<#= field.Tag #>.ReadBinary(reader);
+						<#= field.Name #>.Add(temp<#= field.Tag #>);
+<# } #>
+<# } else { #>
+						Read<#= field.Name #>(reader);
+<# } #>
+						break;
+<# } #>
+					default:
+						throw new Exception();
+				}
+			}
+		}
+
+		public override void WriteData(ESPWriter writer)
+		{
+<# foreach (var field in template.Fields) { #>
+<# if (field.implementWriteData) { #>
+			if (<#= field.Name #> != null)
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
+				<#= field.Name #>.WriteBinary(writer);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){ #>
+				foreach (var item in <#= field.Name #>)
+					item.WriteBinary(writer);
+<# } #>
+<# } else { #>
+
+			Write<#= field.Name #>(writer);
+<# } #>
+<# } #>
+		}
+
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
+		{
+			XElement subEle;
+<# foreach (var field in template.Fields) { #>
+<# if (field.implementWriteXML) { #>
+			if (<#= field.Name #> != null)		
+			{		
+				ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
+				<#= field.Name #>.WriteXML(subEle, master);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
+				List<string> xmlNames = new List<string>{"<#= string.Join("\", \"", field.XMLSubNames) #>"};
+				int i = 0;
+				foreach (var entry in <#= field.Name #>)
+				{
+					i = i % xmlNames.Count();
+					XElement newEle = new XElement(xmlNames[i]);
+					entry.WriteXML(newEle, master);
+					subEle.Add(newEle);
+					i++;
+				}
+<# } #>
+			}
+<# } else { #>
+
+			Write<#= field.Name #>XML(ele, master);
+<# } #>
+<# } #>
+		}
+
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
+		{
+			XElement subEle;
+
+<# foreach (var field in template.Fields) { #>
+<# if (field.implementReadXML) { #>
+			if (ele.TryPathTo("<#= field.XMLPath#>", false, out subEle))
+			{
+				if (<#= field.Name #> == null)
+					<#= field.Name #> = new <#= field.TypeString #>();
+					
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
+				<#= field.Name #>.ReadXML(subEle, master);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
+				foreach (XElement e in subEle.Elements())
+				{
+					<#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp<#= field.Tag #> = new <#= GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
+					temp<#= field.Tag #>.ReadXML(e, master);
+					<#=  field.Name #>.Add(temp<#= field.Tag #>);
+				}
+<# } #>
+			}
+<# } else { #>
+
+			Read<#= field.Name #>XML(ele, master);
+<# } #>
+<# } #>
+		}
+
+<#foreach (var field in template.Fields.Where(f => !f.implementReadData)) { #>
+		partial void Read<#= field.Name #>(ESPReader reader);
+<# } #>
+<#foreach (var field in template.Fields.Where(f => !f.implementWriteData)) { #>
+		partial void Write<#= field.Name #>(ESPWriter writer);
+<# } #>
+<#foreach (var field in template.Fields.Where(f => !f.implementWriteXML)) { #>
+		partial void Write<#= field.Name #>XML(XElement ele, ElderScrollsPlugin master);
+<# } #>
+<#foreach (var field in template.Fields.Where(f => !f.implementReadXML)) { #>
+		partial void Read<#= field.Name #>XML(XElement ele, ElderScrollsPlugin master);
+<# } #>
+	}
+}
+<#+
+public class RecordTemplate
+{
+    public string ClassName;
+	public List<RecordField> Fields = new List<RecordField>();
+}
+
+public class RecordField
+{
+	public string Tag;
+	public Type Type;
+	public string Name;
+	public string XMLPath;
+	public List<string> XMLSubNames;
+
+	public bool isRequired = false;
+	public bool isReadOnly = false;
+	public bool implementReadData = true;
+	public bool implementWriteData = true;
+	public bool implementReadXML = true;
+	public bool implementWriteXML = true;
+
+	public RecordField()
+    {
+    }
+
+	public RecordField(string Tag, Type Type, string Name, string XMLPath)
+    {
+		this.Tag = Tag;
+		this.Type = Type;
+		this.Name = Name;
+		this.XMLPath = XMLPath;
+    }
+
+	public string TypeString
+    {
+        get 
+        {
+			return GetFriendlyName(Type);
+        }
+    }
+
+	public string Declaration
+    {
+		get
+        {
+			return string.Format("private {0} {1}", TypeString, ToPrivateCase(Name));
+        }
+    }
+
+	public string PropertyDeclaration
+    {
+		get
+        {
+			string declare = "public " + GetFriendlyName(Type) + " " + ToPropertyCase(Name);
+
+			if (isReadOnly)
+				declare += " { get; }";
+			else				
+				declare += " { get; set; }";
+
+			return declare;
+        }
+    }
+}
+
+public static string ToPrivateCase(string inString)
+{
+	return string.Format("{0}{1}", inString.Substring(0, 1).ToLowerInvariant(), inString.Substring(1));
+}
+
+public static string ToPropertyCase(string inString)
+{
+	return string.Format("{0}{1}", inString.Substring(0, 1).ToUpperInvariant(), inString.Substring(1));
+}
+
+public static string GetFriendlyName(Type inType)
+{
+	if (inType.IsConstructedGenericType)
+    {
+		string name = inType.Name.Substring(0, inType.Name.IndexOf('`'));
+		string args = string.Join(", ", inType.GenericTypeArguments.Select<Type, string>(t => GetFriendlyName(t)));
+
+		return name + "<" + args + ">";
+    }
+	else if (inType == typeof(object))
+		return "dynamic";
+	else
+		return inType.Name;
+}
+#>

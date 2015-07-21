@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PackageDialogData : Subrecord, ICloneable<PackageDialogData>, IComparable<PackageDialogData>, IEquatable<PackageDialogData>  
+	public partial class PackageDialogData : Subrecord, ICloneable, IComparable<PackageDialogData>, IEquatable<PackageDialogData>  
 	{
 		public Single FOV { get; set; }
 		public FormID Topic { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unused { get; set; }
 		public PackageDialogType Type { get; set; }
 
-		public PackageDialogData()
+		public PackageDialogData(string Tag = null)
+			:base(Tag)
 		{
 			FOV = new Single();
 			Topic = new FormID();
@@ -44,9 +45,11 @@ namespace ESPSharp.Subrecords
 		public PackageDialogData(PackageDialogData copyObject)
 		{
 			FOV = copyObject.FOV;
-			Topic = copyObject.Topic.Clone();
+			if (copyObject.Topic != null)
+				Topic = (FormID)copyObject.Topic.Clone();
 			Flags = copyObject.Flags;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			Type = copyObject.Type;
 		}
 	
@@ -120,7 +123,7 @@ namespace ESPSharp.Subrecords
 				Type = subEle.ToEnum<PackageDialogType>();
 		}
 
-		public PackageDialogData Clone()
+		public override object Clone()
 		{
 			return new PackageDialogData(this);
 		}

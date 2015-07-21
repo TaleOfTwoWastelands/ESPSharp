@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WaterDataAndDamage : Subrecord, ICloneable<WaterDataAndDamage>, IComparable<WaterDataAndDamage>, IEquatable<WaterDataAndDamage>  
+	public partial class WaterDataAndDamage : Subrecord, ICloneable, IComparable<WaterDataAndDamage>, IEquatable<WaterDataAndDamage>  
 	{
 		public Byte[] Unknown { get; set; }
 		public Single WaterPropertiesSunPower { get; set; }
@@ -65,7 +65,8 @@ namespace ESPSharp.Subrecords
 		public Single NoisePropertiesNoiseLayerThreeAmplitudeScale { get; set; }
 		public UInt16 Damage { get; set; }
 
-		public WaterDataAndDamage()
+		public WaterDataAndDamage(string Tag = null)
+			:base(Tag)
 		{
 			Unknown = new byte[16];
 			WaterPropertiesSunPower = new Single();
@@ -110,9 +111,9 @@ namespace ESPSharp.Subrecords
 			NoisePropertiesNoiseLayerOneUVScale = new Single();
 			NoisePropertiesNoiseLayerTwoUVScale = new Single();
 			NoisePropertiesNoiseLayerThreeUVScale = new Single();
-			NoisePropertiesNoiseLayerOneAmplitudeScale = new Single();
-			NoisePropertiesNoiseLayerTwoAmplitudeScale = new Single();
-			NoisePropertiesNoiseLayerThreeAmplitudeScale = new Single();
+			NoisePropertiesNoiseLayerOneAmplitudeScale = 1;
+			NoisePropertiesNoiseLayerTwoAmplitudeScale = 0.5f;
+			NoisePropertiesNoiseLayerThreeAmplitudeScale = 0.25f;
 			Damage = new UInt16();
 		}
 
@@ -169,17 +170,23 @@ namespace ESPSharp.Subrecords
 
 		public WaterDataAndDamage(WaterDataAndDamage copyObject)
 		{
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 			WaterPropertiesSunPower = copyObject.WaterPropertiesSunPower;
 			WaterPropertiesReflectivityAmount = copyObject.WaterPropertiesReflectivityAmount;
 			WaterPropertiesFresnelAmount = copyObject.WaterPropertiesFresnelAmount;
-			Unused1 = (Byte[])copyObject.Unused1.Clone();
+			if (copyObject.Unused1 != null)
+				Unused1 = (Byte[])copyObject.Unused1.Clone();
 			FogPropertiesAboveWaterFogNearPlaneDistance = copyObject.FogPropertiesAboveWaterFogNearPlaneDistance;
 			FogPropertiesAboveWaterFogFarPlaneDistance = copyObject.FogPropertiesAboveWaterFogFarPlaneDistance;
-			ColorShallow = copyObject.ColorShallow.Clone();
-			ColorDeep = copyObject.ColorDeep.Clone();
-			ColorReflection = copyObject.ColorReflection.Clone();
-			Unused2 = (Byte[])copyObject.Unused2.Clone();
+			if (copyObject.ColorShallow != null)
+				ColorShallow = (Color)copyObject.ColorShallow.Clone();
+			if (copyObject.ColorDeep != null)
+				ColorDeep = (Color)copyObject.ColorDeep.Clone();
+			if (copyObject.ColorReflection != null)
+				ColorReflection = (Color)copyObject.ColorReflection.Clone();
+			if (copyObject.Unused2 != null)
+				Unused2 = (Byte[])copyObject.Unused2.Clone();
 			RainSimulatorForce = copyObject.RainSimulatorForce;
 			RainSimulatorVelocity = copyObject.RainSimulatorVelocity;
 			RainSimulatorFalloff = copyObject.RainSimulatorFalloff;
@@ -628,7 +635,7 @@ namespace ESPSharp.Subrecords
 				Damage = subEle.ToUInt16();
 		}
 
-		public WaterDataAndDamage Clone()
+		public override object Clone()
 		{
 			return new WaterDataAndDamage(this);
 		}

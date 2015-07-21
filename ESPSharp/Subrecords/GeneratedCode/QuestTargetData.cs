@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class QuestTargetData : Subrecord, ICloneable<QuestTargetData>, IComparable<QuestTargetData>, IEquatable<QuestTargetData>  
+	public partial class QuestTargetData : Subrecord, ICloneable, IComparable<QuestTargetData>, IEquatable<QuestTargetData>  
 	{
 		public FormID Target { get; set; }
 		public QuestTargetFlags Flags { get; set; }
 		public Byte[] Unused { get; set; }
 
-		public QuestTargetData()
+		public QuestTargetData(string Tag = null)
+			:base(Tag)
 		{
 			Target = new FormID();
 			Flags = new QuestTargetFlags();
@@ -37,9 +38,11 @@ namespace ESPSharp.Subrecords
 
 		public QuestTargetData(QuestTargetData copyObject)
 		{
-			Target = copyObject.Target.Clone();
+			if (copyObject.Target != null)
+				Target = (FormID)copyObject.Target.Clone();
 			Flags = copyObject.Flags;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -96,7 +99,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public QuestTargetData Clone()
+		public override object Clone()
 		{
 			return new QuestTargetData(this);
 		}

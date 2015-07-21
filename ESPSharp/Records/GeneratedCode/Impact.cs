@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Impact : Record, IEditorID	{
+	public partial class Impact : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public Model Model { get; set; }
 		public ImpactData Data { get; set; }
@@ -22,6 +24,22 @@ namespace ESPSharp.Records
 		public RecordReference TextureSet { get; set; }
 		public RecordReference Sound1 { get; set; }
 		public RecordReference Sound2 { get; set; }
+
+		public Impact()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new ImpactData("DATA");
+		}
+
+		public Impact(SimpleSubrecord<String> EditorID, Model Model, ImpactData Data, DecalData DecalData, RecordReference TextureSet, RecordReference Sound1, RecordReference Sound2)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public Impact(Impact copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -190,6 +208,11 @@ namespace ESPSharp.Records
 					
 				Sound2.ReadXML(subEle, master);
 			}
+		}		
+
+		public Impact Clone()
+		{
+			return new Impact(this);
 		}
 
 	}

@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	RecordTemplate template = new RecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "DialogTopic";
 
 	RecordField tempField;
@@ -23,6 +23,7 @@
 			"AddedQuests",
 			"AddedQuests"
 			);
+	tempField.isSorted = true;
 	tempField.XMLSubNames = new List<string>{"AddedQuest"};
 	template.Fields.Add(tempField);
 
@@ -63,6 +64,7 @@
 			"Priority",
 			"Priority"
 			);
+	tempField.DefaultValue = "new SimpleSubrecord<float>(\"PNAM\", 50)";
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 

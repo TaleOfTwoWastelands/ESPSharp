@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Activator : Record, IEditorID	{
+	public partial class Activator : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -27,6 +29,22 @@ namespace ESPSharp.Records
 		public RecordReference RadioStation { get; set; }
 		public RecordReference WaterType { get; set; }
 		public SimpleSubrecord<String> ActivationPrompt { get; set; }
+
+		public Activator()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+		}
+
+		public Activator(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, RecordReference Script, Destructable Destructable, RecordReference LoopingSound, RecordReference ActivationSound, RecordReference RadioTemplate, RecordReference RadioStation, RecordReference WaterType, SimpleSubrecord<String> ActivationPrompt)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+		}
+
+		public Activator(Activator copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -295,6 +313,11 @@ namespace ESPSharp.Records
 					
 				ActivationPrompt.ReadXML(subEle, master);
 			}
+		}		
+
+		public Activator Clone()
+		{
+			return new Activator(this);
 		}
 
 	}

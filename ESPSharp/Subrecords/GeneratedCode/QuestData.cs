@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class QuestData : Subrecord, ICloneable<QuestData>, IComparable<QuestData>, IEquatable<QuestData>  
+	public partial class QuestData : Subrecord, ICloneable, IComparable<QuestData>, IEquatable<QuestData>  
 	{
 		public QuestFlags Flags { get; set; }
 		public Byte Priority { get; set; }
 		public Byte[] Unused { get; set; }
 		public Single QuestDelay { get; set; }
 
-		public QuestData()
+		public QuestData(string Tag = null)
+			:base(Tag)
 		{
 			Flags = new QuestFlags();
 			Priority = new Byte();
@@ -42,7 +43,8 @@ namespace ESPSharp.Subrecords
 		{
 			Flags = copyObject.Flags;
 			Priority = copyObject.Priority;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			QuestDelay = copyObject.QuestDelay;
 		}
 	
@@ -108,7 +110,7 @@ namespace ESPSharp.Subrecords
 				QuestDelay = subEle.ToSingle();
 		}
 
-		public QuestData Clone()
+		public override object Clone()
 		{
 			return new QuestData(this);
 		}

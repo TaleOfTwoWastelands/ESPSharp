@@ -13,6 +13,7 @@
 			"Header",
 			"Header"
 			);
+	template.hashKey = tempField;
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
@@ -92,7 +93,7 @@
 	tempField = 
 		new SubrecordCollectionField(
 			"RDWT",
-			typeof(RegionWeatherList),
+			typeof(WeatherList),
 			"Weathers",
 			"Weathers"
 			);

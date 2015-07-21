@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	RecordTemplate template = new RecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "LeveledItem";
 
 	RecordField tempField;
@@ -53,7 +53,6 @@
 			"Global",
 			"Global"
 			);
-	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
 	tempField = 

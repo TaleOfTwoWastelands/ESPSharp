@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ImpactList : Subrecord, ICloneable<ImpactList>, IComparable<ImpactList>, IEquatable<ImpactList>  
+	public partial class ImpactList : Subrecord, ICloneable, IComparable<ImpactList>, IEquatable<ImpactList>  
 	{
 		public FormID Stone { get; set; }
 		public FormID Dirt { get; set; }
@@ -30,7 +30,8 @@ namespace ESPSharp.Subrecords
 		public FormID OrganicBug { get; set; }
 		public FormID OrganicGlow { get; set; }
 
-		public ImpactList()
+		public ImpactList(string Tag = null)
+			:base(Tag)
 		{
 			Stone = new FormID();
 			Dirt = new FormID();
@@ -64,18 +65,30 @@ namespace ESPSharp.Subrecords
 
 		public ImpactList(ImpactList copyObject)
 		{
-			Stone = copyObject.Stone.Clone();
-			Dirt = copyObject.Dirt.Clone();
-			Grass = copyObject.Grass.Clone();
-			Glass = copyObject.Glass.Clone();
-			Metal = copyObject.Metal.Clone();
-			Wood = copyObject.Wood.Clone();
-			Organic = copyObject.Organic.Clone();
-			Cloth = copyObject.Cloth.Clone();
-			Water = copyObject.Water.Clone();
-			HollowMetal = copyObject.HollowMetal.Clone();
-			OrganicBug = copyObject.OrganicBug.Clone();
-			OrganicGlow = copyObject.OrganicGlow.Clone();
+			if (copyObject.Stone != null)
+				Stone = (FormID)copyObject.Stone.Clone();
+			if (copyObject.Dirt != null)
+				Dirt = (FormID)copyObject.Dirt.Clone();
+			if (copyObject.Grass != null)
+				Grass = (FormID)copyObject.Grass.Clone();
+			if (copyObject.Glass != null)
+				Glass = (FormID)copyObject.Glass.Clone();
+			if (copyObject.Metal != null)
+				Metal = (FormID)copyObject.Metal.Clone();
+			if (copyObject.Wood != null)
+				Wood = (FormID)copyObject.Wood.Clone();
+			if (copyObject.Organic != null)
+				Organic = (FormID)copyObject.Organic.Clone();
+			if (copyObject.Cloth != null)
+				Cloth = (FormID)copyObject.Cloth.Clone();
+			if (copyObject.Water != null)
+				Water = (FormID)copyObject.Water.Clone();
+			if (copyObject.HollowMetal != null)
+				HollowMetal = (FormID)copyObject.HollowMetal.Clone();
+			if (copyObject.OrganicBug != null)
+				OrganicBug = (FormID)copyObject.OrganicBug.Clone();
+			if (copyObject.OrganicGlow != null)
+				OrganicGlow = (FormID)copyObject.OrganicGlow.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -203,7 +216,7 @@ namespace ESPSharp.Subrecords
 				OrganicGlow.ReadXML(subEle, master);
 		}
 
-		public ImpactList Clone()
+		public override object Clone()
 		{
 			return new ImpactList(this);
 		}

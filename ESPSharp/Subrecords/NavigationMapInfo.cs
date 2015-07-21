@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-    public partial class NavigationMapInfo : Subrecord, ICloneable<NavigationMapInfo>, IReferenceContainer
+    public partial class NavigationMapInfo : Subrecord, ICloneable, IReferenceContainer
     {
         partial void ReadUnknown2Binary(ESPReader reader)
         {

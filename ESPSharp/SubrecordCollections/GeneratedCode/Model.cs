@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class Model : SubrecordCollection, ICloneable<Model>, IReferenceContainer
-	{
+	public partial class Model : SubrecordCollection, IReferenceContainer	{
 		public SimpleSubrecord<String> FileName { get; set; }
 		public SimpleSubrecord<Byte[]> Unknown { get; set; }
 		public SimpleSubrecord<Byte[]> TextureFileHash { get; set; }
@@ -37,12 +36,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public Model(Model copyObject)
 		{
-			FileName = copyObject.FileName.Clone();
-			Unknown = copyObject.Unknown.Clone();
-			TextureFileHash = copyObject.TextureFileHash.Clone();
-			AlternateTextures = copyObject.AlternateTextures.Clone();
-			FaceGenModelFlags = copyObject.FaceGenModelFlags.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

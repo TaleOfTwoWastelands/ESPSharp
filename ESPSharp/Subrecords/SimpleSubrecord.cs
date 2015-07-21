@@ -9,9 +9,70 @@ using ESPSharp.Interfaces;
 
 namespace ESPSharp.Subrecords
 {
-    public class SimpleSubrecord<T> : Subrecord, ICloneable<SimpleSubrecord<T>>
+    public class SimpleSubrecord<T> : Subrecord, ICloneable
     {
         public T Value { get; set; }
+
+        public SimpleSubrecord(string Tag = null)
+            :base(Tag)
+        {
+            Type tType = typeof(T);
+            Type readType = tType;
+
+            if (tType.IsEnum)
+                readType = Enum.GetUnderlyingType(tType);
+
+            string typeName = readType.FullName;
+
+
+            switch (typeName)
+            {
+                case "System.Byte":
+                    break;
+                case "System.SByte":
+                    break;
+                case "System.Char":
+                    Value = (T)(object)'\0';
+                    break;
+                case "System.UInt16":
+                    break;
+                case "System.Int16":
+                    break;
+                case "System.UInt32":
+                    break;
+                case "System.Int32":
+                    break;
+                case "System.Single":
+                    break;
+                case "System.UInt64":
+                    break;
+                case "System.Int64":
+                    break;
+                case "System.Byte[]":
+                    Value = (T)(object) new byte[0];
+                    break;
+                case "System.Char[]":
+                    Value = (T)(object)new char[0];
+                    break;
+                case "System.String":
+                    Value = (T)(object)"";
+                    break;
+                case "ESPSharp.DataTypes.Color":
+                    Value = (T)(object)new DataTypes.Color();
+                    break;
+                case "ESPSharp.DataTypes.XYFloat":
+                    Value = (T)(object)new DataTypes.XYFloat();
+                    break;
+                default:
+                    throw new NotImplementedException(typeName + " is not yet implemented.");
+            }
+        }
+
+        public SimpleSubrecord(string tag, T value)
+            :base(tag)
+        {
+            Value = value;
+        }
 
         protected override void ReadData(ESPReader reader)
         {
@@ -263,7 +324,7 @@ namespace ESPSharp.Subrecords
             }
         }
 
-        public SimpleSubrecord<T> Clone()
+        public override object Clone()
         {
             throw new NotImplementedException();
         }

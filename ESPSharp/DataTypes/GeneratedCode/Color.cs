@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class Color : IESPSerializable, ICloneable<Color>, IComparable<Color>, IEquatable<Color>
+	public partial class Color : IESPSerializable, ICloneable, IComparable<Color>, IEquatable<Color>  
 	{
 		public Byte Red { get; set; }
 		public Byte Green { get; set; }
@@ -50,9 +50,9 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				Red = reader.ReadByte();
-				Green = reader.ReadByte();
-				Blue = reader.ReadByte();
-				Alpha_Unused = reader.ReadByte();
+					Green = reader.ReadByte();
+					Blue = reader.ReadByte();
+					Alpha_Unused = reader.ReadByte();
 			}
 			catch
 			{
@@ -62,16 +62,16 @@ namespace ESPSharp.DataTypes
 
 		public void WriteBinary(ESPWriter writer)
 		{
-			writer.Write(Red);			
-			writer.Write(Green);			
-			writer.Write(Blue);			
-			writer.Write(Alpha_Unused);			
+			writer.Write(Red);
+			writer.Write(Green);
+			writer.Write(Blue);
+			writer.Write(Alpha_Unused);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Red", true, out subEle);
 			subEle.Value = Red.ToString();
 
@@ -88,36 +88,28 @@ namespace ESPSharp.DataTypes
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Red", false, out subEle))
-			{
 				Red = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Green", false, out subEle))
-			{
 				Green = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Blue", false, out subEle))
-			{
 				Blue = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("Alpha_Unused", false, out subEle))
-			{
 				Alpha_Unused = subEle.ToByte();
-			}
 		}
 
-		public Color Clone()
+		public object Clone()
 		{
 			return new Color(this);
 		}
 
         public int CompareTo(Color other)
         {
-            return Red.CompareTo(other.Red);
+			return Red.CompareTo(other.Red);
         }
 
         public static bool operator >(Color objA, Color objB)
@@ -142,6 +134,16 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(Color other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return Red == other.Red &&
 				Green == other.Green &&
 				Blue == other.Blue &&
@@ -150,7 +152,11 @@ namespace ESPSharp.DataTypes
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             Color other = obj as Color;
+
             if (other == null)
                 return false;
             else
@@ -164,11 +170,31 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(Color objA, Color objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(Color objA, Color objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 	}

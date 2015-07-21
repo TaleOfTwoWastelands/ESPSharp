@@ -13,6 +13,7 @@
 			"InfoConnection",
 			"InfoConnection"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 

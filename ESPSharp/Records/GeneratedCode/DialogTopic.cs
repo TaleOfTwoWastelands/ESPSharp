@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class DialogTopic : Record, IEditorID	{
+	public partial class DialogTopic : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public List<AddedQuest> AddedQuests { get; set; }
 		public List<RecordReference> RemovedQuests { get; set; }
@@ -23,6 +25,26 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<Single> Priority { get; set; }
 		public SimpleSubrecord<String> Unknown { get; set; }
 		public DialogTopicData Data { get; set; }
+
+		public DialogTopic()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Name = new SimpleSubrecord<String>("FULL");
+			Priority = new SimpleSubrecord<float>("PNAM", 50);
+			Data = new DialogTopicData("DATA");
+		}
+
+		public DialogTopic(SimpleSubrecord<String> EditorID, List<AddedQuest> AddedQuests, List<RecordReference> RemovedQuests, List<SharedInfo> UnusedInfos, SimpleSubrecord<String> Name, SimpleSubrecord<Single> Priority, SimpleSubrecord<String> Unknown, DialogTopicData Data)
+		{
+			this.EditorID = EditorID;
+			this.Name = Name;
+			this.Priority = Priority;
+			this.Data = Data;
+		}
+
+		public DialogTopic(DialogTopic copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -97,8 +119,11 @@ namespace ESPSharp.Records
 			if (EditorID != null)
 				EditorID.WriteBinary(writer);
 			if (AddedQuests != null)
+			{
+				AddedQuests.Sort();
 				foreach (var item in AddedQuests)
 					item.WriteBinary(writer);
+			}
 			if (RemovedQuests != null)
 				foreach (var item in RemovedQuests)
 					item.WriteBinary(writer);
@@ -128,6 +153,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("AddedQuests", true, out subEle);
 				List<string> xmlNames = new List<string>{"AddedQuest"};
 				int i = 0;
+				AddedQuests.Sort();
 				foreach (var entry in AddedQuests)
 				{
 					i = i % xmlNames.Count();
@@ -262,6 +288,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public DialogTopic Clone()
+		{
+			return new DialogTopic(this);
 		}
 
 	}

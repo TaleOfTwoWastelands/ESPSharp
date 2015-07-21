@@ -14,10 +14,11 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-    public partial class SubMarker : Subrecord, ICloneable<SubMarker>
+    public partial class SubMarker : Subrecord, ICloneable
     {
 
-        public SubMarker()
+        public SubMarker(string Tag = null)
+            :base(Tag)
         {
         }
 
@@ -41,7 +42,7 @@ namespace ESPSharp.Subrecords
         {
         }
 
-        public SubMarker Clone()
+        public override object Clone()
         {
             return new SubMarker(this);
         }

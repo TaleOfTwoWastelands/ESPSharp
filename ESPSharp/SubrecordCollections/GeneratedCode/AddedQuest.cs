@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class AddedQuest : SubrecordCollection, ICloneable<AddedQuest>
-	{
+	public partial class AddedQuest : SubrecordCollection, IComparable<AddedQuest>	{
 		public RecordReference Quest { get; set; }
 		public List<SharedInfo> SharedInfos { get; set; }
 
@@ -31,13 +30,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public AddedQuest(AddedQuest copyObject)
 		{
-			Quest = copyObject.Quest.Clone();
-			SharedInfos = new List<SharedInfo>();
-			foreach (var item in copyObject.SharedInfos)
-			{
-				SharedInfos.Add(item.Clone());
-			}
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{
@@ -132,6 +125,31 @@ namespace ESPSharp.SubrecordCollections
 		{
 			return new AddedQuest(this);
 		}
+
+		public int CompareTo(AddedQuest other)
+        {
+			return Quest.CompareTo(other.Quest);
+        }
+
+        public static bool operator >(AddedQuest objA, AddedQuest objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(AddedQuest objA, AddedQuest objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(AddedQuest objA, AddedQuest objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(AddedQuest objA, AddedQuest objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
 
 	}
 }

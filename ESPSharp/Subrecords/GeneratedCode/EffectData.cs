@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EffectData : Subrecord, ICloneable<EffectData>, IComparable<EffectData>, IEquatable<EffectData>  
+	public partial class EffectData : Subrecord, ICloneable, IComparable<EffectData>, IEquatable<EffectData>  
 	{
 		public UInt32 Magnitude { get; set; }
 		public UInt32 Area { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public EffectType Type { get; set; }
 		public ActorValues ActorValue { get; set; }
 
-		public EffectData()
+		public EffectData(string Tag = null)
+			:base(Tag)
 		{
 			Magnitude = new UInt32();
 			Area = new UInt32();
@@ -119,7 +120,7 @@ namespace ESPSharp.Subrecords
 				ActorValue = subEle.ToEnum<ActorValues>();
 		}
 
-		public EffectData Clone()
+		public override object Clone()
 		{
 			return new EffectData(this);
 		}

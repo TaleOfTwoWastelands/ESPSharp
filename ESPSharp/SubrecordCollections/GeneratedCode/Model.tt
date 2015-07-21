@@ -13,6 +13,7 @@
 			"FileName",
 			"FileName"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 

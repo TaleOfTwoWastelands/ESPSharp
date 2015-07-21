@@ -15,11 +15,12 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PerkAbilityData : Subrecord, ICloneable<PerkAbilityData>, IComparable<PerkAbilityData>, IEquatable<PerkAbilityData>  
+	public partial class PerkAbilityData : Subrecord, ICloneable, IComparable<PerkAbilityData>, IEquatable<PerkAbilityData>  
 	{
 		public FormID Ability { get; set; }
 
-		public PerkAbilityData()
+		public PerkAbilityData(string Tag = null)
+			:base(Tag)
 		{
 			Ability = new FormID();
 		}
@@ -31,7 +32,8 @@ namespace ESPSharp.Subrecords
 
 		public PerkAbilityData(PerkAbilityData copyObject)
 		{
-			Ability = copyObject.Ability.Clone();
+			if (copyObject.Ability != null)
+				Ability = (FormID)copyObject.Ability.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -71,7 +73,7 @@ namespace ESPSharp.Subrecords
 				Ability.ReadXML(subEle, master);
 		}
 
-		public PerkAbilityData Clone()
+		public override object Clone()
 		{
 			return new PerkAbilityData(this);
 		}

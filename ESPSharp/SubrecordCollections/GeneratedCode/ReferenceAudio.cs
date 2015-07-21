@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class ReferenceAudio : SubrecordCollection, ICloneable<ReferenceAudio>
-	{
+	public partial class ReferenceAudio : SubrecordCollection	{
 		public SubMarker Marker { get; set; }
 		public SimpleSubrecord<Byte[]> Unknown1 { get; set; }
 		public RecordReference AudioLocation { get; set; }
@@ -39,12 +38,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public ReferenceAudio(ReferenceAudio copyObject)
 		{
-			Unknown1 = copyObject.Unknown1.Clone();
-			AudioLocation = copyObject.AudioLocation.Clone();
-			Unknown2 = copyObject.Unknown2.Clone();
-			Unknown3 = copyObject.Unknown3.Clone();
-			Unknown4 = copyObject.Unknown4.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

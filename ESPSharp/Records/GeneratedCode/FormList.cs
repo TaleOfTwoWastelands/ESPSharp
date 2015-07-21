@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,24 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class FormList : Record, IEditorID	{
+	public partial class FormList : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public List<RecordReference> List { get; set; }
+
+		public FormList()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public FormList(SimpleSubrecord<String> EditorID, List<RecordReference> List)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public FormList(FormList copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -102,6 +118,11 @@ namespace ESPSharp.Records
 					List.Add(tempLNAM);
 				}
 			}
+		}		
+
+		public FormList Clone()
+		{
+			return new FormList(this);
 		}
 
 	}

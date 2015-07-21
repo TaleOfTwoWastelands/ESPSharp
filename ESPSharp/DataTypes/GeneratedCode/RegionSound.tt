@@ -1,13 +1,11 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ output extension=".cs" #>
-<#	
-	DataTypeTemplate template = new DataTypeTemplate();
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "RegionSound";
 
-	DataTypeField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(FormID),
 			"Sound",
 			"Sound"
@@ -16,7 +14,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(RegionSoundFlags),
 			"Flags",
 			"Flags"
@@ -24,7 +22,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(uint),
 			"Chance",
 			"Chance"

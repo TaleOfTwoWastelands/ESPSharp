@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class MagicEffectData : Subrecord, ICloneable<MagicEffectData>, IComparable<MagicEffectData>, IEquatable<MagicEffectData>  
+	public partial class MagicEffectData : Subrecord, ICloneable, IComparable<MagicEffectData>, IEquatable<MagicEffectData>  
 	{
 		public MagicEffectFlags MagicEffectFlags { get; set; }
 		public Single BaseCost { get; set; }
@@ -37,7 +37,8 @@ namespace ESPSharp.Subrecords
 		public MagicEffectArchetype Archetype { get; set; }
 		public ActorValues ActorValue { get; set; }
 
-		public MagicEffectData()
+		public MagicEffectData(string Tag = null)
+			:base(Tag)
 		{
 			MagicEffectFlags = new MagicEffectFlags();
 			BaseCost = new Single();
@@ -87,19 +88,28 @@ namespace ESPSharp.Subrecords
 		{
 			MagicEffectFlags = copyObject.MagicEffectFlags;
 			BaseCost = copyObject.BaseCost;
-			AssociatedItem = copyObject.AssociatedItem.Clone();
+			if (copyObject.AssociatedItem != null)
+				AssociatedItem = (FormID)copyObject.AssociatedItem.Clone();
 			MagicSchool = copyObject.MagicSchool;
 			ResistanceType = copyObject.ResistanceType;
 			Unknown = copyObject.Unknown;
-			Unused = (Byte[])copyObject.Unused.Clone();
-			Light = copyObject.Light.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Light != null)
+				Light = (FormID)copyObject.Light.Clone();
 			ProjectileSpeed = copyObject.ProjectileSpeed;
-			EffectShader = copyObject.EffectShader.Clone();
-			ObjectDisplayShader = copyObject.ObjectDisplayShader.Clone();
-			EffectSound = copyObject.EffectSound.Clone();
-			BoltSound = copyObject.BoltSound.Clone();
-			HitSound = copyObject.HitSound.Clone();
-			AreaSound = copyObject.AreaSound.Clone();
+			if (copyObject.EffectShader != null)
+				EffectShader = (FormID)copyObject.EffectShader.Clone();
+			if (copyObject.ObjectDisplayShader != null)
+				ObjectDisplayShader = (FormID)copyObject.ObjectDisplayShader.Clone();
+			if (copyObject.EffectSound != null)
+				EffectSound = (FormID)copyObject.EffectSound.Clone();
+			if (copyObject.BoltSound != null)
+				BoltSound = (FormID)copyObject.BoltSound.Clone();
+			if (copyObject.HitSound != null)
+				HitSound = (FormID)copyObject.HitSound.Clone();
+			if (copyObject.AreaSound != null)
+				AreaSound = (FormID)copyObject.AreaSound.Clone();
 			ConstantEffectEnchantmentFactor = copyObject.ConstantEffectEnchantmentFactor;
 			ConstantEffectBarterFactor = copyObject.ConstantEffectBarterFactor;
 			Archetype = copyObject.Archetype;
@@ -288,7 +298,7 @@ namespace ESPSharp.Subrecords
 				ActorValue = subEle.ToEnum<ActorValues>();
 		}
 
-		public MagicEffectData Clone()
+		public override object Clone()
 		{
 			return new MagicEffectData(this);
 		}

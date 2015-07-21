@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,25 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class MusicType : Record, IEditorID	{
+	public partial class MusicType : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Filename { get; set; }
 		public SimpleSubrecord<Single> Decibel { get; set; }
+
+		public MusicType()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public MusicType(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Filename, SimpleSubrecord<Single> Decibel)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public MusicType(MusicType copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -106,6 +122,11 @@ namespace ESPSharp.Records
 					
 				Decibel.ReadXML(subEle, master);
 			}
+		}		
+
+		public MusicType Clone()
+		{
+			return new MusicType(this);
 		}
 
 	}

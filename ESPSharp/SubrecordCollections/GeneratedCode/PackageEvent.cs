@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class PackageEvent : SubrecordCollection, ICloneable<PackageEvent>
-	{
+	public partial class PackageEvent : SubrecordCollection	{
 		public SubMarker Marker { get; set; }
 		public RecordReference Idle { get; set; }
 		public EmbeddedScript Script { get; set; }
@@ -35,10 +34,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public PackageEvent(PackageEvent copyObject)
 		{
-			Idle = copyObject.Idle.Clone();
-			Script = copyObject.Script.Clone();
-			Topic = copyObject.Topic.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

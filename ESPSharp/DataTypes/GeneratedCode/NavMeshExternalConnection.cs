@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class NavMeshExternalConnection : IESPSerializable, ICloneable<NavMeshExternalConnection>, IComparable<NavMeshExternalConnection>, IEquatable<NavMeshExternalConnection>, IReferenceContainer
+	public partial class NavMeshExternalConnection : IESPSerializable, ICloneable, IComparable<NavMeshExternalConnection>, IEquatable<NavMeshExternalConnection>  
 	{
 		public Byte[] Unknown { get; set; }
 		public FormID NavigationMesh { get; set; }
@@ -36,8 +36,10 @@ namespace ESPSharp.DataTypes
 
 		public NavMeshExternalConnection(NavMeshExternalConnection copyObject)
 		{
-			Unknown = (Byte[])copyObject.Unknown.Clone();
-			NavigationMesh = copyObject.NavigationMesh.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.NavigationMesh != null)
+				NavigationMesh = (FormID)copyObject.NavigationMesh.Clone();
 			Triangle = copyObject.Triangle;
 		}
 	
@@ -46,8 +48,8 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				Unknown = reader.ReadBytes(4);
-				NavigationMesh.ReadBinary(reader);
-				Triangle = reader.ReadUInt16();
+					NavigationMesh.ReadBinary(reader);
+					Triangle = reader.ReadUInt16();
 			}
 			catch
 			{
@@ -60,15 +62,15 @@ namespace ESPSharp.DataTypes
 			if (Unknown == null)
 				writer.Write(new byte[4]);
 			else
-				writer.Write(Unknown);
+			writer.Write(Unknown);
 			NavigationMesh.WriteBinary(writer);
-			writer.Write(Triangle);			
+			writer.Write(Triangle);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Unknown", true, out subEle);
 			subEle.Value = Unknown.ToHex();
 
@@ -82,31 +84,25 @@ namespace ESPSharp.DataTypes
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Unknown", false, out subEle))
-			{
 				Unknown = subEle.ToBytes();
-			}
 
 			if (ele.TryPathTo("NavigationMesh", false, out subEle))
-			{
 				NavigationMesh.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Triangle", false, out subEle))
-			{
 				Triangle = subEle.ToUInt16();
-			}
 		}
 
-		public NavMeshExternalConnection Clone()
+		public object Clone()
 		{
 			return new NavMeshExternalConnection(this);
 		}
 
         public int CompareTo(NavMeshExternalConnection other)
         {
-            return NavigationMesh.CompareTo(other.NavigationMesh);
+			return NavigationMesh.CompareTo(other.NavigationMesh);
         }
 
         public static bool operator >(NavMeshExternalConnection objA, NavMeshExternalConnection objB)
@@ -131,14 +127,28 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(NavMeshExternalConnection other)
         {
-			return Unknown == other.Unknown &&
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return Unknown.SequenceEqual(other.Unknown) &&
 				NavigationMesh == other.NavigationMesh &&
 				Triangle == other.Triangle;
         }
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             NavMeshExternalConnection other = obj as NavMeshExternalConnection;
+
             if (other == null)
                 return false;
             else
@@ -152,11 +162,31 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(NavMeshExternalConnection objA, NavMeshExternalConnection objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(NavMeshExternalConnection objA, NavMeshExternalConnection objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 	}

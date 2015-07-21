@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Ammunition : Record, IEditorID	{
+	public partial class Ammunition : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -30,6 +32,26 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<String> ShortName { get; set; }
 		public SimpleSubrecord<String> Abbreviation { get; set; }
 		public List<RecordReference> AmmoEffects { get; set; }
+
+		public Ammunition()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Name = new SimpleSubrecord<String>("FULL");
+			Data = new AmmoData("DATA");
+		}
+
+		public Ammunition(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference Script, Destructable Destructable, RecordReference PickUpSound, RecordReference DropSound, AmmoData Data, AmmoExtraData ExtraData, SimpleSubrecord<String> ShortName, SimpleSubrecord<String> Abbreviation, List<RecordReference> AmmoEffects)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Name = Name;
+			this.Data = Data;
+		}
+
+		public Ammunition(Ammunition copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -375,6 +397,11 @@ namespace ESPSharp.Records
 					AmmoEffects.Add(tempRCIL);
 				}
 			}
+		}		
+
+		public Ammunition Clone()
+		{
+			return new Ammunition(this);
 		}
 
 	}

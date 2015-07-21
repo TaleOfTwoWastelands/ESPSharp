@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class InventoryItem : SubrecordCollection, ICloneable<InventoryItem>
-	{
+	public partial class InventoryItem : SubrecordCollection, IComparable<InventoryItem>	{
 		public InventoryItemData Data { get; set; }
 		public InventoryItemExtraData ExtraData { get; set; }
 
@@ -32,9 +31,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public InventoryItem(InventoryItem copyObject)
 		{
-			Data = copyObject.Data.Clone();
-			ExtraData = copyObject.ExtraData.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{
@@ -115,6 +112,31 @@ namespace ESPSharp.SubrecordCollections
 		{
 			return new InventoryItem(this);
 		}
+
+		public int CompareTo(InventoryItem other)
+        {
+			return Data.CompareTo(other.Data);
+        }
+
+        public static bool operator >(InventoryItem objA, InventoryItem objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(InventoryItem objA, InventoryItem objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(InventoryItem objA, InventoryItem objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(InventoryItem objA, InventoryItem objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
 
 	}
 }

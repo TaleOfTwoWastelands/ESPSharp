@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class DialogEndScript : SubrecordCollection, ICloneable<DialogEndScript>
-	{
+	public partial class DialogEndScript : SubrecordCollection	{
 		public SubMarker EndScriptMarker { get; set; }
 		public EmbeddedScript EmbeddedScript { get; set; }
 
@@ -31,9 +30,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public DialogEndScript(DialogEndScript copyObject)
 		{
-			EndScriptMarker = copyObject.EndScriptMarker.Clone();
-			EmbeddedScript = copyObject.EmbeddedScript.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

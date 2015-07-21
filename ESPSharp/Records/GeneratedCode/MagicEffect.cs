@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class MagicEffect : Record, IEditorID	{
+	public partial class MagicEffect : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<String> Description { get; set; }
@@ -22,6 +24,24 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<String> SmallIcon { get; set; }
 		public Model Model { get; set; }
 		public MagicEffectData Data { get; set; }
+
+		public MagicEffect()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Description = new SimpleSubrecord<String>("DESC");
+			Data = new MagicEffectData("DATA");
+		}
+
+		public MagicEffect(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<String> Description, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, Model Model, MagicEffectData Data)
+		{
+			this.EditorID = EditorID;
+			this.Description = Description;
+			this.Data = Data;
+		}
+
+		public MagicEffect(MagicEffect copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -190,6 +210,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public MagicEffect Clone()
+		{
+			return new MagicEffect(this);
 		}
 
 	}

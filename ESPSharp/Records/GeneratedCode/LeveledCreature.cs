@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,36 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class LeveledCreature : Record, IEditorID	{
+	public partial class LeveledCreature : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<Byte> ChanceNone { get; set; }
 		public SimpleSubrecord<LeveledListFlags> LeveledObjectFlags { get; set; }
 		public List<LeveledListEntry> LeveledList { get; set; }
 		public Model Model { get; set; }
+
+		public LeveledCreature()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			ChanceNone = new SimpleSubrecord<Byte>("LVLD");
+			LeveledObjectFlags = new SimpleSubrecord<LeveledListFlags>("LVLF");
+			LeveledList = new List<LeveledListEntry>();
+		}
+
+		public LeveledCreature(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<Byte> ChanceNone, SimpleSubrecord<LeveledListFlags> LeveledObjectFlags, List<LeveledListEntry> LeveledList, Model Model)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.ChanceNone = ChanceNone;
+			this.LeveledObjectFlags = LeveledObjectFlags;
+			this.LeveledList = LeveledList;
+		}
+
+		public LeveledCreature(LeveledCreature copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -186,6 +210,11 @@ namespace ESPSharp.Records
 					
 				Model.ReadXML(subEle, master);
 			}
+		}		
+
+		public LeveledCreature Clone()
+		{
+			return new LeveledCreature(this);
 		}
 
 	}

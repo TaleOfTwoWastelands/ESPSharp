@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeaponExtraData : Subrecord, ICloneable<WeaponExtraData>, IComparable<WeaponExtraData>, IEquatable<WeaponExtraData>  
+	public partial class WeaponExtraData : Subrecord, ICloneable, IComparable<WeaponExtraData>, IEquatable<WeaponExtraData>  
 	{
 		public WeaponAnimationType AnimationType { get; set; }
 		public Single AnimationMultiplier { get; set; }
@@ -77,7 +77,8 @@ namespace ESPSharp.Subrecords
 		public Single ImpulseDistance { get; set; }
 		public UInt32 SkillRequirement { get; set; }
 
-		public WeaponExtraData()
+		public WeaponExtraData(string Tag = null)
+			:base(Tag)
 		{
 			AnimationType = new WeaponAnimationType();
 			AnimationMultiplier = new Single();
@@ -214,10 +215,12 @@ namespace ESPSharp.Subrecords
 			ReloadAnimation = copyObject.ReloadAnimation;
 			MinSpread = copyObject.MinSpread;
 			Spread = copyObject.Spread;
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 			SightFOV = copyObject.SightFOV;
 			Unknown2 = copyObject.Unknown2;
-			Projectile = copyObject.Projectile.Clone();
+			if (copyObject.Projectile != null)
+				Projectile = (FormID)copyObject.Projectile.Clone();
 			BaseVATSToHitChance = copyObject.BaseVATSToHitChance;
 			AttackAnimation = copyObject.AttackAnimation;
 			ProjectileCount = copyObject.ProjectileCount;
@@ -256,7 +259,8 @@ namespace ESPSharp.Subrecords
 			StrengthRequirement = copyObject.StrengthRequirement;
 			Unknown4 = copyObject.Unknown4;
 			Mod1ReloadAnimation = copyObject.Mod1ReloadAnimation;
-			Unknown5 = (Byte[])copyObject.Unknown5.Clone();
+			if (copyObject.Unknown5 != null)
+				Unknown5 = (Byte[])copyObject.Unknown5.Clone();
 			AmmoRegenRate = copyObject.AmmoRegenRate;
 			KillImpulse = copyObject.KillImpulse;
 			Mod1ValueB = copyObject.Mod1ValueB;
@@ -773,7 +777,7 @@ namespace ESPSharp.Subrecords
 				SkillRequirement = subEle.ToUInt32();
 		}
 
-		public WeaponExtraData Clone()
+		public override object Clone()
 		{
 			return new WeaponExtraData(this);
 		}

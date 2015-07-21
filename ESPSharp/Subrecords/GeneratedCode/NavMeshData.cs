@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NavMeshData : Subrecord, ICloneable<NavMeshData>, IComparable<NavMeshData>, IEquatable<NavMeshData>  
+	public partial class NavMeshData : Subrecord, ICloneable, IComparable<NavMeshData>, IEquatable<NavMeshData>  
 	{
 		public FormID Cell { get; set; }
 		public UInt32 VertexCount { get; set; }
@@ -24,7 +24,8 @@ namespace ESPSharp.Subrecords
 		public UInt32 NVCACount { get; set; }
 		public UInt32 DoorsCount { get; set; }
 
-		public NavMeshData()
+		public NavMeshData(string Tag = null)
+			:base(Tag)
 		{
 			Cell = new FormID();
 			VertexCount = new UInt32();
@@ -46,7 +47,8 @@ namespace ESPSharp.Subrecords
 
 		public NavMeshData(NavMeshData copyObject)
 		{
-			Cell = copyObject.Cell.Clone();
+			if (copyObject.Cell != null)
+				Cell = (FormID)copyObject.Cell.Clone();
 			VertexCount = copyObject.VertexCount;
 			TriangleCount = copyObject.TriangleCount;
 			ExternalConnectionsCount = copyObject.ExternalConnectionsCount;
@@ -131,7 +133,7 @@ namespace ESPSharp.Subrecords
 				DoorsCount = subEle.ToUInt32();
 		}
 
-		public NavMeshData Clone()
+		public override object Clone()
 		{
 			return new NavMeshData(this);
 		}

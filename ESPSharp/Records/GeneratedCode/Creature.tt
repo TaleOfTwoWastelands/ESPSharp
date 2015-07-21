@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	RecordTemplate template = new RecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "Creature";
 
 	RecordField tempField;
@@ -51,6 +51,7 @@
 			"ActorEffects",
 			"ActorEffects"
 			);
+	tempField.isSorted = true;
 	tempField.XMLSubNames = new List<string> {"ActorEffect"};
 	template.Fields.Add(tempField);
 
@@ -127,7 +128,6 @@
 			"VoiceType",
 			"VoiceType"
 			);
-	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
 	tempField = 
@@ -164,6 +164,7 @@
 			"Contents",
 			"Contents"
 			);
+	tempField.isSorted = true;
 	tempField.XMLSubNames = new List<string> {"Item"};
 	template.Fields.Add(tempField);
 

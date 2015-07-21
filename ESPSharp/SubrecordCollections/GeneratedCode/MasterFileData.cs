@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class MasterFileData : SubrecordCollection, ICloneable<MasterFileData>
-	{
+	public partial class MasterFileData : SubrecordCollection	{
 		public SimpleSubrecord<String> FileName { get; set; }
 		public SimpleSubrecord<UInt64> FileSize { get; set; }
 
@@ -33,9 +32,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public MasterFileData(MasterFileData copyObject)
 		{
-			FileName = copyObject.FileName.Clone();
-			FileSize = copyObject.FileSize.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

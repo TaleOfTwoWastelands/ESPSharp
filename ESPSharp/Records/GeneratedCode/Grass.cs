@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,32 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Grass : Record, IEditorID	{
+	public partial class Grass : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public Model Model { get; set; }
 		public GrassData Data { get; set; }
+
+		public Grass()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			Data = new GrassData("DATA");
+		}
+
+		public Grass(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, Model Model, GrassData Data)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.Data = Data;
+		}
+
+		public Grass(Grass copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -127,6 +149,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public Grass Clone()
+		{
+			return new Grass(this);
 		}
 
 	}

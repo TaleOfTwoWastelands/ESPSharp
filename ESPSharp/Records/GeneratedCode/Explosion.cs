@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Explosion : Record, IEditorID	{
+	public partial class Explosion : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -23,6 +25,24 @@ namespace ESPSharp.Records
 		public RecordReference ImageSpaceModifier { get; set; }
 		public ExplosionData Data { get; set; }
 		public RecordReference ImpactObject { get; set; }
+
+		public Explosion()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Data = new ExplosionData("DATA");
+		}
+
+		public Explosion(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, RecordReference Effect, RecordReference ImageSpaceModifier, ExplosionData Data, RecordReference ImpactObject)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Data = Data;
+		}
+
+		public Explosion(Explosion copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -211,6 +231,11 @@ namespace ESPSharp.Records
 					
 				ImpactObject.ReadXML(subEle, master);
 			}
+		}		
+
+		public Explosion Clone()
+		{
+			return new Explosion(this);
 		}
 
 	}

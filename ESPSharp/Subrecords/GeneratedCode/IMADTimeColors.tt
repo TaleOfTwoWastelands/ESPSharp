@@ -1,0 +1,20 @@
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
+	template.ClassName = "IMADTimeColors";
+	template.isComparable = false;
+	template.isReferenceable = false;
+
+	ClassField tempField;
+
+	tempField = 
+		new ClassField(
+			typeof(List<IMADTimeColor>),
+			"TimeColors",
+			"TimeColors"
+			);
+	tempField.XMLSubName = "TimeColor";
+	tempField.listItemSize = 20;
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

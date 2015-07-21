@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class MessageButton : SubrecordCollection, ICloneable<MessageButton>
-	{
+	public partial class MessageButton : SubrecordCollection	{
 		public SimpleSubrecord<String> ButtonText { get; set; }
 		public List<Condition> Conditions { get; set; }
 
@@ -31,13 +30,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public MessageButton(MessageButton copyObject)
 		{
-			ButtonText = copyObject.ButtonText.Clone();
-			Conditions = new List<Condition>();
-			foreach (var item in copyObject.Conditions)
-			{
-				Conditions.Add(item.Clone());
-			}
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

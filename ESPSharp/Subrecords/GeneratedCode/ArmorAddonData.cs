@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ArmorAddonData : Subrecord, ICloneable<ArmorAddonData>, IComparable<ArmorAddonData>, IEquatable<ArmorAddonData>  
+	public partial class ArmorAddonData : Subrecord, ICloneable, IComparable<ArmorAddonData>, IEquatable<ArmorAddonData>  
 	{
 		public Int16 ArmorRating { get; set; }
 		public NoYesShort ModulatesVoice { get; set; }
 		public Byte[] Unknown { get; set; }
 
-		public ArmorAddonData()
+		public ArmorAddonData(string Tag = null)
+			:base(Tag)
 		{
 			ArmorRating = new Int16();
 			ModulatesVoice = new NoYesShort();
@@ -39,7 +40,8 @@ namespace ESPSharp.Subrecords
 		{
 			ArmorRating = copyObject.ArmorRating;
 			ModulatesVoice = copyObject.ModulatesVoice;
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -98,7 +100,7 @@ namespace ESPSharp.Subrecords
 				Unknown = subEle.ToBytes();
 		}
 
-		public ArmorAddonData Clone()
+		public override object Clone()
 		{
 			return new ArmorAddonData(this);
 		}

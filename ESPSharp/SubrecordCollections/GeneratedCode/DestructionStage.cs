@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class DestructionStage : SubrecordCollection, ICloneable<DestructionStage>
-	{
+	public partial class DestructionStage : SubrecordCollection	{
 		public DestructionStageData StageData { get; set; }
 		public SimpleSubrecord<String> ModelFilename { get; set; }
 		public SimpleSubrecord<Byte[]> ModelTextureHash { get; set; }
@@ -36,11 +35,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public DestructionStage(DestructionStage copyObject)
 		{
-			StageData = copyObject.StageData.Clone();
-			ModelFilename = copyObject.ModelFilename.Clone();
-			ModelTextureHash = copyObject.ModelTextureHash.Clone();
-			EndMarker = copyObject.EndMarker.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

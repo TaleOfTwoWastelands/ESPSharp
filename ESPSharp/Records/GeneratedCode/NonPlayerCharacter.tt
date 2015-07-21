@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	RecordTemplate template = new RecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "NonPlayerCharacter";
 
 	RecordField tempField;
@@ -62,6 +62,7 @@
 			"Factions",
 			"Factions"
 			);
+	tempField.isSorted = true;
 	tempField.XMLSubNames = new List<string>{"Faction"};
 	template.Fields.Add(tempField);
 
@@ -157,6 +158,7 @@
 			"Contents",
 			"Contents"
 			);
+	tempField.isSorted = true;
 	tempField.XMLSubNames = new List<string> {"Item"};
 	template.Fields.Add(tempField);
 
@@ -216,6 +218,7 @@
 			"HeadParts",
 			"HeadParts"
 			);
+	tempField.isSorted = true;
 	tempField.XMLSubNames = new List<string> {"HeadPart"};
 	template.Fields.Add(tempField);
 
@@ -282,6 +285,7 @@
 			"FaceGenGeometrySymmetric",
 			"FaceGen/Geometry/Symmetric"
 			);
+	tempField.DefaultValue = "new SimpleSubrecord<byte[]>(\"FGGS\", new byte[4])";
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
@@ -292,6 +296,7 @@
 			"FaceGenGeometryAsymmetric",
 			"FaceGen/Geometry/Asymmetric"
 			);
+	tempField.DefaultValue = "new SimpleSubrecord<byte[]>(\"FGGA\", new byte[4])";
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
@@ -302,6 +307,7 @@
 			"FaceGenTexture",
 			"FaceGen/Texture"
 			);
+	tempField.DefaultValue = "new SimpleSubrecord<byte[]>(\"FGTS\", new byte[4])";
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 

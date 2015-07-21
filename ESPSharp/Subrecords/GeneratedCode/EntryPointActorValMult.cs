@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EntryPointActorValMult : Subrecord, ICloneable<EntryPointActorValMult>, IComparable<EntryPointActorValMult>, IEquatable<EntryPointActorValMult>  
+	public partial class EntryPointActorValMult : Subrecord, ICloneable, IComparable<EntryPointActorValMult>, IEquatable<EntryPointActorValMult>  
 	{
 		public ActorValues ActorValue { get; set; }
 		public Single Multiplier { get; set; }
 
-		public EntryPointActorValMult()
+		public EntryPointActorValMult(string Tag = null)
+			:base(Tag)
 		{
 			ActorValue = new ActorValues();
 			Multiplier = new Single();
@@ -83,7 +84,7 @@ namespace ESPSharp.Subrecords
 				Multiplier = subEle.ToSingle();
 		}
 
-		public EntryPointActorValMult Clone()
+		public override object Clone()
 		{
 			return new EntryPointActorValMult(this);
 		}

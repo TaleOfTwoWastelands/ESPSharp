@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class FootstepMaterial : Subrecord, ICloneable<FootstepMaterial>, IComparable<FootstepMaterial>, IEquatable<FootstepMaterial>  
+	public partial class FootstepMaterial : Subrecord, ICloneable, IComparable<FootstepMaterial>, IEquatable<FootstepMaterial>  
 	{
 		public Byte[] ConcreteSolid { get; set; }
 		public Byte[] ConcreteBroken { get; set; }
@@ -28,7 +28,8 @@ namespace ESPSharp.Subrecords
 		public Byte[] Grass { get; set; }
 		public Byte[] Water { get; set; }
 
-		public FootstepMaterial()
+		public FootstepMaterial(string Tag = null)
+			:base(Tag)
 		{
 			ConcreteSolid = new byte[30];
 			ConcreteBroken = new byte[30];
@@ -58,16 +59,26 @@ namespace ESPSharp.Subrecords
 
 		public FootstepMaterial(FootstepMaterial copyObject)
 		{
-			ConcreteSolid = (Byte[])copyObject.ConcreteSolid.Clone();
-			ConcreteBroken = (Byte[])copyObject.ConcreteBroken.Clone();
-			MetalSolid = (Byte[])copyObject.MetalSolid.Clone();
-			MetalHollow = (Byte[])copyObject.MetalHollow.Clone();
-			MetalSheet = (Byte[])copyObject.MetalSheet.Clone();
-			Wood = (Byte[])copyObject.Wood.Clone();
-			Sand = (Byte[])copyObject.Sand.Clone();
-			Dirt = (Byte[])copyObject.Dirt.Clone();
-			Grass = (Byte[])copyObject.Grass.Clone();
-			Water = (Byte[])copyObject.Water.Clone();
+			if (copyObject.ConcreteSolid != null)
+				ConcreteSolid = (Byte[])copyObject.ConcreteSolid.Clone();
+			if (copyObject.ConcreteBroken != null)
+				ConcreteBroken = (Byte[])copyObject.ConcreteBroken.Clone();
+			if (copyObject.MetalSolid != null)
+				MetalSolid = (Byte[])copyObject.MetalSolid.Clone();
+			if (copyObject.MetalHollow != null)
+				MetalHollow = (Byte[])copyObject.MetalHollow.Clone();
+			if (copyObject.MetalSheet != null)
+				MetalSheet = (Byte[])copyObject.MetalSheet.Clone();
+			if (copyObject.Wood != null)
+				Wood = (Byte[])copyObject.Wood.Clone();
+			if (copyObject.Sand != null)
+				Sand = (Byte[])copyObject.Sand.Clone();
+			if (copyObject.Dirt != null)
+				Dirt = (Byte[])copyObject.Dirt.Clone();
+			if (copyObject.Grass != null)
+				Grass = (Byte[])copyObject.Grass.Clone();
+			if (copyObject.Water != null)
+				Water = (Byte[])copyObject.Water.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -209,7 +220,7 @@ namespace ESPSharp.Subrecords
 				Water = subEle.ToBytes();
 		}
 
-		public FootstepMaterial Clone()
+		public override object Clone()
 		{
 			return new FootstepMaterial(this);
 		}

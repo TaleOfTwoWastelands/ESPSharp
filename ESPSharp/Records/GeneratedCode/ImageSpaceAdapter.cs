@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class ImageSpaceAdapter : Record, IEditorID	{
+	public partial class ImageSpaceAdapter : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ImageSpaceAdapterData Data { get; set; }
 		public IMADTimeValues BlurRadius { get; set; }
@@ -74,6 +76,20 @@ namespace ESPSharp.Records
 		public IMADTimeValues Unknown20 { get; set; }
 		public RecordReference SoundIntro { get; set; }
 		public RecordReference SoundOutro { get; set; }
+
+		public ImageSpaceAdapter()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public ImageSpaceAdapter(SimpleSubrecord<String> EditorID, ImageSpaceAdapterData Data, IMADTimeValues BlurRadius, IMADTimeValues DoubleVisionStrength, IMADTimeColors TintColor, IMADTimeColors FadeColor, IMADTimeValues RadialBlurStrength, IMADTimeValues RadialBlurRampUp, IMADTimeValues RadialBlurStart, IMADTimeValues RadialBlurRampDown, IMADTimeValues RadialBlurDownStart, IMADTimeValues DoFStrength, IMADTimeValues DoFDistance, IMADTimeValues DoFRange, IMADTimeValues MotionBlurStrength, IMADTimeValues HDREyeAdaptSpeedMult, IMADTimeValues HDREyeAdaptSpeedAdd, IMADTimeValues HDRBloomBlurRadiusMult, IMADTimeValues HDRBloomBlurRadiusAdd, IMADTimeValues HDRBloomThresholdMult, IMADTimeValues HDRBloomThresholdAdd, IMADTimeValues HDRBloomScaleMult, IMADTimeValues HDRBloomScaleAdd, IMADTimeValues HDRTargetLUMMinMult, IMADTimeValues HDRTargetLUMMinAdd, IMADTimeValues HDRTargetLUMMaxMult, IMADTimeValues HDRTargetLUMMaxAdd, IMADTimeValues HDRSunlightScaleMult, IMADTimeValues HDRSunlightScaleAdd, IMADTimeValues HDRSkyScaleMult, IMADTimeValues HDRSkyScaleAdd, IMADTimeValues Unknown1, IMADTimeValues Unknown2, IMADTimeValues Unknown3, IMADTimeValues Unknown4, IMADTimeValues Unknown5, IMADTimeValues Unknown6, IMADTimeValues Unknown7, IMADTimeValues Unknown8, IMADTimeValues Unknown9, IMADTimeValues Unknown10, IMADTimeValues Unknown11, IMADTimeValues Unknown12, IMADTimeValues Unknown13, IMADTimeValues Unknown14, IMADTimeValues Unknown15, IMADTimeValues Unknown16, IMADTimeValues Unknown17, IMADTimeValues Unknown18, IMADTimeValues CinematicSaturationMult, IMADTimeValues CinematicSaturationAdd, IMADTimeValues CinematicBrightnessMult, IMADTimeValues CinematicBrightnessAdd, IMADTimeValues CinematicContrastMult, IMADTimeValues CinematicContrastAdd, IMADTimeValues Unknown19, IMADTimeValues Unknown20, RecordReference SoundIntro, RecordReference SoundOutro)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public ImageSpaceAdapter(ImageSpaceAdapter copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -1282,6 +1298,11 @@ namespace ESPSharp.Records
 					
 				SoundOutro.ReadXML(subEle, master);
 			}
+		}		
+
+		public ImageSpaceAdapter Clone()
+		{
+			return new ImageSpaceAdapter(this);
 		}
 
 	}

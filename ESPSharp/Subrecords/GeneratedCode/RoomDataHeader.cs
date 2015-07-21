@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RoomDataHeader : Subrecord, ICloneable<RoomDataHeader>, IComparable<RoomDataHeader>, IEquatable<RoomDataHeader>  
+	public partial class RoomDataHeader : Subrecord, ICloneable, IComparable<RoomDataHeader>, IEquatable<RoomDataHeader>  
 	{
 		public UInt16 LinkedRoomsCount { get; set; }
 		public Byte[] Unknown { get; set; }
 
-		public RoomDataHeader()
+		public RoomDataHeader(string Tag = null)
+			:base(Tag)
 		{
 			LinkedRoomsCount = new UInt16();
 			Unknown = new byte[2];
@@ -35,7 +36,8 @@ namespace ESPSharp.Subrecords
 		public RoomDataHeader(RoomDataHeader copyObject)
 		{
 			LinkedRoomsCount = copyObject.LinkedRoomsCount;
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -86,7 +88,7 @@ namespace ESPSharp.Subrecords
 				Unknown = subEle.ToBytes();
 		}
 
-		public RoomDataHeader Clone()
+		public override object Clone()
 		{
 			return new RoomDataHeader(this);
 		}

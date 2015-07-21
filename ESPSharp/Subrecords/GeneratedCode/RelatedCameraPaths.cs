@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RelatedCameraPaths : Subrecord, ICloneable<RelatedCameraPaths>, IComparable<RelatedCameraPaths>, IEquatable<RelatedCameraPaths>  
+	public partial class RelatedCameraPaths : Subrecord, ICloneable, IComparable<RelatedCameraPaths>, IEquatable<RelatedCameraPaths>  
 	{
 		public FormID Parent { get; set; }
 		public FormID PreviousSibling { get; set; }
 
-		public RelatedCameraPaths()
+		public RelatedCameraPaths(string Tag = null)
+			:base(Tag)
 		{
 			Parent = new FormID();
 			PreviousSibling = new FormID();
@@ -34,8 +35,10 @@ namespace ESPSharp.Subrecords
 
 		public RelatedCameraPaths(RelatedCameraPaths copyObject)
 		{
-			Parent = copyObject.Parent.Clone();
-			PreviousSibling = copyObject.PreviousSibling.Clone();
+			if (copyObject.Parent != null)
+				Parent = (FormID)copyObject.Parent.Clone();
+			if (copyObject.PreviousSibling != null)
+				PreviousSibling = (FormID)copyObject.PreviousSibling.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -83,7 +86,7 @@ namespace ESPSharp.Subrecords
 				PreviousSibling.ReadXML(subEle, master);
 		}
 
-		public RelatedCameraPaths Clone()
+		public override object Clone()
 		{
 			return new RelatedCameraPaths(this);
 		}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,29 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class AnimatedObject : Record, IEditorID	{
+	public partial class AnimatedObject : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public Model Model { get; set; }
 		public RecordReference Animation { get; set; }
+
+		public AnimatedObject()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Model = new Model();
+			Animation = new RecordReference("DATA");
+		}
+
+		public AnimatedObject(SimpleSubrecord<String> EditorID, Model Model, RecordReference Animation)
+		{
+			this.EditorID = EditorID;
+			this.Model = Model;
+			this.Animation = Animation;
+		}
+
+		public AnimatedObject(AnimatedObject copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -106,6 +126,11 @@ namespace ESPSharp.Records
 					
 				Animation.ReadXML(subEle, master);
 			}
+		}		
+
+		public AnimatedObject Clone()
+		{
+			return new AnimatedObject(this);
 		}
 
 	}

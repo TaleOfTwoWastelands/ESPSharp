@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,27 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Reputation : Record, IEditorID	{
+	public partial class Reputation : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<String> LargeIcon { get; set; }
 		public SimpleSubrecord<String> SmallIcon { get; set; }
 		public SimpleSubrecord<Single> Value { get; set; }
+
+		public Reputation()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public Reputation(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, SimpleSubrecord<Single> Value)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public Reputation(Reputation copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -148,6 +164,11 @@ namespace ESPSharp.Records
 					
 				Value.ReadXML(subEle, master);
 			}
+		}		
+
+		public Reputation Clone()
+		{
+			return new Reputation(this);
 		}
 
 	}

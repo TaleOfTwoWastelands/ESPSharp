@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class RegionDataEntry : SubrecordCollection, ICloneable<RegionDataEntry>, IReferenceContainer
-	{
+	public partial class RegionDataEntry : SubrecordCollection, IReferenceContainer	{
 		public RegionDataHeader Header { get; set; }
 		public RegionObjectList ObjectList { get; set; }
 		public SimpleSubrecord<String> MapName { get; set; }
@@ -25,7 +24,7 @@ namespace ESPSharp.SubrecordCollections
 		public RecordReference IncidentalMediaSet { get; set; }
 		public List<RecordReference> BattleMediaSets { get; set; }
 		public RegionSoundList Sounds { get; set; }
-		public RegionWeatherList Weathers { get; set; }
+		public WeatherList Weathers { get; set; }
 		public FormArray Imposters { get; set; }
 
 		public RegionDataEntry()
@@ -33,7 +32,7 @@ namespace ESPSharp.SubrecordCollections
 			Header = new RegionDataHeader();
 		}
 
-		public RegionDataEntry(RegionDataHeader Header, RegionObjectList ObjectList, SimpleSubrecord<String> MapName, RegionGrassList GrassList, SimpleSubrecord<RegionMusicType> MusicType, RecordReference Music, RecordReference IncidentalMediaSet, List<RecordReference> BattleMediaSets, RegionSoundList Sounds, RegionWeatherList Weathers, FormArray Imposters)
+		public RegionDataEntry(RegionDataHeader Header, RegionObjectList ObjectList, SimpleSubrecord<String> MapName, RegionGrassList GrassList, SimpleSubrecord<RegionMusicType> MusicType, RecordReference Music, RecordReference IncidentalMediaSet, List<RecordReference> BattleMediaSets, RegionSoundList Sounds, WeatherList Weathers, FormArray Imposters)
 		{
 			this.Header = Header;
 			this.ObjectList = ObjectList;
@@ -50,22 +49,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public RegionDataEntry(RegionDataEntry copyObject)
 		{
-			Header = copyObject.Header.Clone();
-			ObjectList = copyObject.ObjectList.Clone();
-			MapName = copyObject.MapName.Clone();
-			GrassList = copyObject.GrassList.Clone();
-			MusicType = copyObject.MusicType.Clone();
-			Music = copyObject.Music.Clone();
-			IncidentalMediaSet = copyObject.IncidentalMediaSet.Clone();
-			BattleMediaSets = new List<RecordReference>();
-			foreach (var item in copyObject.BattleMediaSets)
-			{
-				BattleMediaSets.Add(item.Clone());
-			}
-			Sounds = copyObject.Sounds.Clone();
-			Weathers = copyObject.Weathers.Clone();
-			Imposters = copyObject.Imposters.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{
@@ -150,7 +134,7 @@ namespace ESPSharp.SubrecordCollections
 						if (readTags.Contains("RDWT"))
 							return;
 						if (Weathers == null)
-							Weathers = new RegionWeatherList();
+							Weathers = new WeatherList();
 
 						Weathers.ReadBinary(reader);
 						break;
@@ -338,7 +322,7 @@ namespace ESPSharp.SubrecordCollections
 			if (ele.TryPathTo("Weathers", false, out subEle))
 			{
 				if (Weathers == null)
-					Weathers = new RegionWeatherList();
+					Weathers = new WeatherList();
 					
 				Weathers.ReadXML(subEle, master);
 			}

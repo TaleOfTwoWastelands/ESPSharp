@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,31 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Static : Record, IEditorID	{
+	public partial class Static : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public Model Model { get; set; }
 		public SimpleSubrecord<PassthroughSound> PassthroughSound { get; set; }
 		public RecordReference Looping_RandomSound { get; set; }
+
+		public Static()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+		}
+
+		public Static(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, Model Model, SimpleSubrecord<PassthroughSound> PassthroughSound, RecordReference Looping_RandomSound)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+		}
+
+		public Static(Static copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -148,6 +168,11 @@ namespace ESPSharp.Records
 					
 				Looping_RandomSound.ReadXML(subEle, master);
 			}
+		}		
+
+		public Static Clone()
+		{
+			return new Static(this);
 		}
 
 	}

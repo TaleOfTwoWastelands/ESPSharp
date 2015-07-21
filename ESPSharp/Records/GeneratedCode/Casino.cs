@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Casino : Record, IEditorID	{
+	public partial class Casino : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public CasinoData Data { get; set; }
@@ -24,6 +26,20 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<String> ModelRouletteTable { get; set; }
 		public List<SimpleSubrecord<String>> SlotReelTextures { get; set; }
 		public List<SimpleSubrecord<String>> BlackjackTextures { get; set; }
+
+		public Casino()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public Casino(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, CasinoData Data, List<SimpleSubrecord<String>> Models, SimpleSubrecord<String> ModelSlotMachine, SimpleSubrecord<String> ModelBlackjackTable, SimpleSubrecord<String> ModelRouletteTable, List<SimpleSubrecord<String>> SlotReelTextures, List<SimpleSubrecord<String>> BlackjackTextures)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public Casino(Casino copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -283,6 +299,11 @@ namespace ESPSharp.Records
 					BlackjackTextures.Add(tempICO2);
 				}
 			}
+		}		
+
+		public Casino Clone()
+		{
+			return new Casino(this);
 		}
 
 	}

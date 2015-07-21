@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,32 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class StaticCollection : Record, IEditorID	{
+	public partial class StaticCollection : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public Model Model { get; set; }
 		public List<StaticCollectionPart> Parts { get; set; }
+
+		public StaticCollection()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			Parts = new List<StaticCollectionPart>();
+		}
+
+		public StaticCollection(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, Model Model, List<StaticCollectionPart> Parts)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.Parts = Parts;
+		}
+
+		public StaticCollection(StaticCollection copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -69,8 +91,11 @@ namespace ESPSharp.Records
 			if (Model != null)
 				Model.WriteBinary(writer);
 			if (Parts != null)
+			{
+				Parts.Sort();
 				foreach (var item in Parts)
 					item.WriteBinary(writer);
+			}
 		}
 
 		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -96,6 +121,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("Parts", true, out subEle);
 				List<string> xmlNames = new List<string>{"Part"};
 				int i = 0;
+				Parts.Sort();
 				foreach (var entry in Parts)
 				{
 					i = i % xmlNames.Count();
@@ -144,6 +170,11 @@ namespace ESPSharp.Records
 					Parts.Add(tempONAM);
 				}
 			}
+		}		
+
+		public StaticCollection Clone()
+		{
+			return new StaticCollection(this);
 		}
 
 	}

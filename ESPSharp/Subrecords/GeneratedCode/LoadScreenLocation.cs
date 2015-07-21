@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LoadScreenLocation : Subrecord, ICloneable<LoadScreenLocation>, IComparable<LoadScreenLocation>, IEquatable<LoadScreenLocation>  
+	public partial class LoadScreenLocation : Subrecord, ICloneable, IComparable<LoadScreenLocation>, IEquatable<LoadScreenLocation>  
 	{
 		public FormID Direct { get; set; }
 		public FormID IndirectWorld { get; set; }
 		public Int16 IndirectGridY { get; set; }
 		public Int16 IndirectGridX { get; set; }
 
-		public LoadScreenLocation()
+		public LoadScreenLocation(string Tag = null)
+			:base(Tag)
 		{
 			Direct = new FormID();
 			IndirectWorld = new FormID();
@@ -40,8 +41,10 @@ namespace ESPSharp.Subrecords
 
 		public LoadScreenLocation(LoadScreenLocation copyObject)
 		{
-			Direct = copyObject.Direct.Clone();
-			IndirectWorld = copyObject.IndirectWorld.Clone();
+			if (copyObject.Direct != null)
+				Direct = (FormID)copyObject.Direct.Clone();
+			if (copyObject.IndirectWorld != null)
+				IndirectWorld = (FormID)copyObject.IndirectWorld.Clone();
 			IndirectGridY = copyObject.IndirectGridY;
 			IndirectGridX = copyObject.IndirectGridX;
 		}
@@ -107,7 +110,7 @@ namespace ESPSharp.Subrecords
 				IndirectGridX = subEle.ToInt16();
 		}
 
-		public LoadScreenLocation Clone()
+		public override object Clone()
 		{
 			return new LoadScreenLocation(this);
 		}

@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class AIData : Subrecord, ICloneable<AIData>, IComparable<AIData>, IEquatable<AIData>  
+	public partial class AIData : Subrecord, ICloneable, IComparable<AIData>, IEquatable<AIData>  
 	{
 		public AggressionType Aggression { get; set; }
 		public ConfidenceType Confidence { get; set; }
@@ -30,7 +30,8 @@ namespace ESPSharp.Subrecords
 		public AggroRadiusBehaviorFlags AggroRadiusBehavior { get; set; }
 		public Int32 AggroRadius { get; set; }
 
-		public AIData()
+		public AIData(string Tag = null)
+			:base(Tag)
 		{
 			Aggression = new AggressionType();
 			Confidence = new ConfidenceType();
@@ -69,7 +70,8 @@ namespace ESPSharp.Subrecords
 			EnergyLevel = copyObject.EnergyLevel;
 			Responsibility = copyObject.Responsibility;
 			Mood = copyObject.Mood;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			Services = copyObject.Services;
 			Teaches = copyObject.Teaches;
 			MaxTrainingLevel = copyObject.MaxTrainingLevel;
@@ -204,7 +206,7 @@ namespace ESPSharp.Subrecords
 				AggroRadius = subEle.ToInt32();
 		}
 
-		public AIData Clone()
+		public override object Clone()
 		{
 			return new AIData(this);
 		}

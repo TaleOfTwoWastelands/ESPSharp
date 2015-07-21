@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	RecordTemplate template = new RecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "Package";
 
 	RecordField tempField;
@@ -80,7 +80,6 @@
 			"IdleFlags",
 			"Idle/Flags"
 			);
-	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
 	tempField = 
@@ -90,7 +89,6 @@
 			"IdleCount",
 			"Idle/Count"
 			);
-	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
 	tempField = 
@@ -100,7 +98,6 @@
 			"IdleTimerSetting",
 			"Idle/TimerSetting"
 			);
-	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
 	tempField = 
@@ -209,6 +206,16 @@
 			"DialogData",
 			"DialogData"
 			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new RecordField(
+			"DUMY",
+			typeof(PackageLocation),
+			"DummyIgnore",
+			"DummyIgnore"
+			);
+	tempField.implementWriteData = false;
 	template.Fields.Add(tempField);
 
 	tempField = 

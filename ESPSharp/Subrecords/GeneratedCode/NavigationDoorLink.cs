@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NavigationDoorLink : Subrecord, ICloneable<NavigationDoorLink>, IComparable<NavigationDoorLink>, IEquatable<NavigationDoorLink>  
+	public partial class NavigationDoorLink : Subrecord, ICloneable, IComparable<NavigationDoorLink>, IEquatable<NavigationDoorLink>  
 	{
 		public FormID NavigationMesh { get; set; }
 		public Byte[] Unknown { get; set; }
 
-		public NavigationDoorLink()
+		public NavigationDoorLink(string Tag = null)
+			:base(Tag)
 		{
 			NavigationMesh = new FormID();
 			Unknown = new byte[4];
@@ -34,8 +35,10 @@ namespace ESPSharp.Subrecords
 
 		public NavigationDoorLink(NavigationDoorLink copyObject)
 		{
-			NavigationMesh = copyObject.NavigationMesh.Clone();
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.NavigationMesh != null)
+				NavigationMesh = (FormID)copyObject.NavigationMesh.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -71,8 +74,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("NavigationMesh", true, out subEle);
 			NavigationMesh.WriteXML(subEle, master);
 
-			ele.TryPathTo("Unknown", true, out subEle);
-			subEle.Value = Unknown.ToHex();
+			WriteUnknownXML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -82,11 +84,10 @@ namespace ESPSharp.Subrecords
 			if (ele.TryPathTo("NavigationMesh", false, out subEle))
 				NavigationMesh.ReadXML(subEle, master);
 
-			if (ele.TryPathTo("Unknown", false, out subEle))
-				Unknown = subEle.ToBytes();
+			ReadUnknownXML(ele, master);
 		}
 
-		public NavigationDoorLink Clone()
+		public override object Clone()
 		{
 			return new NavigationDoorLink(this);
 		}
@@ -179,5 +180,9 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+		partial void ReadUnknownXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnknownXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

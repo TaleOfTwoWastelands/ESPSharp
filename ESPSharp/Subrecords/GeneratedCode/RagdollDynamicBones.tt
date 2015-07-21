@@ -1,0 +1,20 @@
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
+	template.ClassName = "RagdollDynamicBones";
+	template.isComparable = false;
+	template.isReferenceable = false;
+
+	ClassField tempField;
+
+	tempField = 
+		new ClassField(
+			typeof(List<ushort>),
+			"Bones",
+			"Bones"
+			);
+	tempField.XMLSubName = "Bone";
+	tempField.listItemSize = 2;
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

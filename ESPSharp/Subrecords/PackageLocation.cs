@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-    public class PackageLocation : Subrecord, ICloneable<PackageLocation>
+    public class PackageLocation : Subrecord, ICloneable
     {
         public PackageLocationType Type { get; set; }
         public dynamic Location { get; set; }
@@ -211,7 +211,7 @@ namespace ESPSharp.Subrecords
             }
         }
 
-        public PackageLocation Clone()
+        public override object Clone()
         {
             return new PackageLocation(this);
         }

@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class ReferencePatrolData : SubrecordCollection, ICloneable<ReferencePatrolData>
-	{
+	public partial class ReferencePatrolData : SubrecordCollection	{
 		public SimpleSubrecord<Single> IdleTime { get; set; }
 		public SubMarker ScriptMarker { get; set; }
 		public RecordReference Idle { get; set; }
@@ -38,12 +37,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public ReferencePatrolData(ReferencePatrolData copyObject)
 		{
-			IdleTime = copyObject.IdleTime.Clone();
-			ScriptMarker = copyObject.ScriptMarker.Clone();
-			Idle = copyObject.Idle.Clone();
-			Script = copyObject.Script.Clone();
-			Topic = copyObject.Topic.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

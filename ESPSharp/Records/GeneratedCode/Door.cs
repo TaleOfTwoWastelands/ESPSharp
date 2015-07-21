@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Door : Record, IEditorID	{
+	public partial class Door : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -25,6 +27,26 @@ namespace ESPSharp.Records
 		public RecordReference CloseSound { get; set; }
 		public RecordReference LoopingSound { get; set; }
 		public SimpleSubrecord<DoorFlags> DoorFlags { get; set; }
+
+		public Door()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			DoorFlags = new SimpleSubrecord<DoorFlags>("FNAM");
+		}
+
+		public Door(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, RecordReference Script, Destructable Destructable, RecordReference OpenSound, RecordReference CloseSound, RecordReference LoopingSound, SimpleSubrecord<DoorFlags> DoorFlags)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.DoorFlags = DoorFlags;
+		}
+
+		public Door(Door copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -253,6 +275,11 @@ namespace ESPSharp.Records
 					
 				DoorFlags.ReadXML(subEle, master);
 			}
+		}		
+
+		public Door Clone()
+		{
+			return new Door(this);
 		}
 
 	}

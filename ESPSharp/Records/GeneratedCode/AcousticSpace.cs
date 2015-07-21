@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class AcousticSpace : Record, IEditorID	{
+	public partial class AcousticSpace : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public List<RecordReference> Sounds { get; set; }
@@ -22,6 +24,28 @@ namespace ESPSharp.Records
 		public RecordReference UseSoundFromRegion { get; set; }
 		public SimpleSubrecord<EnvironmentType> EnvironmentType { get; set; }
 		public SimpleSubrecord<IsInteriorEnum> IsInterior { get; set; }
+
+		public AcousticSpace()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			WallaTriggerCount = new SimpleSubrecord<UInt32>("WNAM");
+			EnvironmentType = new SimpleSubrecord<EnvironmentType>("ANAM");
+			IsInterior = new SimpleSubrecord<IsInteriorEnum>("INAM");
+		}
+
+		public AcousticSpace(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, List<RecordReference> Sounds, SimpleSubrecord<UInt32> WallaTriggerCount, RecordReference UseSoundFromRegion, SimpleSubrecord<EnvironmentType> EnvironmentType, SimpleSubrecord<IsInteriorEnum> IsInterior)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.WallaTriggerCount = WallaTriggerCount;
+			this.EnvironmentType = EnvironmentType;
+			this.IsInterior = IsInterior;
+		}
+
+		public AcousticSpace(AcousticSpace copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -207,6 +231,11 @@ namespace ESPSharp.Records
 					
 				IsInterior.ReadXML(subEle, master);
 			}
+		}		
+
+		public AcousticSpace Clone()
+		{
+			return new AcousticSpace(this);
 		}
 
 	}

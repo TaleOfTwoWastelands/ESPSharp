@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class GrassData : Subrecord, ICloneable<GrassData>, IComparable<GrassData>, IEquatable<GrassData>  
+	public partial class GrassData : Subrecord, ICloneable, IComparable<GrassData>, IEquatable<GrassData>  
 	{
 		public Byte Density { get; set; }
 		public Byte MinSlope { get; set; }
@@ -31,7 +31,8 @@ namespace ESPSharp.Subrecords
 		public GrassFlags Flags { get; set; }
 		public Byte[] Unused3 { get; set; }
 
-		public GrassData()
+		public GrassData(string Tag = null)
+			:base(Tag)
 		{
 			Density = new Byte();
 			MinSlope = new Byte();
@@ -72,14 +73,16 @@ namespace ESPSharp.Subrecords
 			MaxSlope = copyObject.MaxSlope;
 			Unused1 = copyObject.Unused1;
 			UnitFromWaterAmount = copyObject.UnitFromWaterAmount;
-			Unused2 = (Byte[])copyObject.Unused2.Clone();
+			if (copyObject.Unused2 != null)
+				Unused2 = (Byte[])copyObject.Unused2.Clone();
 			UnitFromWaterType = copyObject.UnitFromWaterType;
 			PositionRange = copyObject.PositionRange;
 			HeightRange = copyObject.HeightRange;
 			ColorRange = copyObject.ColorRange;
 			WavePeriod = copyObject.WavePeriod;
 			Flags = copyObject.Flags;
-			Unused3 = (Byte[])copyObject.Unused3.Clone();
+			if (copyObject.Unused3 != null)
+				Unused3 = (Byte[])copyObject.Unused3.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -215,7 +218,7 @@ namespace ESPSharp.Subrecords
 			ReadUnused3XML(ele, master);
 		}
 
-		public GrassData Clone()
+		public override object Clone()
 		{
 			return new GrassData(this);
 		}

@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class BodyPart : SubrecordCollection, ICloneable<BodyPart>
-	{
+	public partial class BodyPart : SubrecordCollection	{
 		public SimpleSubrecord<String> PartNode { get; set; }
 		public SimpleSubrecord<String> VATSTarget { get; set; }
 		public SimpleSubrecord<String> IKDataStartNode { get; set; }
@@ -47,14 +46,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public BodyPart(BodyPart copyObject)
 		{
-			PartNode = copyObject.PartNode.Clone();
-			VATSTarget = copyObject.VATSTarget.Clone();
-			IKDataStartNode = copyObject.IKDataStartNode.Clone();
-			Data = copyObject.Data.Clone();
-			LimbReplacementModel = copyObject.LimbReplacementModel.Clone();
-			GoreEffectsTargetBone = copyObject.GoreEffectsTargetBone.Clone();
-			TextureFileHashes = copyObject.TextureFileHashes.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

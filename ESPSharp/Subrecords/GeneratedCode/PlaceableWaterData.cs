@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PlaceableWaterData : Subrecord, ICloneable<PlaceableWaterData>, IComparable<PlaceableWaterData>, IEquatable<PlaceableWaterData>  
+	public partial class PlaceableWaterData : Subrecord, ICloneable, IComparable<PlaceableWaterData>, IEquatable<PlaceableWaterData>  
 	{
 		public PlaceableWaterFlags Flags { get; set; }
 		public FormID WaterType { get; set; }
 
-		public PlaceableWaterData()
+		public PlaceableWaterData(string Tag = null)
+			:base(Tag)
 		{
 			Flags = new PlaceableWaterFlags();
 			WaterType = new FormID();
@@ -35,7 +36,8 @@ namespace ESPSharp.Subrecords
 		public PlaceableWaterData(PlaceableWaterData copyObject)
 		{
 			Flags = copyObject.Flags;
-			WaterType = copyObject.WaterType.Clone();
+			if (copyObject.WaterType != null)
+				WaterType = (FormID)copyObject.WaterType.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -83,7 +85,7 @@ namespace ESPSharp.Subrecords
 				WaterType.ReadXML(subEle, master);
 		}
 
-		public PlaceableWaterData Clone()
+		public override object Clone()
 		{
 			return new PlaceableWaterData(this);
 		}

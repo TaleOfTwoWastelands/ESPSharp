@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ValueWeight : Subrecord, ICloneable<ValueWeight>, IComparable<ValueWeight>, IEquatable<ValueWeight>  
+	public partial class ValueWeight : Subrecord, ICloneable, IComparable<ValueWeight>, IEquatable<ValueWeight>  
 	{
 		public Int32 Value { get; set; }
 		public Single Weight { get; set; }
 
-		public ValueWeight()
+		public ValueWeight(string Tag = null)
+			:base(Tag)
 		{
 			Value = new Int32();
 			Weight = new Single();
@@ -83,7 +84,7 @@ namespace ESPSharp.Subrecords
 				Weight = subEle.ToSingle();
 		}
 
-		public ValueWeight Clone()
+		public override object Clone()
 		{
 			return new ValueWeight(this);
 		}

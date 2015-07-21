@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,28 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Recipe : Record, IEditorID	{
+	public partial class Recipe : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public List<Condition> Conditions { get; set; }
 		public RecipeData Data { get; set; }
 		public List<RecipeIngredient> Ingredients { get; set; }
 		public List<RecipeOutput> Outputs { get; set; }
+
+		public Recipe()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public Recipe(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, List<Condition> Conditions, RecipeData Data, List<RecipeIngredient> Ingredients, List<RecipeOutput> Outputs)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public Recipe(Recipe copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -220,6 +236,11 @@ namespace ESPSharp.Records
 					Outputs.Add(tempRCOD);
 				}
 			}
+		}		
+
+		public Recipe Clone()
+		{
+			return new Recipe(this);
 		}
 
 	}

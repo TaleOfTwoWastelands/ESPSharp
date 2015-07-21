@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ImageSpaceData : Subrecord, ICloneable<ImageSpaceData>, IComparable<ImageSpaceData>, IEquatable<ImageSpaceData>  
+	public partial class ImageSpaceData : Subrecord, ICloneable, IComparable<ImageSpaceData>, IEquatable<ImageSpaceData>  
 	{
 		public Single HDREyeAdaptSpeed { get; set; }
 		public Single HDRBlurRadius { get; set; }
@@ -52,7 +52,8 @@ namespace ESPSharp.Subrecords
 		public ImageSpaceFlags Flags { get; set; }
 		public Byte[] Unused2 { get; set; }
 
-		public ImageSpaceData()
+		public ImageSpaceData(string Tag = null)
+			:base(Tag)
 		{
 			HDREyeAdaptSpeed = new Single();
 			HDRBlurRadius = new Single();
@@ -161,9 +162,11 @@ namespace ESPSharp.Subrecords
 			CinematicBrightnessTintColorGreen = copyObject.CinematicBrightnessTintColorGreen;
 			CinematicBrightnessTintColorBlue = copyObject.CinematicBrightnessTintColorBlue;
 			CinematicBrightnessTintValue = copyObject.CinematicBrightnessTintValue;
-			Unused1 = (Byte[])copyObject.Unused1.Clone();
+			if (copyObject.Unused1 != null)
+				Unused1 = (Byte[])copyObject.Unused1.Clone();
 			Flags = copyObject.Flags;
-			Unused2 = (Byte[])copyObject.Unused2.Clone();
+			if (copyObject.Unused2 != null)
+				Unused2 = (Byte[])copyObject.Unused2.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -473,7 +476,7 @@ namespace ESPSharp.Subrecords
 				Unused2 = subEle.ToBytes();
 		}
 
-		public ImageSpaceData Clone()
+		public override object Clone()
 		{
 			return new ImageSpaceData(this);
 		}

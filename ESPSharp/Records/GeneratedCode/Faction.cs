@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Faction : Record, IEditorID	{
+	public partial class Faction : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public List<Relationship> Relationships { get; set; }
@@ -22,6 +24,20 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<Single> Unused { get; set; }
 		public List<FactionRank> Ranks { get; set; }
 		public RecordReference Reputation { get; set; }
+
+		public Faction()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public Faction(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, List<Relationship> Relationships, FactionData Data, SimpleSubrecord<Single> Unused, List<FactionRank> Ranks, RecordReference Reputation)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public Faction(Faction copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -224,6 +240,11 @@ namespace ESPSharp.Records
 					
 				Reputation.ReadXML(subEle, master);
 			}
+		}		
+
+		public Faction Clone()
+		{
+			return new Faction(this);
 		}
 
 	}

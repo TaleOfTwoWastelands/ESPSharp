@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Class : Record, IEditorID	{
+	public partial class Class : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<String> Description { get; set; }
@@ -22,6 +24,28 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<String> SmallIcon { get; set; }
 		public ClassData Data { get; set; }
 		public Attributes Attributes { get; set; }
+
+		public Class()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Name = new SimpleSubrecord<String>("FULL");
+			Description = new SimpleSubrecord<String>("DESC");
+			Data = new ClassData("DATA");
+			Attributes = new Attributes("ATTR");
+		}
+
+		public Class(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<String> Description, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, ClassData Data, Attributes Attributes)
+		{
+			this.EditorID = EditorID;
+			this.Name = Name;
+			this.Description = Description;
+			this.Data = Data;
+			this.Attributes = Attributes;
+		}
+
+		public Class(Class copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -190,6 +214,11 @@ namespace ESPSharp.Records
 					
 				Attributes.ReadXML(subEle, master);
 			}
+		}		
+
+		public Class Clone()
+		{
+			return new Class(this);
 		}
 
 	}

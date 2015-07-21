@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ThresholdData : Subrecord, ICloneable<ThresholdData>, IComparable<ThresholdData>, IEquatable<ThresholdData>  
+	public partial class ThresholdData : Subrecord, ICloneable, IComparable<ThresholdData>, IEquatable<ThresholdData>  
 	{
 		public UInt32 TriggerThreshold { get; set; }
 		public FormID Effect { get; set; }
 
-		public ThresholdData()
+		public ThresholdData(string Tag = null)
+			:base(Tag)
 		{
 			TriggerThreshold = new UInt32();
 			Effect = new FormID();
@@ -35,7 +36,8 @@ namespace ESPSharp.Subrecords
 		public ThresholdData(ThresholdData copyObject)
 		{
 			TriggerThreshold = copyObject.TriggerThreshold;
-			Effect = copyObject.Effect.Clone();
+			if (copyObject.Effect != null)
+				Effect = (FormID)copyObject.Effect.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -83,7 +85,7 @@ namespace ESPSharp.Subrecords
 				Effect.ReadXML(subEle, master);
 		}
 
-		public ThresholdData Clone()
+		public override object Clone()
 		{
 			return new ThresholdData(this);
 		}

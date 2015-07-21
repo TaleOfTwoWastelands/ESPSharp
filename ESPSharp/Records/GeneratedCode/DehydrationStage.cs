@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class DehydrationStage : Record, IEditorID	{
+	public partial class DehydrationStage : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ThresholdData Data { get; set; }
+
+		public DehydrationStage()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new ThresholdData("DATA");
+		}
+
+		public DehydrationStage(SimpleSubrecord<String> EditorID, ThresholdData Data)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public DehydrationStage(DehydrationStage copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -85,6 +103,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public DehydrationStage Clone()
+		{
+			return new DehydrationStage(this);
 		}
 
 	}

@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class BodyModel : SubrecordCollection, ICloneable<BodyModel>, IReferenceContainer
-	{
+	public partial class BodyModel : SubrecordCollection, IReferenceContainer	{
 		public SimpleSubrecord<BodyPartIndex> Index { get; set; }
 		public SimpleSubrecord<String> LargeIcon { get; set; }
 		public SimpleSubrecord<String> SmallIcon { get; set; }
@@ -37,11 +36,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public BodyModel(BodyModel copyObject)
 		{
-			Index = copyObject.Index.Clone();
-			LargeIcon = copyObject.LargeIcon.Clone();
-			SmallIcon = copyObject.SmallIcon.Clone();
-			Model = copyObject.Model.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

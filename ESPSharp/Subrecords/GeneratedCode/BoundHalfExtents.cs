@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class BoundHalfExtents : Subrecord, ICloneable<BoundHalfExtents>, IComparable<BoundHalfExtents>, IEquatable<BoundHalfExtents>  
+	public partial class BoundHalfExtents : Subrecord, ICloneable, IComparable<BoundHalfExtents>, IEquatable<BoundHalfExtents>  
 	{
 		public Single X { get; set; }
 		public Single Y { get; set; }
 		public Single Z { get; set; }
 
-		public BoundHalfExtents()
+		public BoundHalfExtents(string Tag = null)
+			:base(Tag)
 		{
 			X = new Single();
 			Y = new Single();
@@ -95,7 +96,7 @@ namespace ESPSharp.Subrecords
 				Z = subEle.ToSingle();
 		}
 
-		public BoundHalfExtents Clone()
+		public override object Clone()
 		{
 			return new BoundHalfExtents(this);
 		}

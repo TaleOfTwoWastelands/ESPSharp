@@ -1,13 +1,11 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ output extension=".cs" #>
-<#	
-	DataTypeTemplate template = new DataTypeTemplate();
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "DateStamp";
 
-	DataTypeField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(byte),
 			"DayOfMonth",
 			"DayOfMonth"
@@ -15,7 +13,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(byte),
 			"MonthsSince2001",
 			"MonthsSince2001"

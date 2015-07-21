@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-    public partial class PerkEffect : SubrecordCollection, ICloneable<PerkEffect>
+    public partial class PerkEffect : SubrecordCollection, ICloneable
     {
         public PerkEffectHeader Header { get; set; }
         public Subrecord EffectData { get; set; }
@@ -46,6 +46,7 @@ namespace ESPSharp.SubrecordCollections
 
         public PerkEffect(PerkEffect copyObject)
         {
+            /*
             Header = copyObject.Header.Clone();
             switch (Header.Type)
             {
@@ -90,6 +91,7 @@ namespace ESPSharp.SubrecordCollections
             RunImmediately = copyObject.RunImmediately.Clone();
             Script = copyObject.Script.Clone();
             EndMarker = copyObject.EndMarker.Clone();
+             */
         }
 
         public override void ReadBinary(ESPReader reader)
@@ -391,7 +393,7 @@ namespace ESPSharp.SubrecordCollections
             }
         }
 
-        public PerkEffect Clone()
+        public object Clone()
         {
             return new PerkEffect(this);
         }

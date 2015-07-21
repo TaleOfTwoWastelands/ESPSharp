@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WaterReflection : Subrecord, ICloneable<WaterReflection>, IComparable<WaterReflection>, IEquatable<WaterReflection>  
+	public partial class WaterReflection : Subrecord, ICloneable, IComparable<WaterReflection>, IEquatable<WaterReflection>  
 	{
 		public FormID Reference { get; set; }
 		public WaterReflectionFlags Flags { get; set; }
 
-		public WaterReflection()
+		public WaterReflection(string Tag = null)
+			:base(Tag)
 		{
 			Reference = new FormID();
 			Flags = new WaterReflectionFlags();
@@ -34,7 +35,8 @@ namespace ESPSharp.Subrecords
 
 		public WaterReflection(WaterReflection copyObject)
 		{
-			Reference = copyObject.Reference.Clone();
+			if (copyObject.Reference != null)
+				Reference = (FormID)copyObject.Reference.Clone();
 			Flags = copyObject.Flags;
 		}
 	
@@ -83,7 +85,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<WaterReflectionFlags>();
 		}
 
-		public WaterReflection Clone()
+		public override object Clone()
 		{
 			return new WaterReflection(this);
 		}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Cell : Record, IEditorID	{
+	public partial class Cell : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<CellFlags> CellFlags { get; set; }
@@ -25,7 +27,7 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<LightTemplateInheritFlags> LightTemplateInherit { get; set; }
 		public SimpleSubrecord<Single> WaterHeight { get; set; }
 		public SimpleSubrecord<String> WaterNoiseTexture { get; set; }
-		public FormArray Regions { get; set; }
+		public SortedFormArray Regions { get; set; }
 		public RecordReference ImageSpace { get; set; }
 		public SimpleSubrecord<Byte> Unknown { get; set; }
 		public RecordReference EncounterZone { get; set; }
@@ -36,6 +38,24 @@ namespace ESPSharp.Records
 		public RecordReference AcousticSpace { get; set; }
 		public SimpleSubrecord<Byte> Unused { get; set; }
 		public RecordReference MusicType { get; set; }
+
+		public Cell()
+		{
+			CellFlags = new SimpleSubrecord<CellFlags>("DATA");
+			LightTemplate = new RecordReference("LTMP");
+			LightTemplateInherit = new SimpleSubrecord<LightTemplateInheritFlags>("LNAM");
+		}
+
+		public Cell(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<CellFlags> CellFlags, CellGrid Grid, CellLighting Lighting, FootstepMaterial FootstepMaterial, RecordReference LightTemplate, SimpleSubrecord<LightTemplateInheritFlags> LightTemplateInherit, SimpleSubrecord<Single> WaterHeight, SimpleSubrecord<String> WaterNoiseTexture, SortedFormArray Regions, RecordReference ImageSpace, SimpleSubrecord<Byte> Unknown, RecordReference EncounterZone, RecordReference Climate, RecordReference Water, RecordReference Owner, SimpleSubrecord<Int32> FactionRank, RecordReference AcousticSpace, SimpleSubrecord<Byte> Unused, RecordReference MusicType)
+		{
+			this.CellFlags = CellFlags;
+			this.LightTemplate = LightTemplate;
+			this.LightTemplateInherit = LightTemplateInherit;
+		}
+
+		public Cell(Cell copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -107,7 +127,7 @@ namespace ESPSharp.Records
 						break;
 					case "XCLR":
 						if (Regions == null)
-							Regions = new FormArray();
+							Regions = new SortedFormArray();
 
 						Regions.ReadBinary(reader);
 						break;
@@ -410,7 +430,7 @@ namespace ESPSharp.Records
 			if (ele.TryPathTo("Regions", false, out subEle))
 			{
 				if (Regions == null)
-					Regions = new FormArray();
+					Regions = new SortedFormArray();
 					
 				Regions.ReadXML(subEle, master);
 			}
@@ -484,6 +504,11 @@ namespace ESPSharp.Records
 					
 				MusicType.ReadXML(subEle, master);
 			}
+		}		
+
+		public Cell Clone()
+		{
+			return new Cell(this);
 		}
 
 	}

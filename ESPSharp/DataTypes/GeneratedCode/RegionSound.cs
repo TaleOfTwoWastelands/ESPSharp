@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class RegionSound : IESPSerializable, ICloneable<RegionSound>, IComparable<RegionSound>, IEquatable<RegionSound>, IReferenceContainer
+	public partial class RegionSound : IESPSerializable, ICloneable, IComparable<RegionSound>, IEquatable<RegionSound>  
 	{
 		public FormID Sound { get; set; }
 		public RegionSoundFlags Flags { get; set; }
@@ -36,7 +36,8 @@ namespace ESPSharp.DataTypes
 
 		public RegionSound(RegionSound copyObject)
 		{
-			Sound = copyObject.Sound.Clone();
+			if (copyObject.Sound != null)
+				Sound = (FormID)copyObject.Sound.Clone();
 			Flags = copyObject.Flags;
 			Chance = copyObject.Chance;
 		}
@@ -46,8 +47,8 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				Sound.ReadBinary(reader);
-				Flags = reader.ReadEnum<RegionSoundFlags>();
-				Chance = reader.ReadUInt32();
+					Flags = reader.ReadEnum<RegionSoundFlags>();
+					Chance = reader.ReadUInt32();
 			}
 			catch
 			{
@@ -59,13 +60,13 @@ namespace ESPSharp.DataTypes
 		{
 			Sound.WriteBinary(writer);
 			writer.Write((UInt32)Flags);
-			writer.Write(Chance);			
+			writer.Write(Chance);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Sound", true, out subEle);
 			Sound.WriteXML(subEle, master);
 
@@ -79,31 +80,25 @@ namespace ESPSharp.DataTypes
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Sound", false, out subEle))
-			{
 				Sound.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<RegionSoundFlags>();
-			}
 
 			if (ele.TryPathTo("Chance", false, out subEle))
-			{
 				Chance = subEle.ToUInt32();
-			}
 		}
 
-		public RegionSound Clone()
+		public object Clone()
 		{
 			return new RegionSound(this);
 		}
 
         public int CompareTo(RegionSound other)
         {
-            return Sound.CompareTo(other.Sound);
+			return Sound.CompareTo(other.Sound);
         }
 
         public static bool operator >(RegionSound objA, RegionSound objB)
@@ -128,6 +123,16 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(RegionSound other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return Sound == other.Sound &&
 				Flags == other.Flags &&
 				Chance == other.Chance;
@@ -135,7 +140,11 @@ namespace ESPSharp.DataTypes
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             RegionSound other = obj as RegionSound;
+
             if (other == null)
                 return false;
             else
@@ -149,11 +158,31 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(RegionSound objA, RegionSound objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(RegionSound objA, RegionSound objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 	}

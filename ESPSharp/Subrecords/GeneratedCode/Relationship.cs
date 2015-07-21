@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class Relationship : Subrecord, ICloneable<Relationship>, IComparable<Relationship>, IEquatable<Relationship>  
+	public partial class Relationship : Subrecord, ICloneable, IComparable<Relationship>, IEquatable<Relationship>  
 	{
 		public FormID Faction { get; set; }
 		public Int32 Modifier { get; set; }
 		public RelationshipCombatReaction CombatReaction { get; set; }
 
-		public Relationship()
+		public Relationship(string Tag = null)
+			:base(Tag)
 		{
 			Faction = new FormID();
 			Modifier = new Int32();
@@ -37,7 +38,8 @@ namespace ESPSharp.Subrecords
 
 		public Relationship(Relationship copyObject)
 		{
-			Faction = copyObject.Faction.Clone();
+			if (copyObject.Faction != null)
+				Faction = (FormID)copyObject.Faction.Clone();
 			Modifier = copyObject.Modifier;
 			CombatReaction = copyObject.CombatReaction;
 		}
@@ -95,7 +97,7 @@ namespace ESPSharp.Subrecords
 				CombatReaction = subEle.ToEnum<RelationshipCombatReaction>();
 		}
 
-		public Relationship Clone()
+		public override object Clone()
 		{
 			return new Relationship(this);
 		}

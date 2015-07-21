@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class ImageSpace : Record, IEditorID	{
+	public partial class ImageSpace : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ImageSpaceData Data { get; set; }
+
+		public ImageSpace()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new ImageSpaceData("DNAM");
+		}
+
+		public ImageSpace(SimpleSubrecord<String> EditorID, ImageSpaceData Data)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public ImageSpace(ImageSpace copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -85,6 +103,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public ImageSpace Clone()
+		{
+			return new ImageSpace(this);
 		}
 
 	}

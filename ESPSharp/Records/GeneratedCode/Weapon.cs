@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Weapon : Record, IEditorID	{
+	public partial class Weapon : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -81,6 +83,28 @@ namespace ESPSharp.Records
 		public WeaponCriticalHitData CriticalHitData { get; set; }
 		public WeaponVATSData VATSSpecialAttack { get; set; }
 		public SimpleSubrecord<SoundLevel> SoundLevel { get; set; }
+
+		public Weapon()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Data = new WeaponData("DATA");
+			ExtraData = new WeaponExtraData("DNAM");
+			CriticalHitData = new WeaponCriticalHitData("CRDT");
+		}
+
+		public Weapon(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, SimpleSubrecord<String> ModelFileName, SimpleSubrecord<Byte[]> ModelUnknown, SimpleSubrecord<Byte[]> ModelTextureFileHash, AlternateTextures ModelAlternateTextures, SimpleSubrecord<FaceGenModelFlags> FaceGenModelFlags, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference Script, RecordReference ObjectEffect, SimpleSubrecord<UInt16> EnchantmentChargeAmount, RecordReference Ammo, Destructable Destructable, RecordReference RepairList, SimpleSubrecord<EquipmentType> EquipmentType, RecordReference BipedalModelList, RecordReference PickUpSound, RecordReference DropSound, SimpleSubrecord<String> ShellCasingModelFileName, SimpleSubrecord<Byte[]> ShellCasingModelTextureFileHash, AlternateTextures ShellCasingModelAlternateTextures, SimpleSubrecord<String> ScopeModelFileName, SimpleSubrecord<Byte[]> ScopeModelTextureFileHash, AlternateTextures ScopeModelAlternateTextures, RecordReference ScopeEffect, SimpleSubrecord<String> ScopeEffectModelFileName, SimpleSubrecord<Byte[]> ScopeEffectModelTextureFileHash, AlternateTextures ScopeEffectModelAlternateTextures, SimpleSubrecord<String> ModelWithMod1, SimpleSubrecord<String> ModelWithMod2, SimpleSubrecord<String> ModelWithMod1_2, SimpleSubrecord<String> ModelWithMod3, SimpleSubrecord<String> ModelWithMod1_3, SimpleSubrecord<String> ModelWithMod2_3, SimpleSubrecord<String> ModelWithMod1_2_3, SimpleSubrecord<String> VATSAttackName, SimpleSubrecord<String> EmbeddedWeaponNode, RecordReference ImpactDataset, RecordReference FirstPersonModel, RecordReference FirstPersonModelWithMod1, RecordReference FirstPersonModelWithMod2, RecordReference FirstPersonModelWithMod1_2, RecordReference FirstPersonModelWithMod3, RecordReference FirstPersonModelWithMod1_3, RecordReference FirstPersonModelWithMod2_3, RecordReference FirstPersonModelWithMod1_2_3, RecordReference WeaponMod1, RecordReference WeaponMod2, RecordReference WeaponMod3, List<RecordReference> SoundGunShoot, RecordReference SoundGunShoot2D, RecordReference SoundGunShoot3DLooping, RecordReference SoundMeleeSwing, RecordReference SoundMeleeBlock, RecordReference SoundIdle, RecordReference SoundEquip, RecordReference SoundUnequip, List<RecordReference> SoundMod1Shoot, RecordReference SoundMod1Shoot2D, WeaponData Data, WeaponExtraData ExtraData, WeaponCriticalHitData CriticalHitData, WeaponVATSData VATSSpecialAttack, SimpleSubrecord<SoundLevel> SoundLevel)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Data = Data;
+			this.ExtraData = ExtraData;
+			this.CriticalHitData = CriticalHitData;
+		}
+
+		public Weapon(Weapon copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -1463,6 +1487,11 @@ namespace ESPSharp.Records
 					
 				SoundLevel.ReadXML(subEle, master);
 			}
+		}		
+
+		public Weapon Clone()
+		{
+			return new Weapon(this);
 		}
 
 	}

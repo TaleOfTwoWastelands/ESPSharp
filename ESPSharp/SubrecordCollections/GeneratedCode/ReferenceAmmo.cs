@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class ReferenceAmmo : SubrecordCollection, ICloneable<ReferenceAmmo>
-	{
+	public partial class ReferenceAmmo : SubrecordCollection	{
 		public RecordReference Type { get; set; }
 		public SimpleSubrecord<Int32> Count { get; set; }
 
@@ -33,9 +32,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public ReferenceAmmo(ReferenceAmmo copyObject)
 		{
-			Type = copyObject.Type.Clone();
-			Count = copyObject.Count.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

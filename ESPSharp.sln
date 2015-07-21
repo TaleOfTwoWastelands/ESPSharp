@@ -5,7 +5,9 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESPSharp", "ESPSharp\ESPSharp.csproj", "{EEC78DA7-DC30-49F2-936C-CDD6C4BEF45B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESPSharpTest", "ESPSharpTest\ESPSharpTest.csproj", "{2D902915-8DAD-49BB-BFFB-3F890066B2DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginDecompiler", "PluginDecompiler\PluginDecompiler.csproj", "{2D902915-8DAD-49BB-BFFB-3F890066B2DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESPSharpTest", "ESPSharpTest\ESPSharpTest.csproj", "{C6E6C4DB-4720-486E-9D3A-D9486B8671B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2D902915-8DAD-49BB-BFFB-3F890066B2DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D902915-8DAD-49BB-BFFB-3F890066B2DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D902915-8DAD-49BB-BFFB-3F890066B2DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6E6C4DB-4720-486E-9D3A-D9486B8671B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6E6C4DB-4720-486E-9D3A-D9486B8671B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6E6C4DB-4720-486E-9D3A-D9486B8671B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6E6C4DB-4720-486E-9D3A-D9486B8671B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

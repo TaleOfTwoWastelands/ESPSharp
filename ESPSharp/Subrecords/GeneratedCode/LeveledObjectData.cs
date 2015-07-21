@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LeveledObjectData : Subrecord, ICloneable<LeveledObjectData>, IComparable<LeveledObjectData>, IEquatable<LeveledObjectData>  
+	public partial class LeveledObjectData : Subrecord, ICloneable, IComparable<LeveledObjectData>, IEquatable<LeveledObjectData>  
 	{
 		public Int16 Level { get; set; }
 		public Byte[] Unused1 { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public Int16 Count { get; set; }
 		public Byte[] Unused2 { get; set; }
 
-		public LeveledObjectData()
+		public LeveledObjectData(string Tag = null)
+			:base(Tag)
 		{
 			Level = new Int16();
 			Unused1 = new byte[2];
@@ -44,10 +45,13 @@ namespace ESPSharp.Subrecords
 		public LeveledObjectData(LeveledObjectData copyObject)
 		{
 			Level = copyObject.Level;
-			Unused1 = (Byte[])copyObject.Unused1.Clone();
-			Reference = copyObject.Reference.Clone();
+			if (copyObject.Unused1 != null)
+				Unused1 = (Byte[])copyObject.Unused1.Clone();
+			if (copyObject.Reference != null)
+				Reference = (FormID)copyObject.Reference.Clone();
 			Count = copyObject.Count;
-			Unused2 = (Byte[])copyObject.Unused2.Clone();
+			if (copyObject.Unused2 != null)
+				Unused2 = (Byte[])copyObject.Unused2.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -121,7 +125,7 @@ namespace ESPSharp.Subrecords
 			ReadUnused2XML(ele, master);
 		}
 
-		public LeveledObjectData Clone()
+		public override object Clone()
 		{
 			return new LeveledObjectData(this);
 		}

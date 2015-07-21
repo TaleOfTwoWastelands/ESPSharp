@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Race : Record, IEditorID	{
+	public partial class Race : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<String> Description { get; set; }
@@ -35,6 +37,50 @@ namespace ESPSharp.Records
 		public FormArray Eyes { get; set; }
 		public FaceGenData MaleFaceGenData { get; set; }
 		public FaceGenData FemaleFaceGenData { get; set; }
+
+		public Race()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Description = new SimpleSubrecord<String>("DESC");
+			Data = new RaceData("DATA");
+			UnknownMarker = new SubMarker("NAM2");
+			DefaultVoices = new RaceDefaultVoices("VTCK");
+			DefaultHairStyles = new RaceDefaultHairStyles("DNAM");
+			DefaultHairColors = new RaceDefaultHairColors("CNAM");
+			FaceGenMainClamp = new SimpleSubrecord<Single>("PNAM");
+			FaceGenFaceClamp = new SimpleSubrecord<Single>("UNAM");
+			Unknown = new SimpleSubrecord<Byte[]>("ATTR");
+			HeadData = new RaceHeadData();
+			BodyData = new RaceBodyData();
+			Hairs = new FormArray("HNAM");
+			Eyes = new FormArray("ENAM");
+			MaleFaceGenData = new FaceGenData();
+			FemaleFaceGenData = new FaceGenData();
+		}
+
+		public Race(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<String> Description, List<Relationship> Relationships, RaceData Data, RecordReference OlderRace, RecordReference YoungerRace, SubMarker UnknownMarker, RaceDefaultVoices DefaultVoices, RaceDefaultHairStyles DefaultHairStyles, RaceDefaultHairColors DefaultHairColors, SimpleSubrecord<Single> FaceGenMainClamp, SimpleSubrecord<Single> FaceGenFaceClamp, SimpleSubrecord<Byte[]> Unknown, RaceHeadData HeadData, RaceBodyData BodyData, FormArray Hairs, FormArray Eyes, FaceGenData MaleFaceGenData, FaceGenData FemaleFaceGenData)
+		{
+			this.EditorID = EditorID;
+			this.Description = Description;
+			this.Data = Data;
+			this.UnknownMarker = UnknownMarker;
+			this.DefaultVoices = DefaultVoices;
+			this.DefaultHairStyles = DefaultHairStyles;
+			this.DefaultHairColors = DefaultHairColors;
+			this.FaceGenMainClamp = FaceGenMainClamp;
+			this.FaceGenFaceClamp = FaceGenFaceClamp;
+			this.Unknown = Unknown;
+			this.HeadData = HeadData;
+			this.BodyData = BodyData;
+			this.Hairs = Hairs;
+			this.Eyes = Eyes;
+			this.MaleFaceGenData = MaleFaceGenData;
+			this.FemaleFaceGenData = FemaleFaceGenData;
+		}
+
+		public Race(Race copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -480,6 +526,11 @@ namespace ESPSharp.Records
 					
 				FemaleFaceGenData.ReadXML(subEle, master);
 			}
+		}		
+
+		public Race Clone()
+		{
+			return new Race(this);
 		}
 
 	}

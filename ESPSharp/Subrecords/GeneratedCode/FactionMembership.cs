@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class FactionMembership : Subrecord, ICloneable<FactionMembership>, IComparable<FactionMembership>, IEquatable<FactionMembership>  
+	public partial class FactionMembership : Subrecord, ICloneable, IComparable<FactionMembership>, IEquatable<FactionMembership>  
 	{
 		public FormID Faction { get; set; }
 		public Byte Rank { get; set; }
 		public Byte[] Unused { get; set; }
 
-		public FactionMembership()
+		public FactionMembership(string Tag = null)
+			:base(Tag)
 		{
 			Faction = new FormID();
 			Rank = new Byte();
@@ -37,9 +38,11 @@ namespace ESPSharp.Subrecords
 
 		public FactionMembership(FactionMembership copyObject)
 		{
-			Faction = copyObject.Faction.Clone();
+			if (copyObject.Faction != null)
+				Faction = (FormID)copyObject.Faction.Clone();
 			Rank = copyObject.Rank;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -96,7 +99,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public FactionMembership Clone()
+		public override object Clone()
 		{
 			return new FactionMembership(this);
 		}

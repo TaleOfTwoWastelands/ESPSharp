@@ -1,0 +1,68 @@
+﻿<#@ output extension=".cs" #>
+<#	
+	ClassTemplate template = new ClassTemplate();
+	template.ClassName = "PackageData";
+
+	ClassField tempField;
+
+	tempField = 
+		new ClassField(
+			typeof(PackageFlags),
+			"Flags",
+			"Flags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(PackageType),
+			"Type",
+			"Type"
+			);
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(byte[]),
+			"Unused1",
+			"Unused1"
+			);
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
+	tempField.byteCount = 1;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(FalloutBehaviorFlags),
+			"FalloutBehaviorFlags",
+			"FalloutBehaviorFlags"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(object),
+			"TypeFlags",
+			"TypeFlags"
+			);
+	tempField.implementReadData = false;
+	tempField.implementWriteData = false;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
+	tempField.DefaultValue = "0";
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(byte[]),
+			"Unused2",
+			"Unused2"
+			);
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
+	tempField.byteCount = 2;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

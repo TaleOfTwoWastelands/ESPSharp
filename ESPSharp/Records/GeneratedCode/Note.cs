@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Note : Record, IEditorID	{
+	public partial class Note : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -26,8 +28,26 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<NoteType> Type { get; set; }
 		public List<RecordReference> Quests { get; set; }
 		public SimpleSubrecord<String> Image { get; set; }
-		public dynamic EntryData { get; set; }
+		public Subrecord EntryData { get; set; }
 		public RecordReference Audio { get; set; }
+
+		public Note()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Name = new SimpleSubrecord<String>("FULL");
+		}
+
+		public Note(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference PickUpSound, RecordReference DropSound, SimpleSubrecord<NoteType> Type, List<RecordReference> Quests, SimpleSubrecord<String> Image, Subrecord EntryData, RecordReference Audio)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Name = Name;
+		}
+
+		public Note(Note copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -322,11 +342,20 @@ namespace ESPSharp.Records
 					
 				Audio.ReadXML(subEle, master);
 			}
+		}		
+
+		public Note Clone()
+		{
+			return new Note(this);
 		}
 
+
 		partial void ReadEntryData(ESPReader reader);
+
 		partial void WriteEntryData(ESPWriter writer);
+
 		partial void WriteEntryDataXML(XElement ele, ElderScrollsPlugin master);
+
 		partial void ReadEntryDataXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

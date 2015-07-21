@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class AmmoExtraData : Subrecord, ICloneable<AmmoExtraData>, IComparable<AmmoExtraData>, IEquatable<AmmoExtraData>  
+	public partial class AmmoExtraData : Subrecord, ICloneable, IComparable<AmmoExtraData>, IEquatable<AmmoExtraData>  
 	{
 		public UInt32 ProjectilesPerShot { get; set; }
 		public FormID Projectile { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public FormID ConsumedAmmo { get; set; }
 		public Single ConsumedPercentage { get; set; }
 
-		public AmmoExtraData()
+		public AmmoExtraData(string Tag = null)
+			:base(Tag)
 		{
 			ProjectilesPerShot = new UInt32();
 			Projectile = new FormID();
@@ -44,9 +45,11 @@ namespace ESPSharp.Subrecords
 		public AmmoExtraData(AmmoExtraData copyObject)
 		{
 			ProjectilesPerShot = copyObject.ProjectilesPerShot;
-			Projectile = copyObject.Projectile.Clone();
+			if (copyObject.Projectile != null)
+				Projectile = (FormID)copyObject.Projectile.Clone();
 			Weight = copyObject.Weight;
-			ConsumedAmmo = copyObject.ConsumedAmmo.Clone();
+			if (copyObject.ConsumedAmmo != null)
+				ConsumedAmmo = (FormID)copyObject.ConsumedAmmo.Clone();
 			ConsumedPercentage = copyObject.ConsumedPercentage;
 		}
 	
@@ -119,7 +122,7 @@ namespace ESPSharp.Subrecords
 				ConsumedPercentage = subEle.ToSingle();
 		}
 
-		public AmmoExtraData Clone()
+		public override object Clone()
 		{
 			return new AmmoExtraData(this);
 		}

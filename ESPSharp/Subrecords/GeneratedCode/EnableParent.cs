@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EnableParent : Subrecord, ICloneable<EnableParent>, IComparable<EnableParent>, IEquatable<EnableParent>  
+	public partial class EnableParent : Subrecord, ICloneable, IComparable<EnableParent>, IEquatable<EnableParent>  
 	{
 		public FormID Parent { get; set; }
 		public EnableParentFlags Flags { get; set; }
 		public Byte[] Unknown { get; set; }
 
-		public EnableParent()
+		public EnableParent(string Tag = null)
+			:base(Tag)
 		{
 			Parent = new FormID();
 			Flags = new EnableParentFlags();
@@ -37,9 +38,11 @@ namespace ESPSharp.Subrecords
 
 		public EnableParent(EnableParent copyObject)
 		{
-			Parent = copyObject.Parent.Clone();
+			if (copyObject.Parent != null)
+				Parent = (FormID)copyObject.Parent.Clone();
 			Flags = copyObject.Flags;
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -80,8 +83,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unknown", true, out subEle);
-			subEle.Value = Unknown.ToHex();
+			WriteUnknownXML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -94,11 +96,10 @@ namespace ESPSharp.Subrecords
 			if (ele.TryPathTo("Flags", false, out subEle))
 				Flags = subEle.ToEnum<EnableParentFlags>();
 
-			if (ele.TryPathTo("Unknown", false, out subEle))
-				Unknown = subEle.ToBytes();
+			ReadUnknownXML(ele, master);
 		}
 
-		public EnableParent Clone()
+		public override object Clone()
 		{
 			return new EnableParent(this);
 		}
@@ -192,5 +193,9 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+		partial void ReadUnknownXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnknownXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

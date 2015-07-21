@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DestructableHeader : Subrecord, ICloneable<DestructableHeader>, IComparable<DestructableHeader>, IEquatable<DestructableHeader>  
+	public partial class DestructableHeader : Subrecord, ICloneable, IComparable<DestructableHeader>, IEquatable<DestructableHeader>  
 	{
 		public Int32 Health { get; set; }
 		public Byte Count { get; set; }
 		public DestructableFlags Flags { get; set; }
 		public Byte[] Unknown { get; set; }
 
-		public DestructableHeader()
+		public DestructableHeader(string Tag = null)
+			:base(Tag)
 		{
 			Health = new Int32();
 			Count = new Byte();
@@ -43,7 +44,8 @@ namespace ESPSharp.Subrecords
 			Health = copyObject.Health;
 			Count = copyObject.Count;
 			Flags = copyObject.Flags;
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -110,7 +112,7 @@ namespace ESPSharp.Subrecords
 				Unknown = subEle.ToBytes();
 		}
 
-		public DestructableHeader Clone()
+		public override object Clone()
 		{
 			return new DestructableHeader(this);
 		}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class ImpactDataSet : Record, IEditorID	{
+	public partial class ImpactDataSet : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ImpactList Impacts { get; set; }
+
+		public ImpactDataSet()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Impacts = new ImpactList("DATA");
+		}
+
+		public ImpactDataSet(SimpleSubrecord<String> EditorID, ImpactList Impacts)
+		{
+			this.EditorID = EditorID;
+			this.Impacts = Impacts;
+		}
+
+		public ImpactDataSet(ImpactDataSet copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -85,6 +103,11 @@ namespace ESPSharp.Records
 					
 				Impacts.ReadXML(subEle, master);
 			}
+		}		
+
+		public ImpactDataSet Clone()
+		{
+			return new ImpactDataSet(this);
 		}
 
 	}

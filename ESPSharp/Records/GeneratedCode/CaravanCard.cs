@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class CaravanCard : Record, IEditorID	{
+	public partial class CaravanCard : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -28,6 +30,26 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<String> TextureBack { get; set; }
 		public Card CardData { get; set; }
 		public SimpleSubrecord<UInt32> Value { get; set; }
+
+		public CaravanCard()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			Value = new SimpleSubrecord<UInt32>("DATA");
+		}
+
+		public CaravanCard(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference Script, RecordReference PickUpSound, RecordReference DropSound, SimpleSubrecord<String> TextureFace, SimpleSubrecord<String> TextureBack, Card CardData, SimpleSubrecord<UInt32> Value)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.Value = Value;
+		}
+
+		public CaravanCard(CaravanCard copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -316,6 +338,11 @@ namespace ESPSharp.Records
 					
 				Value.ReadXML(subEle, master);
 			}
+		}		
+
+		public CaravanCard Clone()
+		{
+			return new CaravanCard(this);
 		}
 
 	}

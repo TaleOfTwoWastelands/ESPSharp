@@ -1,0 +1,50 @@
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
+	template.ClassName = "NavigationConnectionInfo";
+	template.isReferenceable = true;
+
+	ClassField tempField;
+
+	tempField = 
+		new ClassField(
+			typeof(FormID),
+			"Unknown1",
+			"Unknown1"
+			);
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(List<FormID>),
+			"Unknown2",
+			"Unknown2"
+			);
+	tempField.hasListCount = true;
+	tempField.listCountType = typeof(int);
+	tempField.XMLSubName = "Unknown";
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(List<FormID>),
+			"Unknown3",
+			"Unknown3"
+			);
+	tempField.hasListCount = true;
+	tempField.listCountType = typeof(int);
+	tempField.XMLSubName = "Unknown";
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(List<FormID>),
+			"Doors",
+			"Doors"
+			);
+	tempField.hasListCount = true;
+	tempField.listCountType = typeof(int);
+	tempField.XMLSubName = "Door";
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class FactionRank : SubrecordCollection, ICloneable<FactionRank>
-	{
+	public partial class FactionRank : SubrecordCollection	{
 		public SimpleSubrecord<Int32> Rank { get; set; }
 		public SimpleSubrecord<String> MaleTitle { get; set; }
 		public SimpleSubrecord<String> FemaleTitle { get; set; }
@@ -36,11 +35,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public FactionRank(FactionRank copyObject)
 		{
-			Rank = copyObject.Rank.Clone();
-			MaleTitle = copyObject.MaleTitle.Clone();
-			FemaleTitle = copyObject.FemaleTitle.Clone();
-			Insignia = copyObject.Insignia.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

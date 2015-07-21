@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EnvironmentalColors : Subrecord, ICloneable<EnvironmentalColors>, IComparable<EnvironmentalColors>, IEquatable<EnvironmentalColors>  
+	public partial class EnvironmentalColors : Subrecord, ICloneable, IComparable<EnvironmentalColors>, IEquatable<EnvironmentalColors>  
 	{
 		public TimeOfDayColors SkyUpper { get; set; }
 		public TimeOfDayColors Fog { get; set; }
@@ -28,7 +28,8 @@ namespace ESPSharp.Subrecords
 		public TimeOfDayColors Horizon { get; set; }
 		public TimeOfDayColors Unused2 { get; set; }
 
-		public EnvironmentalColors()
+		public EnvironmentalColors(string Tag = null)
+			:base(Tag)
 		{
 			SkyUpper = new TimeOfDayColors();
 			Fog = new TimeOfDayColors();
@@ -58,16 +59,26 @@ namespace ESPSharp.Subrecords
 
 		public EnvironmentalColors(EnvironmentalColors copyObject)
 		{
-			SkyUpper = copyObject.SkyUpper.Clone();
-			Fog = copyObject.Fog.Clone();
-			Unused1 = copyObject.Unused1.Clone();
-			Ambient = copyObject.Ambient.Clone();
-			Sunlight = copyObject.Sunlight.Clone();
-			Sun = copyObject.Sun.Clone();
-			Stars = copyObject.Stars.Clone();
-			SkyLower = copyObject.SkyLower.Clone();
-			Horizon = copyObject.Horizon.Clone();
-			Unused2 = copyObject.Unused2.Clone();
+			if (copyObject.SkyUpper != null)
+				SkyUpper = (TimeOfDayColors)copyObject.SkyUpper.Clone();
+			if (copyObject.Fog != null)
+				Fog = (TimeOfDayColors)copyObject.Fog.Clone();
+			if (copyObject.Unused1 != null)
+				Unused1 = (TimeOfDayColors)copyObject.Unused1.Clone();
+			if (copyObject.Ambient != null)
+				Ambient = (TimeOfDayColors)copyObject.Ambient.Clone();
+			if (copyObject.Sunlight != null)
+				Sunlight = (TimeOfDayColors)copyObject.Sunlight.Clone();
+			if (copyObject.Sun != null)
+				Sun = (TimeOfDayColors)copyObject.Sun.Clone();
+			if (copyObject.Stars != null)
+				Stars = (TimeOfDayColors)copyObject.Stars.Clone();
+			if (copyObject.SkyLower != null)
+				SkyLower = (TimeOfDayColors)copyObject.SkyLower.Clone();
+			if (copyObject.Horizon != null)
+				Horizon = (TimeOfDayColors)copyObject.Horizon.Clone();
+			if (copyObject.Unused2 != null)
+				Unused2 = (TimeOfDayColors)copyObject.Unused2.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -119,7 +130,8 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Fog", true, out subEle);
 			Fog.WriteXML(subEle, master);
 
-			WriteUnused1XML(ele, master);
+			ele.TryPathTo("Unused1", true, out subEle);
+			Unused1.WriteXML(subEle, master);
 
 			ele.TryPathTo("Ambient", true, out subEle);
 			Ambient.WriteXML(subEle, master);
@@ -139,7 +151,8 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Horizon", true, out subEle);
 			Horizon.WriteXML(subEle, master);
 
-			WriteUnused2XML(ele, master);
+			ele.TryPathTo("Unused2", true, out subEle);
+			Unused2.WriteXML(subEle, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -152,7 +165,8 @@ namespace ESPSharp.Subrecords
 			if (ele.TryPathTo("Fog", false, out subEle))
 				Fog.ReadXML(subEle, master);
 
-			ReadUnused1XML(ele, master);
+			if (ele.TryPathTo("Unused1", false, out subEle))
+				Unused1.ReadXML(subEle, master);
 
 			if (ele.TryPathTo("Ambient", false, out subEle))
 				Ambient.ReadXML(subEle, master);
@@ -172,10 +186,11 @@ namespace ESPSharp.Subrecords
 			if (ele.TryPathTo("Horizon", false, out subEle))
 				Horizon.ReadXML(subEle, master);
 
-			ReadUnused2XML(ele, master);
+			if (ele.TryPathTo("Unused2", false, out subEle))
+				Unused2.ReadXML(subEle, master);
 		}
 
-		public EnvironmentalColors Clone()
+		public override object Clone()
 		{
 			return new EnvironmentalColors(this);
 		}
@@ -276,13 +291,5 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
-
-		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
-
-		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
-
-		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
-
-		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ESPSharp.Enums.Flags
 {
     [Flags]
-    public enum FindEscortEatPackageFlags : uint
+    public enum FindEscortEatPackageFlags : ushort
     {
         AllowBuying = 0x0100,
         AllowKilling = 0x0200,

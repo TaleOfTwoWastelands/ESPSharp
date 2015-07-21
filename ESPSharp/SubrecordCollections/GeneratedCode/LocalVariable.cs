@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class LocalVariable : SubrecordCollection, ICloneable<LocalVariable>
-	{
+	public partial class LocalVariable : SubrecordCollection	{
 		public LocalVariableData Data { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 
@@ -32,9 +31,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public LocalVariable(LocalVariable copyObject)
 		{
-			Data = copyObject.Data.Clone();
-			Name = copyObject.Name.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

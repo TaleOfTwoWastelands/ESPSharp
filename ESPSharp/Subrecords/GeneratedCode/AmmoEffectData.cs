@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class AmmoEffectData : Subrecord, ICloneable<AmmoEffectData>, IComparable<AmmoEffectData>, IEquatable<AmmoEffectData>  
+	public partial class AmmoEffectData : Subrecord, ICloneable, IComparable<AmmoEffectData>, IEquatable<AmmoEffectData>  
 	{
 		public AmmoEffectType Type { get; set; }
 		public AmmoEffectOperation Operation { get; set; }
 		public Single Value { get; set; }
 
-		public AmmoEffectData()
+		public AmmoEffectData(string Tag = null)
+			:base(Tag)
 		{
 			Type = new AmmoEffectType();
 			Operation = new AmmoEffectOperation();
@@ -95,7 +96,7 @@ namespace ESPSharp.Subrecords
 				Value = subEle.ToSingle();
 		}
 
-		public AmmoEffectData Clone()
+		public override object Clone()
 		{
 			return new AmmoEffectData(this);
 		}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class PlacedMissile : Record, IEditorID	{
+	public partial class PlacedMissile : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public RecordReference Base { get; set; }
 		public RecordReference EncounterZone { get; set; }
@@ -39,6 +41,18 @@ namespace ESPSharp.Records
 		public SubMarker IgnoredBySandbox { get; set; }
 		public SimpleSubrecord<Single> Scale { get; set; }
 		public PositionRotation PositionRotation { get; set; }
+
+		public PlacedMissile()
+		{
+					}
+
+		public PlacedMissile(SimpleSubrecord<String> EditorID, RecordReference Base, RecordReference EncounterZone, SimpleSubrecord<Byte[]> RagdollData, SimpleSubrecord<Byte[]> RagdollBipedData, ReferencePatrolData Patrol, RecordReference Owner, SimpleSubrecord<Int32> FactionRank, SimpleSubrecord<Int32> Count, SimpleSubrecord<Single> Radius, SimpleSubrecord<Single> Health, List<WaterReflection> WaterReflections, List<SimpleSubrecord<Byte[]>> Decals, RecordReference LinkedReference, LinkedReferenceColor LinkedReferenceColor, SimpleSubrecord<NoYesByte> ParentActivateOnly, List<ActivateParent> ActivateParents, SimpleSubrecord<String> ActivationPrompt, EnableParent EnableParent, RecordReference Emittance, RecordReference MultiBound, SubMarker IgnoredBySandbox, SimpleSubrecord<Single> Scale, PositionRotation PositionRotation)
+		{
+					}
+
+		public PlacedMissile(PlacedMissile copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -598,6 +612,11 @@ namespace ESPSharp.Records
 					
 				PositionRotation.ReadXML(subEle, master);
 			}
+		}		
+
+		public PlacedMissile Clone()
+		{
+			return new PlacedMissile(this);
 		}
 
 	}

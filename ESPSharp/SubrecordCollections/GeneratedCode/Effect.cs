@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class Effect : SubrecordCollection, ICloneable<Effect>
-	{
+	public partial class Effect : SubrecordCollection	{
 		public RecordReference BaseEffect { get; set; }
 		public EffectData EffectData { get; set; }
 		public List<Condition> Conditions { get; set; }
@@ -35,14 +34,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public Effect(Effect copyObject)
 		{
-			BaseEffect = copyObject.BaseEffect.Clone();
-			EffectData = copyObject.EffectData.Clone();
-			Conditions = new List<Condition>();
-			foreach (var item in copyObject.Conditions)
-			{
-				Conditions.Add(item.Clone());
-			}
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

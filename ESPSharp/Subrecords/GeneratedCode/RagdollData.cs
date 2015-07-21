@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RagdollData : Subrecord, ICloneable<RagdollData>, IComparable<RagdollData>, IEquatable<RagdollData>  
+	public partial class RagdollData : Subrecord, ICloneable, IComparable<RagdollData>, IEquatable<RagdollData>  
 	{
 		public UInt32 DynamicBoneCount { get; set; }
 		public Byte[] Unused1 { get; set; }
@@ -26,7 +26,8 @@ namespace ESPSharp.Subrecords
 		public NoYesByte PoseMatching { get; set; }
 		public Byte Unused2 { get; set; }
 
-		public RagdollData()
+		public RagdollData(string Tag = null)
+			:base(Tag)
 		{
 			DynamicBoneCount = new UInt32();
 			Unused1 = new byte[4];
@@ -53,7 +54,8 @@ namespace ESPSharp.Subrecords
 		public RagdollData(RagdollData copyObject)
 		{
 			DynamicBoneCount = copyObject.DynamicBoneCount;
-			Unused1 = (Byte[])copyObject.Unused1.Clone();
+			if (copyObject.Unused1 != null)
+				Unused1 = (Byte[])copyObject.Unused1.Clone();
 			FeedbackEnabled = copyObject.FeedbackEnabled;
 			FootIKEnabled = copyObject.FootIKEnabled;
 			LookIKEnabled = copyObject.LookIKEnabled;
@@ -154,7 +156,7 @@ namespace ESPSharp.Subrecords
 			ReadUnused2XML(ele, master);
 		}
 
-		public RagdollData Clone()
+		public override object Clone()
 		{
 			return new RagdollData(this);
 		}

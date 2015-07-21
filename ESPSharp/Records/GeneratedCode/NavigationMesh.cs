@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class NavigationMesh : Record, IEditorID	{
+	public partial class NavigationMesh : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<UInt32> Version { get; set; }
 		public NavMeshData Data { get; set; }
@@ -24,6 +26,18 @@ namespace ESPSharp.Records
 		public NavMeshDoorList Doors { get; set; }
 		public SimpleSubrecord<Byte[]> Grid { get; set; }
 		public NavMeshExternalConnectionList ExternalConnections { get; set; }
+
+		public NavigationMesh()
+		{
+					}
+
+		public NavigationMesh(SimpleSubrecord<String> EditorID, SimpleSubrecord<UInt32> Version, NavMeshData Data, SimpleSubrecord<Byte[]> Vertices, SimpleSubrecord<Byte[]> Triangles, SimpleSubrecord<Byte[]> Unknown, NavMeshDoorList Doors, SimpleSubrecord<Byte[]> Grid, NavMeshExternalConnectionList ExternalConnections)
+		{
+					}
+
+		public NavigationMesh(NavigationMesh copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -232,6 +246,11 @@ namespace ESPSharp.Records
 					
 				ExternalConnections.ReadXML(subEle, master);
 			}
+		}		
+
+		public NavigationMesh Clone()
+		{
+			return new NavigationMesh(this);
 		}
 
 	}

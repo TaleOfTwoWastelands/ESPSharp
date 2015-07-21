@@ -1,0 +1,22 @@
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
+	template.ClassName = "AlternateTextures";
+	template.isComparable = false;
+	template.isReferenceable = true;
+
+	ClassField tempField;
+
+	tempField = 
+		new ClassField(
+			typeof(List<AlternateTexture>),
+			"Textures",
+			"Textures"
+			);
+	tempField.isSorted = true;
+	tempField.hasListCount = true;
+	tempField.listCountType = typeof(int);
+	tempField.XMLSubName = "Texture";
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ClimateTiming : Subrecord, ICloneable<ClimateTiming>, IComparable<ClimateTiming>, IEquatable<ClimateTiming>  
+	public partial class ClimateTiming : Subrecord, ICloneable, IComparable<ClimateTiming>, IEquatable<ClimateTiming>  
 	{
 		public Byte SunriseBegin { get; set; }
 		public Byte SunriseEnd { get; set; }
@@ -24,7 +24,8 @@ namespace ESPSharp.Subrecords
 		public Byte Volatility { get; set; }
 		public MoonData MoonData { get; set; }
 
-		public ClimateTiming()
+		public ClimateTiming(string Tag = null)
+			:base(Tag)
 		{
 			SunriseBegin = new Byte();
 			SunriseEnd = new Byte();
@@ -51,7 +52,8 @@ namespace ESPSharp.Subrecords
 			SunsetBegin = copyObject.SunsetBegin;
 			SunsetEnd = copyObject.SunsetEnd;
 			Volatility = copyObject.Volatility;
-			MoonData = copyObject.MoonData.Clone();
+			if (copyObject.MoonData != null)
+				MoonData = (MoonData)copyObject.MoonData.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -131,7 +133,7 @@ namespace ESPSharp.Subrecords
 				MoonData.ReadXML(subEle, master);
 		}
 
-		public ClimateTiming Clone()
+		public override object Clone()
 		{
 			return new ClimateTiming(this);
 		}

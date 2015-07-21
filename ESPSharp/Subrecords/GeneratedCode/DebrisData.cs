@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DebrisData : Subrecord, ICloneable<DebrisData>, IComparable<DebrisData>, IEquatable<DebrisData>  
+	public partial class DebrisData : Subrecord, ICloneable, IComparable<DebrisData>, IEquatable<DebrisData>  
 	{
 		public Byte Percentage { get; set; }
 		public String Model { get; set; }
 		public NoYesByte HasCollisionData { get; set; }
 
-		public DebrisData()
+		public DebrisData(string Tag = null)
+			:base(Tag)
 		{
 			Percentage = new Byte();
 			Model = "";
@@ -38,7 +39,8 @@ namespace ESPSharp.Subrecords
 		public DebrisData(DebrisData copyObject)
 		{
 			Percentage = copyObject.Percentage;
-			Model = (String)copyObject.Model.Clone();
+			if (copyObject.Model != null)
+				Model = (String)copyObject.Model.Clone();
 			HasCollisionData = copyObject.HasCollisionData;
 		}
 	
@@ -95,7 +97,7 @@ namespace ESPSharp.Subrecords
 				HasCollisionData = subEle.ToEnum<NoYesByte>();
 		}
 
-		public DebrisData Clone()
+		public override object Clone()
 		{
 			return new DebrisData(this);
 		}
@@ -138,7 +140,7 @@ namespace ESPSharp.Subrecords
 			}
 
 			return Percentage == other.Percentage &&
-				Model == other.Model &&
+				Model.SequenceEqual(other.Model) &&
 				HasCollisionData == other.HasCollisionData;
         }
 

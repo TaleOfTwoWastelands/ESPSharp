@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class IngestibleData : Subrecord, ICloneable<IngestibleData>, IComparable<IngestibleData>, IEquatable<IngestibleData>  
+	public partial class IngestibleData : Subrecord, ICloneable, IComparable<IngestibleData>, IEquatable<IngestibleData>  
 	{
 		public Int32 Value { get; set; }
 		public IngestibleFlags Flags { get; set; }
@@ -24,7 +24,8 @@ namespace ESPSharp.Subrecords
 		public Single AddictionChance { get; set; }
 		public FormID SoundConsume { get; set; }
 
-		public IngestibleData()
+		public IngestibleData(string Tag = null)
+			:base(Tag)
 		{
 			Value = new Int32();
 			Flags = new IngestibleFlags();
@@ -48,10 +49,13 @@ namespace ESPSharp.Subrecords
 		{
 			Value = copyObject.Value;
 			Flags = copyObject.Flags;
-			Unused = (Byte[])copyObject.Unused.Clone();
-			WithdrawalEffect = copyObject.WithdrawalEffect.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.WithdrawalEffect != null)
+				WithdrawalEffect = (FormID)copyObject.WithdrawalEffect.Clone();
 			AddictionChance = copyObject.AddictionChance;
-			SoundConsume = copyObject.SoundConsume.Clone();
+			if (copyObject.SoundConsume != null)
+				SoundConsume = (FormID)copyObject.SoundConsume.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -132,7 +136,7 @@ namespace ESPSharp.Subrecords
 				SoundConsume.ReadXML(subEle, master);
 		}
 
-		public IngestibleData Clone()
+		public override object Clone()
 		{
 			return new IngestibleData(this);
 		}

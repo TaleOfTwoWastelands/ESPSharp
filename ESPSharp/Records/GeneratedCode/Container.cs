@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Container : Record, IEditorID	{
+	public partial class Container : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -26,6 +28,24 @@ namespace ESPSharp.Records
 		public RecordReference OpenSound { get; set; }
 		public RecordReference CloseSound { get; set; }
 		public RecordReference Random_LoopingSound { get; set; }
+
+		public Container()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+		}
+
+		public Container(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, RecordReference Script, List<InventoryItem> Contents, Destructable Destructable, ContainerData Data, RecordReference OpenSound, RecordReference CloseSound, RecordReference Random_LoopingSound)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+		}
+
+		public Container(Container copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -122,8 +142,11 @@ namespace ESPSharp.Records
 			if (Script != null)
 				Script.WriteBinary(writer);
 			if (Contents != null)
+			{
+				Contents.Sort();
 				foreach (var item in Contents)
 					item.WriteBinary(writer);
+			}
 			if (Destructable != null)
 				Destructable.WriteBinary(writer);
 			if (Data != null)
@@ -169,6 +192,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("Contents", true, out subEle);
 				List<string> xmlNames = new List<string>{"Item"};
 				int i = 0;
+				Contents.Sort();
 				foreach (var entry in Contents)
 				{
 					i = i % xmlNames.Count();
@@ -291,6 +315,11 @@ namespace ESPSharp.Records
 					
 				Random_LoopingSound.ReadXML(subEle, master);
 			}
+		}		
+
+		public Container Clone()
+		{
+			return new Container(this);
 		}
 
 	}

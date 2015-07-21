@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class DefaultObjectManager : Record, IEditorID	{
+	public partial class DefaultObjectManager : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public DefaultObjects DefaultObjects { get; set; }
+
+		public DefaultObjectManager()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			DefaultObjects = new DefaultObjects("DATA");
+		}
+
+		public DefaultObjectManager(SimpleSubrecord<String> EditorID, DefaultObjects DefaultObjects)
+		{
+			this.EditorID = EditorID;
+			this.DefaultObjects = DefaultObjects;
+		}
+
+		public DefaultObjectManager(DefaultObjectManager copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -85,6 +103,11 @@ namespace ESPSharp.Records
 					
 				DefaultObjects.ReadXML(subEle, master);
 			}
+		}		
+
+		public DefaultObjectManager Clone()
+		{
+			return new DefaultObjectManager(this);
 		}
 
 	}

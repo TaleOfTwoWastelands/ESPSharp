@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class CaravanMoney : Record, IEditorID	{
+	public partial class CaravanMoney : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -24,6 +26,26 @@ namespace ESPSharp.Records
 		public RecordReference PickUpSound { get; set; }
 		public RecordReference DropSound { get; set; }
 		public SimpleSubrecord<UInt32> AbsoluteValue { get; set; }
+
+		public CaravanMoney()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			AbsoluteValue = new SimpleSubrecord<UInt32>("DATA");
+		}
+
+		public CaravanMoney(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference PickUpSound, RecordReference DropSound, SimpleSubrecord<UInt32> AbsoluteValue)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.AbsoluteValue = AbsoluteValue;
+		}
+
+		public CaravanMoney(CaravanMoney copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -232,6 +254,11 @@ namespace ESPSharp.Records
 					
 				AbsoluteValue.ReadXML(subEle, master);
 			}
+		}		
+
+		public CaravanMoney Clone()
+		{
+			return new CaravanMoney(this);
 		}
 
 	}

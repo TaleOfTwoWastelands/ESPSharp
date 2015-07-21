@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-    public partial class DateStamp : IESPSerializable, ICloneable<DateStamp>
+    public partial class DateStamp : IESPSerializable, ICloneable
     {
         public static DateStamp Now
         {

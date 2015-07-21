@@ -1,5 +1,4 @@
 ﻿<#@ assembly name="System.Core" #>
-<#@ assembly name="System.Core" #>
 <#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
 <#@ template debug="false" hostspecific="false" language="C#" inherits="ESPSharpCustomT4" #>
 <#@ output extension=".cs" #>
@@ -31,11 +30,12 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class <#= template.ClassName #> : Subrecord, ICloneable<<#= template.ClassName#>><# WriteInterfaces(template); #>  
+	public partial class <#= template.ClassName #> : Subrecord, ICloneable<# WriteInterfaces(template); #>  
 	{
 		<# foreach (var field in template.Fields) WritePropertyDeclaration(field); #>
 
-		public <#= template.ClassName #>()
+		public <#= template.ClassName #>(string Tag = null)
+			:base(Tag)
 		{
 			<# foreach (var field in template.Fields) WritePropertyInitializer(field); #>
 		}
@@ -57,7 +57,7 @@ namespace ESPSharp.Subrecords
 			{
 				try
 				{
-					<# foreach (var field in template.Fields) WriteReadBinaryCommand(field); #>
+					<# foreach (var field in template.Fields) WriteReadBinaryCommand(field, "subReader"); #>
 				}
 				catch
 				{
@@ -91,7 +91,7 @@ namespace ESPSharp.Subrecords
 			}#>
 		}
 
-		public <#= template.ClassName #> Clone()
+		public override object Clone()
 		{
 			return new <#= template.ClassName #>(this);
 		}

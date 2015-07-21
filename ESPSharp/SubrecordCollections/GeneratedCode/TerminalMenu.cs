@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class TerminalMenu : SubrecordCollection, ICloneable<TerminalMenu>
-	{
+	public partial class TerminalMenu : SubrecordCollection	{
 		public SimpleSubrecord<String> ItemText { get; set; }
 		public SimpleSubrecord<String> ResultText { get; set; }
 		public SimpleSubrecord<TerminalMenuFlags> Flags { get; set; }
@@ -44,18 +43,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public TerminalMenu(TerminalMenu copyObject)
 		{
-			ItemText = copyObject.ItemText.Clone();
-			ResultText = copyObject.ResultText.Clone();
-			Flags = copyObject.Flags.Clone();
-			DisplayNote = copyObject.DisplayNote.Clone();
-			SubMenu = copyObject.SubMenu.Clone();
-			Script = copyObject.Script.Clone();
-			Conditions = new List<Condition>();
-			foreach (var item in copyObject.Conditions)
-			{
-				Conditions.Add(item.Clone());
-			}
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

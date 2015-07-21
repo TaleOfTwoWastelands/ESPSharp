@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class BookData : Subrecord, ICloneable<BookData>, IComparable<BookData>, IEquatable<BookData>  
+	public partial class BookData : Subrecord, ICloneable, IComparable<BookData>, IEquatable<BookData>  
 	{
 		public BookFlags Flags { get; set; }
 		public ActorValuesByte Skill { get; set; }
 		public Int32 Value { get; set; }
 		public Single Weight { get; set; }
 
-		public BookData()
+		public BookData(string Tag = null)
+			:base(Tag)
 		{
 			Flags = new BookFlags();
 			Skill = new ActorValuesByte();
@@ -107,7 +108,7 @@ namespace ESPSharp.Subrecords
 				Weight = subEle.ToSingle();
 		}
 
-		public BookData Clone()
+		public override object Clone()
 		{
 			return new BookData(this);
 		}

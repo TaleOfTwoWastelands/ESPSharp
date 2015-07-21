@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,28 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class ActorEffect : Record, IEditorID	{
+	public partial class ActorEffect : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SpellData Data { get; set; }
 		public List<Effect> Effects { get; set; }
+
+		public ActorEffect()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new SpellData("SPIT");
+		}
+
+		public ActorEffect(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SpellData Data, List<Effect> Effects)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public ActorEffect(ActorEffect copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -144,6 +162,11 @@ namespace ESPSharp.Records
 					Effects.Add(tempEFID);
 				}
 			}
+		}		
+
+		public ActorEffect Clone()
+		{
+			return new ActorEffect(this);
 		}
 
 	}

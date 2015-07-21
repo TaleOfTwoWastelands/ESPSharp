@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class AddonNodeData : Subrecord, ICloneable<AddonNodeData>, IComparable<AddonNodeData>, IEquatable<AddonNodeData>  
+	public partial class AddonNodeData : Subrecord, ICloneable, IComparable<AddonNodeData>, IEquatable<AddonNodeData>  
 	{
 		public UInt16 MasterParticleSystemCap { get; set; }
 		public Byte[] Unknown { get; set; }
 
-		public AddonNodeData()
+		public AddonNodeData(string Tag = null)
+			:base(Tag)
 		{
 			MasterParticleSystemCap = new UInt16();
 			Unknown = new byte[2];
@@ -35,7 +36,8 @@ namespace ESPSharp.Subrecords
 		public AddonNodeData(AddonNodeData copyObject)
 		{
 			MasterParticleSystemCap = copyObject.MasterParticleSystemCap;
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -86,7 +88,7 @@ namespace ESPSharp.Subrecords
 				Unknown = subEle.ToBytes();
 		}
 
-		public AddonNodeData Clone()
+		public override object Clone()
 		{
 			return new AddonNodeData(this);
 		}

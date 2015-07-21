@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class PerkCondition : SubrecordCollection, ICloneable<PerkCondition>
-	{
+	public partial class PerkCondition : SubrecordCollection	{
 		public SimpleSubrecord<PerkRunOn> RunOn { get; set; }
 		public List<Condition> Conditions { get; set; }
 
@@ -33,13 +32,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public PerkCondition(PerkCondition copyObject)
 		{
-			RunOn = copyObject.RunOn.Clone();
-			Conditions = new List<Condition>();
-			foreach (var item in copyObject.Conditions)
-			{
-				Conditions.Add(item.Clone());
-			}
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

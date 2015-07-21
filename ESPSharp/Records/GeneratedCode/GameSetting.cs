@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,24 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class GameSetting : Record, IEditorID	{
+	public partial class GameSetting : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
-		public dynamic Value { get; set; }
+		public Subrecord Value { get; set; }
+
+		public GameSetting()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public GameSetting(SimpleSubrecord<String> EditorID, Subrecord Value)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public GameSetting(GameSetting copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -74,11 +90,20 @@ namespace ESPSharp.Records
 			}
 
 			ReadValueXML(ele, master);
+		}		
+
+		public GameSetting Clone()
+		{
+			return new GameSetting(this);
 		}
 
+
 		partial void ReadValue(ESPReader reader);
+
 		partial void WriteValue(ESPWriter writer);
+
 		partial void WriteValueXML(XElement ele, ElderScrollsPlugin master);
+
 		partial void ReadValueXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

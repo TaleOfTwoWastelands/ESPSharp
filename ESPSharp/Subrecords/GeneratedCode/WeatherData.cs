@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeatherData : Subrecord, ICloneable<WeatherData>, IComparable<WeatherData>, IEquatable<WeatherData>  
+	public partial class WeatherData : Subrecord, ICloneable, IComparable<WeatherData>, IEquatable<WeatherData>  
 	{
 		public Byte WindSpeed { get; set; }
 		public Byte CloudSpeedLower { get; set; }
@@ -33,7 +33,8 @@ namespace ESPSharp.Subrecords
 		public Byte LightningColorGreen { get; set; }
 		public Byte LightningColorBlue { get; set; }
 
-		public WeatherData()
+		public WeatherData(string Tag = null)
+			:base(Tag)
 		{
 			WindSpeed = new Byte();
 			CloudSpeedLower = new Byte();
@@ -239,7 +240,7 @@ namespace ESPSharp.Subrecords
 				LightningColorBlue = subEle.ToByte();
 		}
 
-		public WeatherData Clone()
+		public override object Clone()
 		{
 			return new WeatherData(this);
 		}

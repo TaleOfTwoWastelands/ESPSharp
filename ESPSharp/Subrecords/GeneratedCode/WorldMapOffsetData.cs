@@ -14,13 +14,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WorldMapOffsetData : Subrecord, ICloneable<WorldMapOffsetData>, IComparable<WorldMapOffsetData>, IEquatable<WorldMapOffsetData>  
+	public partial class WorldMapOffsetData : Subrecord, ICloneable, IComparable<WorldMapOffsetData>, IEquatable<WorldMapOffsetData>  
 	{
 		public Single WorldMapScale { get; set; }
 		public Single CellXOffset { get; set; }
 		public Single CellYOffset { get; set; }
 
-		public WorldMapOffsetData()
+		public WorldMapOffsetData(string Tag = null)
+			:base(Tag)
 		{
 			WorldMapScale = new Single();
 			CellXOffset = new Single();
@@ -94,7 +95,7 @@ namespace ESPSharp.Subrecords
 				CellYOffset = subEle.ToSingle();
 		}
 
-		public WorldMapOffsetData Clone()
+		public override object Clone()
 		{
 			return new WorldMapOffsetData(this);
 		}

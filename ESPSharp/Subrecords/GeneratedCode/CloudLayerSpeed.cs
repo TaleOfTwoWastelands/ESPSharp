@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CloudLayerSpeed : Subrecord, ICloneable<CloudLayerSpeed>, IComparable<CloudLayerSpeed>, IEquatable<CloudLayerSpeed>  
+	public partial class CloudLayerSpeed : Subrecord, ICloneable, IComparable<CloudLayerSpeed>, IEquatable<CloudLayerSpeed>  
 	{
 		public Byte Layer0 { get; set; }
 		public Byte Layer1 { get; set; }
 		public Byte Layer2 { get; set; }
 		public Byte Layer3 { get; set; }
 
-		public CloudLayerSpeed()
+		public CloudLayerSpeed(string Tag = null)
+			:base(Tag)
 		{
 			Layer0 = new Byte();
 			Layer1 = new Byte();
@@ -107,7 +108,7 @@ namespace ESPSharp.Subrecords
 				Layer3 = subEle.ToByte();
 		}
 
-		public CloudLayerSpeed Clone()
+		public override object Clone()
 		{
 			return new CloudLayerSpeed(this);
 		}

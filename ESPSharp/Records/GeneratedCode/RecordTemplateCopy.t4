@@ -1,0 +1,274 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
+<#@ template debug="false" hostspecific="false" language="C#" inherits="ESPSharpCustomT4" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="ESPSharp" #>
+<#@ import namespace="ESPSharp.T4" #>
+<#@ import namespace="ESPSharp.Enums" #>
+<#@ import namespace="ESPSharp.DataTypes" #>
+<#@ import namespace="ESPSharp.Interfaces" #>
+<#@ import namespace="ESPSharp.Enums.Flags" #>
+<#@ import namespace="ESPSharp.Subrecords" #>
+<#@ import namespace="ESPSharp.SubrecordCollections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Xml.Linq;
+using ESPSharp.Enums;
+using ESPSharp.Enums.Flags;
+using ESPSharp.Interfaces;
+using ESPSharp.Subrecords;
+using ESPSharp.SubrecordCollections;
+using ESPSharp.DataTypes;
+
+namespace ESPSharp.Records
+{
+	public partial class <#= template.ClassName #> : Record, ICloneable<<#= template.ClassName#>><# WriteInterfaces(template); #><# if (template.Fields.Any(f => f.Name == "EditorID")) { #>, IEditorID<#}WriteLine("");#>
+	{
+		<# foreach (RecordField field in template.Fields) WritePropertyDeclaration(field); #>
+
+		public <#= template.ClassName #>()
+		{
+			<# foreach (RecordField field in template.Fields.Where(f => (f as RecordField).isRequired)) WritePropertyInitializer(field); #>
+		}
+
+		public <#= template.ClassName #>(<# WriteParamsConstructorArgs(template);#>)
+		{
+			<# foreach (RecordField field in template.Fields.Where(f => (f as RecordField).isRequired)) WriteParamsConstructorAssignment(field);#>
+		}
+
+		public <#= template.ClassName #>(<#= template.ClassName #> copyObject)
+		{
+			<# foreach (RecordField field in template.Fields) WriteCopyConstructorAssignment(field); #>
+		}
+	
+		public override void ReadData(ESPReader reader, long dataEnd)
+		{
+			while (reader.BaseStream.Position < dataEnd)
+			{
+				string subTag = reader.PeekTag();
+
+				switch (subTag)
+				{
+<# foreach (RecordField field in template.Fields) { #>
+					case "<#= field.Tag #>":
+<# if (field.implementReadData) { #>
+						if (<#= field.Name #> == null)
+							<#= field.Name #> = new <#= field.TypeString #>();
+
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
+						<#= field.Name #>.ReadBinary(reader);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){#>
+						<#= Utility.GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp<#= field.Tag #> = new <#= Utility.GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
+						temp<#= field.Tag #>.ReadBinary(reader);
+						<#= field.Name #>.Add(temp<#= field.Tag #>);
+<# } #>
+<# } else { #>
+						Read<#= field.Name #>(reader);
+<# } #>
+						break;
+<# } #>
+					default:
+						throw new Exception();
+				}
+			}
+		}
+
+		public override void WriteData(ESPWriter writer)
+		{
+<# foreach (RecordField field in template.Fields) { #>
+<# if (field.implementWriteData) { #>
+			if (<#= field.Name #> != null)
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
+				<#= field.Name #>.WriteBinary(writer);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){ #>
+				foreach (var item in <#= field.Name #>)
+					item.WriteBinary(writer);
+<# } #>
+<# } else { #>
+
+			Write<#= field.Name #>(writer);
+<# } #>
+<# } #>
+		}
+
+		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
+		{
+			XElement subEle;
+<# foreach (RecordField field in template.Fields) { #>
+<# if (field.implementWriteXML) { #>
+			if (<#= field.Name #> != null)		
+			{		
+				ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
+				<#= field.Name #>.WriteXML(subEle, master);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
+				List<string> xmlNames = new List<string>{"<#= string.Join("\", \"", field.XMLSubNames) #>"};
+				int i = 0;
+				foreach (var entry in <#= field.Name #>)
+				{
+					i = i % xmlNames.Count();
+					XElement newEle = new XElement(xmlNames[i]);
+					entry.WriteXML(newEle, master);
+					subEle.Add(newEle);
+					i++;
+				}
+<# } #>
+			}
+<# } else { #>
+
+			Write<#= field.Name #>XML(ele, master);
+<# } #>
+<# } #>
+		}
+
+		public override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
+		{
+			XElement subEle;
+
+<# foreach (RecordField field in template.Fields) { #>
+<# if (field.implementReadXML) { #>
+			if (ele.TryPathTo("<#= field.XMLPath#>", false, out subEle))
+			{
+				if (<#= field.Name #> == null)
+					<#= field.Name #> = new <#= field.TypeString #>();
+					
+<# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
+				<#= field.Name #>.ReadXML(subEle, master);
+<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
+				foreach (XElement e in subEle.Elements())
+				{
+					<#= Utility.GetFriendlyName(field.Type.GenericTypeArguments[0]) #> temp<#= field.Tag #> = new <#= Utility.GetFriendlyName(field.Type.GenericTypeArguments[0]) #>();
+					temp<#= field.Tag #>.ReadXML(e, master);
+					<#=  field.Name #>.Add(temp<#= field.Tag #>);
+				}
+<# } #>
+			}
+<# } else { #>
+
+			Read<#= field.Name #>XML(ele, master);
+<# } #>
+<# } #>
+		}		
+
+		public <#= template.ClassName #> Clone()
+		{
+			return new <#= template.ClassName #>(this);
+		}
+
+<# if(template.isComparable) { #>
+        public int CompareTo(<#= template.ClassName #> other)
+        {
+			<# WriteCompareHashKeyCommand(template); #>
+        }
+
+        public static bool operator >(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+
+<#}#>
+<# if(template.isEquatable) { #>
+        public bool Equals(<#= template.ClassName #> other)
+        {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
+			return <#= string.Join(" &&\n\t\t\t\t", template.Fields.Select<ClassField, string>(s => s.EqualString))#>;
+        }
+
+        public override bool Equals(object obj)
+        {
+			if (obj == null)
+				return false;
+
+            <#= template.ClassName #> other = obj as <#= template.ClassName #>;
+
+            if (other == null)
+                return false;
+            else
+                return Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return <#= template.hashKey.Name#>.GetHashCode();
+        }
+
+        public static bool operator ==(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
+            return objA.Equals(objB);
+        }
+
+        public static bool operator !=(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
+            return !objA.Equals(objB);
+        }
+<#}#>
+<#foreach (RecordField field in template.Fields.Where(f => !f.implementReadData)) { #>
+
+		partial void Read<#= field.Name #>(ESPReader reader);
+<# } #>
+<#foreach (RecordField field in template.Fields.Where(f => !f.implementWriteData)) { #>
+
+		partial void Write<#= field.Name #>(ESPWriter writer);
+<# } #>
+<#foreach (RecordField field in template.Fields.Where(f => !f.implementWriteXML)) { #>
+
+		partial void Write<#= field.Name #>XML(XElement ele, ElderScrollsPlugin master);
+<# } #>
+<#foreach (RecordField field in template.Fields.Where(f => !f.implementReadXML)) { #>
+
+		partial void Read<#= field.Name #>XML(XElement ele, ElderScrollsPlugin master);
+<# } #>
+	}
+}

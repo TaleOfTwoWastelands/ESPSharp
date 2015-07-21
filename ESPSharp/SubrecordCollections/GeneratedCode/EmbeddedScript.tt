@@ -13,6 +13,7 @@
 			"Data",
 			"Data"
 			);
+	template.hashKey = tempField;
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
@@ -46,22 +47,34 @@
 
 	tempField = 
 		new SubrecordCollectionField(
-			"SCRV",
-			typeof(List<SimpleSubrecord<uint>>),
-			"LocalReferences",
-			"LocalReferences"
+			"DUMY",
+			typeof(List<Subrecord>),
+			"References",
+			"References"
 			);
+	tempField.implementWriteData = false;
+	tempField.implementWriteXML = false;
+	tempField.implementReadData = false;
+	tempField.implementReadXML = false;
 	tempField.XMLSubName = "Reference";
+	template.Fields.Add(tempField);	
+
+	tempField = 
+		new SubrecordCollectionField(
+			"SCRV",
+			null,
+			"LocalReference",
+			"LocalReference"
+			);
 	template.Fields.Add(tempField);
 
 	tempField = 
 		new SubrecordCollectionField(
 			"SCRO",
-			typeof(List<RecordReference>),
-			"GlobalReferences",
-			"GlobalReferences"
+			null,
+			"GlobalReference",
+			"GlobalReference"
 			);
-	tempField.XMLSubName = "Reference";
 	template.Fields.Add(tempField);
 
 #>

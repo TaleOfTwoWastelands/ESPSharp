@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Weather : Record, IEditorID	{
+	public partial class Weather : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public RecordReference ImageSpaceModifierSunrise { get; set; }
 		public RecordReference ImageSpaceModifierDay { get; set; }
@@ -35,6 +37,40 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<Byte[]> Unused { get; set; }
 		public WeatherData Data { get; set; }
 		public List<WeatherSound> Sounds { get; set; }
+
+		public Weather()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			CloudTextureLayer0 = new SimpleSubrecord<String>("DNAM");
+			CloudTextureLayer1 = new SimpleSubrecord<String>("CNAM");
+			CloudTextureLayer2 = new SimpleSubrecord<String>("ANAM");
+			CloudTextureLayer3 = new SimpleSubrecord<String>("BNAM");
+			Unknown = new SimpleSubrecord<Byte[]>("LNAM");
+			CloudLayerSpeed = new CloudLayerSpeed("ONAM");
+			EnvironmentalColors = new EnvironmentalColors("NAM0");
+			WeatherFogDistance = new WeatherFogDistance("FNAM");
+			Unused = new SimpleSubrecord<Byte[]>("INAM");
+			Data = new WeatherData("DATA");
+		}
+
+		public Weather(SimpleSubrecord<String> EditorID, RecordReference ImageSpaceModifierSunrise, RecordReference ImageSpaceModifierDay, RecordReference ImageSpaceModifierSunset, RecordReference ImageSpaceModifierNight, RecordReference ImageSpaceModifierHighNoon, RecordReference ImageSpaceModifierMidnight, SimpleSubrecord<String> CloudTextureLayer0, SimpleSubrecord<String> CloudTextureLayer1, SimpleSubrecord<String> CloudTextureLayer2, SimpleSubrecord<String> CloudTextureLayer3, Model Model, SimpleSubrecord<Byte[]> Unknown, CloudLayerSpeed CloudLayerSpeed, CloudLayerColors CloudLayerColors, EnvironmentalColors EnvironmentalColors, WeatherFogDistance WeatherFogDistance, SimpleSubrecord<Byte[]> Unused, WeatherData Data, List<WeatherSound> Sounds)
+		{
+			this.EditorID = EditorID;
+			this.CloudTextureLayer0 = CloudTextureLayer0;
+			this.CloudTextureLayer1 = CloudTextureLayer1;
+			this.CloudTextureLayer2 = CloudTextureLayer2;
+			this.CloudTextureLayer3 = CloudTextureLayer3;
+			this.Unknown = Unknown;
+			this.CloudLayerSpeed = CloudLayerSpeed;
+			this.EnvironmentalColors = EnvironmentalColors;
+			this.WeatherFogDistance = WeatherFogDistance;
+			this.Unused = Unused;
+			this.Data = Data;
+		}
+
+		public Weather(Weather copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -480,6 +516,11 @@ namespace ESPSharp.Records
 					Sounds.Add(tempSNAM);
 				}
 			}
+		}		
+
+		public Weather Clone()
+		{
+			return new Weather(this);
 		}
 
 	}

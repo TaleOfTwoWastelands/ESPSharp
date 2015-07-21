@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class SleepDeprivationStage : Record, IEditorID	{
+	public partial class SleepDeprivationStage : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ThresholdData Data { get; set; }
+
+		public SleepDeprivationStage()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new ThresholdData("DATA");
+		}
+
+		public SleepDeprivationStage(SimpleSubrecord<String> EditorID, ThresholdData Data)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public SleepDeprivationStage(SleepDeprivationStage copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -85,6 +103,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public SleepDeprivationStage Clone()
+		{
+			return new SleepDeprivationStage(this);
 		}
 
 	}

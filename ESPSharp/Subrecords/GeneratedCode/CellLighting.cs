@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CellLighting : Subrecord, ICloneable<CellLighting>, IComparable<CellLighting>, IEquatable<CellLighting>  
+	public partial class CellLighting : Subrecord, ICloneable, IComparable<CellLighting>, IEquatable<CellLighting>  
 	{
 		public Color ColorAmbient { get; set; }
 		public Color ColorDirectional { get; set; }
@@ -28,7 +28,8 @@ namespace ESPSharp.Subrecords
 		public Single FogClipDistance { get; set; }
 		public Single FogPower { get; set; }
 
-		public CellLighting()
+		public CellLighting(string Tag = null)
+			:base(Tag)
 		{
 			ColorAmbient = new Color();
 			ColorDirectional = new Color();
@@ -58,9 +59,12 @@ namespace ESPSharp.Subrecords
 
 		public CellLighting(CellLighting copyObject)
 		{
-			ColorAmbient = copyObject.ColorAmbient.Clone();
-			ColorDirectional = copyObject.ColorDirectional.Clone();
-			FogColor = copyObject.FogColor.Clone();
+			if (copyObject.ColorAmbient != null)
+				ColorAmbient = (Color)copyObject.ColorAmbient.Clone();
+			if (copyObject.ColorDirectional != null)
+				ColorDirectional = (Color)copyObject.ColorDirectional.Clone();
+			if (copyObject.FogColor != null)
+				FogColor = (Color)copyObject.FogColor.Clone();
 			FogNear = copyObject.FogNear;
 			FogFar = copyObject.FogFar;
 			DirectionalRotationXY = copyObject.DirectionalRotationXY;
@@ -179,7 +183,7 @@ namespace ESPSharp.Subrecords
 				FogPower = subEle.ToSingle();
 		}
 
-		public CellLighting Clone()
+		public override object Clone()
 		{
 			return new CellLighting(this);
 		}

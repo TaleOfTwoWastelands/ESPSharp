@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CreatureBaseStats : Subrecord, ICloneable<CreatureBaseStats>, IComparable<CreatureBaseStats>, IEquatable<CreatureBaseStats>  
+	public partial class CreatureBaseStats : Subrecord, ICloneable, IComparable<CreatureBaseStats>, IEquatable<CreatureBaseStats>  
 	{
 		public CreatureFlags Flags { get; set; }
 		public UInt16 Fatigue { get; set; }
@@ -28,7 +28,8 @@ namespace ESPSharp.Subrecords
 		public Int16 DispositionBase { get; set; }
 		public ActorTemplateFlags TemplateFlags { get; set; }
 
-		public CreatureBaseStats()
+		public CreatureBaseStats(string Tag = null)
+			:base(Tag)
 		{
 			Flags = new CreatureFlags();
 			Fatigue = new UInt16();
@@ -179,7 +180,7 @@ namespace ESPSharp.Subrecords
 				TemplateFlags = subEle.ToEnum<ActorTemplateFlags>();
 		}
 
-		public CreatureBaseStats Clone()
+		public override object Clone()
 		{
 			return new CreatureBaseStats(this);
 		}

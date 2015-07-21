@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PlaneData : Subrecord, ICloneable<PlaneData>, IComparable<PlaneData>, IEquatable<PlaneData>  
+	public partial class PlaneData : Subrecord, ICloneable, IComparable<PlaneData>, IEquatable<PlaneData>  
 	{
 		public Single Width { get; set; }
 		public Single Height { get; set; }
@@ -27,7 +27,8 @@ namespace ESPSharp.Subrecords
 		public Single RotationQuaternion3 { get; set; }
 		public Single RotationQuaternion4 { get; set; }
 
-		public PlaneData()
+		public PlaneData(string Tag = null)
+			:base(Tag)
 		{
 			Width = new Single();
 			Height = new Single();
@@ -167,7 +168,7 @@ namespace ESPSharp.Subrecords
 				RotationQuaternion4 = subEle.ToSingle();
 		}
 
-		public PlaneData Clone()
+		public override object Clone()
 		{
 			return new PlaneData(this);
 		}

@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeaponData : Subrecord, ICloneable<WeaponData>, IComparable<WeaponData>, IEquatable<WeaponData>  
+	public partial class WeaponData : Subrecord, ICloneable, IComparable<WeaponData>, IEquatable<WeaponData>  
 	{
 		public Int32 Value { get; set; }
 		public Int32 Health { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public Int16 BaseDamage { get; set; }
 		public Byte ClipSize { get; set; }
 
-		public WeaponData()
+		public WeaponData(string Tag = null)
+			:base(Tag)
 		{
 			Value = new Int32();
 			Health = new Int32();
@@ -119,7 +120,7 @@ namespace ESPSharp.Subrecords
 				ClipSize = subEle.ToByte();
 		}
 
-		public WeaponData Clone()
+		public override object Clone()
 		{
 			return new WeaponData(this);
 		}

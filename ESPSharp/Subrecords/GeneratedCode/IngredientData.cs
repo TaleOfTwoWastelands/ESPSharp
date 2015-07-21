@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class IngredientData : Subrecord, ICloneable<IngredientData>, IComparable<IngredientData>, IEquatable<IngredientData>  
+	public partial class IngredientData : Subrecord, ICloneable, IComparable<IngredientData>, IEquatable<IngredientData>  
 	{
 		public Int32 Value { get; set; }
 		public IngredientFlags Flags { get; set; }
 		public Byte[] Unused { get; set; }
 
-		public IngredientData()
+		public IngredientData(string Tag = null)
+			:base(Tag)
 		{
 			Value = new Int32();
 			Flags = new IngredientFlags();
@@ -39,7 +40,8 @@ namespace ESPSharp.Subrecords
 		{
 			Value = copyObject.Value;
 			Flags = copyObject.Flags;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -96,7 +98,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public IngredientData Clone()
+		public override object Clone()
 		{
 			return new IngredientData(this);
 		}

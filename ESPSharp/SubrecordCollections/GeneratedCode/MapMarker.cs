@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class MapMarker : SubrecordCollection, ICloneable<MapMarker>
-	{
+	public partial class MapMarker : SubrecordCollection	{
 		public SubMarker Marker { get; set; }
 		public SimpleSubrecord<MapMarkerFlags> Flags { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -39,11 +38,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public MapMarker(MapMarker copyObject)
 		{
-			Flags = copyObject.Flags.Clone();
-			Name = copyObject.Name.Clone();
-			Data = copyObject.Data.Clone();
-			Reputation = copyObject.Reputation.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

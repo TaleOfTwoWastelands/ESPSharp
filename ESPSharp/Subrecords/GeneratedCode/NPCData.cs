@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NPCData : Subrecord, ICloneable<NPCData>, IComparable<NPCData>, IEquatable<NPCData>  
+	public partial class NPCData : Subrecord, ICloneable, IComparable<NPCData>, IEquatable<NPCData>  
 	{
 		public Int32 BaseHealth { get; set; }
 		public Byte Strength { get; set; }
@@ -26,7 +26,8 @@ namespace ESPSharp.Subrecords
 		public Byte Agility { get; set; }
 		public Byte Luck { get; set; }
 
-		public NPCData()
+		public NPCData(string Tag = null)
+			:base(Tag)
 		{
 			BaseHealth = new Int32();
 			Strength = new Byte();
@@ -155,7 +156,7 @@ namespace ESPSharp.Subrecords
 				Luck = subEle.ToByte();
 		}
 
-		public NPCData Clone()
+		public override object Clone()
 		{
 			return new NPCData(this);
 		}

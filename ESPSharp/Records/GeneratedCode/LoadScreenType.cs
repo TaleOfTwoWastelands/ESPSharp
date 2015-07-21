@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class LoadScreenType : Record, IEditorID	{
+	public partial class LoadScreenType : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public LoadScreenTypeData Data { get; set; }
+
+		public LoadScreenType()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new LoadScreenTypeData("DATA");
+		}
+
+		public LoadScreenType(SimpleSubrecord<String> EditorID, LoadScreenTypeData Data)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public LoadScreenType(LoadScreenType copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -85,6 +103,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public LoadScreenType Clone()
+		{
+			return new LoadScreenType(this);
 		}
 
 	}

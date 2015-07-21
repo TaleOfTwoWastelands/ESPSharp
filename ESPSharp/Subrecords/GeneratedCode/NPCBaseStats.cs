@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NPCBaseStats : Subrecord, ICloneable<NPCBaseStats>, IComparable<NPCBaseStats>, IEquatable<NPCBaseStats>  
+	public partial class NPCBaseStats : Subrecord, ICloneable, IComparable<NPCBaseStats>, IEquatable<NPCBaseStats>  
 	{
 		public NPCFlags Flags { get; set; }
 		public UInt16 Fatigue { get; set; }
@@ -28,7 +28,8 @@ namespace ESPSharp.Subrecords
 		public Int16 DispositionBase { get; set; }
 		public ActorTemplateFlags TemplateFlags { get; set; }
 
-		public NPCBaseStats()
+		public NPCBaseStats(string Tag = null)
+			:base(Tag)
 		{
 			Flags = new NPCFlags();
 			Fatigue = new UInt16();
@@ -179,7 +180,7 @@ namespace ESPSharp.Subrecords
 				TemplateFlags = subEle.ToEnum<ActorTemplateFlags>();
 		}
 
-		public NPCBaseStats Clone()
+		public override object Clone()
 		{
 			return new NPCBaseStats(this);
 		}

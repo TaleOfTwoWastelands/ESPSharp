@@ -1,19 +1,17 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ output extension=".cs" #>
-<#	
-	DataTypeTemplate template = new DataTypeTemplate();
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "FormID";
-	template.implementReadXML = false;
-	template.implementWriteXML = false;
 
-	DataTypeField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(uint),
 			"RawValue",
 			""
 			);
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.hashKey = tempField;
 	tempField.isReadOnly = true;
 	template.Fields.Add(tempField);

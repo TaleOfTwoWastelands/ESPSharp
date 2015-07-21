@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class MapMarkerData : Subrecord, ICloneable<MapMarkerData>, IComparable<MapMarkerData>, IEquatable<MapMarkerData>  
+	public partial class MapMarkerData : Subrecord, ICloneable, IComparable<MapMarkerData>, IEquatable<MapMarkerData>  
 	{
 		public MapMarkerType Type { get; set; }
 		public Byte[] Unused { get; set; }
 
-		public MapMarkerData()
+		public MapMarkerData(string Tag = null)
+			:base(Tag)
 		{
 			Type = new MapMarkerType();
 			Unused = new byte[1];
@@ -35,7 +36,8 @@ namespace ESPSharp.Subrecords
 		public MapMarkerData(MapMarkerData copyObject)
 		{
 			Type = copyObject.Type;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -84,7 +86,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public MapMarkerData Clone()
+		public override object Clone()
 		{
 			return new MapMarkerData(this);
 		}

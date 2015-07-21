@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CombatStyleDecision : Subrecord, ICloneable<CombatStyleDecision>, IComparable<CombatStyleDecision>, IEquatable<CombatStyleDecision>  
+	public partial class CombatStyleDecision : Subrecord, ICloneable, IComparable<CombatStyleDecision>, IEquatable<CombatStyleDecision>  
 	{
 		public Byte ManeuverDodgeChance { get; set; }
 		public Byte ManeuverSidestepChance { get; set; }
@@ -52,7 +52,8 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unused5 { get; set; }
 		public Single MeleeRushingPowerAttackDistanceMult { get; set; }
 
-		public CombatStyleDecision()
+		public CombatStyleDecision(string Tag = null)
+			:base(Tag)
 		{
 			ManeuverDodgeChance = new Byte();
 			ManeuverSidestepChance = new Byte();
@@ -132,7 +133,8 @@ namespace ESPSharp.Subrecords
 		{
 			ManeuverDodgeChance = copyObject.ManeuverDodgeChance;
 			ManeuverSidestepChance = copyObject.ManeuverSidestepChance;
-			Unused1 = (Byte[])copyObject.Unused1.Clone();
+			if (copyObject.Unused1 != null)
+				Unused1 = (Byte[])copyObject.Unused1.Clone();
 			ManeuverDodgeLRTimerMin = copyObject.ManeuverDodgeLRTimerMin;
 			ManeuverDodgeLRTimerMax = copyObject.ManeuverDodgeLRTimerMax;
 			ManeuverDodgeForwardTimerMin = copyObject.ManeuverDodgeForwardTimerMin;
@@ -143,12 +145,14 @@ namespace ESPSharp.Subrecords
 			ManeuverDodgeIdleTimerMax = copyObject.ManeuverDodgeIdleTimerMax;
 			MeleeBlockChance = copyObject.MeleeBlockChance;
 			MeleeAttackChance = copyObject.MeleeAttackChance;
-			Unused2 = (Byte[])copyObject.Unused2.Clone();
+			if (copyObject.Unused2 != null)
+				Unused2 = (Byte[])copyObject.Unused2.Clone();
 			MeleeRecoilStaggerBonusToAttack = copyObject.MeleeRecoilStaggerBonusToAttack;
 			MeleeUnconsciousBonusToAttack = copyObject.MeleeUnconsciousBonusToAttack;
 			MeleeHandToHandBonusToAttack = copyObject.MeleeHandToHandBonusToAttack;
 			MeleePowerAttackChance = copyObject.MeleePowerAttackChance;
-			Unused3 = (Byte[])copyObject.Unused3.Clone();
+			if (copyObject.Unused3 != null)
+				Unused3 = (Byte[])copyObject.Unused3.Clone();
 			MeleePowerAttackRecoilStaggerBonus = copyObject.MeleePowerAttackRecoilStaggerBonus;
 			MeleePowerAttackUnconsciousBonus = copyObject.MeleePowerAttackUnconsciousBonus;
 			MeleePowerAttackNormal = copyObject.MeleePowerAttackNormal;
@@ -156,13 +160,15 @@ namespace ESPSharp.Subrecords
 			MeleePowerAttackBack = copyObject.MeleePowerAttackBack;
 			MeleePowerAttackLeft = copyObject.MeleePowerAttackLeft;
 			MeleePowerAttackRight = copyObject.MeleePowerAttackRight;
-			Unused4 = (Byte[])copyObject.Unused4.Clone();
+			if (copyObject.Unused4 != null)
+				Unused4 = (Byte[])copyObject.Unused4.Clone();
 			MeleeHoldTimerMin = copyObject.MeleeHoldTimerMin;
 			MeleeHoldTimerMax = copyObject.MeleeHoldTimerMax;
 			Flags = copyObject.Flags;
 			ManeuverAcrobaticDodgeChance = copyObject.ManeuverAcrobaticDodgeChance;
 			MeleeRushingPowerAttackChance = copyObject.MeleeRushingPowerAttackChance;
-			Unused5 = (Byte[])copyObject.Unused5.Clone();
+			if (copyObject.Unused5 != null)
+				Unused5 = (Byte[])copyObject.Unused5.Clone();
 			MeleeRushingPowerAttackDistanceMult = copyObject.MeleeRushingPowerAttackDistanceMult;
 		}
 	
@@ -472,7 +478,7 @@ namespace ESPSharp.Subrecords
 				MeleeRushingPowerAttackDistanceMult = subEle.ToSingle();
 		}
 
-		public CombatStyleDecision Clone()
+		public override object Clone()
 		{
 			return new CombatStyleDecision(this);
 		}

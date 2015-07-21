@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-    public class Function : IESPSerializable, ICloneable<Function>, IComparable<Function>, IEquatable<Function>, IReferenceContainer
+    public class Function : IESPSerializable, ICloneable, IComparable<Function>, IEquatable<Function>, IReferenceContainer
     {
         #region Dictionary
         private static Dictionary<FunctionType, TypeStringArgData> Metadata = new Dictionary<FunctionType, TypeStringArgData>()
@@ -502,7 +502,7 @@ namespace ESPSharp.DataTypes
             else throw new Exception(Type.ToString() + " was not in the dictionary.");
         }
 
-        public Function Clone()
+        public object Clone()
         {
             return new Function(this);
         }

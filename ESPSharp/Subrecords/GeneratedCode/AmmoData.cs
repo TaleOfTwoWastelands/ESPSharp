@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class AmmoData : Subrecord, ICloneable<AmmoData>, IComparable<AmmoData>, IEquatable<AmmoData>  
+	public partial class AmmoData : Subrecord, ICloneable, IComparable<AmmoData>, IEquatable<AmmoData>  
 	{
 		public Single Speed { get; set; }
 		public WeaponFlags Flags { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public Int32 Value { get; set; }
 		public Byte ClipRounds { get; set; }
 
-		public AmmoData()
+		public AmmoData(string Tag = null)
+			:base(Tag)
 		{
 			Speed = new Single();
 			Flags = new WeaponFlags();
@@ -45,7 +46,8 @@ namespace ESPSharp.Subrecords
 		{
 			Speed = copyObject.Speed;
 			Flags = copyObject.Flags;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			Value = copyObject.Value;
 			ClipRounds = copyObject.ClipRounds;
 		}
@@ -120,7 +122,7 @@ namespace ESPSharp.Subrecords
 				ClipRounds = subEle.ToByte();
 		}
 
-		public AmmoData Clone()
+		public override object Clone()
 		{
 			return new AmmoData(this);
 		}

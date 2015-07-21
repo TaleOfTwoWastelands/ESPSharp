@@ -1,0 +1,20 @@
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
+	template.ClassName = "SpeedtreeSeeds";
+	template.isComparable = false;
+	template.isReferenceable = false;
+
+	ClassField tempField;
+
+	tempField = 
+		new ClassField(
+			typeof(List<uint>),
+			"Seeds",
+			"Seeds"
+			);
+	tempField.XMLSubName = "Seed";
+	tempField.listItemSize = 4;
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

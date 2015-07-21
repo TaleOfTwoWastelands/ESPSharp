@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CombatStyleAdvanced : Subrecord, ICloneable<CombatStyleAdvanced>, IComparable<CombatStyleAdvanced>, IEquatable<CombatStyleAdvanced>  
+	public partial class CombatStyleAdvanced : Subrecord, ICloneable, IComparable<CombatStyleAdvanced>, IEquatable<CombatStyleAdvanced>  
 	{
 		public Single DodgeFatigueModMult { get; set; }
 		public Single DodgeFatigueModBase { get; set; }
@@ -39,7 +39,8 @@ namespace ESPSharp.Subrecords
 		public Single PowerAttackFatigueModBase { get; set; }
 		public Single PowerAttackFatigueModMult { get; set; }
 
-		public CombatStyleAdvanced()
+		public CombatStyleAdvanced(string Tag = null)
+			:base(Tag)
 		{
 			DodgeFatigueModMult = new Single();
 			DodgeFatigueModBase = new Single();
@@ -311,7 +312,7 @@ namespace ESPSharp.Subrecords
 				PowerAttackFatigueModMult = subEle.ToSingle();
 		}
 
-		public CombatStyleAdvanced Clone()
+		public override object Clone()
 		{
 			return new CombatStyleAdvanced(this);
 		}

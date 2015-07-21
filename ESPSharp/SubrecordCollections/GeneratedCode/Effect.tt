@@ -13,6 +13,7 @@
 			"BaseEffect",
 			"BaseEffect"
 			);
+	template.hashKey = tempField;
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 

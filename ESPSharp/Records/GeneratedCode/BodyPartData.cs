@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,33 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class BodyPartData : Record, IEditorID	{
+	public partial class BodyPartData : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public Model Model { get; set; }
 		public List<NamedBodyPart> NamedBodyParts { get; set; }
 		public List<BodyPart> BodyParts { get; set; }
 		public RecordReference Ragdoll { get; set; }
+
+		public BodyPartData()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Model = new Model();
+			NamedBodyParts = new List<NamedBodyPart>();
+			BodyParts = new List<BodyPart>();
+		}
+
+		public BodyPartData(SimpleSubrecord<String> EditorID, Model Model, List<NamedBodyPart> NamedBodyParts, List<BodyPart> BodyParts, RecordReference Ragdoll)
+		{
+			this.EditorID = EditorID;
+			this.Model = Model;
+			this.NamedBodyParts = NamedBodyParts;
+			this.BodyParts = BodyParts;
+		}
+
+		public BodyPartData(BodyPartData copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -182,6 +204,11 @@ namespace ESPSharp.Records
 					
 				Ragdoll.ReadXML(subEle, master);
 			}
+		}		
+
+		public BodyPartData Clone()
+		{
+			return new BodyPartData(this);
 		}
 
 	}

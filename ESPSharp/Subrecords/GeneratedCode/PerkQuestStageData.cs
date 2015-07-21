@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PerkQuestStageData : Subrecord, ICloneable<PerkQuestStageData>, IComparable<PerkQuestStageData>, IEquatable<PerkQuestStageData>  
+	public partial class PerkQuestStageData : Subrecord, ICloneable, IComparable<PerkQuestStageData>, IEquatable<PerkQuestStageData>  
 	{
 		public FormID Quest { get; set; }
 		public UInt32 QuestStage { get; set; }
 
-		public PerkQuestStageData()
+		public PerkQuestStageData(string Tag = null)
+			:base(Tag)
 		{
 			Quest = new FormID();
 			QuestStage = new UInt32();
@@ -34,7 +35,8 @@ namespace ESPSharp.Subrecords
 
 		public PerkQuestStageData(PerkQuestStageData copyObject)
 		{
-			Quest = copyObject.Quest.Clone();
+			if (copyObject.Quest != null)
+				Quest = (FormID)copyObject.Quest.Clone();
 			QuestStage = copyObject.QuestStage;
 		}
 	
@@ -83,7 +85,7 @@ namespace ESPSharp.Subrecords
 				QuestStage = subEle.ToUInt32();
 		}
 
-		public PerkQuestStageData Clone()
+		public override object Clone()
 		{
 			return new PerkQuestStageData(this);
 		}

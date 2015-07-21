@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class InventoryItemData : Subrecord, ICloneable<InventoryItemData>, IComparable<InventoryItemData>, IEquatable<InventoryItemData>  
+	public partial class InventoryItemData : Subrecord, ICloneable, IComparable<InventoryItemData>, IEquatable<InventoryItemData>  
 	{
 		public FormID Item { get; set; }
 		public Int32 Count { get; set; }
 
-		public InventoryItemData()
+		public InventoryItemData(string Tag = null)
+			:base(Tag)
 		{
 			Item = new FormID();
 			Count = new Int32();
@@ -34,7 +35,8 @@ namespace ESPSharp.Subrecords
 
 		public InventoryItemData(InventoryItemData copyObject)
 		{
-			Item = copyObject.Item.Clone();
+			if (copyObject.Item != null)
+				Item = (FormID)copyObject.Item.Clone();
 			Count = copyObject.Count;
 		}
 	
@@ -83,7 +85,7 @@ namespace ESPSharp.Subrecords
 				Count = subEle.ToInt32();
 		}
 
-		public InventoryItemData Clone()
+		public override object Clone()
 		{
 			return new InventoryItemData(this);
 		}

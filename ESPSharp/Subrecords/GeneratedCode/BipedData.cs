@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class BipedData : Subrecord, ICloneable<BipedData>, IComparable<BipedData>, IEquatable<BipedData>  
+	public partial class BipedData : Subrecord, ICloneable, IComparable<BipedData>, IEquatable<BipedData>  
 	{
 		public BodySlotFlags Slots { get; set; }
 		public BipedDataFlags Flags { get; set; }
 		public Byte[] Unused { get; set; }
 
-		public BipedData()
+		public BipedData(string Tag = null)
+			:base(Tag)
 		{
 			Slots = new BodySlotFlags();
 			Flags = new BipedDataFlags();
@@ -39,7 +40,8 @@ namespace ESPSharp.Subrecords
 		{
 			Slots = copyObject.Slots;
 			Flags = copyObject.Flags;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -96,7 +98,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public BipedData Clone()
+		public override object Clone()
 		{
 			return new BipedData(this);
 		}

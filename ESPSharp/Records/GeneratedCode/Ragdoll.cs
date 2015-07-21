@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Ragdoll : Record, IEditorID	{
+	public partial class Ragdoll : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<UInt32> Version { get; set; }
 		public RagdollData GeneralData { get; set; }
@@ -24,6 +26,30 @@ namespace ESPSharp.Records
 		public RagdollDynamicBones DynamicBones { get; set; }
 		public RagdollPoseMatching PoseMatchingData { get; set; }
 		public SimpleSubrecord<String> DeathPose { get; set; }
+
+		public Ragdoll()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Version = new SimpleSubrecord<UInt32>("NVER");
+			GeneralData = new RagdollData("DATA");
+			ActorBase = new RecordReference("XNAM");
+			BodyPartData = new RecordReference("TNAM");
+			PoseMatchingData = new RagdollPoseMatching("RAPS");
+		}
+
+		public Ragdoll(SimpleSubrecord<String> EditorID, SimpleSubrecord<UInt32> Version, RagdollData GeneralData, RecordReference ActorBase, RecordReference BodyPartData, RagdollFeedbackData FeedbackData, RagdollDynamicBones DynamicBones, RagdollPoseMatching PoseMatchingData, SimpleSubrecord<String> DeathPose)
+		{
+			this.EditorID = EditorID;
+			this.Version = Version;
+			this.GeneralData = GeneralData;
+			this.ActorBase = ActorBase;
+			this.BodyPartData = BodyPartData;
+			this.PoseMatchingData = PoseMatchingData;
+		}
+
+		public Ragdoll(Ragdoll copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -232,6 +258,11 @@ namespace ESPSharp.Records
 					
 				DeathPose.ReadXML(subEle, master);
 			}
+		}		
+
+		public Ragdoll Clone()
+		{
+			return new Ragdoll(this);
 		}
 
 	}

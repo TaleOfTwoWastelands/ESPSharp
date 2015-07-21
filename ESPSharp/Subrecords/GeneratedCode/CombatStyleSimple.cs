@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CombatStyleSimple : Subrecord, ICloneable<CombatStyleSimple>, IComparable<CombatStyleSimple>, IEquatable<CombatStyleSimple>  
+	public partial class CombatStyleSimple : Subrecord, ICloneable, IComparable<CombatStyleSimple>, IEquatable<CombatStyleSimple>  
 	{
 		public Single CoverSearchRadius { get; set; }
 		public Single TakeCoverChance { get; set; }
@@ -34,7 +34,8 @@ namespace ESPSharp.Subrecords
 		public Single SemiAutoFiringDelayMultMin { get; set; }
 		public Single SemiAutoFiringDelayMultMax { get; set; }
 
-		public CombatStyleSimple()
+		public CombatStyleSimple(string Tag = null)
+			:base(Tag)
 		{
 			CoverSearchRadius = new Single();
 			TakeCoverChance = new Single();
@@ -85,7 +86,8 @@ namespace ESPSharp.Subrecords
 			FireTimerMin = copyObject.FireTimerMin;
 			FireTimerMax = copyObject.FireTimerMax;
 			RangedWeaponRangeMultMin = copyObject.RangedWeaponRangeMultMin;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			WeaponRestrictions = copyObject.WeaponRestrictions;
 			RangedWeaponRangeMultMax = copyObject.RangedWeaponRangeMultMax;
 			MaxTargetingFOV = copyObject.MaxTargetingFOV;
@@ -252,7 +254,7 @@ namespace ESPSharp.Subrecords
 				SemiAutoFiringDelayMultMax = subEle.ToSingle();
 		}
 
-		public CombatStyleSimple Clone()
+		public override object Clone()
 		{
 			return new CombatStyleSimple(this);
 		}

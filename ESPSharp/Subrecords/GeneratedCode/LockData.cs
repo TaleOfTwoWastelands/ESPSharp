@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LockData : Subrecord, ICloneable<LockData>, IComparable<LockData>, IEquatable<LockData>  
+	public partial class LockData : Subrecord, ICloneable, IComparable<LockData>, IEquatable<LockData>  
 	{
 		public Byte Level { get; set; }
 		public Byte[] Unused { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public LockFlags Flags { get; set; }
 		public Byte[] Unknown { get; set; }
 
-		public LockData()
+		public LockData(string Tag = null)
+			:base(Tag)
 		{
 			Level = new Byte();
 			Unused = new byte[3];
@@ -44,10 +45,13 @@ namespace ESPSharp.Subrecords
 		public LockData(LockData copyObject)
 		{
 			Level = copyObject.Level;
-			Unused = (Byte[])copyObject.Unused.Clone();
-			Key = copyObject.Key.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Key != null)
+				Key = (FormID)copyObject.Key.Clone();
 			Flags = copyObject.Flags;
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -100,8 +104,7 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
 
-			ele.TryPathTo("Unknown", true, out subEle);
-			subEle.Value = Unknown.ToHex();
+			WriteUnknownXML(ele, master);
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -119,11 +122,10 @@ namespace ESPSharp.Subrecords
 			if (ele.TryPathTo("Flags", false, out subEle))
 				Flags = subEle.ToEnum<LockFlags>();
 
-			if (ele.TryPathTo("Unknown", false, out subEle))
-				Unknown = subEle.ToBytes();
+			ReadUnknownXML(ele, master);
 		}
 
-		public LockData Clone()
+		public override object Clone()
 		{
 			return new LockData(this);
 		}
@@ -222,6 +224,10 @@ namespace ESPSharp.Subrecords
 
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+		partial void ReadUnknownXML(XElement ele, ElderScrollsPlugin master);
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnknownXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

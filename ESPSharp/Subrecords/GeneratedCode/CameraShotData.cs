@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CameraShotData : Subrecord, ICloneable<CameraShotData>, IComparable<CameraShotData>, IEquatable<CameraShotData>  
+	public partial class CameraShotData : Subrecord, ICloneable, IComparable<CameraShotData>, IEquatable<CameraShotData>  
 	{
 		public CameraShotAction Action { get; set; }
 		public CameraShotSubject Location { get; set; }
@@ -28,7 +28,8 @@ namespace ESPSharp.Subrecords
 		public Single TimeMin { get; set; }
 		public Single TargetPercentBetweenActors { get; set; }
 
-		public CameraShotData()
+		public CameraShotData(string Tag = null)
+			:base(Tag)
 		{
 			Action = new CameraShotAction();
 			Location = new CameraShotSubject();
@@ -179,7 +180,7 @@ namespace ESPSharp.Subrecords
 				TargetPercentBetweenActors = subEle.ToSingle();
 		}
 
-		public CameraShotData Clone()
+		public override object Clone()
 		{
 			return new CameraShotData(this);
 		}

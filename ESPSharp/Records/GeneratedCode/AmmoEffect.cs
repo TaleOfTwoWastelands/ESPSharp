@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,25 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class AmmoEffect : Record, IEditorID	{
+	public partial class AmmoEffect : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public AmmoEffectData Data { get; set; }
+
+		public AmmoEffect()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public AmmoEffect(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, AmmoEffectData Data)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public AmmoEffect(AmmoEffect copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -106,6 +122,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public AmmoEffect Clone()
+		{
+			return new AmmoEffect(this);
 		}
 
 	}

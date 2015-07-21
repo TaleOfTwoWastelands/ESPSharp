@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CloudLayerColors : Subrecord, ICloneable<CloudLayerColors>, IComparable<CloudLayerColors>, IEquatable<CloudLayerColors>  
+	public partial class CloudLayerColors : Subrecord, ICloneable, IComparable<CloudLayerColors>, IEquatable<CloudLayerColors>  
 	{
 		public TimeOfDayColors Layer0 { get; set; }
 		public TimeOfDayColors Layer1 { get; set; }
 		public TimeOfDayColors Layer2 { get; set; }
 		public TimeOfDayColors Layer3 { get; set; }
 
-		public CloudLayerColors()
+		public CloudLayerColors(string Tag = null)
+			:base(Tag)
 		{
 			Layer0 = new TimeOfDayColors();
 			Layer1 = new TimeOfDayColors();
@@ -40,10 +41,14 @@ namespace ESPSharp.Subrecords
 
 		public CloudLayerColors(CloudLayerColors copyObject)
 		{
-			Layer0 = copyObject.Layer0.Clone();
-			Layer1 = copyObject.Layer1.Clone();
-			Layer2 = copyObject.Layer2.Clone();
-			Layer3 = copyObject.Layer3.Clone();
+			if (copyObject.Layer0 != null)
+				Layer0 = (TimeOfDayColors)copyObject.Layer0.Clone();
+			if (copyObject.Layer1 != null)
+				Layer1 = (TimeOfDayColors)copyObject.Layer1.Clone();
+			if (copyObject.Layer2 != null)
+				Layer2 = (TimeOfDayColors)copyObject.Layer2.Clone();
+			if (copyObject.Layer3 != null)
+				Layer3 = (TimeOfDayColors)copyObject.Layer3.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -107,7 +112,7 @@ namespace ESPSharp.Subrecords
 				Layer3.ReadXML(subEle, master);
 		}
 
-		public CloudLayerColors Clone()
+		public override object Clone()
 		{
 			return new CloudLayerColors(this);
 		}

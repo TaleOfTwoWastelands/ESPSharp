@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class MoveableStatic : Record, IEditorID	{
+	public partial class MoveableStatic : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -22,6 +24,26 @@ namespace ESPSharp.Records
 		public Destructable Destructable { get; set; }
 		public SimpleSubrecord<Byte> Unknown { get; set; }
 		public RecordReference Sound { get; set; }
+
+		public MoveableStatic()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			Unknown = new SimpleSubrecord<Byte>("DATA");
+		}
+
+		public MoveableStatic(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, Destructable Destructable, SimpleSubrecord<Byte> Unknown, RecordReference Sound)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.Unknown = Unknown;
+		}
+
+		public MoveableStatic(MoveableStatic copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -190,6 +212,11 @@ namespace ESPSharp.Records
 					
 				Sound.ReadXML(subEle, master);
 			}
+		}		
+
+		public MoveableStatic Clone()
+		{
+			return new MoveableStatic(this);
 		}
 
 	}

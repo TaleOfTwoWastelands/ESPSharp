@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Challenge : Record, IEditorID	{
+	public partial class Challenge : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<String> LargeIcon { get; set; }
@@ -24,6 +26,20 @@ namespace ESPSharp.Records
 		public ChallengeData Data { get; set; }
 		public Subrecord Value1 { get; set; }
 		public Subrecord Value2 { get; set; }
+
+		public Challenge()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public Challenge(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference Script, SimpleSubrecord<String> Description, ChallengeData Data, Subrecord Value1, Subrecord Value2)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public Challenge(Challenge copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -210,15 +226,28 @@ namespace ESPSharp.Records
 			ReadValue1XML(ele, master);
 
 			ReadValue2XML(ele, master);
+		}		
+
+		public Challenge Clone()
+		{
+			return new Challenge(this);
 		}
 
+
 		partial void ReadValue1(ESPReader reader);
+
 		partial void ReadValue2(ESPReader reader);
+
 		partial void WriteValue1(ESPWriter writer);
+
 		partial void WriteValue2(ESPWriter writer);
+
 		partial void WriteValue1XML(XElement ele, ElderScrollsPlugin master);
+
 		partial void WriteValue2XML(XElement ele, ElderScrollsPlugin master);
+
 		partial void ReadValue1XML(XElement ele, ElderScrollsPlugin master);
+
 		partial void ReadValue2XML(XElement ele, ElderScrollsPlugin master);
 	}
 }

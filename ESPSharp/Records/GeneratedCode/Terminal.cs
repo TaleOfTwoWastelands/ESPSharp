@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Terminal : Record, IEditorID	{
+	public partial class Terminal : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -26,6 +28,26 @@ namespace ESPSharp.Records
 		public RecordReference Password { get; set; }
 		public TerminalData Data { get; set; }
 		public List<TerminalMenu> Selections { get; set; }
+
+		public Terminal()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			WelcomeText = new SimpleSubrecord<String>("DESC");
+			Data = new TerminalData("DNAM");
+		}
+
+		public Terminal(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, RecordReference Script, Destructable Destructable, SimpleSubrecord<String> WelcomeText, RecordReference LoopingSound, RecordReference Password, TerminalData Data, List<TerminalMenu> Selections)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.WelcomeText = WelcomeText;
+			this.Data = Data;
+		}
+
+		public Terminal(Terminal copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -291,6 +313,11 @@ namespace ESPSharp.Records
 					Selections.Add(tempITXT);
 				}
 			}
+		}		
+
+		public Terminal Clone()
+		{
+			return new Terminal(this);
 		}
 
 	}

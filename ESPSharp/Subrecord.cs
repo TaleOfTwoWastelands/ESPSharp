@@ -6,14 +6,19 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Linq;
 using System.Diagnostics;
+using ESPSharp.Interfaces;
 
 namespace ESPSharp
 {
-    public abstract class Subrecord
+    public abstract class Subrecord : ICloneable
     {
         public string Tag { get; set; }
         protected int size;
 
+        public Subrecord(string Tag = null)
+        {
+            this.Tag = Tag;
+        }
 
         public virtual void WriteXML(XElement root, ElderScrollsPlugin master)
         {
@@ -62,5 +67,6 @@ namespace ESPSharp
         protected abstract void WriteData(ESPWriter writer);
         protected abstract void WriteDataXML(XElement ele, ElderScrollsPlugin master);
         protected abstract void ReadDataXML(XElement ele, ElderScrollsPlugin master);
+        public abstract object Clone();
     }
 }

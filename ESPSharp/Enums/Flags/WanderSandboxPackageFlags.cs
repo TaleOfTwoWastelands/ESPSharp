@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ESPSharp.Enums.Flags
 {
     [Flags]
-    public enum WanderSandboxPackageFlags : uint
+    public enum WanderSandboxPackageFlags : ushort
     {
         NoEating = 0x01,
         NoSleeping = 0x02,

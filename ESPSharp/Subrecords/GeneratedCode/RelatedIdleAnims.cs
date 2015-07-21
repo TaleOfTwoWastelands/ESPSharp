@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RelatedIdleAnims : Subrecord, ICloneable<RelatedIdleAnims>, IComparable<RelatedIdleAnims>, IEquatable<RelatedIdleAnims>  
+	public partial class RelatedIdleAnims : Subrecord, ICloneable, IComparable<RelatedIdleAnims>, IEquatable<RelatedIdleAnims>  
 	{
 		public FormID Parent { get; set; }
 		public FormID Sibling { get; set; }
 
-		public RelatedIdleAnims()
+		public RelatedIdleAnims(string Tag = null)
+			:base(Tag)
 		{
 			Parent = new FormID();
 			Sibling = new FormID();
@@ -34,8 +35,10 @@ namespace ESPSharp.Subrecords
 
 		public RelatedIdleAnims(RelatedIdleAnims copyObject)
 		{
-			Parent = copyObject.Parent.Clone();
-			Sibling = copyObject.Sibling.Clone();
+			if (copyObject.Parent != null)
+				Parent = (FormID)copyObject.Parent.Clone();
+			if (copyObject.Sibling != null)
+				Sibling = (FormID)copyObject.Sibling.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -83,7 +86,7 @@ namespace ESPSharp.Subrecords
 				Sibling.ReadXML(subEle, master);
 		}
 
-		public RelatedIdleAnims Clone()
+		public override object Clone()
 		{
 			return new RelatedIdleAnims(this);
 		}

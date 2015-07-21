@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ProjectileData : Subrecord, ICloneable<ProjectileData>, IComparable<ProjectileData>, IEquatable<ProjectileData>  
+	public partial class ProjectileData : Subrecord, ICloneable, IComparable<ProjectileData>, IEquatable<ProjectileData>  
 	{
 		public ProjectileFlags Flags { get; set; }
 		public ProjectileType Type { get; set; }
@@ -40,7 +40,8 @@ namespace ESPSharp.Subrecords
 		public Single ZRotation { get; set; }
 		public Single BouncyMult { get; set; }
 
-		public ProjectileData()
+		public ProjectileData(string Tag = null)
+			:base(Tag)
 		{
 			Flags = new ProjectileFlags();
 			Type = new ProjectileType();
@@ -99,19 +100,26 @@ namespace ESPSharp.Subrecords
 			Gravity = copyObject.Gravity;
 			Speed = copyObject.Speed;
 			Range = copyObject.Range;
-			Light = copyObject.Light.Clone();
-			MuzzleFlashLight = copyObject.MuzzleFlashLight.Clone();
+			if (copyObject.Light != null)
+				Light = (FormID)copyObject.Light.Clone();
+			if (copyObject.MuzzleFlashLight != null)
+				MuzzleFlashLight = (FormID)copyObject.MuzzleFlashLight.Clone();
 			TracerChance = copyObject.TracerChance;
 			ExplosionAltTriggerProximity = copyObject.ExplosionAltTriggerProximity;
 			ExplosionAltTriggerTimer = copyObject.ExplosionAltTriggerTimer;
-			Explosion = copyObject.Explosion.Clone();
-			Sound = copyObject.Sound.Clone();
+			if (copyObject.Explosion != null)
+				Explosion = (FormID)copyObject.Explosion.Clone();
+			if (copyObject.Sound != null)
+				Sound = (FormID)copyObject.Sound.Clone();
 			MuzzleFlashDuration = copyObject.MuzzleFlashDuration;
 			FadeDuration = copyObject.FadeDuration;
 			ImpactForce = copyObject.ImpactForce;
-			SoundCountdown = copyObject.SoundCountdown.Clone();
-			Sounddisable = copyObject.Sounddisable.Clone();
-			DefaultWeaponSource = copyObject.DefaultWeaponSource.Clone();
+			if (copyObject.SoundCountdown != null)
+				SoundCountdown = (FormID)copyObject.SoundCountdown.Clone();
+			if (copyObject.Sounddisable != null)
+				Sounddisable = (FormID)copyObject.Sounddisable.Clone();
+			if (copyObject.DefaultWeaponSource != null)
+				DefaultWeaponSource = (FormID)copyObject.DefaultWeaponSource.Clone();
 			XRotation = copyObject.XRotation;
 			YRotation = copyObject.YRotation;
 			ZRotation = copyObject.ZRotation;
@@ -323,7 +331,7 @@ namespace ESPSharp.Subrecords
 				BouncyMult = subEle.ToSingle();
 		}
 
-		public ProjectileData Clone()
+		public override object Clone()
 		{
 			return new ProjectileData(this);
 		}

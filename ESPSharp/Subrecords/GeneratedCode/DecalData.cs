@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DecalData : Subrecord, ICloneable<DecalData>, IComparable<DecalData>, IEquatable<DecalData>  
+	public partial class DecalData : Subrecord, ICloneable, IComparable<DecalData>, IEquatable<DecalData>  
 	{
 		public Single MinWidth { get; set; }
 		public Single MaxWidth { get; set; }
@@ -29,7 +29,8 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unused { get; set; }
 		public Color Color { get; set; }
 
-		public DecalData()
+		public DecalData(string Tag = null)
+			:base(Tag)
 		{
 			MinWidth = new Single();
 			MaxWidth = new Single();
@@ -70,8 +71,10 @@ namespace ESPSharp.Subrecords
 			ParallaxScale = copyObject.ParallaxScale;
 			ParallaxPasses = copyObject.ParallaxPasses;
 			DecalFlags = copyObject.DecalFlags;
-			Unused = (Byte[])copyObject.Unused.Clone();
-			Color = copyObject.Color.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Color != null)
+				Color = (Color)copyObject.Color.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -192,7 +195,7 @@ namespace ESPSharp.Subrecords
 				Color.ReadXML(subEle, master);
 		}
 
-		public DecalData Clone()
+		public override object Clone()
 		{
 			return new DecalData(this);
 		}

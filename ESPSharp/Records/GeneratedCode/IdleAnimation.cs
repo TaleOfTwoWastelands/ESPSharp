@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,31 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class IdleAnimation : Record, IEditorID	{
+	public partial class IdleAnimation : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public Model Model { get; set; }
 		public List<Condition> Conditions { get; set; }
 		public RelatedIdleAnims RelatedIdles { get; set; }
 		public IdleAnimationData Data { get; set; }
+
+		public IdleAnimation()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Model = new Model();
+			Data = new IdleAnimationData("DATA");
+		}
+
+		public IdleAnimation(SimpleSubrecord<String> EditorID, Model Model, List<Condition> Conditions, RelatedIdleAnims RelatedIdles, IdleAnimationData Data)
+		{
+			this.EditorID = EditorID;
+			this.Model = Model;
+			this.Data = Data;
+		}
+
+		public IdleAnimation(IdleAnimation copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -165,6 +185,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public IdleAnimation Clone()
+		{
+			return new IdleAnimation(this);
 		}
 
 	}

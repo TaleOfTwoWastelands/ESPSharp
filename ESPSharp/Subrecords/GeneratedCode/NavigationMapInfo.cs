@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NavigationMapInfo : Subrecord, ICloneable<NavigationMapInfo>, IComparable<NavigationMapInfo>, IEquatable<NavigationMapInfo>  
+	public partial class NavigationMapInfo : Subrecord, ICloneable, IComparable<NavigationMapInfo>, IEquatable<NavigationMapInfo>  
 	{
 		public Byte[] Unknown1 { get; set; }
 		public FormID NavigationMesh { get; set; }
@@ -24,7 +24,8 @@ namespace ESPSharp.Subrecords
 		public Int16 GridY { get; set; }
 		public Byte[] Unknown2 { get; set; }
 
-		public NavigationMapInfo()
+		public NavigationMapInfo(string Tag = null)
+			:base(Tag)
 		{
 			Unknown1 = new byte[4];
 			NavigationMesh = new FormID();
@@ -46,12 +47,16 @@ namespace ESPSharp.Subrecords
 
 		public NavigationMapInfo(NavigationMapInfo copyObject)
 		{
-			Unknown1 = (Byte[])copyObject.Unknown1.Clone();
-			NavigationMesh = copyObject.NavigationMesh.Clone();
-			Location = copyObject.Location.Clone();
+			if (copyObject.Unknown1 != null)
+				Unknown1 = (Byte[])copyObject.Unknown1.Clone();
+			if (copyObject.NavigationMesh != null)
+				NavigationMesh = (FormID)copyObject.NavigationMesh.Clone();
+			if (copyObject.Location != null)
+				Location = (FormID)copyObject.Location.Clone();
 			GridX = copyObject.GridX;
 			GridY = copyObject.GridY;
-			Unknown2 = (Byte[])copyObject.Unknown2.Clone();
+			if (copyObject.Unknown2 != null)
+				Unknown2 = (Byte[])copyObject.Unknown2.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -137,7 +142,7 @@ namespace ESPSharp.Subrecords
 				Unknown2 = subEle.ToBytes();
 		}
 
-		public NavigationMapInfo Clone()
+		public override object Clone()
 		{
 			return new NavigationMapInfo(this);
 		}

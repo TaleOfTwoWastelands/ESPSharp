@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class WeatherChance : IESPSerializable, ICloneable<WeatherChance>, IComparable<WeatherChance>, IEquatable<WeatherChance>, IReferenceContainer
+	public partial class WeatherChance : IESPSerializable, ICloneable, IComparable<WeatherChance>, IEquatable<WeatherChance>  
 	{
 		public FormID Weather { get; set; }
 		public Int32 Chance { get; set; }
@@ -36,9 +36,11 @@ namespace ESPSharp.DataTypes
 
 		public WeatherChance(WeatherChance copyObject)
 		{
-			Weather = copyObject.Weather.Clone();
+			if (copyObject.Weather != null)
+				Weather = (FormID)copyObject.Weather.Clone();
 			Chance = copyObject.Chance;
-			Global = copyObject.Global.Clone();
+			if (copyObject.Global != null)
+				Global = (FormID)copyObject.Global.Clone();
 		}
 	
 		public void ReadBinary(ESPReader reader)
@@ -46,8 +48,8 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				Weather.ReadBinary(reader);
-				Chance = reader.ReadInt32();
-				Global.ReadBinary(reader);
+					Chance = reader.ReadInt32();
+					Global.ReadBinary(reader);
 			}
 			catch
 			{
@@ -58,14 +60,14 @@ namespace ESPSharp.DataTypes
 		public void WriteBinary(ESPWriter writer)
 		{
 			Weather.WriteBinary(writer);
-			writer.Write(Chance);			
+			writer.Write(Chance);
 			Global.WriteBinary(writer);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Weather", true, out subEle);
 			Weather.WriteXML(subEle, master);
 
@@ -79,31 +81,25 @@ namespace ESPSharp.DataTypes
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Weather", false, out subEle))
-			{
 				Weather.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Chance", false, out subEle))
-			{
 				Chance = subEle.ToInt32();
-			}
 
 			if (ele.TryPathTo("Global", false, out subEle))
-			{
 				Global.ReadXML(subEle, master);
-			}
 		}
 
-		public WeatherChance Clone()
+		public object Clone()
 		{
 			return new WeatherChance(this);
 		}
 
         public int CompareTo(WeatherChance other)
         {
-            return Weather.CompareTo(other.Weather);
+			return Weather.CompareTo(other.Weather);
         }
 
         public static bool operator >(WeatherChance objA, WeatherChance objB)
@@ -128,6 +124,16 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(WeatherChance other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return Weather == other.Weather &&
 				Chance == other.Chance &&
 				Global == other.Global;
@@ -135,7 +141,11 @@ namespace ESPSharp.DataTypes
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             WeatherChance other = obj as WeatherChance;
+
             if (other == null)
                 return false;
             else
@@ -149,11 +159,31 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(WeatherChance objA, WeatherChance objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(WeatherChance objA, WeatherChance objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 	}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,32 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Eyes : Record, IEditorID	{
+	public partial class Eyes : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<String> Texture { get; set; }
 		public SimpleSubrecord<EyesFlags> EyesFlags { get; set; }
+
+		public Eyes()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Name = new SimpleSubrecord<String>("FULL");
+			Texture = new SimpleSubrecord<String>("ICON");
+			EyesFlags = new SimpleSubrecord<EyesFlags>("DATA");
+		}
+
+		public Eyes(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<String> Texture, SimpleSubrecord<EyesFlags> EyesFlags)
+		{
+			this.EditorID = EditorID;
+			this.Name = Name;
+			this.Texture = Texture;
+			this.EyesFlags = EyesFlags;
+		}
+
+		public Eyes(Eyes copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -127,6 +149,11 @@ namespace ESPSharp.Records
 					
 				EyesFlags.ReadXML(subEle, master);
 			}
+		}		
+
+		public Eyes Clone()
+		{
+			return new Eyes(this);
 		}
 
 	}

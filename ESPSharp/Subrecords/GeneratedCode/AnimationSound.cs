@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class AnimationSound : Subrecord, ICloneable<AnimationSound>, IComparable<AnimationSound>, IEquatable<AnimationSound>  
+	public partial class AnimationSound : Subrecord, ICloneable, IComparable<AnimationSound>, IEquatable<AnimationSound>  
 	{
 		public FormID Sound { get; set; }
 		public Byte Chance { get; set; }
 		public Byte[] Unused { get; set; }
 		public AnimationSoundType Type { get; set; }
 
-		public AnimationSound()
+		public AnimationSound(string Tag = null)
+			:base(Tag)
 		{
 			Sound = new FormID();
 			Chance = new Byte();
@@ -40,9 +41,11 @@ namespace ESPSharp.Subrecords
 
 		public AnimationSound(AnimationSound copyObject)
 		{
-			Sound = copyObject.Sound.Clone();
+			if (copyObject.Sound != null)
+				Sound = (FormID)copyObject.Sound.Clone();
 			Chance = copyObject.Chance;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			Type = copyObject.Type;
 		}
 	
@@ -108,7 +111,7 @@ namespace ESPSharp.Subrecords
 				Type = subEle.ToEnum<AnimationSoundType>();
 		}
 
-		public AnimationSound Clone()
+		public override object Clone()
 		{
 			return new AnimationSound(this);
 		}

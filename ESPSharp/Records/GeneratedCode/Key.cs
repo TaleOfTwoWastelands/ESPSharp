@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Key : Record, IEditorID	{
+	public partial class Key : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -27,6 +29,30 @@ namespace ESPSharp.Records
 		public RecordReference DropSound { get; set; }
 		public ValueWeight Data { get; set; }
 		public RecordReference Looping_RandomSound { get; set; }
+
+		public Key()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Name = new SimpleSubrecord<String>("FULL");
+			LargeIcon = new SimpleSubrecord<String>("ICON");
+			SmallIcon = new SimpleSubrecord<String>("MICO");
+			Data = new ValueWeight("DATA");
+		}
+
+		public Key(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference Script, Destructable Destructable, RecordReference PickUpSound, RecordReference DropSound, ValueWeight Data, RecordReference Looping_RandomSound)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Name = Name;
+			this.LargeIcon = LargeIcon;
+			this.SmallIcon = SmallIcon;
+			this.Data = Data;
+		}
+
+		public Key(Key copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -295,6 +321,11 @@ namespace ESPSharp.Records
 					
 				Looping_RandomSound.ReadXML(subEle, master);
 			}
+		}		
+
+		public Key Clone()
+		{
+			return new Key(this);
 		}
 
 	}

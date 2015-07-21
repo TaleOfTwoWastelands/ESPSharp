@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class TreeData : Subrecord, ICloneable<TreeData>, IComparable<TreeData>, IEquatable<TreeData>  
+	public partial class TreeData : Subrecord, ICloneable, IComparable<TreeData>, IEquatable<TreeData>  
 	{
 		public Single LeafCurvature { get; set; }
 		public Single MinLeafAngle { get; set; }
@@ -26,7 +26,8 @@ namespace ESPSharp.Subrecords
 		public Single RockSpeed { get; set; }
 		public Single RustleSpeed { get; set; }
 
-		public TreeData()
+		public TreeData(string Tag = null)
+			:base(Tag)
 		{
 			LeafCurvature = new Single();
 			MinLeafAngle = new Single();
@@ -155,7 +156,7 @@ namespace ESPSharp.Subrecords
 				RustleSpeed = subEle.ToSingle();
 		}
 
-		public TreeData Clone()
+		public override object Clone()
 		{
 			return new TreeData(this);
 		}

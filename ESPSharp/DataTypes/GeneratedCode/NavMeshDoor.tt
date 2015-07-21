@@ -1,13 +1,11 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ output extension=".cs" #>
-<#	
-	DataTypeTemplate template = new DataTypeTemplate();
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "NavMeshDoor";
 
-	DataTypeField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(FormID),
 			"Door",
 			"Door"
@@ -16,7 +14,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(ushort),
 			"Triangle",
 			"Triangle"
@@ -24,12 +22,14 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(byte[]),
 			"Unused",
 			"Unused"
 			);
 	tempField.byteCount = 2;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 #>
 <#@ include file="DataTypeTemplate.t4" once="true" #>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Worldspace : Record, IEditorID	{
+	public partial class Worldspace : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public RecordReference EncounterZone { get; set; }
@@ -40,6 +42,22 @@ namespace ESPSharp.Records
 		public FootstepMaterial FootstepMaterial { get; set; }
 		public SimpleSubrecord<UInt32> OffsetDataSize { get; set; }
 		public SimpleSubrecord<Byte[]> OffsetData { get; set; }
+
+		public Worldspace()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			WorldMapOffsetData = new WorldMapOffsetData("ONAM");
+		}
+
+		public Worldspace(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, RecordReference EncounterZone, RecordReference ParentWorldspace, SimpleSubrecord<ParentWorldspaceFlags> ParentWorldspaceFlags, RecordReference Climate, RecordReference Water, RecordReference LODWaterType, SimpleSubrecord<Single> LODWaterHeight, WorldLandData LandData, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, MapData MapData, WorldMapOffsetData WorldMapOffsetData, RecordReference ImageSpace, SimpleSubrecord<WorldspaceFlags> WorldspaceFlags, SimpleSubrecord<XYFloat> MinObjectBounds, SimpleSubrecord<XYFloat> MaxObjectBounds, RecordReference Music, SimpleSubrecord<String> CanopyShadow, SimpleSubrecord<String> WaterNoiseTexture, List<SwappedImpact> SwappedImpacts, FootstepMaterial FootstepMaterial, SimpleSubrecord<UInt32> OffsetDataSize, SimpleSubrecord<Byte[]> OffsetData)
+		{
+			this.EditorID = EditorID;
+			this.WorldMapOffsetData = WorldMapOffsetData;
+		}
+
+		public Worldspace(Worldspace copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -582,9 +600,16 @@ namespace ESPSharp.Records
 					
 				OffsetData.ReadXML(subEle, master);
 			}
+		}		
+
+		public Worldspace Clone()
+		{
+			return new Worldspace(this);
 		}
 
+
 		partial void ReadOffsetData(ESPReader reader);
+
 		partial void WriteOffsetData(ESPWriter writer);
 	}
 }

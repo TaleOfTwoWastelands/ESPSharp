@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CellGrid : Subrecord, ICloneable<CellGrid>, IComparable<CellGrid>, IEquatable<CellGrid>  
+	public partial class CellGrid : Subrecord, ICloneable, IComparable<CellGrid>, IEquatable<CellGrid>  
 	{
 		public Int32 X { get; set; }
 		public Int32 Y { get; set; }
 		public ForceHideLandFlags ForceHideLand { get; set; }
 
-		public CellGrid()
+		public CellGrid(string Tag = null)
+			:base(Tag)
 		{
 			X = new Int32();
 			Y = new Int32();
@@ -95,7 +96,7 @@ namespace ESPSharp.Subrecords
 				ForceHideLand = subEle.ToEnum<ForceHideLandFlags>();
 		}
 
-		public CellGrid Clone()
+		public override object Clone()
 		{
 			return new CellGrid(this);
 		}

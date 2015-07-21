@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class TerminalData : Subrecord, ICloneable<TerminalData>, IComparable<TerminalData>, IEquatable<TerminalData>  
+	public partial class TerminalData : Subrecord, ICloneable, IComparable<TerminalData>, IEquatable<TerminalData>  
 	{
 		public HackingDifficulty HackingDifficulty { get; set; }
 		public TerminalFlags Flags { get; set; }
 		public TerminalServerType ServerType { get; set; }
 		public Byte[] Unused { get; set; }
 
-		public TerminalData()
+		public TerminalData(string Tag = null)
+			:base(Tag)
 		{
 			HackingDifficulty = new HackingDifficulty();
 			Flags = new TerminalFlags();
@@ -43,7 +44,8 @@ namespace ESPSharp.Subrecords
 			HackingDifficulty = copyObject.HackingDifficulty;
 			Flags = copyObject.Flags;
 			ServerType = copyObject.ServerType;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -108,7 +110,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public TerminalData Clone()
+		public override object Clone()
 		{
 			return new TerminalData(this);
 		}

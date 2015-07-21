@@ -1,23 +1,23 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ output extension=".cs" #>
-<#	
-	DataTypeTemplate template = new DataTypeTemplate();
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "AlternateTexture";
-	template.implementReadData = false;
-	template.implementWriteData = false;
+	//template.implementReadData = false;
+	//template.implementWriteData = false;
 
-	DataTypeField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(string),
 			"Name",
 			"Name"
 			);
+	tempField.implementReadData = false;
+	tempField.implementWriteData = false;
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(FormID),
 			"TextureSet",
 			"TextureSet"
@@ -25,7 +25,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(int),
 			"Index",
 			"Index"

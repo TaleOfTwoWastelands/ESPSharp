@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	RecordTemplate template = new RecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "Container";
 
 	RecordField tempField;
@@ -61,6 +61,7 @@
 			"Contents",
 			"Contents"
 			);
+	tempField.isSorted = true;
 	tempField.XMLSubNames = new List<string> {"Item"};
 	template.Fields.Add(tempField);
 

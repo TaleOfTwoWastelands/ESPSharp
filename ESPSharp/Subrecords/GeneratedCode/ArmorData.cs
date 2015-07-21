@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ArmorData : Subrecord, ICloneable<ArmorData>, IComparable<ArmorData>, IEquatable<ArmorData>  
+	public partial class ArmorData : Subrecord, ICloneable, IComparable<ArmorData>, IEquatable<ArmorData>  
 	{
 		public Int32 Value { get; set; }
 		public Int32 MaxCondition { get; set; }
 		public Single Weight { get; set; }
 
-		public ArmorData()
+		public ArmorData(string Tag = null)
+			:base(Tag)
 		{
 			Value = new Int32();
 			MaxCondition = new Int32();
@@ -95,7 +96,7 @@ namespace ESPSharp.Subrecords
 				Weight = subEle.ToSingle();
 		}
 
-		public ArmorData Clone()
+		public override object Clone()
 		{
 			return new ArmorData(this);
 		}

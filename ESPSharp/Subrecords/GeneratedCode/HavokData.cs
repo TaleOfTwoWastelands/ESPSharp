@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class HavokData : Subrecord, ICloneable<HavokData>, IComparable<HavokData>, IEquatable<HavokData>  
+	public partial class HavokData : Subrecord, ICloneable, IComparable<HavokData>, IEquatable<HavokData>  
 	{
 		public MaterialType MaterialType { get; set; }
 		public Byte Friction { get; set; }
 		public Byte Restitution { get; set; }
 
-		public HavokData()
+		public HavokData(string Tag = null)
+			:base(Tag)
 		{
 			MaterialType = new MaterialType();
 			Friction = new Byte();
@@ -95,7 +96,7 @@ namespace ESPSharp.Subrecords
 				Restitution = subEle.ToByte();
 		}
 
-		public HavokData Clone()
+		public override object Clone()
 		{
 			return new HavokData(this);
 		}

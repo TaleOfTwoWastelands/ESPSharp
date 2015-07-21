@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Sound : Record, IEditorID	{
+	public partial class Sound : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Filename { get; set; }
@@ -24,6 +26,22 @@ namespace ESPSharp.Records
 		public SoundAttenuation AttenuationCurve { get; set; }
 		public SimpleSubrecord<Int16> ReverbAttenuationControl { get; set; }
 		public SimpleSubrecord<Int32> SoundPriority { get; set; }
+
+		public Sound()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+		}
+
+		public Sound(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Filename, SimpleSubrecord<Byte> RandomChance, SoundData SoundData, SoundDataShort SoundDataShort, SoundAttenuation AttenuationCurve, SimpleSubrecord<Int16> ReverbAttenuationControl, SimpleSubrecord<Int32> SoundPriority)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+		}
+
+		public Sound(Sound copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -232,6 +250,11 @@ namespace ESPSharp.Records
 					
 				SoundPriority.ReadXML(subEle, master);
 			}
+		}		
+
+		public Sound Clone()
+		{
+			return new Sound(this);
 		}
 
 	}

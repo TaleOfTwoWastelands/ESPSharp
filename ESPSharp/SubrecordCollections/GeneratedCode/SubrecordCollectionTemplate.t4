@@ -13,7 +13,7 @@
 <#
 	bool isReferenceContainer = false;
 
-	foreach (var field in template.Fields)
+	foreach (var field in template.Fields.Where(f => f.Type != null))
     {
 		if (field.Type.GetInterface("IReferenceContainer") != null)
         {
@@ -38,12 +38,12 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class <#= template.ClassName #> : SubrecordCollection, ICloneable<<#= template.ClassName#>><# if (isReferenceContainer) { #>, IReferenceContainer<#}Write("\n");#>
+	public partial class <#= template.ClassName #> : SubrecordCollection<# if (template.isComparable) { #>, IComparable<<#= template.ClassName #>><#}#><# if (isReferenceContainer) { #>, IReferenceContainer<#}#>
 	{
 <# if (template.startsWithMarker) { #>
 		public SubMarker Marker { get; set; }
 <# } #>
-<# foreach (var field in template.Fields) { #>
+<# foreach (var field in template.Fields.Where(f => f.Type != null)) { #>
 		<#= field.PropertyDeclaration #>
 <#}#>
 
@@ -52,33 +52,21 @@ namespace ESPSharp.SubrecordCollections
 <# if (template.startsWithMarker) { #>
 			Marker = new SubMarker();
 <# } #>
-<# foreach (var field in template.Fields.Where(f => f.isRequired)) { #>
+<# foreach (var field in template.Fields.Where(f => f.isRequired && f.Type != null)) { #>
 			<#= field.Name #> = new <#= GetFriendlyName(field.Type)#>();
 <#}#>
 		}
 
-		public <#= template.ClassName #>(<#= string.Join(", ", template.Fields.Select<SubrecordCollectionField, string>(s => string.Format("{0} {1}", GetFriendlyName(s.Type), s.Name)))#>)
+		public <#= template.ClassName #>(<#= string.Join(", ", template.Fields.Where(f => f.Type != null).Select<SubrecordCollectionField, string>(s => string.Format("{0} {1}", GetFriendlyName(s.Type), s.Name)))#>)
 		{
-<# foreach (var field in template.Fields) { #>
+<# foreach (var field in template.Fields.Where(f => f.Type != null)) { #>
 			this.<#= field.Name #> = <#= field.Name #>;
 <# } #>
 		}
 
 		public <#= template.ClassName #>(<#= template.ClassName #> copyObject)
 		{
-<# foreach (var field in template.Fields) { #>
-<# if (field.Type.GetInterface("ICloneable`1") != null){ #>
-			<#= field.Name #> = copyObject.<#= field.Name #>.Clone();
-<# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){#>
-			<#= field.Name #> = new <#= GetFriendlyName(field.Type)#>();
-			foreach (var item in copyObject.<#= field.Name #>)
-			{
-				<#= field.Name #>.Add(item.Clone());
-			}
-<# } else { #>
-			<# throw new Exception(field.Name); #>
-<# } #>
-<# } #>
+			<# //foreach (RecordField field in template.Fields.Where(f => f.Type != null)) WriteCopyConstructorAssignment(field); #>
 		}
 	
 		public override void ReadBinary(ESPReader reader)
@@ -98,7 +86,7 @@ namespace ESPSharp.SubrecordCollections
 				{
 <# foreach (var field in template.Fields) { #>
 					case "<#= field.Tag #>":
-<# if (field.implementReadData) { #>
+<# if (field.implementReadData && field.Type != null) { #>
 <# if (!field.Type.GetInterfaces().Contains(typeof(IEnumerable))){#>
 						if (readTags.Contains("<#= field.Tag #>"))
 							return;
@@ -135,7 +123,7 @@ namespace ESPSharp.SubrecordCollections
 
 <# } #>
 <# foreach (var field in template.Fields) { #>
-<# if (field.implementWriteData) { #>
+<# if (field.implementWriteData && field.Type != null) { #>
 			if (<#= field.Name #> != null)
 <# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
 				<#= field.Name #>.WriteBinary(writer);
@@ -160,7 +148,7 @@ namespace ESPSharp.SubrecordCollections
 
 <# } #>
 <# foreach (var field in template.Fields) { #>
-<# if (field.implementWriteXML) { #>
+<# if (field.implementWriteXML && field.Type != null) { #>
 			if (<#= field.Name #> != null)		
 			{		
 				ele.TryPathTo("<#= field.XMLPath#>", true, out subEle);
@@ -193,7 +181,7 @@ namespace ESPSharp.SubrecordCollections
 
 <# } #>
 <# foreach (var field in template.Fields) { #>
-<# if (field.implementReadXML) { #>
+<# if (field.implementReadXML && field.Type != null) { #>
 			if (ele.TryPathTo("<#= field.XMLPath#>", false, out subEle))
 			{
 				if (<#= field.Name #> == null)
@@ -222,17 +210,44 @@ namespace ESPSharp.SubrecordCollections
 		{
 			return new <#= template.ClassName #>(this);
 		}
+<# if (template.isComparable) { #>
 
-<#foreach (var field in template.Fields.Where(f => !f.implementReadData)) { #>
+		public int CompareTo(<#= template.ClassName #> other)
+        {
+			return <#= template.hashKey.Name#>.CompareTo(other.<#= template.hashKey.Name#>);
+        }
+
+        public static bool operator >(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
+<# } #>
+
+<#foreach (var field in template.Fields.Where(f => !f.implementReadData || f.Type == null)) { #>
 		partial void Read<#= field.Name #>(ESPReader reader);
 <# } #>
-<#foreach (var field in template.Fields.Where(f => !f.implementWriteData)) { #>
+<#foreach (var field in template.Fields.Where(f => !f.implementWriteData || f.Type == null)) { #>
 		partial void Write<#= field.Name #>(ESPWriter writer);
 <# } #>
-<#foreach (var field in template.Fields.Where(f => !f.implementWriteXML)) { #>
+<#foreach (var field in template.Fields.Where(f => !f.implementWriteXML || f.Type == null)) { #>
 		partial void Write<#= field.Name #>XML(XElement ele, ElderScrollsPlugin master);
 <# } #>
-<#foreach (var field in template.Fields.Where(f => !f.implementReadXML)) { #>
+<#foreach (var field in template.Fields.Where(f => !f.implementReadXML || f.Type == null)) { #>
 		partial void Read<#= field.Name #>XML(XElement ele, ElderScrollsPlugin master);
 <# } #>
 	}
@@ -243,6 +258,8 @@ public class SubrecordCollectionTemplate
     public string ClassName;
 	public List<SubrecordCollectionField> Fields = new List<SubrecordCollectionField>();
 	public bool startsWithMarker = false;
+	public SubrecordCollectionField hashKey = null;
+	public bool isComparable = false;
 }
 
 public class SubrecordCollectionField
@@ -255,6 +272,7 @@ public class SubrecordCollectionField
 
 	public bool isRequired = false;
 	public bool isReadOnly = false;
+	public bool isSorted = false;
 	public bool implementReadData = true;
 	public bool implementWriteData = true;
 	public bool implementReadXML = true;

@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RecipeData : Subrecord, ICloneable<RecipeData>, IComparable<RecipeData>, IEquatable<RecipeData>  
+	public partial class RecipeData : Subrecord, ICloneable, IComparable<RecipeData>, IEquatable<RecipeData>  
 	{
 		public ActorValues Skill { get; set; }
 		public UInt32 Level { get; set; }
 		public FormID Category { get; set; }
 		public FormID SubCategory { get; set; }
 
-		public RecipeData()
+		public RecipeData(string Tag = null)
+			:base(Tag)
 		{
 			Skill = new ActorValues();
 			Level = new UInt32();
@@ -42,8 +43,10 @@ namespace ESPSharp.Subrecords
 		{
 			Skill = copyObject.Skill;
 			Level = copyObject.Level;
-			Category = copyObject.Category.Clone();
-			SubCategory = copyObject.SubCategory.Clone();
+			if (copyObject.Category != null)
+				Category = (FormID)copyObject.Category.Clone();
+			if (copyObject.SubCategory != null)
+				SubCategory = (FormID)copyObject.SubCategory.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -107,7 +110,7 @@ namespace ESPSharp.Subrecords
 				SubCategory.ReadXML(subEle, master);
 		}
 
-		public RecipeData Clone()
+		public override object Clone()
 		{
 			return new RecipeData(this);
 		}

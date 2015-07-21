@@ -49,6 +49,8 @@
 			"Unknown"
 			);
 	tempField.byteCount = 11;
+	tempField.implementReadXML = false;
+	tempField.implementWriteXML = false;
 	template.Fields.Add(tempField);
 #>
 <#@ include file="SubrecordTemplate.t4" once="true" #>

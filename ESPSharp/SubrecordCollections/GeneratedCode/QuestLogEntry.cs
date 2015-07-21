@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class QuestLogEntry : SubrecordCollection, ICloneable<QuestLogEntry>
-	{
+	public partial class QuestLogEntry : SubrecordCollection	{
 		public SimpleSubrecord<QuestStageFlags> StageFlags { get; set; }
 		public List<Condition> Conditions { get; set; }
 		public SimpleSubrecord<String> LogEntry { get; set; }
@@ -38,16 +37,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public QuestLogEntry(QuestLogEntry copyObject)
 		{
-			StageFlags = copyObject.StageFlags.Clone();
-			Conditions = new List<Condition>();
-			foreach (var item in copyObject.Conditions)
-			{
-				Conditions.Add(item.Clone());
-			}
-			LogEntry = copyObject.LogEntry.Clone();
-			Script = copyObject.Script.Clone();
-			NextQuest = copyObject.NextQuest.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class MapData : Subrecord, ICloneable<MapData>, IComparable<MapData>, IEquatable<MapData>  
+	public partial class MapData : Subrecord, ICloneable, IComparable<MapData>, IEquatable<MapData>  
 	{
 		public Int32 UsableXSize { get; set; }
 		public Int32 UsableYSize { get; set; }
@@ -24,7 +24,8 @@ namespace ESPSharp.Subrecords
 		public Int16 MaxX { get; set; }
 		public Int16 MaxY { get; set; }
 
-		public MapData()
+		public MapData(string Tag = null)
+			:base(Tag)
 		{
 			UsableXSize = new Int32();
 			UsableYSize = new Int32();
@@ -131,7 +132,7 @@ namespace ESPSharp.Subrecords
 				MaxY = subEle.ToInt16();
 		}
 
-		public MapData Clone()
+		public override object Clone()
 		{
 			return new MapData(this);
 		}

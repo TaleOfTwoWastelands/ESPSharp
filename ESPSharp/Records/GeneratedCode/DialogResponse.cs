@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class DialogResponse : Record	{
+	public partial class DialogResponse : Record
+	{
 		public DialogResponseData Data { get; set; }
 		public RecordReference Quest { get; set; }
 		public RecordReference Topic { get; set; }
@@ -32,6 +34,22 @@ namespace ESPSharp.Records
 		public RecordReference Speaker { get; set; }
 		public RecordReference RelatedSkillOrPerk { get; set; }
 		public SimpleSubrecord<SpeechChallengeType> SpeechChallenge { get; set; }
+
+		public DialogResponse()
+		{
+			Data = new DialogResponseData("DATA");
+			Quest = new RecordReference("QSTI");
+		}
+
+		public DialogResponse(DialogResponseData Data, RecordReference Quest, RecordReference Topic, RecordReference PreviousDialogResponse, List<RecordReference> LearnedTopics, List<Response> Responses, List<Condition> Conditions, List<RecordReference> Choices, List<RecordReference> LinkedFromList, List<RecordReference> UnknownList, EmbeddedScript BeginScript, DialogEndScript EndScript, RecordReference UnusedSound, SimpleSubrecord<String> Prompt, RecordReference Speaker, RecordReference RelatedSkillOrPerk, SimpleSubrecord<SpeechChallengeType> SpeechChallenge)
+		{
+			this.Data = Data;
+			this.Quest = Quest;
+		}
+
+		public DialogResponse(DialogResponse copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -502,6 +520,11 @@ namespace ESPSharp.Records
 					
 				SpeechChallenge.ReadXML(subEle, master);
 			}
+		}		
+
+		public DialogResponse Clone()
+		{
+			return new DialogResponse(this);
 		}
 
 	}

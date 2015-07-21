@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LightData : Subrecord, ICloneable<LightData>, IComparable<LightData>, IEquatable<LightData>  
+	public partial class LightData : Subrecord, ICloneable, IComparable<LightData>, IEquatable<LightData>  
 	{
 		public Int32 Time { get; set; }
 		public UInt32 Radius { get; set; }
@@ -26,7 +26,8 @@ namespace ESPSharp.Subrecords
 		public UInt32 Value { get; set; }
 		public Single Weight { get; set; }
 
-		public LightData()
+		public LightData(string Tag = null)
+			:base(Tag)
 		{
 			Time = new Int32();
 			Radius = new UInt32();
@@ -54,7 +55,8 @@ namespace ESPSharp.Subrecords
 		{
 			Time = copyObject.Time;
 			Radius = copyObject.Radius;
-			Color = copyObject.Color.Clone();
+			if (copyObject.Color != null)
+				Color = (Color)copyObject.Color.Clone();
 			Flags = copyObject.Flags;
 			FalloffExponent = copyObject.FalloffExponent;
 			FOV = copyObject.FOV;
@@ -155,7 +157,7 @@ namespace ESPSharp.Subrecords
 				Weight = subEle.ToSingle();
 		}
 
-		public LightData Clone()
+		public override object Clone()
 		{
 			return new LightData(this);
 		}

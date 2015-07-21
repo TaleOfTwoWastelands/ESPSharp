@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,35 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Hair : Record, IEditorID	{
+	public partial class Hair : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public Model Model { get; set; }
 		public SimpleSubrecord<String> Texture { get; set; }
 		public SimpleSubrecord<HairFlags> HairFlags { get; set; }
+
+		public Hair()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Name = new SimpleSubrecord<String>("FULL");
+			Model = new Model();
+			Texture = new SimpleSubrecord<String>("ICON");
+			HairFlags = new SimpleSubrecord<HairFlags>("DATA");
+		}
+
+		public Hair(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> Texture, SimpleSubrecord<HairFlags> HairFlags)
+		{
+			this.EditorID = EditorID;
+			this.Name = Name;
+			this.Model = Model;
+			this.Texture = Texture;
+			this.HairFlags = HairFlags;
+		}
+
+		public Hair(Hair copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -148,6 +172,11 @@ namespace ESPSharp.Records
 					
 				HairFlags.ReadXML(subEle, master);
 			}
+		}		
+
+		public Hair Clone()
+		{
+			return new Hair(this);
 		}
 
 	}

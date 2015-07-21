@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Light : Record, IEditorID	{
+	public partial class Light : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public Model Model { get; set; }
@@ -25,6 +27,26 @@ namespace ESPSharp.Records
 		public LightData Data { get; set; }
 		public SimpleSubrecord<Single> FadeValue { get; set; }
 		public RecordReference Sound { get; set; }
+
+		public Light()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Data = new LightData("DATA");
+			FadeValue = new SimpleSubrecord<Single>("FNAM");
+		}
+
+		public Light(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, Model Model, RecordReference Script, SimpleSubrecord<String> Name, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, LightData Data, SimpleSubrecord<Single> FadeValue, RecordReference Sound)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Data = Data;
+			this.FadeValue = FadeValue;
+		}
+
+		public Light(Light copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -253,6 +275,11 @@ namespace ESPSharp.Records
 					
 				Sound.ReadXML(subEle, master);
 			}
+		}		
+
+		public Light Clone()
+		{
+			return new Light(this);
 		}
 
 	}

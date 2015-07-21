@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class CreatureSound : SubrecordCollection, ICloneable<CreatureSound>
-	{
+	public partial class CreatureSound : SubrecordCollection	{
 		public RecordReference Sound { get; set; }
 		public SimpleSubrecord<Byte> Chance { get; set; }
 
@@ -33,9 +32,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public CreatureSound(CreatureSound copyObject)
 		{
-			Sound = copyObject.Sound.Clone();
-			Chance = copyObject.Chance.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

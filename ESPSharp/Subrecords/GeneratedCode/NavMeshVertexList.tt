@@ -1,0 +1,20 @@
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
+	template.ClassName = "NavMeshVertexList";
+	template.isComparable = false;
+	template.isReferenceable = false;
+
+	ClassField tempField;
+
+	tempField = 
+		new ClassField(
+			typeof(List<XYZFloat>),
+			"Vertices",
+			"Vertices"
+			);
+	tempField.XMLSubName = "Vertex";
+	tempField.listItemSize = 52;
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

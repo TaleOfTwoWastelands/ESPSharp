@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EncounterZoneData : Subrecord, ICloneable<EncounterZoneData>, IComparable<EncounterZoneData>, IEquatable<EncounterZoneData>  
+	public partial class EncounterZoneData : Subrecord, ICloneable, IComparable<EncounterZoneData>, IEquatable<EncounterZoneData>  
 	{
 		public FormID Owner { get; set; }
 		public Byte OwnerRank { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public EncounterZoneFlags Flags { get; set; }
 		public Byte Unused { get; set; }
 
-		public EncounterZoneData()
+		public EncounterZoneData(string Tag = null)
+			:base(Tag)
 		{
 			Owner = new FormID();
 			OwnerRank = new Byte();
@@ -43,7 +44,8 @@ namespace ESPSharp.Subrecords
 
 		public EncounterZoneData(EncounterZoneData copyObject)
 		{
-			Owner = copyObject.Owner.Clone();
+			if (copyObject.Owner != null)
+				Owner = (FormID)copyObject.Owner.Clone();
 			OwnerRank = copyObject.OwnerRank;
 			MinimumLevel = copyObject.MinimumLevel;
 			Flags = copyObject.Flags;
@@ -117,7 +119,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public EncounterZoneData Clone()
+		public override object Clone()
 		{
 			return new EncounterZoneData(this);
 		}

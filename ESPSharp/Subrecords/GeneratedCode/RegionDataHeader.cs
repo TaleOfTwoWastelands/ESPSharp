@@ -15,23 +15,27 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RegionDataHeader : Subrecord, ICloneable<RegionDataHeader>, IComparable<RegionDataHeader>, IEquatable<RegionDataHeader>  
+	public partial class RegionDataHeader : Subrecord, ICloneable, IComparable<RegionDataHeader>, IEquatable<RegionDataHeader>  
 	{
 		public RegionDataType Type { get; set; }
 		public RegionDataFlags Flags { get; set; }
-		public Byte Unused { get; set; }
+		public Byte Priority { get; set; }
+		public Byte[] Unused { get; set; }
 
-		public RegionDataHeader()
+		public RegionDataHeader(string Tag = null)
+			:base(Tag)
 		{
 			Type = new RegionDataType();
 			Flags = new RegionDataFlags();
-			Unused = new Byte();
+			Priority = new Byte();
+			Unused = new byte[2];
 		}
 
-		public RegionDataHeader(RegionDataType Type, RegionDataFlags Flags, Byte Unused)
+		public RegionDataHeader(RegionDataType Type, RegionDataFlags Flags, Byte Priority, Byte[] Unused)
 		{
 			this.Type = Type;
 			this.Flags = Flags;
+			this.Priority = Priority;
 			this.Unused = Unused;
 		}
 
@@ -39,7 +43,9 @@ namespace ESPSharp.Subrecords
 		{
 			Type = copyObject.Type;
 			Flags = copyObject.Flags;
-			Unused = copyObject.Unused;
+			Priority = copyObject.Priority;
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -51,7 +57,8 @@ namespace ESPSharp.Subrecords
 				{
 					Type = subReader.ReadEnum<RegionDataType>();
 					Flags = subReader.ReadEnum<RegionDataFlags>();
-					Unused = subReader.ReadByte();
+					Priority = subReader.ReadByte();
+					Unused = subReader.ReadBytes(2);
 				}
 				catch
 				{
@@ -64,6 +71,10 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write((UInt32)Type);
 			writer.Write((Byte)Flags);
+			writer.Write(Priority);
+			if (Unused == null)
+				writer.Write(new byte[2]);
+			else
 			writer.Write(Unused);
 		}
 
@@ -76,6 +87,9 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
+
+			ele.TryPathTo("Priority", true, out subEle);
+			subEle.Value = Priority.ToString();
 
 			WriteUnusedXML(ele, master);
 		}
@@ -90,10 +104,13 @@ namespace ESPSharp.Subrecords
 			if (ele.TryPathTo("Flags", false, out subEle))
 				Flags = subEle.ToEnum<RegionDataFlags>();
 
+			if (ele.TryPathTo("Priority", false, out subEle))
+				Priority = subEle.ToByte();
+
 			ReadUnusedXML(ele, master);
 		}
 
-		public RegionDataHeader Clone()
+		public override object Clone()
 		{
 			return new RegionDataHeader(this);
 		}
@@ -137,7 +154,8 @@ namespace ESPSharp.Subrecords
 
 			return Type == other.Type &&
 				Flags == other.Flags &&
-				Unused == other.Unused;
+				Priority == other.Priority &&
+				Unused.SequenceEqual(other.Unused);
         }
 
         public override bool Equals(object obj)

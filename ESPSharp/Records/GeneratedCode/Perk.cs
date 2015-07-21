@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Perk : Record, IEditorID	{
+	public partial class Perk : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<String> Description { get; set; }
@@ -23,6 +25,24 @@ namespace ESPSharp.Records
 		public List<Condition> Requirements { get; set; }
 		public PerkData Data { get; set; }
 		public List<PerkEffect> Effects { get; set; }
+
+		public Perk()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Description = new SimpleSubrecord<String>("DESC");
+			Data = new PerkData("DATA");
+		}
+
+		public Perk(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<String> Description, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, List<Condition> Requirements, PerkData Data, List<PerkEffect> Effects)
+		{
+			this.EditorID = EditorID;
+			this.Description = Description;
+			this.Data = Data;
+		}
+
+		public Perk(Perk copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -245,6 +265,11 @@ namespace ESPSharp.Records
 					Effects.Add(tempPRKE);
 				}
 			}
+		}		
+
+		public Perk Clone()
+		{
+			return new Perk(this);
 		}
 
 	}

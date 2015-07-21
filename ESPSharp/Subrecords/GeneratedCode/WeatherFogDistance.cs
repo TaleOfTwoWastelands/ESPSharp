@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeatherFogDistance : Subrecord, ICloneable<WeatherFogDistance>, IComparable<WeatherFogDistance>, IEquatable<WeatherFogDistance>  
+	public partial class WeatherFogDistance : Subrecord, ICloneable, IComparable<WeatherFogDistance>, IEquatable<WeatherFogDistance>  
 	{
 		public Single DayNear { get; set; }
 		public Single DayFar { get; set; }
@@ -24,7 +24,8 @@ namespace ESPSharp.Subrecords
 		public Single DayPower { get; set; }
 		public Single NightPower { get; set; }
 
-		public WeatherFogDistance()
+		public WeatherFogDistance(string Tag = null)
+			:base(Tag)
 		{
 			DayNear = new Single();
 			DayFar = new Single();
@@ -131,7 +132,7 @@ namespace ESPSharp.Subrecords
 				NightPower = subEle.ToSingle();
 		}
 
-		public WeatherFogDistance Clone()
+		public override object Clone()
 		{
 			return new WeatherFogDistance(this);
 		}

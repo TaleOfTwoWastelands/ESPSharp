@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class FaceGenData : SubrecordCollection, ICloneable<FaceGenData>
-	{
+	public partial class FaceGenData : SubrecordCollection	{
 		public SubMarker Marker { get; set; }
 		public SimpleSubrecord<Byte[]> GeometrySymmetric { get; set; }
 		public SimpleSubrecord<Byte[]> GeometryAsymmetric { get; set; }
@@ -41,11 +40,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public FaceGenData(FaceGenData copyObject)
 		{
-			GeometrySymmetric = copyObject.GeometrySymmetric.Clone();
-			GeometryAsymmetric = copyObject.GeometryAsymmetric.Clone();
-			TextureSymmetric = copyObject.TextureSymmetric.Clone();
-			Unknown = copyObject.Unknown.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-    public class MoonData : IESPSerializable, ICloneable<MoonData>, IComparable<MoonData>, IEquatable<MoonData>
+    public class MoonData : IESPSerializable, ICloneable, IComparable<MoonData>, IEquatable<MoonData>
     {
         public MoonFlags Moons { get; set; }
         public byte PhaseLength { get; set; }
@@ -76,7 +76,7 @@ namespace ESPSharp.DataTypes
             }
         }
 
-        public MoonData Clone()
+        public object Clone()
         {
             return new MoonData(this);
         }

@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class QuestTarget : SubrecordCollection, ICloneable<QuestTarget>
-	{
+	public partial class QuestTarget : SubrecordCollection	{
 		public QuestTargetData Target { get; set; }
 		public List<Condition> Conditions { get; set; }
 
@@ -31,13 +30,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public QuestTarget(QuestTarget copyObject)
 		{
-			Target = copyObject.Target.Clone();
-			Conditions = new List<Condition>();
-			foreach (var item in copyObject.Conditions)
-			{
-				Conditions.Add(item.Clone());
-			}
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CasinoData : Subrecord, ICloneable<CasinoData>, IComparable<CasinoData>, IEquatable<CasinoData>  
+	public partial class CasinoData : Subrecord, ICloneable, IComparable<CasinoData>, IEquatable<CasinoData>  
 	{
 		public Single DecksPercentBeforeShuffle { get; set; }
 		public Single BlackjackPayoutRatio { get; set; }
@@ -32,7 +32,8 @@ namespace ESPSharp.Subrecords
 		public FormID WinningsQuest { get; set; }
 		public NoYes DealerStayOnSoft17 { get; set; }
 
-		public CasinoData()
+		public CasinoData(string Tag = null)
+			:base(Tag)
 		{
 			DecksPercentBeforeShuffle = new Single();
 			BlackjackPayoutRatio = new Single();
@@ -81,8 +82,10 @@ namespace ESPSharp.Subrecords
 			SlotReelStopW = copyObject.SlotReelStopW;
 			NumberOfDecks = copyObject.NumberOfDecks;
 			MaxWinnings = copyObject.MaxWinnings;
-			Currency = copyObject.Currency.Clone();
-			WinningsQuest = copyObject.WinningsQuest.Clone();
+			if (copyObject.Currency != null)
+				Currency = (FormID)copyObject.Currency.Clone();
+			if (copyObject.WinningsQuest != null)
+				WinningsQuest = (FormID)copyObject.WinningsQuest.Clone();
 			DealerStayOnSoft17 = copyObject.DealerStayOnSoft17;
 		}
 	
@@ -227,7 +230,7 @@ namespace ESPSharp.Subrecords
 				DealerStayOnSoft17 = subEle.ToEnum<NoYes>();
 		}
 
-		public CasinoData Clone()
+		public override object Clone()
 		{
 			return new CasinoData(this);
 		}

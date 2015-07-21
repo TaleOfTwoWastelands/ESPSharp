@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class TimeOfDayColors : IESPSerializable, ICloneable<TimeOfDayColors>, IComparable<TimeOfDayColors>, IEquatable<TimeOfDayColors>
+	public partial class TimeOfDayColors : IESPSerializable, ICloneable, IComparable<TimeOfDayColors>, IEquatable<TimeOfDayColors>  
 	{
 		public Color Sunrise { get; set; }
 		public Color Day { get; set; }
@@ -45,12 +45,18 @@ namespace ESPSharp.DataTypes
 
 		public TimeOfDayColors(TimeOfDayColors copyObject)
 		{
-			Sunrise = copyObject.Sunrise.Clone();
-			Day = copyObject.Day.Clone();
-			Sunset = copyObject.Sunset.Clone();
-			Night = copyObject.Night.Clone();
-			HighNoon = copyObject.HighNoon.Clone();
-			Midnight = copyObject.Midnight.Clone();
+			if (copyObject.Sunrise != null)
+				Sunrise = (Color)copyObject.Sunrise.Clone();
+			if (copyObject.Day != null)
+				Day = (Color)copyObject.Day.Clone();
+			if (copyObject.Sunset != null)
+				Sunset = (Color)copyObject.Sunset.Clone();
+			if (copyObject.Night != null)
+				Night = (Color)copyObject.Night.Clone();
+			if (copyObject.HighNoon != null)
+				HighNoon = (Color)copyObject.HighNoon.Clone();
+			if (copyObject.Midnight != null)
+				Midnight = (Color)copyObject.Midnight.Clone();
 		}
 	
 		public void ReadBinary(ESPReader reader)
@@ -58,11 +64,11 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				Sunrise.ReadBinary(reader);
-				Day.ReadBinary(reader);
-				Sunset.ReadBinary(reader);
-				Night.ReadBinary(reader);
-				HighNoon.ReadBinary(reader);
-				Midnight.ReadBinary(reader);
+					Day.ReadBinary(reader);
+					Sunset.ReadBinary(reader);
+					Night.ReadBinary(reader);
+					HighNoon.ReadBinary(reader);
+					Midnight.ReadBinary(reader);
 			}
 			catch
 			{
@@ -83,7 +89,7 @@ namespace ESPSharp.DataTypes
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Sunrise", true, out subEle);
 			Sunrise.WriteXML(subEle, master);
 
@@ -106,46 +112,34 @@ namespace ESPSharp.DataTypes
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Sunrise", false, out subEle))
-			{
 				Sunrise.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Day", false, out subEle))
-			{
 				Day.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Sunset", false, out subEle))
-			{
 				Sunset.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Night", false, out subEle))
-			{
 				Night.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("HighNoon", false, out subEle))
-			{
 				HighNoon.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Midnight", false, out subEle))
-			{
 				Midnight.ReadXML(subEle, master);
-			}
 		}
 
-		public TimeOfDayColors Clone()
+		public object Clone()
 		{
 			return new TimeOfDayColors(this);
 		}
 
         public int CompareTo(TimeOfDayColors other)
         {
-            return Sunrise.CompareTo(other.Sunrise);
+			return Sunrise.CompareTo(other.Sunrise);
         }
 
         public static bool operator >(TimeOfDayColors objA, TimeOfDayColors objB)
@@ -170,6 +164,16 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(TimeOfDayColors other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return Sunrise == other.Sunrise &&
 				Day == other.Day &&
 				Sunset == other.Sunset &&
@@ -180,7 +184,11 @@ namespace ESPSharp.DataTypes
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             TimeOfDayColors other = obj as TimeOfDayColors;
+
             if (other == null)
                 return false;
             else
@@ -194,11 +202,31 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(TimeOfDayColors objA, TimeOfDayColors objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(TimeOfDayColors objA, TimeOfDayColors objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 	}

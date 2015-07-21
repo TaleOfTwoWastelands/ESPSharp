@@ -3,6 +3,7 @@
 <#	
 	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
 	template.ClassName = "StaticCollectionPart";
+	template.isComparable = true;
 
 	SubrecordCollectionField tempField;
 
@@ -13,6 +14,7 @@
 			"Static",
 			"Static"
 			);
+	template.hashKey = tempField;
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 

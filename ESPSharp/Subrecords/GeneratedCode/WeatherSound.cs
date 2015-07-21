@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeatherSound : Subrecord, ICloneable<WeatherSound>, IComparable<WeatherSound>, IEquatable<WeatherSound>  
+	public partial class WeatherSound : Subrecord, ICloneable, IComparable<WeatherSound>, IEquatable<WeatherSound>  
 	{
 		public FormID Sound { get; set; }
 		public WeatherType Type { get; set; }
 
-		public WeatherSound()
+		public WeatherSound(string Tag = null)
+			:base(Tag)
 		{
 			Sound = new FormID();
 			Type = new WeatherType();
@@ -34,7 +35,8 @@ namespace ESPSharp.Subrecords
 
 		public WeatherSound(WeatherSound copyObject)
 		{
-			Sound = copyObject.Sound.Clone();
+			if (copyObject.Sound != null)
+				Sound = (FormID)copyObject.Sound.Clone();
 			Type = copyObject.Type;
 		}
 	
@@ -83,7 +85,7 @@ namespace ESPSharp.Subrecords
 				Type = subEle.ToEnum<WeatherType>();
 		}
 
-		public WeatherSound Clone()
+		public override object Clone()
 		{
 			return new WeatherSound(this);
 		}

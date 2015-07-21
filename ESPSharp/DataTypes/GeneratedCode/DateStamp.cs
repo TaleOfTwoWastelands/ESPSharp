@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class DateStamp : IESPSerializable, ICloneable<DateStamp>, IComparable<DateStamp>, IEquatable<DateStamp>
+	public partial class DateStamp : IESPSerializable, ICloneable, IComparable<DateStamp>, IEquatable<DateStamp>  
 	{
 		public Byte DayOfMonth { get; set; }
 		public Byte MonthsSince2001 { get; set; }
@@ -42,7 +42,7 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				DayOfMonth = reader.ReadByte();
-				MonthsSince2001 = reader.ReadByte();
+					MonthsSince2001 = reader.ReadByte();
 			}
 			catch
 			{
@@ -52,14 +52,14 @@ namespace ESPSharp.DataTypes
 
 		public void WriteBinary(ESPWriter writer)
 		{
-			writer.Write(DayOfMonth);			
-			writer.Write(MonthsSince2001);			
+			writer.Write(DayOfMonth);
+			writer.Write(MonthsSince2001);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("DayOfMonth", true, out subEle);
 			subEle.Value = DayOfMonth.ToString();
 
@@ -70,26 +70,22 @@ namespace ESPSharp.DataTypes
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("DayOfMonth", false, out subEle))
-			{
 				DayOfMonth = subEle.ToByte();
-			}
 
 			if (ele.TryPathTo("MonthsSince2001", false, out subEle))
-			{
 				MonthsSince2001 = subEle.ToByte();
-			}
 		}
 
-		public DateStamp Clone()
+		public object Clone()
 		{
 			return new DateStamp(this);
 		}
 
         public int CompareTo(DateStamp other)
         {
-            return MonthsSince2001.CompareTo(other.MonthsSince2001);
+			return MonthsSince2001.CompareTo(other.MonthsSince2001);
         }
 
         public static bool operator >(DateStamp objA, DateStamp objB)
@@ -114,13 +110,27 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(DateStamp other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return DayOfMonth == other.DayOfMonth &&
 				MonthsSince2001 == other.MonthsSince2001;
         }
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             DateStamp other = obj as DateStamp;
+
             if (other == null)
                 return false;
             else
@@ -134,11 +144,31 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(DateStamp objA, DateStamp objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(DateStamp objA, DateStamp objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 	}

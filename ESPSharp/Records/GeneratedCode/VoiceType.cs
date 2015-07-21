@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,24 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class VoiceType : Record, IEditorID	{
+	public partial class VoiceType : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<VoiceTypeFlags> VoiceTypeFlags { get; set; }
+
+		public VoiceType()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public VoiceType(SimpleSubrecord<String> EditorID, SimpleSubrecord<VoiceTypeFlags> VoiceTypeFlags)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public VoiceType(VoiceType copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -85,6 +101,11 @@ namespace ESPSharp.Records
 					
 				VoiceTypeFlags.ReadXML(subEle, master);
 			}
+		}		
+
+		public VoiceType Clone()
+		{
+			return new VoiceType(this);
 		}
 
 	}

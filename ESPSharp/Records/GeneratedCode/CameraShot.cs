@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,28 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class CameraShot : Record, IEditorID	{
+	public partial class CameraShot : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public Model Model { get; set; }
 		public CameraShotData Data { get; set; }
 		public RecordReference ImageSpaceModifier { get; set; }
+
+		public CameraShot()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new CameraShotData("DATA");
+		}
+
+		public CameraShot(SimpleSubrecord<String> EditorID, Model Model, CameraShotData Data, RecordReference ImageSpaceModifier)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public CameraShot(CameraShot copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -127,6 +145,11 @@ namespace ESPSharp.Records
 					
 				ImageSpaceModifier.ReadXML(subEle, master);
 			}
+		}		
+
+		public CameraShot Clone()
+		{
+			return new CameraShot(this);
 		}
 
 	}

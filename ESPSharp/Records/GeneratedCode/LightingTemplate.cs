@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class LightingTemplate : Record, IEditorID	{
+	public partial class LightingTemplate : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public LightingTemplateData Data { get; set; }
+
+		public LightingTemplate()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new LightingTemplateData("DATA");
+		}
+
+		public LightingTemplate(SimpleSubrecord<String> EditorID, LightingTemplateData Data)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public LightingTemplate(LightingTemplate copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -85,6 +103,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public LightingTemplate Clone()
+		{
+			return new LightingTemplate(this);
 		}
 
 	}

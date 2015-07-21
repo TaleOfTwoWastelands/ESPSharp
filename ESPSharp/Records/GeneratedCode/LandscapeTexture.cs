@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class LandscapeTexture : Record, IEditorID	{
+	public partial class LandscapeTexture : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> LargeIcon { get; set; }
 		public SimpleSubrecord<String> SmallIcon { get; set; }
@@ -22,6 +24,26 @@ namespace ESPSharp.Records
 		public HavokData HavokData { get; set; }
 		public SimpleSubrecord<Byte> TextureSpecularExponent { get; set; }
 		public List<RecordReference> Grasses { get; set; }
+
+		public LandscapeTexture()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			TextureSet = new RecordReference("TNAM");
+			HavokData = new HavokData("HNAM");
+			TextureSpecularExponent = new SimpleSubrecord<Byte>("SNAM");
+		}
+
+		public LandscapeTexture(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference TextureSet, HavokData HavokData, SimpleSubrecord<Byte> TextureSpecularExponent, List<RecordReference> Grasses)
+		{
+			this.EditorID = EditorID;
+			this.TextureSet = TextureSet;
+			this.HavokData = HavokData;
+			this.TextureSpecularExponent = TextureSpecularExponent;
+		}
+
+		public LandscapeTexture(LandscapeTexture copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -207,6 +229,11 @@ namespace ESPSharp.Records
 					Grasses.Add(tempGNAM);
 				}
 			}
+		}		
+
+		public LandscapeTexture Clone()
+		{
+			return new LandscapeTexture(this);
 		}
 
 	}

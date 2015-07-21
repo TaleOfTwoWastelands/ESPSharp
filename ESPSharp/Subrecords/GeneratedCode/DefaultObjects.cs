@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DefaultObjects : Subrecord, ICloneable<DefaultObjects>, IComparable<DefaultObjects>, IEquatable<DefaultObjects>  
+	public partial class DefaultObjects : Subrecord, ICloneable, IComparable<DefaultObjects>, IEquatable<DefaultObjects>  
 	{
 		public FormID Stimpack { get; set; }
 		public FormID SuperStimpack { get; set; }
@@ -52,7 +52,8 @@ namespace ESPSharp.Subrecords
 		public FormID ItemDetectedEffect { get; set; }
 		public FormID CateyeMobileEffect { get; set; }
 
-		public DefaultObjects()
+		public DefaultObjects(string Tag = null)
+			:base(Tag)
 		{
 			Stimpack = new FormID();
 			SuperStimpack = new FormID();
@@ -130,40 +131,74 @@ namespace ESPSharp.Subrecords
 
 		public DefaultObjects(DefaultObjects copyObject)
 		{
-			Stimpack = copyObject.Stimpack.Clone();
-			SuperStimpack = copyObject.SuperStimpack.Clone();
-			RadX = copyObject.RadX.Clone();
-			RadAway = copyObject.RadAway.Clone();
-			MedX = copyObject.MedX.Clone();
-			PerkParalysis = copyObject.PerkParalysis.Clone();
-			PlayerFaction = copyObject.PlayerFaction.Clone();
-			MysteriousStrangerNPC = copyObject.MysteriousStrangerNPC.Clone();
-			MysteriousStrangerFaction = copyObject.MysteriousStrangerFaction.Clone();
-			DefaultMusic = copyObject.DefaultMusic.Clone();
-			BattleMusic = copyObject.BattleMusic.Clone();
-			DeathMusic = copyObject.DeathMusic.Clone();
-			SuccessMusic = copyObject.SuccessMusic.Clone();
-			LevelUpMusic = copyObject.LevelUpMusic.Clone();
-			PlayerVoiceMale = copyObject.PlayerVoiceMale.Clone();
-			PlayerVoiceMaleChild = copyObject.PlayerVoiceMaleChild.Clone();
-			PlayerVoiceFemale = copyObject.PlayerVoiceFemale.Clone();
-			PlayerVoiceFemaleChild = copyObject.PlayerVoiceFemaleChild.Clone();
-			EatPackageDefaultFood = copyObject.EatPackageDefaultFood.Clone();
-			EveryActorAbility = copyObject.EveryActorAbility.Clone();
-			DrugWearsOffImageSpace = copyObject.DrugWearsOffImageSpace.Clone();
-			DoctorsBag = copyObject.DoctorsBag.Clone();
-			MissFortuneNPC = copyObject.MissFortuneNPC.Clone();
-			MissFortuneFaction = copyObject.MissFortuneFaction.Clone();
-			MeltdownExplosion = copyObject.MeltdownExplosion.Clone();
-			UnarmedPowerAttackForward = copyObject.UnarmedPowerAttackForward.Clone();
-			UnarmedPowerAttackBackward = copyObject.UnarmedPowerAttackBackward.Clone();
-			UnarmedPowerAttackLeft = copyObject.UnarmedPowerAttackLeft.Clone();
-			UnarmedPowerAttackRight = copyObject.UnarmedPowerAttackRight.Clone();
-			UnarmedPowerAttackCrouch = copyObject.UnarmedPowerAttackCrouch.Clone();
-			UnarmedPowerAttackCounter = copyObject.UnarmedPowerAttackCounter.Clone();
-			SpotterEffect = copyObject.SpotterEffect.Clone();
-			ItemDetectedEffect = copyObject.ItemDetectedEffect.Clone();
-			CateyeMobileEffect = copyObject.CateyeMobileEffect.Clone();
+			if (copyObject.Stimpack != null)
+				Stimpack = (FormID)copyObject.Stimpack.Clone();
+			if (copyObject.SuperStimpack != null)
+				SuperStimpack = (FormID)copyObject.SuperStimpack.Clone();
+			if (copyObject.RadX != null)
+				RadX = (FormID)copyObject.RadX.Clone();
+			if (copyObject.RadAway != null)
+				RadAway = (FormID)copyObject.RadAway.Clone();
+			if (copyObject.MedX != null)
+				MedX = (FormID)copyObject.MedX.Clone();
+			if (copyObject.PerkParalysis != null)
+				PerkParalysis = (FormID)copyObject.PerkParalysis.Clone();
+			if (copyObject.PlayerFaction != null)
+				PlayerFaction = (FormID)copyObject.PlayerFaction.Clone();
+			if (copyObject.MysteriousStrangerNPC != null)
+				MysteriousStrangerNPC = (FormID)copyObject.MysteriousStrangerNPC.Clone();
+			if (copyObject.MysteriousStrangerFaction != null)
+				MysteriousStrangerFaction = (FormID)copyObject.MysteriousStrangerFaction.Clone();
+			if (copyObject.DefaultMusic != null)
+				DefaultMusic = (FormID)copyObject.DefaultMusic.Clone();
+			if (copyObject.BattleMusic != null)
+				BattleMusic = (FormID)copyObject.BattleMusic.Clone();
+			if (copyObject.DeathMusic != null)
+				DeathMusic = (FormID)copyObject.DeathMusic.Clone();
+			if (copyObject.SuccessMusic != null)
+				SuccessMusic = (FormID)copyObject.SuccessMusic.Clone();
+			if (copyObject.LevelUpMusic != null)
+				LevelUpMusic = (FormID)copyObject.LevelUpMusic.Clone();
+			if (copyObject.PlayerVoiceMale != null)
+				PlayerVoiceMale = (FormID)copyObject.PlayerVoiceMale.Clone();
+			if (copyObject.PlayerVoiceMaleChild != null)
+				PlayerVoiceMaleChild = (FormID)copyObject.PlayerVoiceMaleChild.Clone();
+			if (copyObject.PlayerVoiceFemale != null)
+				PlayerVoiceFemale = (FormID)copyObject.PlayerVoiceFemale.Clone();
+			if (copyObject.PlayerVoiceFemaleChild != null)
+				PlayerVoiceFemaleChild = (FormID)copyObject.PlayerVoiceFemaleChild.Clone();
+			if (copyObject.EatPackageDefaultFood != null)
+				EatPackageDefaultFood = (FormID)copyObject.EatPackageDefaultFood.Clone();
+			if (copyObject.EveryActorAbility != null)
+				EveryActorAbility = (FormID)copyObject.EveryActorAbility.Clone();
+			if (copyObject.DrugWearsOffImageSpace != null)
+				DrugWearsOffImageSpace = (FormID)copyObject.DrugWearsOffImageSpace.Clone();
+			if (copyObject.DoctorsBag != null)
+				DoctorsBag = (FormID)copyObject.DoctorsBag.Clone();
+			if (copyObject.MissFortuneNPC != null)
+				MissFortuneNPC = (FormID)copyObject.MissFortuneNPC.Clone();
+			if (copyObject.MissFortuneFaction != null)
+				MissFortuneFaction = (FormID)copyObject.MissFortuneFaction.Clone();
+			if (copyObject.MeltdownExplosion != null)
+				MeltdownExplosion = (FormID)copyObject.MeltdownExplosion.Clone();
+			if (copyObject.UnarmedPowerAttackForward != null)
+				UnarmedPowerAttackForward = (FormID)copyObject.UnarmedPowerAttackForward.Clone();
+			if (copyObject.UnarmedPowerAttackBackward != null)
+				UnarmedPowerAttackBackward = (FormID)copyObject.UnarmedPowerAttackBackward.Clone();
+			if (copyObject.UnarmedPowerAttackLeft != null)
+				UnarmedPowerAttackLeft = (FormID)copyObject.UnarmedPowerAttackLeft.Clone();
+			if (copyObject.UnarmedPowerAttackRight != null)
+				UnarmedPowerAttackRight = (FormID)copyObject.UnarmedPowerAttackRight.Clone();
+			if (copyObject.UnarmedPowerAttackCrouch != null)
+				UnarmedPowerAttackCrouch = (FormID)copyObject.UnarmedPowerAttackCrouch.Clone();
+			if (copyObject.UnarmedPowerAttackCounter != null)
+				UnarmedPowerAttackCounter = (FormID)copyObject.UnarmedPowerAttackCounter.Clone();
+			if (copyObject.SpotterEffect != null)
+				SpotterEffect = (FormID)copyObject.SpotterEffect.Clone();
+			if (copyObject.ItemDetectedEffect != null)
+				ItemDetectedEffect = (FormID)copyObject.ItemDetectedEffect.Clone();
+			if (copyObject.CateyeMobileEffect != null)
+				CateyeMobileEffect = (FormID)copyObject.CateyeMobileEffect.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -467,7 +502,7 @@ namespace ESPSharp.Subrecords
 				CateyeMobileEffect.ReadXML(subEle, master);
 		}
 
-		public DefaultObjects Clone()
+		public override object Clone()
 		{
 			return new DefaultObjects(this);
 		}

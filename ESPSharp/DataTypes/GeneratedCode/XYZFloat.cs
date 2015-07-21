@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class XYZFloat : IESPSerializable, ICloneable<XYZFloat>, IComparable<XYZFloat>, IEquatable<XYZFloat>
+	public partial class XYZFloat : IESPSerializable, ICloneable, IComparable<XYZFloat>, IEquatable<XYZFloat>  
 	{
 		public Single X { get; set; }
 		public Single Y { get; set; }
@@ -46,8 +46,8 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				X = reader.ReadSingle();
-				Y = reader.ReadSingle();
-				Z = reader.ReadSingle();
+					Y = reader.ReadSingle();
+					Z = reader.ReadSingle();
 			}
 			catch
 			{
@@ -57,15 +57,15 @@ namespace ESPSharp.DataTypes
 
 		public void WriteBinary(ESPWriter writer)
 		{
-			writer.Write(X);			
-			writer.Write(Y);			
-			writer.Write(Z);			
+			writer.Write(X);
+			writer.Write(Y);
+			writer.Write(Z);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("X", true, out subEle);
 			subEle.Value = X.ToString("G15");
 
@@ -79,31 +79,25 @@ namespace ESPSharp.DataTypes
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("X", false, out subEle))
-			{
 				X = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Y", false, out subEle))
-			{
 				Y = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Z", false, out subEle))
-			{
 				Z = subEle.ToSingle();
-			}
 		}
 
-		public XYZFloat Clone()
+		public object Clone()
 		{
 			return new XYZFloat(this);
 		}
 
         public int CompareTo(XYZFloat other)
         {
-            return X.CompareTo(other.X);
+			return X.CompareTo(other.X);
         }
 
         public static bool operator >(XYZFloat objA, XYZFloat objB)
@@ -128,6 +122,16 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(XYZFloat other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return X == other.X &&
 				Y == other.Y &&
 				Z == other.Z;
@@ -135,7 +139,11 @@ namespace ESPSharp.DataTypes
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             XYZFloat other = obj as XYZFloat;
+
             if (other == null)
                 return false;
             else
@@ -149,11 +157,31 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(XYZFloat objA, XYZFloat objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(XYZFloat objA, XYZFloat objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 	}

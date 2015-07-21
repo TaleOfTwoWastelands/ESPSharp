@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class CaravanDeck : Record, IEditorID	{
+	public partial class CaravanDeck : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public List<RecordReference> Cards { get; set; }
 		public SimpleSubrecord<UInt32> Data { get; set; }
+
+		public CaravanDeck()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public CaravanDeck(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, List<RecordReference> Cards, SimpleSubrecord<UInt32> Data)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public CaravanDeck(CaravanDeck copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -144,6 +160,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public CaravanDeck Clone()
+		{
+			return new CaravanDeck(this);
 		}
 
 	}

@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class BillboardDimensions : Subrecord, ICloneable<BillboardDimensions>, IComparable<BillboardDimensions>, IEquatable<BillboardDimensions>  
+	public partial class BillboardDimensions : Subrecord, ICloneable, IComparable<BillboardDimensions>, IEquatable<BillboardDimensions>  
 	{
 		public Single Width { get; set; }
 		public Single Height { get; set; }
 
-		public BillboardDimensions()
+		public BillboardDimensions(string Tag = null)
+			:base(Tag)
 		{
 			Width = new Single();
 			Height = new Single();
@@ -83,7 +84,7 @@ namespace ESPSharp.Subrecords
 				Height = subEle.ToSingle();
 		}
 
-		public BillboardDimensions Clone()
+		public override object Clone()
 		{
 			return new BillboardDimensions(this);
 		}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,32 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class CombatStyle : Record, IEditorID	{
+	public partial class CombatStyle : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public CombatStyleDecision DecisionData { get; set; }
 		public CombatStyleAdvanced AdvancedData { get; set; }
 		public CombatStyleSimple SimpleData { get; set; }
+
+		public CombatStyle()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			DecisionData = new CombatStyleDecision("CSTD");
+			AdvancedData = new CombatStyleAdvanced("CSAD");
+			SimpleData = new CombatStyleSimple("CSSD");
+		}
+
+		public CombatStyle(SimpleSubrecord<String> EditorID, CombatStyleDecision DecisionData, CombatStyleAdvanced AdvancedData, CombatStyleSimple SimpleData)
+		{
+			this.EditorID = EditorID;
+			this.DecisionData = DecisionData;
+			this.AdvancedData = AdvancedData;
+			this.SimpleData = SimpleData;
+		}
+
+		public CombatStyle(CombatStyle copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -127,6 +149,11 @@ namespace ESPSharp.Records
 					
 				SimpleData.ReadXML(subEle, master);
 			}
+		}		
+
+		public CombatStyle Clone()
+		{
+			return new CombatStyle(this);
 		}
 
 	}

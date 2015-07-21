@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class NavMeshTriangle : IESPSerializable, ICloneable<NavMeshTriangle>, IComparable<NavMeshTriangle>, IEquatable<NavMeshTriangle>
+	public partial class NavMeshTriangle : IESPSerializable, ICloneable, IComparable<NavMeshTriangle>, IEquatable<NavMeshTriangle>  
 	{
 		public Int16 Vertex1 { get; set; }
 		public Int16 Vertex2 { get; set; }
@@ -62,12 +62,12 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				Vertex1 = reader.ReadInt16();
-				Vertex2 = reader.ReadInt16();
-				Vertex3 = reader.ReadInt16();
-				EdgeVertices1_2 = reader.ReadInt16();
-				EdgeVertices2_3 = reader.ReadInt16();
-				EdgeVertices3_1 = reader.ReadInt16();
-				Flags = reader.ReadEnum<NavMeshTriangleFlags>();
+					Vertex2 = reader.ReadInt16();
+					Vertex3 = reader.ReadInt16();
+					EdgeVertices1_2 = reader.ReadInt16();
+					EdgeVertices2_3 = reader.ReadInt16();
+					EdgeVertices3_1 = reader.ReadInt16();
+					Flags = reader.ReadEnum<NavMeshTriangleFlags>();
 			}
 			catch
 			{
@@ -77,19 +77,19 @@ namespace ESPSharp.DataTypes
 
 		public void WriteBinary(ESPWriter writer)
 		{
-			writer.Write(Vertex1);			
-			writer.Write(Vertex2);			
-			writer.Write(Vertex3);			
-			writer.Write(EdgeVertices1_2);			
-			writer.Write(EdgeVertices2_3);			
-			writer.Write(EdgeVertices3_1);			
+			writer.Write(Vertex1);
+			writer.Write(Vertex2);
+			writer.Write(Vertex3);
+			writer.Write(EdgeVertices1_2);
+			writer.Write(EdgeVertices2_3);
+			writer.Write(EdgeVertices3_1);
 			writer.Write((UInt32)Flags);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Vertices/Vertex1", true, out subEle);
 			subEle.Value = Vertex1.ToString();
 
@@ -115,51 +115,37 @@ namespace ESPSharp.DataTypes
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Vertices/Vertex1", false, out subEle))
-			{
 				Vertex1 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Vertices/Vertex2", false, out subEle))
-			{
 				Vertex2 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Vertices/Vertex3", false, out subEle))
-			{
 				Vertex3 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Edges/Vertices1_2", false, out subEle))
-			{
 				EdgeVertices1_2 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Edges/Vertices2_3", false, out subEle))
-			{
 				EdgeVertices2_3 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Edges/Vertices3_1", false, out subEle))
-			{
 				EdgeVertices3_1 = subEle.ToInt16();
-			}
 
 			if (ele.TryPathTo("Flags", false, out subEle))
-			{
 				Flags = subEle.ToEnum<NavMeshTriangleFlags>();
-			}
 		}
 
-		public NavMeshTriangle Clone()
+		public object Clone()
 		{
 			return new NavMeshTriangle(this);
 		}
 
         public int CompareTo(NavMeshTriangle other)
         {
-            return Vertex1.CompareTo(other.Vertex1);
+			return Vertex1.CompareTo(other.Vertex1);
         }
 
         public static bool operator >(NavMeshTriangle objA, NavMeshTriangle objB)
@@ -184,6 +170,16 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(NavMeshTriangle other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return Vertex1 == other.Vertex1 &&
 				Vertex2 == other.Vertex2 &&
 				Vertex3 == other.Vertex3 &&
@@ -195,7 +191,11 @@ namespace ESPSharp.DataTypes
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             NavMeshTriangle other = obj as NavMeshTriangle;
+
             if (other == null)
                 return false;
             else
@@ -209,11 +209,31 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(NavMeshTriangle objA, NavMeshTriangle objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(NavMeshTriangle objA, NavMeshTriangle objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 	}

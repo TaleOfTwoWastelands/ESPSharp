@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LoadScreenTypeData : Subrecord, ICloneable<LoadScreenTypeData>, IComparable<LoadScreenTypeData>, IEquatable<LoadScreenTypeData>  
+	public partial class LoadScreenTypeData : Subrecord, ICloneable, IComparable<LoadScreenTypeData>, IEquatable<LoadScreenTypeData>  
 	{
 		public LoadScreenTypeEnum Type { get; set; }
 		public UInt32 X { get; set; }
@@ -36,7 +36,8 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unknown2 { get; set; }
 		public UInt32 Stats { get; set; }
 
-		public LoadScreenTypeData()
+		public LoadScreenTypeData(string Tag = null)
+			:base(Tag)
 		{
 			Type = new LoadScreenTypeEnum();
 			X = new UInt32();
@@ -93,12 +94,14 @@ namespace ESPSharp.Subrecords
 			Font1Green = copyObject.Font1Green;
 			Font1Blue = copyObject.Font1Blue;
 			Font1Alignment = copyObject.Font1Alignment;
-			Unknown1 = (Byte[])copyObject.Unknown1.Clone();
+			if (copyObject.Unknown1 != null)
+				Unknown1 = (Byte[])copyObject.Unknown1.Clone();
 			Font2 = copyObject.Font2;
 			Font2Red = copyObject.Font2Red;
 			Font2Green = copyObject.Font2Green;
 			Font2Blue = copyObject.Font2Blue;
-			Unknown2 = (Byte[])copyObject.Unknown2.Clone();
+			if (copyObject.Unknown2 != null)
+				Unknown2 = (Byte[])copyObject.Unknown2.Clone();
 			Stats = copyObject.Stats;
 		}
 	
@@ -281,7 +284,7 @@ namespace ESPSharp.Subrecords
 				Stats = subEle.ToUInt32();
 		}
 
-		public LoadScreenTypeData Clone()
+		public override object Clone()
 		{
 			return new LoadScreenTypeData(this);
 		}

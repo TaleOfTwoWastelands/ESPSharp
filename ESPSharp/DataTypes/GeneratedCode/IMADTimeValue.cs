@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class IMADTimeValue : IESPSerializable, ICloneable<IMADTimeValue>, IComparable<IMADTimeValue>, IEquatable<IMADTimeValue>
+	public partial class IMADTimeValue : IESPSerializable, ICloneable, IComparable<IMADTimeValue>, IEquatable<IMADTimeValue>  
 	{
 		public Single Time { get; set; }
 		public Single Value { get; set; }
@@ -42,7 +42,7 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				Time = reader.ReadSingle();
-				Value = reader.ReadSingle();
+					Value = reader.ReadSingle();
 			}
 			catch
 			{
@@ -52,14 +52,14 @@ namespace ESPSharp.DataTypes
 
 		public void WriteBinary(ESPWriter writer)
 		{
-			writer.Write(Time);			
-			writer.Write(Value);			
+			writer.Write(Time);
+			writer.Write(Value);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Time", true, out subEle);
 			subEle.Value = Time.ToString("G15");
 
@@ -70,26 +70,22 @@ namespace ESPSharp.DataTypes
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Time", false, out subEle))
-			{
 				Time = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Value", false, out subEle))
-			{
 				Value = subEle.ToSingle();
-			}
 		}
 
-		public IMADTimeValue Clone()
+		public object Clone()
 		{
 			return new IMADTimeValue(this);
 		}
 
         public int CompareTo(IMADTimeValue other)
         {
-            return Time.CompareTo(other.Time);
+			return Time.CompareTo(other.Time);
         }
 
         public static bool operator >(IMADTimeValue objA, IMADTimeValue objB)
@@ -114,13 +110,27 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(IMADTimeValue other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return Time == other.Time &&
 				Value == other.Value;
         }
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             IMADTimeValue other = obj as IMADTimeValue;
+
             if (other == null)
                 return false;
             else
@@ -134,11 +144,31 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(IMADTimeValue objA, IMADTimeValue objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(IMADTimeValue objA, IMADTimeValue objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 	}

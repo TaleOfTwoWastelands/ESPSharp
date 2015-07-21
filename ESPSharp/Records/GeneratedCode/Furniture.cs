@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Furniture : Record, IEditorID	{
+	public partial class Furniture : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -22,6 +24,26 @@ namespace ESPSharp.Records
 		public RecordReference Script { get; set; }
 		public Destructable Destructable { get; set; }
 		public SimpleSubrecord<Byte[]> MarkerFlags { get; set; }
+
+		public Furniture()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			MarkerFlags = new SimpleSubrecord<Byte[]>("MNAM");
+		}
+
+		public Furniture(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, RecordReference Script, Destructable Destructable, SimpleSubrecord<Byte[]> MarkerFlags)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.MarkerFlags = MarkerFlags;
+		}
+
+		public Furniture(Furniture copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -190,6 +212,11 @@ namespace ESPSharp.Records
 					
 				MarkerFlags.ReadXML(subEle, master);
 			}
+		}		
+
+		public Furniture Clone()
+		{
+			return new Furniture(this);
 		}
 
 	}

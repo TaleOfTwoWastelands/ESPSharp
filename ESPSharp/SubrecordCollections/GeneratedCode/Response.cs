@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class Response : SubrecordCollection, ICloneable<Response>
-	{
+	public partial class Response : SubrecordCollection	{
 		public ResponseData ResponseData { get; set; }
 		public SimpleSubrecord<String> ResponseText { get; set; }
 		public SimpleSubrecord<String> ScriptNotes { get; set; }
@@ -39,13 +38,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public Response(Response copyObject)
 		{
-			ResponseData = copyObject.ResponseData.Clone();
-			ResponseText = copyObject.ResponseText.Clone();
-			ScriptNotes = copyObject.ScriptNotes.Clone();
-			Edits = copyObject.Edits.Clone();
-			SpeakerAnimation = copyObject.SpeakerAnimation.Clone();
-			ListenerAnimation = copyObject.ListenerAnimation.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Message : Record, IEditorID	{
+	public partial class Message : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Content { get; set; }
 		public SimpleSubrecord<String> Header { get; set; }
@@ -32,6 +34,26 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<MessageFlags> MessageFlags { get; set; }
 		public SimpleSubrecord<UInt32> DisplayTime { get; set; }
 		public List<MessageButton> Buttons { get; set; }
+
+		public Message()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Content = new SimpleSubrecord<String>("DESC");
+			Icon = new RecordReference("INAM");
+			MessageFlags = new SimpleSubrecord<MessageFlags>("DNAM");
+		}
+
+		public Message(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Content, SimpleSubrecord<String> Header, RecordReference Icon, SimpleSubrecord<Byte[]> Unused0, SimpleSubrecord<Byte[]> Unused1, SimpleSubrecord<Byte[]> Unused2, SimpleSubrecord<Byte[]> Unused3, SimpleSubrecord<Byte[]> Unused4, SimpleSubrecord<Byte[]> Unused5, SimpleSubrecord<Byte[]> Unused6, SimpleSubrecord<Byte[]> Unused7, SimpleSubrecord<Byte[]> Unused8, SimpleSubrecord<Byte[]> Unused9, SimpleSubrecord<MessageFlags> MessageFlags, SimpleSubrecord<UInt32> DisplayTime, List<MessageButton> Buttons)
+		{
+			this.EditorID = EditorID;
+			this.Content = Content;
+			this.Icon = Icon;
+			this.MessageFlags = MessageFlags;
+		}
+
+		public Message(Message copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -417,6 +439,11 @@ namespace ESPSharp.Records
 					Buttons.Add(tempITXT);
 				}
 			}
+		}		
+
+		public Message Clone()
+		{
+			return new Message(this);
 		}
 
 	}

@@ -114,6 +114,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegionSound.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataTypes\GeneratedCode\StaticPlacement.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StaticPlacement.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataTypes\GeneratedCode\TimeOfDayColors.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -321,7 +326,6 @@
     <Compile Include="Enums\WeatherType.cs" />
     <Compile Include="Enums\YesNoUInt.cs" />
     <Compile Include="Enums\ZTestFunction.cs" />
-    <Compile Include="Interfaces\ICloneable.cs" />
     <Compile Include="Enums\ActorValues.cs" />
     <Compile Include="Enums\DataSource.cs" />
     <Compile Include="Enums\Flags\ClassDataFlag.cs" />
@@ -363,6 +367,11 @@
     <Compile Include="Groups\WorldGroup.cs" />
     <Compile Include="Records\Challenge.cs" />
     <Compile Include="Records\GameSetting.cs" />
+    <Compile Include="Records\GeneratedCode\AcousticSpaceCopy.cs">
+      <DependentUpon>AcousticSpaceCopy.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Records\GeneratedCode\AcousticSpace.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -744,9 +753,17 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NavMeshTriangle.cs</LastGenOutput>
     </None>
+    <None Include="DataTypes\GeneratedCode\StaticPlacement.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StaticPlacement.cs</LastGenOutput>
+    </None>
     <None Include="DataTypes\GeneratedCode\XYZFloat.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>XYZFloat.cs</LastGenOutput>
+    </None>
+    <None Include="Records\GeneratedCode\AcousticSpaceCopy.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AcousticSpaceCopy.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\NavigationMesh.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -966,6 +983,7 @@
       <DependentUpon>TextureSet.tt</DependentUpon>
     </Compile>
     <Compile Include="Records\Note.cs" />
+    <Compile Include="Records\Package.cs" />
     <Compile Include="Records\Script.cs" />
     <Compile Include="Records\Terminal.cs" />
     <Compile Include="Records\Water.cs" />
@@ -974,6 +992,7 @@
     <Compile Include="Subrecord.cs" />
     <Compile Include="SubrecordCollection.cs" />
     <Compile Include="SubrecordCollections\Card.cs" />
+    <Compile Include="SubrecordCollections\EmbeddedScript.cs" />
     <Compile Include="SubrecordCollections\GeneratedCode\AddedQuest.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1091,7 +1110,6 @@
     </Compile>
     <Compile Include="SubrecordCollections\PerkEffect.cs" />
     <Compile Include="Subrecords\ChallengeData.cs" />
-    <Compile Include="Subrecords\ExternalConnectionList.cs" />
     <Compile Include="Subrecords\GeneratedCode\ActivateParent.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1101,6 +1119,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AddonNodeData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\AlternateTextures.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlternateTextures.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\AmmoEffectData.cs">
       <AutoGen>True</AutoGen>
@@ -1136,6 +1159,8 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Cell.cs</LastGenOutput>
     </None>
+    <None Include="Records\GeneratedCode\RecordTemplateBak.t4" />
+    <None Include="Records\GeneratedCode\RecordTemplateCopy.t4" />
     <None Include="Records\GeneratedCode\Reference.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -1171,6 +1196,10 @@
     <None Include="Subrecords\GeneratedCode\ActivateParent.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ActivateParent.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\AlternateTextures.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AlternateTextures.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\BoundHalfExtents.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1255,6 +1284,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FootstepMaterial.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\FormArray.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FormArray.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\IMADTimeColors.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IMADTimeColors.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\IMADTimeValues.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IMADTimeValues.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\ImageSpaceAdapterData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1336,6 +1380,18 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FootstepMaterial.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\FormArray.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FormArray.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\IMADTimeColors.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IMADTimeColors.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\IMADTimeValues.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IMADTimeValues.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\LinkedOcclusionPlanes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LinkedOcclusionPlanes.cs</LastGenOutput>
@@ -1368,6 +1424,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LoadScreenLocation.tt</DependentUpon>
     </Compile>
+    <Compile Include="Subrecords\GeneratedCode\LocalVariableData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalVariableData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\LockData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1382,6 +1443,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MapMarkerData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\NavigationConnectionInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavigationConnectionInfo.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\NavigationDoorLink.cs">
       <AutoGen>True</AutoGen>
@@ -1398,7 +1464,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NavMeshData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Subrecords\NavMeshDoorList.cs" />
+    <Compile Include="Subrecords\GeneratedCode\NavMeshDoorList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavMeshDoorList.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\NavMeshExternalConnectionList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavMeshExternalConnectionList.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\NavMeshTriangleList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavMeshTriangleList.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\NavMeshVertexList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavMeshVertexList.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\PackageData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PackageData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\PerkAbilityData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1449,7 +1539,56 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RagdollData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Subrecords\RagdollDynamicBones.cs" />
+    <Compile Include="Subrecords\GeneratedCode\RagdollDynamicBones.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RagdollDynamicBones.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\RegionGrassList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegionGrassList.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\RegionObjectList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegionObjectList.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\RegionPointList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegionPointList.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\RegionSoundList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegionSoundList.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\SortedFormArray.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SortedFormArray.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\SpeedtreeSeeds.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpeedtreeSeeds.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\StaticCollectionPartData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StaticCollectionPartData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\ThresholdData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ThresholdData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subrecords\GeneratedCode\WeatherList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeatherList.tt</DependentUpon>
+    </Compile>
     <Compile Include="Subrecords\GeneratedCode\RagdollFeedbackData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1495,11 +1634,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TeleportDestinationData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Subrecords\GeneratedCode\ThresholdData.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ThresholdData.tt</DependentUpon>
-    </Compile>
     <Compile Include="Subrecords\GeneratedCode\WaterData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1525,14 +1659,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WorldMapOffsetData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Subrecords\IMADTimeColors.cs" />
-    <Compile Include="Subrecords\IMADTimeValues.cs" />
-    <Compile Include="Subrecords\NavigationConnectionInfo.cs" />
     <Compile Include="Subrecords\NavigationMapInfo.cs" />
-    <Compile Include="Subrecords\NavMeshExternalConnectionList.cs" />
     <Compile Include="Subrecords\NavMeshGrid.cs" />
-    <Compile Include="Subrecords\NavMeshTriangleList.cs" />
-    <Compile Include="Subrecords\NavMeshVertexList.cs" />
     <Compile Include="Subrecords\PackageData.cs" />
     <Compile Include="Subrecords\PackageLocation.cs" />
     <Compile Include="Subrecords\GeneratedCode\ClimateTiming.cs">
@@ -2116,8 +2244,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TerminalMenu.tt</DependentUpon>
     </Compile>
-    <Compile Include="Subrecords\FormArray.cs" />
-    <Compile Include="Subrecords\AlternateTextures.cs" />
     <Compile Include="Subrecords\GeneratedCode\AIData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2292,11 +2418,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LightData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Subrecords\GeneratedCode\LocalVariableData.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LocalVariableData.tt</DependentUpon>
     </Compile>
     <Compile Include="Subrecords\GeneratedCode\MagicEffectData.cs">
       <AutoGen>True</AutoGen>
@@ -2480,18 +2601,10 @@
     </Compile>
     <Compile Include="Subrecords\InventoryItemExtraData.cs" />
     <Compile Include="Subrecords\PackageTarget.cs" />
-    <Compile Include="Subrecords\RegionGrassList.cs" />
-    <Compile Include="Subrecords\RegionObjectList.cs" />
-    <Compile Include="Subrecords\RegionPointList.cs" />
-    <Compile Include="Subrecords\RegionSoundList.cs" />
-    <Compile Include="Subrecords\RegionWeatherList.cs" />
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
-    <Compile Include="Subrecords\SpeedtreeSeeds.cs" />
-    <Compile Include="Subrecords\StaticCollectionPartData.cs" />
     <Compile Include="Subrecords\SubMarker.cs" />
     <Compile Include="Subrecords\SubNullStringList.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
-    <Compile Include="Subrecords\WeatherList.cs" />
     <Compile Include="T4\ClassTemplate.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Zlib.cs" />
@@ -2675,6 +2788,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MapMarkerData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\NavigationConnectionInfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavigationConnectionInfo.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\NavigationDoorLink.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NavigationDoorLink.cs</LastGenOutput>
@@ -2687,6 +2804,22 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NavMeshData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\NavMeshDoorList.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavMeshDoorList.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\NavMeshExternalConnectionList.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavMeshExternalConnectionList.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\NavMeshTriangleList.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavMeshTriangleList.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\NavMeshVertexList.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NavMeshVertexList.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\NPCBaseStats.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NPCBaseStats.cs</LastGenOutput>
@@ -2698,6 +2831,10 @@
     <None Include="Subrecords\GeneratedCode\NPCSkills.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NPCSkills.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\PackageData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PackageData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\PackageDialogData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -2763,6 +2900,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RagdollData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\RagdollDynamicBones.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RagdollDynamicBones.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\RagdollFeedbackData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RagdollFeedbackData.cs</LastGenOutput>
@@ -2783,6 +2924,22 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>QuestTargetData.cs</LastGenOutput>
     </None>
+    <None Include="Subrecords\GeneratedCode\RegionGrassList.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RegionGrassList.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\RegionObjectList.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RegionObjectList.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\RegionPointList.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RegionPointList.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\RegionSoundList.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RegionSoundList.cs</LastGenOutput>
+    </None>
     <None Include="Subrecords\GeneratedCode\RelatedCameraPaths.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RelatedCameraPaths.cs</LastGenOutput>
@@ -2802,6 +2959,18 @@
     <None Include="Subrecords\GeneratedCode\RoomDataHeader.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RoomDataHeader.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\SortedFormArray.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SortedFormArray.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\SpeedtreeSeeds.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SpeedtreeSeeds.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\StaticCollectionPartData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StaticCollectionPartData.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\SwappedImpact.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -2866,6 +3035,10 @@
     <None Include="Subrecords\GeneratedCode\WeatherFogDistance.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WeatherFogDistance.cs</LastGenOutput>
+    </None>
+    <None Include="Subrecords\GeneratedCode\WeatherList.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WeatherList.cs</LastGenOutput>
     </None>
     <None Include="Subrecords\GeneratedCode\WeatherSound.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ImpactData : Subrecord, ICloneable<ImpactData>, IComparable<ImpactData>, IEquatable<ImpactData>  
+	public partial class ImpactData : Subrecord, ICloneable, IComparable<ImpactData>, IEquatable<ImpactData>  
 	{
 		public Single EffectDuration { get; set; }
 		public ImpactOrientation EffectOrientation { get; set; }
@@ -24,7 +24,8 @@ namespace ESPSharp.Subrecords
 		public SoundLevel SoundLevel { get; set; }
 		public YesNoUInt HasDecalData { get; set; }
 
-		public ImpactData()
+		public ImpactData(string Tag = null)
+			:base(Tag)
 		{
 			EffectDuration = new Single();
 			EffectOrientation = new ImpactOrientation();
@@ -131,7 +132,7 @@ namespace ESPSharp.Subrecords
 				HasDecalData = subEle.ToEnum<YesNoUInt>();
 		}
 
-		public ImpactData Clone()
+		public override object Clone()
 		{
 			return new ImpactData(this);
 		}

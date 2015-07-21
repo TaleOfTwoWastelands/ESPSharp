@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,29 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class EffectShader : Record, IEditorID	{
+	public partial class EffectShader : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> FillTexture { get; set; }
 		public SimpleSubrecord<String> ParticleShaderTexture { get; set; }
 		public SimpleSubrecord<String> HolesTexture { get; set; }
 		public EffectShaderData Data { get; set; }
+
+		public EffectShader()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new EffectShaderData("DATA");
+		}
+
+		public EffectShader(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> FillTexture, SimpleSubrecord<String> ParticleShaderTexture, SimpleSubrecord<String> HolesTexture, EffectShaderData Data)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public EffectShader(EffectShader copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -148,6 +166,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public EffectShader Clone()
+		{
+			return new EffectShader(this);
 		}
 
 	}

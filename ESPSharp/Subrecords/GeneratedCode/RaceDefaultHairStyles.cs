@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RaceDefaultHairStyles : Subrecord, ICloneable<RaceDefaultHairStyles>, IComparable<RaceDefaultHairStyles>, IEquatable<RaceDefaultHairStyles>  
+	public partial class RaceDefaultHairStyles : Subrecord, ICloneable, IComparable<RaceDefaultHairStyles>, IEquatable<RaceDefaultHairStyles>  
 	{
 		public FormID MaleStyle { get; set; }
 		public FormID FemaleStyle { get; set; }
 
-		public RaceDefaultHairStyles()
+		public RaceDefaultHairStyles(string Tag = null)
+			:base(Tag)
 		{
 			MaleStyle = new FormID();
 			FemaleStyle = new FormID();
@@ -34,8 +35,10 @@ namespace ESPSharp.Subrecords
 
 		public RaceDefaultHairStyles(RaceDefaultHairStyles copyObject)
 		{
-			MaleStyle = copyObject.MaleStyle.Clone();
-			FemaleStyle = copyObject.FemaleStyle.Clone();
+			if (copyObject.MaleStyle != null)
+				MaleStyle = (FormID)copyObject.MaleStyle.Clone();
+			if (copyObject.FemaleStyle != null)
+				FemaleStyle = (FormID)copyObject.FemaleStyle.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -83,7 +86,7 @@ namespace ESPSharp.Subrecords
 				FemaleStyle.ReadXML(subEle, master);
 		}
 
-		public RaceDefaultHairStyles Clone()
+		public override object Clone()
 		{
 			return new RaceDefaultHairStyles(this);
 		}

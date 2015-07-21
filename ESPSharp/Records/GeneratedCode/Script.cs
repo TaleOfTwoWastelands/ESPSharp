@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Script : Record, IEditorID	{
+	public partial class Script : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public EmbeddedScript Data { get; set; }
+
+		public Script()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new EmbeddedScript();
+		}
+
+		public Script(SimpleSubrecord<String> EditorID, EmbeddedScript Data)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public Script(Script copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -85,6 +103,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public Script Clone()
+		{
+			return new Script(this);
 		}
 
 	}

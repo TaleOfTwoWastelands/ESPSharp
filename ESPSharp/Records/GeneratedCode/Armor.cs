@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Armor : Record, IEditorID	{
+	public partial class Armor : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -50,6 +52,38 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<NoYes> OverridesAnimationSounds { get; set; }
 		public List<AnimationSound> AnimationSounds { get; set; }
 		public RecordReference AnimationSoundsTemplate { get; set; }
+
+		public Armor()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			BipedData = new BipedData("BMDT");
+			MaleBipedModelFileName = new SimpleSubrecord<String>("MODL");
+			MaleWorldModelFileName = new SimpleSubrecord<String>("MOD2");
+			FemaleBipedModelFileName = new SimpleSubrecord<String>("MOD3");
+			FemaleWorldModelFileName = new SimpleSubrecord<String>("MOD4");
+			EquipmentType = new SimpleSubrecord<EquipmentType>("ETYP");
+			Data = new ArmorData("DATA");
+			ExtraData = new ArmorExtraData("DNAM");
+		}
+
+		public Armor(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, RecordReference Script, RecordReference ObjectEffect, BipedData BipedData, SimpleSubrecord<String> MaleBipedModelFileName, SimpleSubrecord<Byte[]> MaleBipedModelTextureHashes, AlternateTextures MaleBipedModelAlternateTextures, SimpleSubrecord<FaceGenModelFlags> MaleBipedModelFaceGenModelFlags, SimpleSubrecord<String> MaleWorldModelFileName, SimpleSubrecord<Byte[]> MaleWorldModelTextureHashes, AlternateTextures MaleWorldModelAlternateTextures, SimpleSubrecord<String> MaleInventoryIcon, SimpleSubrecord<String> MaleMessageIcon, SimpleSubrecord<String> FemaleBipedModelFileName, SimpleSubrecord<Byte[]> FemaleBipedModelTextureHashes, AlternateTextures FemaleBipedModelAlternateTextures, SimpleSubrecord<FaceGenModelFlags> FemaleBipedModelFaceGenModelFlags, SimpleSubrecord<String> FemaleWorldModelFileName, SimpleSubrecord<Byte[]> FemaleWorldModelTextureHashes, AlternateTextures FemaleWorldModelAlternateTextures, SimpleSubrecord<String> FemaleInventoryIcon, SimpleSubrecord<String> FemaleMessageIcon, SimpleSubrecord<String> RagdollConstraintTemplate, RecordReference RepairList, RecordReference BipedModelList, SimpleSubrecord<EquipmentType> EquipmentType, RecordReference PickupSound, RecordReference DropSound, ArmorData Data, ArmorExtraData ExtraData, SimpleSubrecord<NoYes> OverridesAnimationSounds, List<AnimationSound> AnimationSounds, RecordReference AnimationSoundsTemplate)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.BipedData = BipedData;
+			this.MaleBipedModelFileName = MaleBipedModelFileName;
+			this.MaleWorldModelFileName = MaleWorldModelFileName;
+			this.FemaleBipedModelFileName = FemaleBipedModelFileName;
+			this.FemaleWorldModelFileName = FemaleWorldModelFileName;
+			this.EquipmentType = EquipmentType;
+			this.Data = Data;
+			this.ExtraData = ExtraData;
+		}
+
+		public Armor(Armor copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -795,6 +829,11 @@ namespace ESPSharp.Records
 					
 				AnimationSoundsTemplate.ReadXML(subEle, master);
 			}
+		}		
+
+		public Armor Clone()
+		{
+			return new Armor(this);
 		}
 
 	}

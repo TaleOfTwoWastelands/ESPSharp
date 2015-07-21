@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Debris : Record, IEditorID	{
+	public partial class Debris : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public List<DebrisModel> DebrisList { get; set; }
+
+		public Debris()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			DebrisList = new List<DebrisModel>();
+		}
+
+		public Debris(SimpleSubrecord<String> EditorID, List<DebrisModel> DebrisList)
+		{
+			this.EditorID = EditorID;
+			this.DebrisList = DebrisList;
+		}
+
+		public Debris(Debris copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -102,6 +120,11 @@ namespace ESPSharp.Records
 					DebrisList.Add(tempDATA);
 				}
 			}
+		}		
+
+		public Debris Clone()
+		{
+			return new Debris(this);
 		}
 
 	}

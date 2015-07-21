@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ResponseData : Subrecord, ICloneable<ResponseData>, IComparable<ResponseData>, IEquatable<ResponseData>  
+	public partial class ResponseData : Subrecord, ICloneable, IComparable<ResponseData>, IEquatable<ResponseData>  
 	{
 		public EmotionType Emotion { get; set; }
 		public Int32 EmotionValue { get; set; }
@@ -26,7 +26,8 @@ namespace ESPSharp.Subrecords
 		public NoYesByte UseEmotionAnimation { get; set; }
 		public Byte[] Unused3 { get; set; }
 
-		public ResponseData()
+		public ResponseData(string Tag = null)
+			:base(Tag)
 		{
 			Emotion = new EmotionType();
 			EmotionValue = new Int32();
@@ -54,12 +55,16 @@ namespace ESPSharp.Subrecords
 		{
 			Emotion = copyObject.Emotion;
 			EmotionValue = copyObject.EmotionValue;
-			Unused1 = (Byte[])copyObject.Unused1.Clone();
+			if (copyObject.Unused1 != null)
+				Unused1 = (Byte[])copyObject.Unused1.Clone();
 			ResponseNumber = copyObject.ResponseNumber;
-			Unused2 = (Byte[])copyObject.Unused2.Clone();
-			Sound = copyObject.Sound.Clone();
+			if (copyObject.Unused2 != null)
+				Unused2 = (Byte[])copyObject.Unused2.Clone();
+			if (copyObject.Sound != null)
+				Sound = (FormID)copyObject.Sound.Clone();
 			UseEmotionAnimation = copyObject.UseEmotionAnimation;
-			Unused3 = (Byte[])copyObject.Unused3.Clone();
+			if (copyObject.Unused3 != null)
+				Unused3 = (Byte[])copyObject.Unused3.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -158,7 +163,7 @@ namespace ESPSharp.Subrecords
 			ReadUnused3XML(ele, master);
 		}
 
-		public ResponseData Clone()
+		public override object Clone()
 		{
 			return new ResponseData(this);
 		}

@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-    public partial class ChallengeData : Subrecord, ICloneable<ChallengeData>
+    public partial class ChallengeData : Subrecord, ICloneable
     {
         public ChallengeType Type { get; set; }
         public UInt32 Threshold { get; set; }
@@ -562,7 +562,7 @@ namespace ESPSharp.Subrecords
             }
         }
 
-        public ChallengeData Clone()
+        public override object Clone()
         {
             return new ChallengeData(this);
         }

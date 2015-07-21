@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PerkEntryPointData : Subrecord, ICloneable<PerkEntryPointData>, IComparable<PerkEntryPointData>, IEquatable<PerkEntryPointData>  
+	public partial class PerkEntryPointData : Subrecord, ICloneable, IComparable<PerkEntryPointData>, IEquatable<PerkEntryPointData>  
 	{
 		public EntryPoint EntryPoint { get; set; }
 		public PerkFunction Function { get; set; }
 		public Byte PerkConditionTabCount { get; set; }
 
-		public PerkEntryPointData()
+		public PerkEntryPointData(string Tag = null)
+			:base(Tag)
 		{
 			EntryPoint = new EntryPoint();
 			Function = new PerkFunction();
@@ -95,7 +96,7 @@ namespace ESPSharp.Subrecords
 				PerkConditionTabCount = subEle.ToByte();
 		}
 
-		public PerkEntryPointData Clone()
+		public override object Clone()
 		{
 			return new PerkEntryPointData(this);
 		}

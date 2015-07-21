@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class IMADTimeColor : IESPSerializable, ICloneable<IMADTimeColor>, IComparable<IMADTimeColor>, IEquatable<IMADTimeColor>
+	public partial class IMADTimeColor : IESPSerializable, ICloneable, IComparable<IMADTimeColor>, IEquatable<IMADTimeColor>  
 	{
 		public Single Time { get; set; }
 		public Single Red { get; set; }
@@ -54,10 +54,10 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				Time = reader.ReadSingle();
-				Red = reader.ReadSingle();
-				Green = reader.ReadSingle();
-				Blue = reader.ReadSingle();
-				Alpha = reader.ReadSingle();
+					Red = reader.ReadSingle();
+					Green = reader.ReadSingle();
+					Blue = reader.ReadSingle();
+					Alpha = reader.ReadSingle();
 			}
 			catch
 			{
@@ -67,17 +67,17 @@ namespace ESPSharp.DataTypes
 
 		public void WriteBinary(ESPWriter writer)
 		{
-			writer.Write(Time);			
-			writer.Write(Red);			
-			writer.Write(Green);			
-			writer.Write(Blue);			
-			writer.Write(Alpha);			
+			writer.Write(Time);
+			writer.Write(Red);
+			writer.Write(Green);
+			writer.Write(Blue);
+			writer.Write(Alpha);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Time", true, out subEle);
 			subEle.Value = Time.ToString("G15");
 
@@ -97,41 +97,31 @@ namespace ESPSharp.DataTypes
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Time", false, out subEle))
-			{
 				Time = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Color/Red", false, out subEle))
-			{
 				Red = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Color/Green", false, out subEle))
-			{
 				Green = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Color/Blue", false, out subEle))
-			{
 				Blue = subEle.ToSingle();
-			}
 
 			if (ele.TryPathTo("Color/Alpha", false, out subEle))
-			{
 				Alpha = subEle.ToSingle();
-			}
 		}
 
-		public IMADTimeColor Clone()
+		public object Clone()
 		{
 			return new IMADTimeColor(this);
 		}
 
         public int CompareTo(IMADTimeColor other)
         {
-            return Time.CompareTo(other.Time);
+			return Time.CompareTo(other.Time);
         }
 
         public static bool operator >(IMADTimeColor objA, IMADTimeColor objB)
@@ -156,6 +146,16 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(IMADTimeColor other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return Time == other.Time &&
 				Red == other.Red &&
 				Green == other.Green &&
@@ -165,7 +165,11 @@ namespace ESPSharp.DataTypes
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             IMADTimeColor other = obj as IMADTimeColor;
+
             if (other == null)
                 return false;
             else
@@ -179,11 +183,31 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(IMADTimeColor objA, IMADTimeColor objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(IMADTimeColor objA, IMADTimeColor objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 	}

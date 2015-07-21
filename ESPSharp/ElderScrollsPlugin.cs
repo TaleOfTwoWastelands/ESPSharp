@@ -118,8 +118,12 @@ namespace ESPSharp
         {
             Header.Record.WriteBinary(writer);
 
-            foreach (var group in TopGroups)
-                group.WriteBinary(writer, this);
+            foreach (var kvp in TopGroup.tagToNameDictionary)
+            {
+                Group group = TopGroups.FirstOrDefault(g => (g as TopGroup).RecordType == kvp.Key);
+                if (group != null)
+                    group.WriteBinary(writer, this);
+            }
         }
 
         public void ReadBinary(string file)

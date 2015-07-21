@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class FactionData : Subrecord, ICloneable<FactionData>, IComparable<FactionData>, IEquatable<FactionData>  
+	public partial class FactionData : Subrecord, ICloneable, IComparable<FactionData>, IEquatable<FactionData>  
 	{
 		public FactionFlags1 Flags1 { get; set; }
 		public FactionFlags2 Flags2 { get; set; }
 		public Byte[] Unused { get; set; }
 
-		public FactionData()
+		public FactionData(string Tag = null)
+			:base(Tag)
 		{
 			Flags1 = new FactionFlags1();
 			Flags2 = new FactionFlags2();
@@ -39,7 +40,8 @@ namespace ESPSharp.Subrecords
 		{
 			Flags1 = copyObject.Flags1;
 			Flags2 = copyObject.Flags2;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -96,7 +98,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public FactionData Clone()
+		public override object Clone()
 		{
 			return new FactionData(this);
 		}

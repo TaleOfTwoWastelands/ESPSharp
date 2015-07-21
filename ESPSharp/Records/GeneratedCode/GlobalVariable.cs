@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,29 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class GlobalVariable : Record, IEditorID	{
+	public partial class GlobalVariable : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<GlobalVarType> Type { get; set; }
 		public SimpleSubrecord<Single> Value { get; set; }
+
+		public GlobalVariable()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Type = new SimpleSubrecord<GlobalVarType>("FNAM");
+			Value = new SimpleSubrecord<Single>("FLTV");
+		}
+
+		public GlobalVariable(SimpleSubrecord<String> EditorID, SimpleSubrecord<GlobalVarType> Type, SimpleSubrecord<Single> Value)
+		{
+			this.EditorID = EditorID;
+			this.Type = Type;
+			this.Value = Value;
+		}
+
+		public GlobalVariable(GlobalVariable copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -106,6 +126,11 @@ namespace ESPSharp.Records
 					
 				Value.ReadXML(subEle, master);
 			}
+		}		
+
+		public GlobalVariable Clone()
+		{
+			return new GlobalVariable(this);
 		}
 
 	}

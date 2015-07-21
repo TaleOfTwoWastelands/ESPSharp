@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class RegionArea : SubrecordCollection, ICloneable<RegionArea>, IReferenceContainer
-	{
+	public partial class RegionArea : SubrecordCollection	{
 		public SimpleSubrecord<UInt32> EdgeFallOff { get; set; }
 		public RegionPointList PointList { get; set; }
 
@@ -31,9 +30,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public RegionArea(RegionArea copyObject)
 		{
-			EdgeFallOff = copyObject.EdgeFallOff.Clone();
-			PointList = copyObject.PointList.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

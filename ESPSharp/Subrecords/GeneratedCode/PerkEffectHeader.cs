@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PerkEffectHeader : Subrecord, ICloneable<PerkEffectHeader>, IComparable<PerkEffectHeader>, IEquatable<PerkEffectHeader>  
+	public partial class PerkEffectHeader : Subrecord, ICloneable, IComparable<PerkEffectHeader>, IEquatable<PerkEffectHeader>  
 	{
 		public PerkType Type { get; set; }
 		public Byte Rank { get; set; }
 		public Byte Priority { get; set; }
 
-		public PerkEffectHeader()
+		public PerkEffectHeader(string Tag = null)
+			:base(Tag)
 		{
 			Type = new PerkType();
 			Rank = new Byte();
@@ -95,7 +96,7 @@ namespace ESPSharp.Subrecords
 				Priority = subEle.ToByte();
 		}
 
-		public PerkEffectHeader Clone()
+		public override object Clone()
 		{
 			return new PerkEffectHeader(this);
 		}

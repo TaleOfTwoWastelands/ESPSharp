@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class Attributes : Subrecord, ICloneable<Attributes>, IComparable<Attributes>, IEquatable<Attributes>  
+	public partial class Attributes : Subrecord, ICloneable, IComparable<Attributes>, IEquatable<Attributes>  
 	{
 		public Byte Strength { get; set; }
 		public Byte Perception { get; set; }
@@ -25,7 +25,8 @@ namespace ESPSharp.Subrecords
 		public Byte Agility { get; set; }
 		public Byte Luck { get; set; }
 
-		public Attributes()
+		public Attributes(string Tag = null)
+			:base(Tag)
 		{
 			Strength = new Byte();
 			Perception = new Byte();
@@ -143,7 +144,7 @@ namespace ESPSharp.Subrecords
 				Luck = subEle.ToByte();
 		}
 
-		public Attributes Clone()
+		public override object Clone()
 		{
 			return new Attributes(this);
 		}

@@ -555,7 +555,7 @@ namespace ESPSharp
 
         public override string ToString()
         {
-            if (this is IEditorID && (this as IEditorID).EditorID != null)
+            if (this is IEditorID && (this as IEditorID).EditorID != null && (this as IEditorID).EditorID.Value != "")
                 return (this as IEditorID).EditorID.Value;
             else
                 return String.Format("{0} - {1}", Tag, FormID.ToString());

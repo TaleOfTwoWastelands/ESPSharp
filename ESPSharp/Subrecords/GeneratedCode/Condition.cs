@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class Condition : Subrecord, ICloneable<Condition>, IComparable<Condition>, IEquatable<Condition>  
+	public partial class Condition : Subrecord, ICloneable, IComparable<Condition>, IEquatable<Condition>  
 	{
 		public Comparison Comparison { get; set; }
 		public Function Function { get; set; }
 		public FunctionTarget RunOn { get; set; }
 		public FormID RunOnReference { get; set; }
 
-		public Condition()
+		public Condition(string Tag = null)
+			:base(Tag)
 		{
 			Comparison = new Comparison();
 			Function = new Function();
@@ -40,10 +41,13 @@ namespace ESPSharp.Subrecords
 
 		public Condition(Condition copyObject)
 		{
-			Comparison = copyObject.Comparison.Clone();
-			Function = copyObject.Function.Clone();
+			if (copyObject.Comparison != null)
+				Comparison = (Comparison)copyObject.Comparison.Clone();
+			if (copyObject.Function != null)
+				Function = (Function)copyObject.Function.Clone();
 			RunOn = copyObject.RunOn;
-			RunOnReference = copyObject.RunOnReference.Clone();
+			if (copyObject.RunOnReference != null)
+				RunOnReference = (FormID)copyObject.RunOnReference.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -107,7 +111,7 @@ namespace ESPSharp.Subrecords
 				RunOnReference.ReadXML(subEle, master);
 		}
 
-		public Condition Clone()
+		public override object Clone()
 		{
 			return new Condition(this);
 		}

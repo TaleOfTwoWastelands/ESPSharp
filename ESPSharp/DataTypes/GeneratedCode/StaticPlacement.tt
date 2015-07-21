@@ -1,0 +1,64 @@
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
+	template.ClassName = "StaticPlacement";
+
+	ClassField tempField;
+
+	tempField = 
+		new ClassField(
+			typeof(float),
+			"PositionX",
+			"Position/X"
+			);
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(float),
+			"PositionY",
+			"Position/Y"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(float),
+			"PositionZ",
+			"Position/Z"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(float),
+			"RotationX",
+			"Rotation/X"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(float),
+			"RotationY",
+			"Rotation/Y"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(float),
+			"RotationZ",
+			"Rotation/Z"
+			);
+	template.Fields.Add(tempField);
+
+	tempField = 
+		new ClassField(
+			typeof(float),
+			"Scale",
+			"Scale"
+			);
+	template.Fields.Add(tempField);
+#>
+<#@ include file="DataTypeTemplate.t4" once="true" #>

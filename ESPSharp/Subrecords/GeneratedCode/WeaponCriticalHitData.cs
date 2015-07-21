@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeaponCriticalHitData : Subrecord, ICloneable<WeaponCriticalHitData>, IComparable<WeaponCriticalHitData>, IEquatable<WeaponCriticalHitData>  
+	public partial class WeaponCriticalHitData : Subrecord, ICloneable, IComparable<WeaponCriticalHitData>, IEquatable<WeaponCriticalHitData>  
 	{
 		public UInt16 Damage { get; set; }
 		public Byte[] Unused1 { get; set; }
@@ -24,7 +24,8 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unused2 { get; set; }
 		public FormID Effect { get; set; }
 
-		public WeaponCriticalHitData()
+		public WeaponCriticalHitData(string Tag = null)
+			:base(Tag)
 		{
 			Damage = new UInt16();
 			Unused1 = new byte[2];
@@ -47,11 +48,14 @@ namespace ESPSharp.Subrecords
 		public WeaponCriticalHitData(WeaponCriticalHitData copyObject)
 		{
 			Damage = copyObject.Damage;
-			Unused1 = (Byte[])copyObject.Unused1.Clone();
+			if (copyObject.Unused1 != null)
+				Unused1 = (Byte[])copyObject.Unused1.Clone();
 			ChanceMult = copyObject.ChanceMult;
 			Flags = copyObject.Flags;
-			Unused2 = (Byte[])copyObject.Unused2.Clone();
-			Effect = copyObject.Effect.Clone();
+			if (copyObject.Unused2 != null)
+				Unused2 = (Byte[])copyObject.Unused2.Clone();
+			if (copyObject.Effect != null)
+				Effect = (FormID)copyObject.Effect.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -133,7 +137,7 @@ namespace ESPSharp.Subrecords
 				Effect.ReadXML(subEle, master);
 		}
 
-		public WeaponCriticalHitData Clone()
+		public override object Clone()
 		{
 			return new WeaponCriticalHitData(this);
 		}

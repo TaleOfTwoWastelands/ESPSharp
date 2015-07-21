@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class DebrisModel : SubrecordCollection, ICloneable<DebrisModel>
-	{
+	public partial class DebrisModel : SubrecordCollection	{
 		public DebrisData Data { get; set; }
 		public SimpleSubrecord<Byte[]> TextureFileHashes { get; set; }
 
@@ -32,9 +31,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public DebrisModel(DebrisModel copyObject)
 		{
-			Data = copyObject.Data.Clone();
-			TextureFileHashes = copyObject.TextureFileHashes.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

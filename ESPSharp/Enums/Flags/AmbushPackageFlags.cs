@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ESPSharp.Enums.Flags
 {
     [Flags]
-    public enum AmbushPackageFlags : uint
+    public enum AmbushPackageFlags : ushort
     {
         HideWhileAmbushing = 0x01
     }

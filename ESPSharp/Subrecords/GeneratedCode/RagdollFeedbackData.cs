@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RagdollFeedbackData : Subrecord, ICloneable<RagdollFeedbackData>, IComparable<RagdollFeedbackData>, IEquatable<RagdollFeedbackData>  
+	public partial class RagdollFeedbackData : Subrecord, ICloneable, IComparable<RagdollFeedbackData>, IEquatable<RagdollFeedbackData>  
 	{
 		public Single Dynamic_KeyframeBlendAmount { get; set; }
 		public Single HierarchyGain { get; set; }
@@ -33,7 +33,8 @@ namespace ESPSharp.Subrecords
 		public Single ProjectilePositionMaxVelocity { get; set; }
 		public Single MeleePositionMaxVelocity { get; set; }
 
-		public RagdollFeedbackData()
+		public RagdollFeedbackData(string Tag = null)
+			:base(Tag)
 		{
 			Dynamic_KeyframeBlendAmount = new Single();
 			HierarchyGain = new Single();
@@ -239,7 +240,7 @@ namespace ESPSharp.Subrecords
 				MeleePositionMaxVelocity = subEle.ToSingle();
 		}
 
-		public RagdollFeedbackData Clone()
+		public override object Clone()
 		{
 			return new RagdollFeedbackData(this);
 		}

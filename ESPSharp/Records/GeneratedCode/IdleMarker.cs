@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,32 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class IdleMarker : Record, IEditorID	{
+	public partial class IdleMarker : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<IdleMarkerFlags> IdleMarkerFlags { get; set; }
 		public SimpleSubrecord<Byte> AnimationCount { get; set; }
 		public SimpleSubrecord<Single> IdleTimer { get; set; }
 		public FormArray Animations { get; set; }
+
+		public IdleMarker()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			IdleMarkerFlags = new SimpleSubrecord<IdleMarkerFlags>("IDLF");
+		}
+
+		public IdleMarker(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<IdleMarkerFlags> IdleMarkerFlags, SimpleSubrecord<Byte> AnimationCount, SimpleSubrecord<Single> IdleTimer, FormArray Animations)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.IdleMarkerFlags = IdleMarkerFlags;
+		}
+
+		public IdleMarker(IdleMarker copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -169,6 +189,11 @@ namespace ESPSharp.Records
 					
 				Animations.ReadXML(subEle, master);
 			}
+		}		
+
+		public IdleMarker Clone()
+		{
+			return new IdleMarker(this);
 		}
 
 	}

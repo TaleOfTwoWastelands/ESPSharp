@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class SoundData : Subrecord, ICloneable<SoundData>, IComparable<SoundData>, IEquatable<SoundData>  
+	public partial class SoundData : Subrecord, ICloneable, IComparable<SoundData>, IEquatable<SoundData>  
 	{
 		public Byte MinAttenuationDistance { get; set; }
 		public Byte MaxAttenuationDistance { get; set; }
@@ -34,7 +34,8 @@ namespace ESPSharp.Subrecords
 		public Int32 Priority { get; set; }
 		public Byte[] Unknown { get; set; }
 
-		public SoundData()
+		public SoundData(string Tag = null)
+			:base(Tag)
 		{
 			MinAttenuationDistance = new Byte();
 			MaxAttenuationDistance = new Byte();
@@ -91,7 +92,8 @@ namespace ESPSharp.Subrecords
 			AttenuationCurvePoint5 = copyObject.AttenuationCurvePoint5;
 			ReverbAttenuationControl = copyObject.ReverbAttenuationControl;
 			Priority = copyObject.Priority;
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -252,7 +254,7 @@ namespace ESPSharp.Subrecords
 				Unknown = subEle.ToBytes();
 		}
 
-		public SoundData Clone()
+		public override object Clone()
 		{
 			return new SoundData(this);
 		}

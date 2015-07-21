@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,34 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class LoadScreen : Record, IEditorID	{
+	public partial class LoadScreen : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> LargeIcon { get; set; }
 		public SimpleSubrecord<String> SmallIcon { get; set; }
 		public SimpleSubrecord<String> Description { get; set; }
 		public List<LoadScreenLocation> Locations { get; set; }
 		public RecordReference LoadScreenType { get; set; }
+
+		public LoadScreen()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			LargeIcon = new SimpleSubrecord<String>("ICON");
+			SmallIcon = new SimpleSubrecord<String>("MICO");
+			Description = new SimpleSubrecord<String>("DESC");
+		}
+
+		public LoadScreen(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, SimpleSubrecord<String> Description, List<LoadScreenLocation> Locations, RecordReference LoadScreenType)
+		{
+			this.EditorID = EditorID;
+			this.LargeIcon = LargeIcon;
+			this.SmallIcon = SmallIcon;
+			this.Description = Description;
+		}
+
+		public LoadScreen(LoadScreen copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -186,6 +208,11 @@ namespace ESPSharp.Records
 					
 				LoadScreenType.ReadXML(subEle, master);
 			}
+		}		
+
+		public LoadScreen Clone()
+		{
+			return new LoadScreen(this);
 		}
 
 	}

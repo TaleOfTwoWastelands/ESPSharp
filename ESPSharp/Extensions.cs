@@ -131,12 +131,25 @@ namespace ESPSharp
             return bytes.ToBase64();
         }
 
+        public static string FriendlyName(this Type type)
+        {
+            if (type.IsConstructedGenericType)
+            {
+                string name = type.Name.Substring(0, type.Name.IndexOf('`'));
+                string args = string.Join(", ", type.GenericTypeArguments.Select<Type, string>(t => t.FriendlyName()));
+
+                return name + "<" + args + ">";
+            }
+            else if (type == typeof(object))
+                return "dynamic";
+            else
+                return type.Name;
+        }
+
         public static string GetCloneText(this Type type, string name)
         {
             if (type.IsValueType)
                 return name;
-            else if (type.GetInterface("ICloneable`1") != null)
-                return String.Format("{0}.Clone()", name);
             else if (type.GetInterface("ICloneable") != null)
                 return String.Format("({0}){1}.Clone()", Utility.GetFriendlyName(type), name);
             else

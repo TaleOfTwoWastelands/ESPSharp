@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,28 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Climate : Record, IEditorID	{
+	public partial class Climate : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public WeatherList Weathers { get; set; }
 		public SimpleSubrecord<String> SunTexture { get; set; }
 		public SimpleSubrecord<String> SunGlareTexture { get; set; }
 		public Model Model { get; set; }
 		public ClimateTiming Timing { get; set; }
+
+		public Climate()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public Climate(SimpleSubrecord<String> EditorID, WeatherList Weathers, SimpleSubrecord<String> SunTexture, SimpleSubrecord<String> SunGlareTexture, Model Model, ClimateTiming Timing)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public Climate(Climate copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -169,6 +185,11 @@ namespace ESPSharp.Records
 					
 				Timing.ReadXML(subEle, master);
 			}
+		}		
+
+		public Climate Clone()
+		{
+			return new Climate(this);
 		}
 
 	}

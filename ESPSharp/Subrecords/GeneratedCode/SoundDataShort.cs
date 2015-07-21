@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class SoundDataShort : Subrecord, ICloneable<SoundDataShort>, IComparable<SoundDataShort>, IEquatable<SoundDataShort>  
+	public partial class SoundDataShort : Subrecord, ICloneable, IComparable<SoundDataShort>, IEquatable<SoundDataShort>  
 	{
 		public Byte MinAttenuationDistance { get; set; }
 		public Byte MaxAttenuationDistance { get; set; }
@@ -26,7 +26,8 @@ namespace ESPSharp.Subrecords
 		public Byte StopTime { get; set; }
 		public Byte StartTime { get; set; }
 
-		public SoundDataShort()
+		public SoundDataShort(string Tag = null)
+			:base(Tag)
 		{
 			MinAttenuationDistance = new Byte();
 			MaxAttenuationDistance = new Byte();
@@ -153,7 +154,7 @@ namespace ESPSharp.Subrecords
 				StartTime = subEle.ToByte();
 		}
 
-		public SoundDataShort Clone()
+		public override object Clone()
 		{
 			return new SoundDataShort(this);
 		}

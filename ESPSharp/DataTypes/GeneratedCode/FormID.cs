@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class FormID : IESPSerializable, ICloneable<FormID>, IComparable<FormID>, IEquatable<FormID>
+	public partial class FormID : IESPSerializable, ICloneable, IComparable<FormID>, IEquatable<FormID>  
 	{
 		public UInt32 RawValue { get; protected set; }
 
@@ -47,27 +47,31 @@ namespace ESPSharp.DataTypes
 
 		public void WriteBinary(ESPWriter writer)
 		{
-			writer.Write(RawValue);			
+			writer.Write(RawValue);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
-			WriteDataXML(ele, master);
+			XElement subEle;
+			
+			WriteRawValueXML(ele, master);
 		}
 
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
-			ReadDataXML(ele, master);
+			XElement subEle;
+			
+			ReadRawValueXML(ele, master);
 		}
 
-		public FormID Clone()
+		public object Clone()
 		{
 			return new FormID(this);
 		}
 
         public int CompareTo(FormID other)
         {
-            return RawValue.CompareTo(other.RawValue);
+			return RawValue.CompareTo(other.RawValue);
         }
 
         public static bool operator >(FormID objA, FormID objB)
@@ -92,12 +96,26 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(FormID other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return RawValue == other.RawValue;
         }
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             FormID other = obj as FormID;
+
             if (other == null)
                 return false;
             else
@@ -111,16 +129,36 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(FormID objA, FormID objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(FormID objA, FormID objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
 
-		partial void ReadDataXML(XElement ele, ElderScrollsPlugin master);
+		partial void ReadRawValueXML(XElement ele, ElderScrollsPlugin master);
 
-		partial void WriteDataXML(XElement ele, ElderScrollsPlugin master);
+		partial void WriteRawValueXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

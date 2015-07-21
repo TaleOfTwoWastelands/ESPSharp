@@ -9,7 +9,7 @@ using ESPSharp.Interfaces;
 
 namespace ESPSharp.Subrecords
 {
-    public class SubNullStringList : Subrecord, ICloneable<SubNullStringList>
+    public class SubNullStringList : Subrecord, ICloneable
     {
         List<string> Strings { get; set; }
 
@@ -44,7 +44,7 @@ namespace ESPSharp.Subrecords
             }
         }
 
-        SubNullStringList ICloneable<SubNullStringList>.Clone()
+        public override object Clone()
         {
             throw new NotImplementedException();
         }

@@ -13,6 +13,7 @@
 			"ButtonText",
 			"ButtonText"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 

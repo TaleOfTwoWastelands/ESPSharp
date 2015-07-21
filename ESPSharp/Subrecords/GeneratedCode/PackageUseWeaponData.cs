@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PackageUseWeaponData : Subrecord, ICloneable<PackageUseWeaponData>, IComparable<PackageUseWeaponData>, IEquatable<PackageUseWeaponData>  
+	public partial class PackageUseWeaponData : Subrecord, ICloneable, IComparable<PackageUseWeaponData>, IEquatable<PackageUseWeaponData>  
 	{
 		public PackageUseWeaponFlags Flags { get; set; }
 		public PackageUseWeaponFireRate FireRate { get; set; }
@@ -27,7 +27,8 @@ namespace ESPSharp.Subrecords
 		public Single PauseBetweenVolleysMax { get; set; }
 		public Byte[] Unused { get; set; }
 
-		public PackageUseWeaponData()
+		public PackageUseWeaponData(string Tag = null)
+			:base(Tag)
 		{
 			Flags = new PackageUseWeaponFlags();
 			FireRate = new PackageUseWeaponFireRate();
@@ -63,7 +64,8 @@ namespace ESPSharp.Subrecords
 			ShotsPerVolleyMax = copyObject.ShotsPerVolleyMax;
 			PauseBetweenVolleysMin = copyObject.PauseBetweenVolleysMin;
 			PauseBetweenVolleysMax = copyObject.PauseBetweenVolleysMax;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -168,7 +170,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public PackageUseWeaponData Clone()
+		public override object Clone()
 		{
 			return new PackageUseWeaponData(this);
 		}

@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ObjectBounds : Subrecord, ICloneable<ObjectBounds>, IComparable<ObjectBounds>, IEquatable<ObjectBounds>  
+	public partial class ObjectBounds : Subrecord, ICloneable, IComparable<ObjectBounds>, IEquatable<ObjectBounds>  
 	{
 		public Int16 X1 { get; set; }
 		public Int16 Y1 { get; set; }
@@ -24,7 +24,8 @@ namespace ESPSharp.Subrecords
 		public Int16 Y2 { get; set; }
 		public Int16 Z2 { get; set; }
 
-		public ObjectBounds()
+		public ObjectBounds(string Tag = null)
+			:base(Tag)
 		{
 			X1 = new Int16();
 			Y1 = new Int16();
@@ -131,7 +132,7 @@ namespace ESPSharp.Subrecords
 				Z2 = subEle.ToInt16();
 		}
 
-		public ObjectBounds Clone()
+		public override object Clone()
 		{
 			return new ObjectBounds(this);
 		}

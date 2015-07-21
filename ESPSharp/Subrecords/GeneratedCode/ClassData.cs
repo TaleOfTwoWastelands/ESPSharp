@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ClassData : Subrecord, ICloneable<ClassData>, IComparable<ClassData>, IEquatable<ClassData>  
+	public partial class ClassData : Subrecord, ICloneable, IComparable<ClassData>, IEquatable<ClassData>  
 	{
 		public ActorValues TagSkill1 { get; set; }
 		public ActorValues TagSkill2 { get; set; }
@@ -27,7 +27,8 @@ namespace ESPSharp.Subrecords
 		public Byte MaxTrainingLevel { get; set; }
 		public Byte[] Unused { get; set; }
 
-		public ClassData()
+		public ClassData(string Tag = null)
+			:base(Tag)
 		{
 			TagSkill1 = new ActorValues();
 			TagSkill2 = new ActorValues();
@@ -63,7 +64,8 @@ namespace ESPSharp.Subrecords
 			Services = copyObject.Services;
 			TrainingSkill = copyObject.TrainingSkill;
 			MaxTrainingLevel = copyObject.MaxTrainingLevel;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -168,7 +170,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public ClassData Clone()
+		public override object Clone()
 		{
 			return new ClassData(this);
 		}

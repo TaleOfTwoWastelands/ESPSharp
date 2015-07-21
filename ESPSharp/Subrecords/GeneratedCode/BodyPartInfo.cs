@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class BodyPartInfo : Subrecord, ICloneable<BodyPartInfo>, IComparable<BodyPartInfo>, IEquatable<BodyPartInfo>  
+	public partial class BodyPartInfo : Subrecord, ICloneable, IComparable<BodyPartInfo>, IEquatable<BodyPartInfo>  
 	{
 		public Single DamageMultiplier { get; set; }
 		public BodyPartDataFlags Flags { get; set; }
@@ -46,7 +46,8 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unused { get; set; }
 		public Single LimbReplacementScale { get; set; }
 
-		public BodyPartInfo()
+		public BodyPartInfo(string Tag = null)
+			:base(Tag)
 		{
 			DamageMultiplier = new Single();
 			Flags = new BodyPartDataFlags();
@@ -120,13 +121,17 @@ namespace ESPSharp.Subrecords
 			ToHitChance = copyObject.ToHitChance;
 			ExplosionChance = copyObject.ExplosionChance;
 			ExplosionDebrisCount = copyObject.ExplosionDebrisCount;
-			ExplosionDebris = copyObject.ExplosionDebris.Clone();
-			Explosion = copyObject.Explosion.Clone();
+			if (copyObject.ExplosionDebris != null)
+				ExplosionDebris = (FormID)copyObject.ExplosionDebris.Clone();
+			if (copyObject.Explosion != null)
+				Explosion = (FormID)copyObject.Explosion.Clone();
 			TrackingMaxAngle = copyObject.TrackingMaxAngle;
 			ExplosionDebrisScale = copyObject.ExplosionDebrisScale;
 			SeverableDebrisCount = copyObject.SeverableDebrisCount;
-			SeverableDebris = copyObject.SeverableDebris.Clone();
-			SeverableExplosion = copyObject.SeverableExplosion.Clone();
+			if (copyObject.SeverableDebris != null)
+				SeverableDebris = (FormID)copyObject.SeverableDebris.Clone();
+			if (copyObject.SeverableExplosion != null)
+				SeverableExplosion = (FormID)copyObject.SeverableExplosion.Clone();
 			SeverableDebrisScale = copyObject.SeverableDebrisScale;
 			GoreEffectsTranslateX = copyObject.GoreEffectsTranslateX;
 			GoreEffectsTranslateY = copyObject.GoreEffectsTranslateY;
@@ -134,11 +139,14 @@ namespace ESPSharp.Subrecords
 			GoreEffectsRotationX = copyObject.GoreEffectsRotationX;
 			GoreEffectsRotationY = copyObject.GoreEffectsRotationY;
 			GoreEffectsRotationZ = copyObject.GoreEffectsRotationZ;
-			SeverableImpactDataSet = copyObject.SeverableImpactDataSet.Clone();
-			ExplosionImpactDataSet = copyObject.ExplosionImpactDataSet.Clone();
+			if (copyObject.SeverableImpactDataSet != null)
+				SeverableImpactDataSet = (FormID)copyObject.SeverableImpactDataSet.Clone();
+			if (copyObject.ExplosionImpactDataSet != null)
+				ExplosionImpactDataSet = (FormID)copyObject.ExplosionImpactDataSet.Clone();
 			SeverableDecalCount = copyObject.SeverableDecalCount;
 			ExplosionDecalCount = copyObject.ExplosionDecalCount;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			LimbReplacementScale = copyObject.LimbReplacementScale;
 		}
 	
@@ -396,7 +404,7 @@ namespace ESPSharp.Subrecords
 				LimbReplacementScale = subEle.ToSingle();
 		}
 
-		public BodyPartInfo Clone()
+		public override object Clone()
 		{
 			return new BodyPartInfo(this);
 		}

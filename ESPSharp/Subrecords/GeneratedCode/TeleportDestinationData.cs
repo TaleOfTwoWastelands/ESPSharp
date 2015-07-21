@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class TeleportDestinationData : Subrecord, ICloneable<TeleportDestinationData>, IComparable<TeleportDestinationData>, IEquatable<TeleportDestinationData>  
+	public partial class TeleportDestinationData : Subrecord, ICloneable, IComparable<TeleportDestinationData>, IEquatable<TeleportDestinationData>  
 	{
 		public FormID Door { get; set; }
 		public Single PositionX { get; set; }
@@ -26,7 +26,8 @@ namespace ESPSharp.Subrecords
 		public Single RotationZ { get; set; }
 		public YesNoUInt Alarm { get; set; }
 
-		public TeleportDestinationData()
+		public TeleportDestinationData(string Tag = null)
+			:base(Tag)
 		{
 			Door = new FormID();
 			PositionX = new Single();
@@ -52,7 +53,8 @@ namespace ESPSharp.Subrecords
 
 		public TeleportDestinationData(TeleportDestinationData copyObject)
 		{
-			Door = copyObject.Door.Clone();
+			if (copyObject.Door != null)
+				Door = (FormID)copyObject.Door.Clone();
 			PositionX = copyObject.PositionX;
 			PositionY = copyObject.PositionY;
 			PositionZ = copyObject.PositionZ;
@@ -155,7 +157,7 @@ namespace ESPSharp.Subrecords
 				Alarm = subEle.ToEnum<YesNoUInt>();
 		}
 
-		public TeleportDestinationData Clone()
+		public override object Clone()
 		{
 			return new TeleportDestinationData(this);
 		}

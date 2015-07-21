@@ -3,6 +3,7 @@
 <#	
 	SubrecordCollectionTemplate template = new SubrecordCollectionTemplate();
 	template.ClassName = "InventoryItem";
+	template.isComparable = true;
 
 	SubrecordCollectionField tempField;
 
@@ -13,6 +14,7 @@
 			"Data",
 			"Data"
 			);
+	template.hashKey = tempField;
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 

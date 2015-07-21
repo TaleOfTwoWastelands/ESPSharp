@@ -1,13 +1,11 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ output extension=".cs" #>
-<#	
-	DataTypeTemplate template = new DataTypeTemplate();
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "RegionObject";
 
-	DataTypeField tempField;
+	ClassField tempField;
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(FormID),
 			"Object",
 			"Object"
@@ -16,7 +14,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(ushort),
 			"ParentIndex",
 			"ParentIndex"
@@ -24,7 +22,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(byte[]),
 			"Unused",
 			"Unused"
@@ -33,7 +31,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(float),
 			"Density",
 			"Density"
@@ -41,7 +39,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(byte),
 			"Clustering",
 			"Clustering"
@@ -49,7 +47,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(byte),
 			"MinSlope",
 			"Slope/Min"
@@ -57,7 +55,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(byte),
 			"MaxSlope",
 			"Slope/Max"
@@ -65,7 +63,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(RegionObjectFlags),
 			"Flags",
 			"Flags"
@@ -73,7 +71,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(ushort),
 			"RadiusWithRespectToParent",
 			"RadiusWithRespectToParent"
@@ -81,7 +79,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(ushort),
 			"Radius",
 			"Radius"
@@ -89,7 +87,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(byte[]),
 			"Unknown1",
 			"Unknown1"
@@ -98,7 +96,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(float),
 			"MaxHeight",
 			"MaxHeight"
@@ -106,7 +104,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(float),
 			"Sink",
 			"Sink"
@@ -114,7 +112,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(float),
 			"SinkVariance",
 			"SinkVariance"
@@ -122,7 +120,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(float),
 			"SizeVariance",
 			"SizeVariance"
@@ -130,7 +128,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(ushort),
 			"XAngleVariance",
 			"XAngleVariance"
@@ -138,7 +136,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(ushort),
 			"YAngleVariance",
 			"YAngleVariance"
@@ -146,7 +144,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(ushort),
 			"ZAngleVariance",
 			"ZAngleVariance"
@@ -154,7 +152,7 @@
 	template.Fields.Add(tempField);
 
 	tempField = 
-		new DataTypeField(
+		new ClassField(
 			typeof(byte[]),
 			"Unknown2",
 			"Unknown2"

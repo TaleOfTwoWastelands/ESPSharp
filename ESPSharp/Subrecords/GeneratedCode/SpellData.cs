@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class SpellData : Subrecord, ICloneable<SpellData>, IComparable<SpellData>, IEquatable<SpellData>  
+	public partial class SpellData : Subrecord, ICloneable, IComparable<SpellData>, IEquatable<SpellData>  
 	{
 		public SpellType Type { get; set; }
 		public UInt32 Cost { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public SpellFlags Flags { get; set; }
 		public Byte[] Unused { get; set; }
 
-		public SpellData()
+		public SpellData(string Tag = null)
+			:base(Tag)
 		{
 			Type = new SpellType();
 			Cost = new UInt32();
@@ -47,7 +48,8 @@ namespace ESPSharp.Subrecords
 			Cost = copyObject.Cost;
 			Level = copyObject.Level;
 			Flags = copyObject.Flags;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -120,7 +122,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public SpellData Clone()
+		public override object Clone()
 		{
 			return new SpellData(this);
 		}

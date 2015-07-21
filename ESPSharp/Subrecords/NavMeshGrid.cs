@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-    public class NavMeshGrid : Subrecord, ICloneable<NavMeshGrid>
+    public class NavMeshGrid : Subrecord, ICloneable
     {
         public UInt32 Divisor { get; set; }
         public Single MaxDistanceX { get; set; }
@@ -227,7 +227,7 @@ namespace ESPSharp.Subrecords
             }
         }
 
-        public NavMeshGrid Clone()
+        public override object Clone()
         {
             return new NavMeshGrid(this);
         }

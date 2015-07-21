@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DialogTopicData : Subrecord, ICloneable<DialogTopicData>, IComparable<DialogTopicData>, IEquatable<DialogTopicData>  
+	public partial class DialogTopicData : Subrecord, ICloneable, IComparable<DialogTopicData>, IEquatable<DialogTopicData>  
 	{
 		public DialogType Type { get; set; }
 		public DialogFlags Flags { get; set; }
 
-		public DialogTopicData()
+		public DialogTopicData(string Tag = null)
+			:base(Tag)
 		{
 			Type = new DialogType();
 			Flags = new DialogFlags();
@@ -83,7 +84,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<DialogFlags>();
 		}
 
-		public DialogTopicData Clone()
+		public override object Clone()
 		{
 			return new DialogTopicData(this);
 		}

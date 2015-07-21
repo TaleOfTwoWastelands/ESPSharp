@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class CreatureData : Subrecord, ICloneable<CreatureData>, IComparable<CreatureData>, IEquatable<CreatureData>  
+	public partial class CreatureData : Subrecord, ICloneable, IComparable<CreatureData>, IEquatable<CreatureData>  
 	{
 		public CreatureType CreatureType { get; set; }
 		public Byte CombatSkill { get; set; }
@@ -32,7 +32,8 @@ namespace ESPSharp.Subrecords
 		public Byte Agility { get; set; }
 		public Byte Luck { get; set; }
 
-		public CreatureData()
+		public CreatureData(string Tag = null)
+			:base(Tag)
 		{
 			CreatureType = new CreatureType();
 			CombatSkill = new Byte();
@@ -75,7 +76,8 @@ namespace ESPSharp.Subrecords
 			MagicSkill = copyObject.MagicSkill;
 			StealthSkill = copyObject.StealthSkill;
 			Health = copyObject.Health;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			Damage = copyObject.Damage;
 			Strength = copyObject.Strength;
 			Perception = copyObject.Perception;
@@ -228,7 +230,7 @@ namespace ESPSharp.Subrecords
 				Luck = subEle.ToByte();
 		}
 
-		public CreatureData Clone()
+		public override object Clone()
 		{
 			return new CreatureData(this);
 		}

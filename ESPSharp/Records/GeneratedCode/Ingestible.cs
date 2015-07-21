@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Ingestible : Record, IEditorID	{
+	public partial class Ingestible : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -29,6 +31,32 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<Single> Weight { get; set; }
 		public IngestibleData Data { get; set; }
 		public List<Effect> Effects { get; set; }
+
+		public Ingestible()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Name = new SimpleSubrecord<String>("FULL");
+			EquipmentType = new SimpleSubrecord<EquipmentType>("ETYP");
+			Weight = new SimpleSubrecord<Single>("DATA");
+			Data = new IngestibleData("ENIT");
+			Effects = new List<Effect>();
+		}
+
+		public Ingestible(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference Script, Destructable Destructable, RecordReference PickUpSound, RecordReference DropSound, SimpleSubrecord<EquipmentType> EquipmentType, SimpleSubrecord<Single> Weight, IngestibleData Data, List<Effect> Effects)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Name = Name;
+			this.EquipmentType = EquipmentType;
+			this.Weight = Weight;
+			this.Data = Data;
+			this.Effects = Effects;
+		}
+
+		public Ingestible(Ingestible copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -354,6 +382,11 @@ namespace ESPSharp.Records
 					Effects.Add(tempEFID);
 				}
 			}
+		}		
+
+		public Ingestible Clone()
+		{
+			return new Ingestible(this);
 		}
 
 	}

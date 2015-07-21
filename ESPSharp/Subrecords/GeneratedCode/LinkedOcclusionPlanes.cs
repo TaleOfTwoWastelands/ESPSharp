@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LinkedOcclusionPlanes : Subrecord, ICloneable<LinkedOcclusionPlanes>, IComparable<LinkedOcclusionPlanes>, IEquatable<LinkedOcclusionPlanes>  
+	public partial class LinkedOcclusionPlanes : Subrecord, ICloneable, IComparable<LinkedOcclusionPlanes>, IEquatable<LinkedOcclusionPlanes>  
 	{
 		public FormID Right { get; set; }
 		public FormID Left { get; set; }
 		public FormID Bottom { get; set; }
 		public FormID Top { get; set; }
 
-		public LinkedOcclusionPlanes()
+		public LinkedOcclusionPlanes(string Tag = null)
+			:base(Tag)
 		{
 			Right = new FormID();
 			Left = new FormID();
@@ -40,10 +41,14 @@ namespace ESPSharp.Subrecords
 
 		public LinkedOcclusionPlanes(LinkedOcclusionPlanes copyObject)
 		{
-			Right = copyObject.Right.Clone();
-			Left = copyObject.Left.Clone();
-			Bottom = copyObject.Bottom.Clone();
-			Top = copyObject.Top.Clone();
+			if (copyObject.Right != null)
+				Right = (FormID)copyObject.Right.Clone();
+			if (copyObject.Left != null)
+				Left = (FormID)copyObject.Left.Clone();
+			if (copyObject.Bottom != null)
+				Bottom = (FormID)copyObject.Bottom.Clone();
+			if (copyObject.Top != null)
+				Top = (FormID)copyObject.Top.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -107,7 +112,7 @@ namespace ESPSharp.Subrecords
 				Top.ReadXML(subEle, master);
 		}
 
-		public LinkedOcclusionPlanes Clone()
+		public override object Clone()
 		{
 			return new LinkedOcclusionPlanes(this);
 		}

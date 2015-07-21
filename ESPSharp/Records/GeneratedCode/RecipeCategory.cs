@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,25 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class RecipeCategory : Record, IEditorID	{
+	public partial class RecipeCategory : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<NoYesByte> IsSubcategory { get; set; }
+
+		public RecipeCategory()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public RecipeCategory(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<NoYesByte> IsSubcategory)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public RecipeCategory(RecipeCategory copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -106,6 +122,11 @@ namespace ESPSharp.Records
 					
 				IsSubcategory.ReadXML(subEle, master);
 			}
+		}		
+
+		public RecipeCategory Clone()
+		{
+			return new RecipeCategory(this);
 		}
 
 	}

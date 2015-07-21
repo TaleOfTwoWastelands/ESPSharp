@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class SharedInfo : SubrecordCollection, ICloneable<SharedInfo>
-	{
+	public partial class SharedInfo : SubrecordCollection	{
 		public RecordReference InfoConnection { get; set; }
 		public SimpleSubrecord<Int32> InfoIndex { get; set; }
 
@@ -31,9 +30,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public SharedInfo(SharedInfo copyObject)
 		{
-			InfoConnection = copyObject.InfoConnection.Clone();
-			InfoIndex = copyObject.InfoIndex.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

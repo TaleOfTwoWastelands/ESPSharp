@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Creature : Record, IEditorID	{
+	public partial class Creature : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -48,6 +50,42 @@ namespace ESPSharp.Records
 		public List<CreatureSoundData> SoundData { get; set; }
 		public RecordReference ImpactDataset { get; set; }
 		public RecordReference MeleeWeaponList { get; set; }
+
+		public Creature()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			UnarmedAttackAnimation = new SimpleSubrecord<UInt16>("EAMT");
+			BaseStats = new CreatureBaseStats("ACBS");
+			AIData = new AIData("AIDT");
+			Data = new CreatureData("DATA");
+			AttackReach = new SimpleSubrecord<Byte>("RNAM");
+			TurningSpeed = new SimpleSubrecord<Single>("TNAM");
+			BaseScale = new SimpleSubrecord<Single>("BNAM");
+			FootWeight = new SimpleSubrecord<Single>("WNAM");
+			ImpactMaterialType = new SimpleSubrecord<MaterialTypeUInt>("NAM4");
+			SoundLevel = new SimpleSubrecord<SoundLevel>("NAM5");
+		}
+
+		public Creature(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, List<RecordReference> ActorEffects, RecordReference UnarmedAttackEffect, SimpleSubrecord<UInt16> UnarmedAttackAnimation, SubNullStringList Models, SimpleSubrecord<Byte[]> TextureHashes, CreatureBaseStats BaseStats, List<FactionMembership> Factions, RecordReference DeathItem, RecordReference VoiceType, RecordReference Template, Destructable Destructable, RecordReference Script, List<InventoryItem> Contents, AIData AIData, List<RecordReference> Packages, SubNullStringList Animations, CreatureData Data, SimpleSubrecord<Byte> AttackReach, RecordReference CombatStyle, RecordReference BodyPartData, SimpleSubrecord<Single> TurningSpeed, SimpleSubrecord<Single> BaseScale, SimpleSubrecord<Single> FootWeight, SimpleSubrecord<MaterialTypeUInt> ImpactMaterialType, SimpleSubrecord<SoundLevel> SoundLevel, RecordReference SoundTemplate, List<CreatureSoundData> SoundData, RecordReference ImpactDataset, RecordReference MeleeWeaponList)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.UnarmedAttackAnimation = UnarmedAttackAnimation;
+			this.BaseStats = BaseStats;
+			this.AIData = AIData;
+			this.Data = Data;
+			this.AttackReach = AttackReach;
+			this.TurningSpeed = TurningSpeed;
+			this.BaseScale = BaseScale;
+			this.FootWeight = FootWeight;
+			this.ImpactMaterialType = ImpactMaterialType;
+			this.SoundLevel = SoundLevel;
+		}
+
+		public Creature(Creature copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -282,8 +320,11 @@ namespace ESPSharp.Records
 			if (Model != null)
 				Model.WriteBinary(writer);
 			if (ActorEffects != null)
+			{
+				ActorEffects.Sort();
 				foreach (var item in ActorEffects)
 					item.WriteBinary(writer);
+			}
 			if (UnarmedAttackEffect != null)
 				UnarmedAttackEffect.WriteBinary(writer);
 			if (UnarmedAttackAnimation != null)
@@ -308,8 +349,11 @@ namespace ESPSharp.Records
 			if (Script != null)
 				Script.WriteBinary(writer);
 			if (Contents != null)
+			{
+				Contents.Sort();
 				foreach (var item in Contents)
 					item.WriteBinary(writer);
+			}
 			if (AIData != null)
 				AIData.WriteBinary(writer);
 			if (Packages != null)
@@ -374,6 +418,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("ActorEffects", true, out subEle);
 				List<string> xmlNames = new List<string>{"ActorEffect"};
 				int i = 0;
+				ActorEffects.Sort();
 				foreach (var entry in ActorEffects)
 				{
 					i = i % xmlNames.Count();
@@ -452,6 +497,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("Contents", true, out subEle);
 				List<string> xmlNames = new List<string>{"Item"};
 				int i = 0;
+				Contents.Sort();
 				foreach (var entry in Contents)
 				{
 					i = i % xmlNames.Count();
@@ -821,6 +867,11 @@ namespace ESPSharp.Records
 					
 				MeleeWeaponList.ReadXML(subEle, master);
 			}
+		}		
+
+		public Creature Clone()
+		{
+			return new Creature(this);
 		}
 
 	}

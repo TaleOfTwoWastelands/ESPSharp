@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ImageSpaceAdapterData : Subrecord, ICloneable<ImageSpaceAdapterData>, IComparable<ImageSpaceAdapterData>, IEquatable<ImageSpaceAdapterData>  
+	public partial class ImageSpaceAdapterData : Subrecord, ICloneable, IComparable<ImageSpaceAdapterData>, IEquatable<ImageSpaceAdapterData>  
 	{
 		public NoYes IsAnimatable { get; set; }
 		public Single Duration { get; set; }
@@ -61,7 +61,8 @@ namespace ESPSharp.Subrecords
 		public Color FadeColor { get; set; }
 		public NoYes MotionBlurStrength { get; set; }
 
-		public ImageSpaceAdapterData()
+		public ImageSpaceAdapterData(string Tag = null)
+			:base(Tag)
 		{
 			IsAnimatable = new NoYes();
 			Duration = new Single();
@@ -175,15 +176,18 @@ namespace ESPSharp.Subrecords
 			HDRSunlightScaleAdd = copyObject.HDRSunlightScaleAdd;
 			HDRSkyScaleMult = copyObject.HDRSkyScaleMult;
 			HDRSkyScaleAdd = copyObject.HDRSkyScaleAdd;
-			Unknown1 = (Byte[])copyObject.Unknown1.Clone();
+			if (copyObject.Unknown1 != null)
+				Unknown1 = (Byte[])copyObject.Unknown1.Clone();
 			CinematicSaturationMult = copyObject.CinematicSaturationMult;
 			CinematicSaturationAdd = copyObject.CinematicSaturationAdd;
 			CinematicBrightnessMult = copyObject.CinematicBrightnessMult;
 			CinematicBrightnessAdd = copyObject.CinematicBrightnessAdd;
 			CinematicContrastMult = copyObject.CinematicContrastMult;
 			CinematicContrastAdd = copyObject.CinematicContrastAdd;
-			Unknown2 = (Byte[])copyObject.Unknown2.Clone();
-			TintColor = copyObject.TintColor.Clone();
+			if (copyObject.Unknown2 != null)
+				Unknown2 = (Byte[])copyObject.Unknown2.Clone();
+			if (copyObject.TintColor != null)
+				TintColor = (Color)copyObject.TintColor.Clone();
 			BlurRadius = copyObject.BlurRadius;
 			DoubleVisionStrength = copyObject.DoubleVisionStrength;
 			RadialBlurStrength = copyObject.RadialBlurStrength;
@@ -198,7 +202,8 @@ namespace ESPSharp.Subrecords
 			DepthOfFieldUseTarget = copyObject.DepthOfFieldUseTarget;
 			RadialBlurRampDown = copyObject.RadialBlurRampDown;
 			RadialBlurDownStart = copyObject.RadialBlurDownStart;
-			FadeColor = copyObject.FadeColor.Clone();
+			if (copyObject.FadeColor != null)
+				FadeColor = (Color)copyObject.FadeColor.Clone();
 			MotionBlurStrength = copyObject.MotionBlurStrength;
 		}
 	
@@ -581,7 +586,7 @@ namespace ESPSharp.Subrecords
 				MotionBlurStrength = subEle.ToEnum<NoYes>();
 		}
 
-		public ImageSpaceAdapterData Clone()
+		public override object Clone()
 		{
 			return new ImageSpaceAdapterData(this);
 		}

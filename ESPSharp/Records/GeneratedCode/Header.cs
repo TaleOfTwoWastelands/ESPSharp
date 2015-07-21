@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Header : Record	{
+	public partial class Header : Record
+	{
 		public PluginHeader FileHeader { get; set; }
 		public SimpleSubrecord<Byte[]> OffsetData { get; set; }
 		public SimpleSubrecord<Byte[]> DeletionsData { get; set; }
@@ -23,6 +25,22 @@ namespace ESPSharp.Records
 		public List<MasterFileData> MasterFiles { get; set; }
 		public FormArray OverriddenRecords { get; set; }
 		public SimpleSubrecord<Byte[]> ScreenshotData { get; set; }
+
+		public Header()
+		{
+			FileHeader = new PluginHeader("HEDR");
+			Author = new SimpleSubrecord<String>("CNAM");
+		}
+
+		public Header(PluginHeader FileHeader, SimpleSubrecord<Byte[]> OffsetData, SimpleSubrecord<Byte[]> DeletionsData, SimpleSubrecord<String> Author, SimpleSubrecord<String> Description, List<MasterFileData> MasterFiles, FormArray OverriddenRecords, SimpleSubrecord<Byte[]> ScreenshotData)
+		{
+			this.FileHeader = FileHeader;
+			this.Author = Author;
+		}
+
+		public Header(Header copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -228,6 +246,11 @@ namespace ESPSharp.Records
 					
 				ScreenshotData.ReadXML(subEle, master);
 			}
+		}		
+
+		public Header Clone()
+		{
+			return new Header(this);
 		}
 
 	}

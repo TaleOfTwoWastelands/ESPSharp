@@ -57,17 +57,7 @@ namespace ESPSharp
 
         public static string GetFriendlyName(Type inType)
         {
-            if (inType.IsConstructedGenericType)
-            {
-                string name = inType.Name.Substring(0, inType.Name.IndexOf('`'));
-                string args = string.Join(", ", inType.GenericTypeArguments.Select<Type, string>(t => GetFriendlyName(t)));
-
-                return name + "<" + args + ">";
-            }
-            else if (inType == typeof(object))
-                return "dynamic";
-            else
-                return inType.Name;
+            return inType.FriendlyName();
         }
     }
 }

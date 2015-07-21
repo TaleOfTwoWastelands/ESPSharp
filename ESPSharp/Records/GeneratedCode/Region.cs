@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Region : Record, IEditorID	{
+	public partial class Region : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> LargeIcon { get; set; }
 		public SimpleSubrecord<String> SmallIcon { get; set; }
@@ -22,6 +24,20 @@ namespace ESPSharp.Records
 		public RecordReference Worldspace { get; set; }
 		public List<RegionArea> Areas { get; set; }
 		public List<RegionDataEntry> DataEntries { get; set; }
+
+		public Region()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public Region(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, SimpleSubrecord<Color> MapColor, RecordReference Worldspace, List<RegionArea> Areas, List<RegionDataEntry> DataEntries)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public Region(Region copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -224,6 +240,11 @@ namespace ESPSharp.Records
 					DataEntries.Add(tempRDAT);
 				}
 			}
+		}		
+
+		public Region Clone()
+		{
+			return new Region(this);
 		}
 
 	}

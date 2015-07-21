@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	RecordTemplate template = new RecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "StaticCollection";
 
 	RecordField tempField;
@@ -43,6 +43,7 @@
 			"Parts",
 			"Parts"
 			);
+	tempField.isSorted = true;
 	tempField.isRequired = true;
 	tempField.XMLSubNames = new List<string> {"Part"};
 	template.Fields.Add(tempField);

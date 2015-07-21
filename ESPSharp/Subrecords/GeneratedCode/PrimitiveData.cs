@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PrimitiveData : Subrecord, ICloneable<PrimitiveData>, IComparable<PrimitiveData>, IEquatable<PrimitiveData>  
+	public partial class PrimitiveData : Subrecord, ICloneable, IComparable<PrimitiveData>, IEquatable<PrimitiveData>  
 	{
 		public Single XBound { get; set; }
 		public Single YBound { get; set; }
@@ -26,7 +26,8 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unknown { get; set; }
 		public PrimitiveType Type { get; set; }
 
-		public PrimitiveData()
+		public PrimitiveData(string Tag = null)
+			:base(Tag)
 		{
 			XBound = new Single();
 			YBound = new Single();
@@ -58,7 +59,8 @@ namespace ESPSharp.Subrecords
 			Red = copyObject.Red;
 			Green = copyObject.Green;
 			Blue = copyObject.Blue;
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 			Type = copyObject.Type;
 		}
 	
@@ -158,7 +160,7 @@ namespace ESPSharp.Subrecords
 				Type = subEle.ToEnum<PrimitiveType>();
 		}
 
-		public PrimitiveData Clone()
+		public override object Clone()
 		{
 			return new PrimitiveData(this);
 		}

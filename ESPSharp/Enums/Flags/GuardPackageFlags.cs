@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ESPSharp.Enums.Flags
 {
     [Flags]
-    public enum GuardPackageFlags : uint
+    public enum GuardPackageFlags : ushort
     {
         RemainNearReferenceToGuard = 0x04
     }

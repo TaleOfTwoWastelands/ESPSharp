@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ScriptData : Subrecord, ICloneable<ScriptData>, IComparable<ScriptData>, IEquatable<ScriptData>  
+	public partial class ScriptData : Subrecord, ICloneable, IComparable<ScriptData>, IEquatable<ScriptData>  
 	{
 		public Byte[] Unused { get; set; }
 		public UInt32 ReferenceCount { get; set; }
@@ -24,7 +24,8 @@ namespace ESPSharp.Subrecords
 		public ScriptType Type { get; set; }
 		public ScriptFlags Flags { get; set; }
 
-		public ScriptData()
+		public ScriptData(string Tag = null)
+			:base(Tag)
 		{
 			Unused = new byte[4];
 			ReferenceCount = new UInt32();
@@ -46,7 +47,8 @@ namespace ESPSharp.Subrecords
 
 		public ScriptData(ScriptData copyObject)
 		{
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			ReferenceCount = copyObject.ReferenceCount;
 			CompiledSize = copyObject.CompiledSize;
 			VariableCount = copyObject.VariableCount;
@@ -132,7 +134,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<ScriptFlags>();
 		}
 
-		public ScriptData Clone()
+		public override object Clone()
 		{
 			return new ScriptData(this);
 		}

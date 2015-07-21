@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Package : Record, IEditorID	{
+	public partial class Package : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public PackageData Data { get; set; }
 		public PackageLocation Location1 { get; set; }
@@ -37,9 +39,28 @@ namespace ESPSharp.Records
 		public SubMarker UseItemMarker { get; set; }
 		public SubMarker AmbushMarker { get; set; }
 		public PackageDialogData DialogData { get; set; }
+		public PackageLocation DummyIgnore { get; set; }
 		public PackageEvent OnBegin { get; set; }
 		public PackageEvent OnEnd { get; set; }
 		public PackageEvent OnChange { get; set; }
+
+		public Package()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new PackageData("PKDT");
+			Schedule = new PackageScheduleData("PSDT");
+		}
+
+		public Package(SimpleSubrecord<String> EditorID, PackageData Data, PackageLocation Location1, PackageLocation Location2, PackageScheduleData Schedule, PackageTarget Target1, List<Condition> Conditions, SimpleSubrecord<PackageIdleFlags> IdleFlags, SimpleSubrecord<Byte> IdleCount, SimpleSubrecord<Single> IdleTimerSetting, FormArray IdleAnimations, SimpleSubrecord<Byte[]> Unused, RecordReference CombatStyle, SubMarker EatMarker, SimpleSubrecord<UInt32> EscortDistance, SimpleSubrecord<UInt32> FollowDistance_StartLocation_TriggerRadius, SimpleSubrecord<NoYesByte> PatrolIsRepeatable, PackageUseWeaponData UseWeaponData, PackageTarget Target2, SubMarker UseItemMarker, SubMarker AmbushMarker, PackageDialogData DialogData, PackageLocation DummyIgnore, PackageEvent OnBegin, PackageEvent OnEnd, PackageEvent OnChange)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+			this.Schedule = Schedule;
+		}
+
+		public Package(Package copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -183,6 +204,12 @@ namespace ESPSharp.Records
 
 						DialogData.ReadBinary(reader);
 						break;
+					case "DUMY":
+						if (DummyIgnore == null)
+							DummyIgnore = new PackageLocation();
+
+						DummyIgnore.ReadBinary(reader);
+						break;
 					case "POBA":
 						if (OnBegin == null)
 							OnBegin = new PackageEvent();
@@ -254,6 +281,8 @@ namespace ESPSharp.Records
 				AmbushMarker.WriteBinary(writer);
 			if (DialogData != null)
 				DialogData.WriteBinary(writer);
+
+			WriteDummyIgnore(writer);
 			if (OnBegin != null)
 				OnBegin.WriteBinary(writer);
 			if (OnEnd != null)
@@ -383,6 +412,11 @@ namespace ESPSharp.Records
 			{		
 				ele.TryPathTo("DialogData", true, out subEle);
 				DialogData.WriteXML(subEle, master);
+			}
+			if (DummyIgnore != null)		
+			{		
+				ele.TryPathTo("DummyIgnore", true, out subEle);
+				DummyIgnore.WriteXML(subEle, master);
 			}
 			if (OnBegin != null)		
 			{		
@@ -564,6 +598,13 @@ namespace ESPSharp.Records
 					
 				DialogData.ReadXML(subEle, master);
 			}
+			if (ele.TryPathTo("DummyIgnore", false, out subEle))
+			{
+				if (DummyIgnore == null)
+					DummyIgnore = new PackageLocation();
+					
+				DummyIgnore.ReadXML(subEle, master);
+			}
 			if (ele.TryPathTo("OnBegin", false, out subEle))
 			{
 				if (OnBegin == null)
@@ -585,7 +626,14 @@ namespace ESPSharp.Records
 					
 				OnChange.ReadXML(subEle, master);
 			}
+		}		
+
+		public Package Clone()
+		{
+			return new Package(this);
 		}
 
+
+		partial void WriteDummyIgnore(ESPWriter writer);
 	}
 }

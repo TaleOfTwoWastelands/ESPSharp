@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class CasinoChip : Record, IEditorID	{
+	public partial class CasinoChip : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -24,6 +26,24 @@ namespace ESPSharp.Records
 		public Destructable Destructable { get; set; }
 		public RecordReference PickUpSound { get; set; }
 		public RecordReference DropSound { get; set; }
+
+		public CasinoChip()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+		}
+
+		public CasinoChip(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, Destructable Destructable, RecordReference PickUpSound, RecordReference DropSound)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+		}
+
+		public CasinoChip(CasinoChip copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -232,6 +252,11 @@ namespace ESPSharp.Records
 					
 				DropSound.ReadXML(subEle, master);
 			}
+		}		
+
+		public CasinoChip Clone()
+		{
+			return new CasinoChip(this);
 		}
 
 	}

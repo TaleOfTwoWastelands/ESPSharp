@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	RecordTemplate template = new RecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "GameSetting";
 
 	//editorID
@@ -19,11 +19,10 @@
 	RecordField valueField = 
 		new RecordField(
 			"DATA",
-			typeof(object),
+			typeof(Subrecord),
 			"Value",
 			"Value"
 			);
-	valueField.isRequired = true;
 	valueField.implementReadData = false;
 	valueField.implementReadXML = false;
 	valueField.implementWriteData = false;

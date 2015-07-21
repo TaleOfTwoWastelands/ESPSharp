@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,24 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class NavigationMeshInfoMap : Record, IEditorID	{
+	public partial class NavigationMeshInfoMap : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<UInt32> Version { get; set; }
 		public List<NavigationMapInfo> NavigationMapInfoList { get; set; }
 		public List<NavigationConnectionInfo> NavigationConnectionInfoList { get; set; }
+
+		public NavigationMeshInfoMap()
+		{
+					}
+
+		public NavigationMeshInfoMap(SimpleSubrecord<String> EditorID, SimpleSubrecord<UInt32> Version, List<NavigationMapInfo> NavigationMapInfoList, List<NavigationConnectionInfo> NavigationConnectionInfoList)
+		{
+					}
+
+		public NavigationMeshInfoMap(NavigationMeshInfoMap copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -161,6 +175,11 @@ namespace ESPSharp.Records
 					NavigationConnectionInfoList.Add(tempNVCI);
 				}
 			}
+		}		
+
+		public NavigationMeshInfoMap Clone()
+		{
+			return new NavigationMeshInfoMap(this);
 		}
 
 	}

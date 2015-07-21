@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-	public partial class NavMeshDoor : IESPSerializable, ICloneable<NavMeshDoor>, IComparable<NavMeshDoor>, IEquatable<NavMeshDoor>, IReferenceContainer
+	public partial class NavMeshDoor : IESPSerializable, ICloneable, IComparable<NavMeshDoor>, IEquatable<NavMeshDoor>  
 	{
 		public FormID Door { get; set; }
 		public UInt16 Triangle { get; set; }
@@ -36,9 +36,11 @@ namespace ESPSharp.DataTypes
 
 		public NavMeshDoor(NavMeshDoor copyObject)
 		{
-			Door = copyObject.Door.Clone();
+			if (copyObject.Door != null)
+				Door = (FormID)copyObject.Door.Clone();
 			Triangle = copyObject.Triangle;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		public void ReadBinary(ESPReader reader)
@@ -46,8 +48,8 @@ namespace ESPSharp.DataTypes
 			try
 			{
 				Door.ReadBinary(reader);
-				Triangle = reader.ReadUInt16();
-				Unused = reader.ReadBytes(2);
+					Triangle = reader.ReadUInt16();
+					Unused = reader.ReadBytes(2);
 			}
 			catch
 			{
@@ -58,55 +60,47 @@ namespace ESPSharp.DataTypes
 		public void WriteBinary(ESPWriter writer)
 		{
 			Door.WriteBinary(writer);
-			writer.Write(Triangle);			
+			writer.Write(Triangle);
 			if (Unused == null)
 				writer.Write(new byte[2]);
 			else
-				writer.Write(Unused);
+			writer.Write(Unused);
 		}
 
 		public void WriteXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			ele.TryPathTo("Door", true, out subEle);
 			Door.WriteXML(subEle, master);
 
 			ele.TryPathTo("Triangle", true, out subEle);
 			subEle.Value = Triangle.ToString();
 
-			ele.TryPathTo("Unused", true, out subEle);
-			subEle.Value = Unused.ToHex();
+			WriteUnusedXML(ele, master);
 		}
 
 		public void ReadXML(XElement ele, ElderScrollsPlugin master)
 		{
 			XElement subEle;
-
+			
 			if (ele.TryPathTo("Door", false, out subEle))
-			{
 				Door.ReadXML(subEle, master);
-			}
 
 			if (ele.TryPathTo("Triangle", false, out subEle))
-			{
 				Triangle = subEle.ToUInt16();
-			}
 
-			if (ele.TryPathTo("Unused", false, out subEle))
-			{
-				Unused = subEle.ToBytes();
-			}
+			ReadUnusedXML(ele, master);
 		}
 
-		public NavMeshDoor Clone()
+		public object Clone()
 		{
 			return new NavMeshDoor(this);
 		}
 
         public int CompareTo(NavMeshDoor other)
         {
-            return Door.CompareTo(other.Door);
+			return Door.CompareTo(other.Door);
         }
 
         public static bool operator >(NavMeshDoor objA, NavMeshDoor objB)
@@ -131,14 +125,28 @@ namespace ESPSharp.DataTypes
 
         public bool Equals(NavMeshDoor other)
         {
+			if (System.Object.ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			if (((object)this == null) || ((object)other == null))
+			{
+				return false;
+			}
+
 			return Door == other.Door &&
 				Triangle == other.Triangle &&
-				Unused == other.Unused;
+				Unused.SequenceEqual(other.Unused);
         }
 
         public override bool Equals(object obj)
         {
+			if (obj == null)
+				return false;
+
             NavMeshDoor other = obj as NavMeshDoor;
+
             if (other == null)
                 return false;
             else
@@ -152,12 +160,36 @@ namespace ESPSharp.DataTypes
 
         public static bool operator ==(NavMeshDoor objA, NavMeshDoor objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return true;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return false;
+			}
+
             return objA.Equals(objB);
         }
 
         public static bool operator !=(NavMeshDoor objA, NavMeshDoor objB)
         {
+			if (System.Object.ReferenceEquals(objA, objB))
+			{
+				return false;
+			}
+
+			if (((object)objA == null) || ((object)objB == null))
+			{
+				return true;
+			}
+
             return !objA.Equals(objB);
         }
+
+		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
+		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

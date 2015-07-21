@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EntryPointRandRange : Subrecord, ICloneable<EntryPointRandRange>, IComparable<EntryPointRandRange>, IEquatable<EntryPointRandRange>  
+	public partial class EntryPointRandRange : Subrecord, ICloneable, IComparable<EntryPointRandRange>, IEquatable<EntryPointRandRange>  
 	{
 		public Single RandMin { get; set; }
 		public Single RandMax { get; set; }
 
-		public EntryPointRandRange()
+		public EntryPointRandRange(string Tag = null)
+			:base(Tag)
 		{
 			RandMin = new Single();
 			RandMax = new Single();
@@ -83,7 +84,7 @@ namespace ESPSharp.Subrecords
 				RandMax = subEle.ToSingle();
 		}
 
-		public EntryPointRandRange Clone()
+		public override object Clone()
 		{
 			return new EntryPointRandRange(this);
 		}

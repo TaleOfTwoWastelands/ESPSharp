@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RaceDefaultHairColors : Subrecord, ICloneable<RaceDefaultHairColors>, IComparable<RaceDefaultHairColors>, IEquatable<RaceDefaultHairColors>  
+	public partial class RaceDefaultHairColors : Subrecord, ICloneable, IComparable<RaceDefaultHairColors>, IEquatable<RaceDefaultHairColors>  
 	{
 		public HairColor MaleColor { get; set; }
 		public HairColor FemaleColor { get; set; }
 
-		public RaceDefaultHairColors()
+		public RaceDefaultHairColors(string Tag = null)
+			:base(Tag)
 		{
 			MaleColor = new HairColor();
 			FemaleColor = new HairColor();
@@ -83,7 +84,7 @@ namespace ESPSharp.Subrecords
 				FemaleColor = subEle.ToEnum<HairColor>();
 		}
 
-		public RaceDefaultHairColors Clone()
+		public override object Clone()
 		{
 			return new RaceDefaultHairColors(this);
 		}

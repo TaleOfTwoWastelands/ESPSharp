@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class MiscItem : Record, IEditorID	{
+	public partial class MiscItem : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -27,6 +29,26 @@ namespace ESPSharp.Records
 		public RecordReference DropSound { get; set; }
 		public ValueWeight Data { get; set; }
 		public RecordReference Looping_RandomSound { get; set; }
+
+		public MiscItem()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			Data = new ValueWeight("DATA");
+		}
+
+		public MiscItem(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference Script, Destructable Destructable, RecordReference PickUpSound, RecordReference DropSound, ValueWeight Data, RecordReference Looping_RandomSound)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.Data = Data;
+		}
+
+		public MiscItem(MiscItem copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -295,6 +317,11 @@ namespace ESPSharp.Records
 					
 				Looping_RandomSound.ReadXML(subEle, master);
 			}
+		}		
+
+		public MiscItem Clone()
+		{
+			return new MiscItem(this);
 		}
 
 	}

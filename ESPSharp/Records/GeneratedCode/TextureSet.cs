@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class TextureSet : Record, IEditorID	{
+	public partial class TextureSet : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> BaseImage_Transparency { get; set; }
@@ -25,6 +27,22 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<String> EnvironmentMap { get; set; }
 		public DecalData DecalData { get; set; }
 		public SimpleSubrecord<TXSTFlags> TextureSetFlags { get; set; }
+
+		public TextureSet()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+		}
+
+		public TextureSet(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> BaseImage_Transparency, SimpleSubrecord<String> NormalMap_Specular, SimpleSubrecord<String> EnvironmentMapMask, SimpleSubrecord<String> GlowMap, SimpleSubrecord<String> ParallaxMap, SimpleSubrecord<String> EnvironmentMap, DecalData DecalData, SimpleSubrecord<TXSTFlags> TextureSetFlags)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+		}
+
+		public TextureSet(TextureSet copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -253,6 +271,11 @@ namespace ESPSharp.Records
 					
 				TextureSetFlags.ReadXML(subEle, master);
 			}
+		}		
+
+		public TextureSet Clone()
+		{
+			return new TextureSet(this);
 		}
 
 	}

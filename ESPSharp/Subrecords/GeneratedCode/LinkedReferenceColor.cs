@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LinkedReferenceColor : Subrecord, ICloneable<LinkedReferenceColor>, IComparable<LinkedReferenceColor>, IEquatable<LinkedReferenceColor>  
+	public partial class LinkedReferenceColor : Subrecord, ICloneable, IComparable<LinkedReferenceColor>, IEquatable<LinkedReferenceColor>  
 	{
 		public Color Start { get; set; }
 		public Color End { get; set; }
 
-		public LinkedReferenceColor()
+		public LinkedReferenceColor(string Tag = null)
+			:base(Tag)
 		{
 			Start = new Color();
 			End = new Color();
@@ -34,8 +35,10 @@ namespace ESPSharp.Subrecords
 
 		public LinkedReferenceColor(LinkedReferenceColor copyObject)
 		{
-			Start = copyObject.Start.Clone();
-			End = copyObject.End.Clone();
+			if (copyObject.Start != null)
+				Start = (Color)copyObject.Start.Clone();
+			if (copyObject.End != null)
+				End = (Color)copyObject.End.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -83,7 +86,7 @@ namespace ESPSharp.Subrecords
 				End.ReadXML(subEle, master);
 		}
 
-		public LinkedReferenceColor Clone()
+		public override object Clone()
 		{
 			return new LinkedReferenceColor(this);
 		}

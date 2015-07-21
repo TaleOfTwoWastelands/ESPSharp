@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,28 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class ObjectEffect : Record, IEditorID	{
+	public partial class ObjectEffect : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public EnchantData Data { get; set; }
 		public List<Effect> Effects { get; set; }
+
+		public ObjectEffect()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new EnchantData("ENIT");
+		}
+
+		public ObjectEffect(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, EnchantData Data, List<Effect> Effects)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public ObjectEffect(ObjectEffect copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -144,6 +162,11 @@ namespace ESPSharp.Records
 					Effects.Add(tempEFID);
 				}
 			}
+		}		
+
+		public ObjectEffect Clone()
+		{
+			return new ObjectEffect(this);
 		}
 
 	}

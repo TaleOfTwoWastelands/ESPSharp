@@ -31,7 +31,7 @@ namespace ESPSharp.DataTypes
             return RawValue.ToString("X8");
         }
 
-        partial void WriteDataXML(XElement ele, ElderScrollsPlugin master)
+        partial void WriteRawValueXML(XElement ele, ElderScrollsPlugin master)
         {
             ele.Add(new XAttribute("ID", this));
 
@@ -48,7 +48,7 @@ namespace ESPSharp.DataTypes
                 ele.Value = "NullReference";
         }
 
-        partial void ReadDataXML(XElement ele, ElderScrollsPlugin master)
+        partial void ReadRawValueXML(XElement ele, ElderScrollsPlugin master)
         {
             RawValue = uint.Parse(ele.Attribute("ID").Value, System.Globalization.NumberStyles.HexNumber);
         }

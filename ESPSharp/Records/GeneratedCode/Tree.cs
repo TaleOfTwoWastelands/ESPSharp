@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Tree : Record, IEditorID	{
+	public partial class Tree : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public Model Model { get; set; }
@@ -23,6 +25,30 @@ namespace ESPSharp.Records
 		public SpeedtreeSeeds SpeedtreeSeeds { get; set; }
 		public TreeData Data { get; set; }
 		public BillboardDimensions BillboardDimensions { get; set; }
+
+		public Tree()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			SpeedtreeSeeds = new SpeedtreeSeeds("SNAM");
+			Data = new TreeData("CNAM");
+			BillboardDimensions = new BillboardDimensions("BNAM");
+		}
+
+		public Tree(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, SpeedtreeSeeds SpeedtreeSeeds, TreeData Data, BillboardDimensions BillboardDimensions)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.SpeedtreeSeeds = SpeedtreeSeeds;
+			this.Data = Data;
+			this.BillboardDimensions = BillboardDimensions;
+		}
+
+		public Tree(Tree copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -211,6 +237,11 @@ namespace ESPSharp.Records
 					
 				BillboardDimensions.ReadXML(subEle, master);
 			}
+		}		
+
+		public Tree Clone()
+		{
+			return new Tree(this);
 		}
 
 	}

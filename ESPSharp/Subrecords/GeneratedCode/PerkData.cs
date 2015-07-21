@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PerkData : Subrecord, ICloneable<PerkData>, IComparable<PerkData>, IEquatable<PerkData>  
+	public partial class PerkData : Subrecord, ICloneable, IComparable<PerkData>, IEquatable<PerkData>  
 	{
 		public NoYesByte IsTrait { get; set; }
 		public Byte MinLevel { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public NoYesByte IsPlayable { get; set; }
 		public NoYesByte IsHidden { get; set; }
 
-		public PerkData()
+		public PerkData(string Tag = null)
+			:base(Tag)
 		{
 			IsTrait = new NoYesByte();
 			MinLevel = new Byte();
@@ -119,7 +120,7 @@ namespace ESPSharp.Subrecords
 				IsHidden = subEle.ToEnum<NoYesByte>();
 		}
 
-		public PerkData Clone()
+		public override object Clone()
 		{
 			return new PerkData(this);
 		}

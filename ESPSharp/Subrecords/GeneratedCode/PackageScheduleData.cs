@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PackageScheduleData : Subrecord, ICloneable<PackageScheduleData>, IComparable<PackageScheduleData>, IEquatable<PackageScheduleData>  
+	public partial class PackageScheduleData : Subrecord, ICloneable, IComparable<PackageScheduleData>, IEquatable<PackageScheduleData>  
 	{
 		public SByte Month { get; set; }
 		public PackageScheduleDays DayOfWeek { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public SByte Time { get; set; }
 		public Int32 Duration { get; set; }
 
-		public PackageScheduleData()
+		public PackageScheduleData(string Tag = null)
+			:base(Tag)
 		{
 			Month = new SByte();
 			DayOfWeek = new PackageScheduleDays();
@@ -119,7 +120,7 @@ namespace ESPSharp.Subrecords
 				Duration = subEle.ToInt32();
 		}
 
-		public PackageScheduleData Clone()
+		public override object Clone()
 		{
 			return new PackageScheduleData(this);
 		}

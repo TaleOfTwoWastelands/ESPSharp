@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class NPCSkills : Subrecord, ICloneable<NPCSkills>, IComparable<NPCSkills>, IEquatable<NPCSkills>  
+	public partial class NPCSkills : Subrecord, ICloneable, IComparable<NPCSkills>, IEquatable<NPCSkills>  
 	{
 		public Byte BarterValue { get; set; }
 		public Byte BigGunsValue { get; set; }
@@ -46,7 +46,8 @@ namespace ESPSharp.Subrecords
 		public Byte SurvivalOffset { get; set; }
 		public Byte UnarmedOffset { get; set; }
 
-		public NPCSkills()
+		public NPCSkills(string Tag = null)
+			:base(Tag)
 		{
 			BarterValue = new Byte();
 			BigGunsValue = new Byte();
@@ -395,7 +396,7 @@ namespace ESPSharp.Subrecords
 				UnarmedOffset = subEle.ToByte();
 		}
 
-		public NPCSkills Clone()
+		public override object Clone()
 		{
 			return new NPCSkills(this);
 		}

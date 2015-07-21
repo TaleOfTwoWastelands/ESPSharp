@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RelatedWaters : Subrecord, ICloneable<RelatedWaters>, IComparable<RelatedWaters>, IEquatable<RelatedWaters>  
+	public partial class RelatedWaters : Subrecord, ICloneable, IComparable<RelatedWaters>, IEquatable<RelatedWaters>  
 	{
 		public FormID Daytime { get; set; }
 		public FormID Nighttime { get; set; }
 		public FormID Underwater { get; set; }
 
-		public RelatedWaters()
+		public RelatedWaters(string Tag = null)
+			:base(Tag)
 		{
 			Daytime = new FormID();
 			Nighttime = new FormID();
@@ -37,9 +38,12 @@ namespace ESPSharp.Subrecords
 
 		public RelatedWaters(RelatedWaters copyObject)
 		{
-			Daytime = copyObject.Daytime.Clone();
-			Nighttime = copyObject.Nighttime.Clone();
-			Underwater = copyObject.Underwater.Clone();
+			if (copyObject.Daytime != null)
+				Daytime = (FormID)copyObject.Daytime.Clone();
+			if (copyObject.Nighttime != null)
+				Nighttime = (FormID)copyObject.Nighttime.Clone();
+			if (copyObject.Underwater != null)
+				Underwater = (FormID)copyObject.Underwater.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -95,7 +99,7 @@ namespace ESPSharp.Subrecords
 				Underwater.ReadXML(subEle, master);
 		}
 
-		public RelatedWaters Clone()
+		public override object Clone()
 		{
 			return new RelatedWaters(this);
 		}

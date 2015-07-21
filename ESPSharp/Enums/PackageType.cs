@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ESPSharp.Enums
 {
-    public enum PackageType : ushort
+    public enum PackageType : byte
     {
         Find,
         Follow,

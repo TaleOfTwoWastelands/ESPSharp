@@ -13,6 +13,7 @@
 			"StageFlags",
 			"StageFlags"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 

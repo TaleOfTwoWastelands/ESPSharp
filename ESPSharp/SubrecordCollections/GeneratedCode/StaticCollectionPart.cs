@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class StaticCollectionPart : SubrecordCollection, ICloneable<StaticCollectionPart>
-	{
+	public partial class StaticCollectionPart : SubrecordCollection, IComparable<StaticCollectionPart>, IReferenceContainer	{
 		public RecordReference Static { get; set; }
 		public StaticCollectionPartData Placements { get; set; }
 
@@ -33,9 +32,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public StaticCollectionPart(StaticCollectionPart copyObject)
 		{
-			Static = copyObject.Static.Clone();
-			Placements = copyObject.Placements.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{
@@ -113,6 +110,31 @@ namespace ESPSharp.SubrecordCollections
 		{
 			return new StaticCollectionPart(this);
 		}
+
+		public int CompareTo(StaticCollectionPart other)
+        {
+			return Static.CompareTo(other.Static);
+        }
+
+        public static bool operator >(StaticCollectionPart objA, StaticCollectionPart objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(StaticCollectionPart objA, StaticCollectionPart objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(StaticCollectionPart objA, StaticCollectionPart objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(StaticCollectionPart objA, StaticCollectionPart objB)
+        {
+            return objA.CompareTo(objB) <= 0;
+        }
 
 	}
 }

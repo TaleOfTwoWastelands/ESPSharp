@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class DialogResponseData : Subrecord, ICloneable<DialogResponseData>, IComparable<DialogResponseData>, IEquatable<DialogResponseData>  
+	public partial class DialogResponseData : Subrecord, ICloneable, IComparable<DialogResponseData>, IEquatable<DialogResponseData>  
 	{
 		public DialogResponseType Type { get; set; }
 		public NextSpeaker NextSpeaker { get; set; }
 		public DialogResponseFlags Flags { get; set; }
 
-		public DialogResponseData()
+		public DialogResponseData(string Tag = null)
+			:base(Tag)
 		{
 			Type = new DialogResponseType();
 			NextSpeaker = new NextSpeaker();
@@ -95,7 +96,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<DialogResponseFlags>();
 		}
 
-		public DialogResponseData Clone()
+		public override object Clone()
 		{
 			return new DialogResponseData(this);
 		}

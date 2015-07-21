@@ -9,7 +9,7 @@ namespace ESPSharp
 {
     class TopGroup : Group
     {
-        private Dictionary<string, string> tagToNameDictionary = new Dictionary<string, string>
+        public static Dictionary<string, string> tagToNameDictionary = new Dictionary<string, string>
         {
             {"GMST", "Game Settings"},
             {"TXST", "Texture Sets"},

@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class InventoryItemExtraData : Subrecord, ICloneable<InventoryItemExtraData>, IComparable<InventoryItemExtraData>, IEquatable<InventoryItemExtraData>  
+	public partial class InventoryItemExtraData : Subrecord, ICloneable, IComparable<InventoryItemExtraData>, IEquatable<InventoryItemExtraData>  
 	{
 		public FormID Owner { get; set; }
 		public UInt32 OwnerData { get; set; }
 		public Single Condition { get; set; }
 
-		public InventoryItemExtraData()
+		public InventoryItemExtraData(string Tag = null)
+			:base(Tag)
 		{
 			Owner = new FormID();
 			OwnerData = new UInt32();
@@ -37,7 +38,8 @@ namespace ESPSharp.Subrecords
 
 		public InventoryItemExtraData(InventoryItemExtraData copyObject)
 		{
-			Owner = copyObject.Owner.Clone();
+			if (copyObject.Owner != null)
+				Owner = (FormID)copyObject.Owner.Clone();
 			OwnerData = copyObject.OwnerData;
 			Condition = copyObject.Condition;
 		}
@@ -93,7 +95,7 @@ namespace ESPSharp.Subrecords
 				Condition = subEle.ToSingle();
 		}
 
-		public InventoryItemExtraData Clone()
+		public override object Clone()
 		{
 			return new InventoryItemExtraData(this);
 		}

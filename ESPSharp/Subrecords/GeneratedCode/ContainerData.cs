@@ -15,12 +15,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ContainerData : Subrecord, ICloneable<ContainerData>, IComparable<ContainerData>, IEquatable<ContainerData>  
+	public partial class ContainerData : Subrecord, ICloneable, IComparable<ContainerData>, IEquatable<ContainerData>  
 	{
 		public ContainerFlags Flags { get; set; }
 		public Single Weight { get; set; }
 
-		public ContainerData()
+		public ContainerData(string Tag = null)
+			:base(Tag)
 		{
 			Flags = new ContainerFlags();
 			Weight = new Single();
@@ -83,7 +84,7 @@ namespace ESPSharp.Subrecords
 				Weight = subEle.ToSingle();
 		}
 
-		public ContainerData Clone()
+		public override object Clone()
 		{
 			return new ContainerData(this);
 		}

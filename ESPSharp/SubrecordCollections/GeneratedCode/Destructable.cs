@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class Destructable : SubrecordCollection, ICloneable<Destructable>
-	{
+	public partial class Destructable : SubrecordCollection	{
 		public DestructableHeader Header { get; set; }
 		public List<DestructionStage> DestructionStages { get; set; }
 
@@ -32,13 +31,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public Destructable(Destructable copyObject)
 		{
-			Header = copyObject.Header.Clone();
-			DestructionStages = new List<DestructionStage>();
-			foreach (var item in copyObject.DestructionStages)
-			{
-				DestructionStages.Add(item.Clone());
-			}
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

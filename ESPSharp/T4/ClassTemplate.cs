@@ -52,15 +52,17 @@ namespace ESPSharp.T4
             SetIndent(indent);
 
             string init;
-            
-            if (field.DefaultValue != null) 
-			    init = field.DefaultValue;
+
+            if (field.DefaultValue != null)
+                init = field.DefaultValue;
+            else if (field is RecordField && typeof(Subrecord).IsAssignableFrom(field.Type))
+                init = String.Format("new {0}(\"{1}\")", field.TypeString, (field as RecordField).Tag);
             else if (field.Type == typeof(string))
-			    init = "\"\"";
+                init = "\"\"";
             else if (field.Type != typeof(byte[]))
                 init = String.Format("new {0}()", field.TypeString);
             else
-			    init = String.Format("new byte[{0}]", field.byteCount);
+                init = String.Format("new byte[{0}]", field.byteCount);
 
 			WriteLine("{0} = {1};", field.Name, init);
              
@@ -87,8 +89,23 @@ namespace ESPSharp.T4
 
             if (field.Type.GetInterface("IEnumerable`1") != null && field.Type.IsConstructedGenericType)
             {
+                WriteLine("if (copyObject.{0} != null)", field.Name);
+                PushIndent("\t");
                 WriteLine("foreach(var temp in copyObject.{0})", field.Name);
-                WriteLine("\t{0}.Add({1});", field.Name, field.Type.GenericTypeArguments[0].GetCloneText("temp"));
+                PushIndent("\t");
+                WriteLine("{0}.Add({1});", field.Name, field.Type.GenericTypeArguments[0].GetCloneText("temp"));
+                PopIndent();
+                PopIndent();
+            }
+            else if (field.Type == typeof(object))
+            {
+                WriteLine("{0} = copyObject.{0};", field.Name);
+            }
+            else if (!field.Type.IsValueType)
+            {
+                WriteLine("if (copyObject.{0} != null)", field.Name);
+                PushIndent("\t");
+                WriteLine("{0} = {1};", field.Name, field.Type.GetCloneText(string.Format("copyObject.{0}", field.Name)));
             }
             else
                 WriteLine("{0} = {1};", field.Name, field.Type.GetCloneText(string.Format("copyObject.{0}", field.Name)));
@@ -96,45 +113,99 @@ namespace ESPSharp.T4
             ClearIndent();
         }
 
-        public void WriteReadBinaryCommand(ClassField field, int indent = 5)
+        public void WriteReadBinaryCommand(ClassField field, string readerName = "reader", int indent = 5)
         {
             SetIndent(indent);
 
             if (field.implementReadData)
-                if (field.Type.IsEnum)
-                    WriteLine("{0} = subReader.ReadEnum<{1}>();", field.Name, field.TypeString);
+                if (field.Type.GetInterface("IEnumerable`1") != null && field.Type.IsConstructedGenericType)
+                {
+                    if (field.hasListCount)
+                    {
+                        WriteLine("{0} {1}Count = {2}.Read{0}();", Utility.GetFriendlyName(field.listCountType), field.Name, readerName);
+                        WriteLine("");
+                        WriteLine("for (int i = 0; i < {0}Count; i++)", field.Name);
+                    }
+                    else if (field.listItemSize > 0)
+                    {
+                        WriteLine("for (int i = 0; i < size/{0}; i++)", field.listItemSize);
+                    }
+                    else
+                        throw new Exception();
+
+                    WriteLine("{");
+                    PushIndent("\t");
+                    if (field.Type.GenericTypeArguments[0].IsEnum)
+                        WriteLine("{0}.Add({1}.ReadEnum<{2}>());", field.Name, readerName, field.Type.GenericTypeArguments[0].FriendlyName());
+                    else if (field.Type.GenericTypeArguments[0] == typeof(byte[]))
+                        WriteLine("{0}.Add({1}.ReadBytes({2}));", field.Name, readerName, field.byteCount);
+                    else if (field.Type.GenericTypeArguments[0].GetInterface("IESPSerializable") != null)
+                    {
+                        WriteLine("var temp = new {0}();", field.Type.GenericTypeArguments[0].FriendlyName());
+                        WriteLine("temp.ReadBinary({0});", readerName);
+                        WriteLine("{0}.Add(temp);", field.Name);
+                    }
+                    else
+                        WriteLine("{0}.Add({1}.Read{2}());", field.Name, readerName, field.Type.GenericTypeArguments[0].FriendlyName());
+                    PopIndent();
+                    WriteLine("}");
+                }
                 else if (field.Type == typeof(byte[]))
-                    WriteLine("{0} = subReader.ReadBytes({1});", field.Name, field.byteCount);
+                    WriteLine("{0} = {1}.ReadBytes({2});", field.Name, readerName, field.byteCount);
+                else if (field.Type.IsEnum)
+                    WriteLine("{0} = {1}.ReadEnum<{2}>();", field.Name, readerName, field.TypeString);
                 else if (field.Type.GetInterface("IESPSerializable") != null)
-                    WriteLine("{0}.ReadBinary(subReader);", field.Name);
+                    WriteLine("{0}.ReadBinary({1});", field.Name, readerName);
                 else
-                    WriteLine("{0} = subReader.Read{1}();", field.Name, field.TypeString);
+                    WriteLine("{0} = {1}.Read{2}();", field.Name, readerName, field.TypeString);
             else
-                WriteLine("Read{0}Binary(subReader);", field.Name);
+                WriteLine("Read{0}Binary({1});", field.Name, readerName);
 
             ClearIndent();
         }
 
-        public void WriteWriteBinaryCommand(ClassField field, int indent = 3)
+        public void WriteWriteBinaryCommand(ClassField field, string writerName = "writer", int indent = 3)
         {
             SetIndent(indent);
 
             if (field.implementWriteData)
-                if (field.Type.IsEnum)
-                    WriteLine("writer.Write(({0}){1});", Utility.GetFriendlyName(Enum.GetUnderlyingType(field.Type)), field.Name);
+                if (field.Type.GetInterface("IEnumerable`1") != null && field.Type.IsConstructedGenericType)
+                {
+                    if (field.hasListCount)
+                        WriteLine("{0}.Write(({1}){2}.Count);", writerName, Utility.GetFriendlyName(field.listCountType), field.Name);
+
+                    if (field.isSorted && field.Type.GenericTypeArguments[0].GetInterface("IComparable`1") != null)
+                        WriteLine("{0}.Sort();", field.Name);
+
+                    WriteLine("foreach (var temp in {0})", field.Name);
+                    WriteLine("{");
+                    PushIndent("\t");
+
+                    if (field.Type.GenericTypeArguments[0].IsEnum)
+                        WriteLine("{0}.Write(({1})temp);", writerName, Utility.GetFriendlyName(Enum.GetUnderlyingType(field.Type.GenericTypeArguments[0])));
+                    else if (field.Type.GenericTypeArguments[0].GetInterface("IESPSerializable") != null)
+                        WriteLine("temp.WriteBinary({0});", writerName);
+                    else
+                        WriteLine("{0}.Write(temp);", writerName);
+
+                    PopIndent();
+                    WriteLine("}");
+                }
+                else if (field.Type.IsEnum)
+                    WriteLine("{0}.Write(({1}){2});", writerName, Utility.GetFriendlyName(Enum.GetUnderlyingType(field.Type)), field.Name);
                 else if (field.Type == typeof(byte[]))
                 {
                     WriteLine("if ({0} == null)", field.Name);
-                    WriteLine("\twriter.Write(new byte[{0}]);", field.byteCount);
+                    WriteLine("\t{0}.Write(new byte[{1}]);",writerName, field.byteCount);
                     WriteLine("else");
-                    WriteLine("writer.Write({0});", field.Name);
+                    WriteLine("{0}.Write({1});", writerName, field.Name);
                 }
                 else if (field.Type.GetInterface("IESPSerializable") != null)
-                    WriteLine("{0}.WriteBinary(writer);", field.Name);
+                    WriteLine("{0}.WriteBinary({1});", field.Name, writerName);
                 else
-                    WriteLine("writer.Write({0});", field.Name);
+                    WriteLine("{0}.Write({1});", writerName, field.Name);
             else
-                WriteLine("Write{0}Binary(writer);", field.Name);
+                WriteLine("Write{0}Binary({1});", field.Name, writerName);
 
             ClearIndent();
         }
@@ -146,7 +217,30 @@ namespace ESPSharp.T4
             if (field.implementWriteXML)
             {
                 WriteLine("ele.TryPathTo(\"{0}\", true, out subEle);", field.XMLPath);
-                if (field.Type == typeof(byte[]))
+                if (field.Type.GetInterface("IEnumerable`1") != null && field.Type.IsConstructedGenericType)
+                {
+                    if (field.isSorted && field.Type.GenericTypeArguments[0].GetInterface("IComparable`1") != null)
+                        WriteLine("{0}.Sort();", field.Name);
+
+                    WriteLine("foreach (var temp in {0})", field.Name);
+                    WriteLine("{");
+                    PushIndent("\t");
+
+                    if (field.Type.GenericTypeArguments[0] == typeof(Single))
+                        WriteLine("subEle.Add(new XElement(\"{0}\", temp.ToString(\"G15\"));", field.XMLSubName);
+                    else if (field.Type.GenericTypeArguments[0].GetInterface("IESPSerializable") != null)
+                    {
+                        WriteLine("XElement e = new XElement(\"{0}\");", field.XMLSubName);
+                        WriteLine("temp.WriteXML(e, master);");
+                        WriteLine("subEle.Add(e);");
+                    }
+                    else
+                        WriteLine("subEle.Add(new XElement(\"{0}\", temp));", field.XMLSubName);
+
+                    PopIndent();
+                    WriteLine("}");
+                }
+                else if (field.Type == typeof(byte[]))
                     WriteLine("subEle.Value = {0}.ToHex();", field.Name);
                 else if (field.Type == typeof(Single))
                     WriteLine("subEle.Value = {0}.ToString(\"G15\");", field.Name);
@@ -169,7 +263,29 @@ namespace ESPSharp.T4
             {
                 WriteLine("if (ele.TryPathTo(\"{0}\", false, out subEle))", field.XMLPath);
                 PushIndent("\t");
-                if (field.Type.IsEnum)
+                if (field.Type.GetInterface("IEnumerable`1") != null && field.Type.IsConstructedGenericType)
+                {
+                    WriteLine("foreach (XElement e in subEle.Elements())");
+                    WriteLine("{");
+                    PushIndent("\t");
+
+                    if (field.Type.GenericTypeArguments[0].IsEnum)
+                        WriteLine("{0}.Add(e.ToEnum<{1}>());", field.Name, field.Type.GenericTypeArguments[0].FriendlyName());
+                    else if (field.Type.GenericTypeArguments[0] == typeof(string))
+                        WriteLine("{0}.Add(e.Value);", field.Name);
+                    else if (field.Type.GenericTypeArguments[0].GetInterface("IESPSerializable") != null)
+                    {
+                        WriteLine("var temp = new {0}();", field.Type.GenericTypeArguments[0].FriendlyName());
+                        WriteLine("temp.ReadXML(e, master);");
+                        WriteLine("{0}.Add(temp);", field.Name);
+                    }
+                    else
+                        WriteLine("{0}.Add(e.To{1}());", field.Name, field.Type.GenericTypeArguments[0].FriendlyName());
+
+                    PopIndent();
+                    WriteLine("}");
+                }
+                else if (field.Type.IsEnum)
                     WriteLine("{0} = subEle.ToEnum<{1}>();", field.Name, field.TypeString);
                 else if (field.Type == typeof(byte[]))
                     WriteLine("{0} = subEle.ToBytes();", field.Name, field.TypeString);
@@ -218,13 +334,18 @@ namespace ESPSharp.T4
         public string XMLSubName;
         public string DefaultValue;
 
+        public bool hasListCount = false;
         public bool isReadOnly = false;
         public bool implementReadData = true;
         public bool implementWriteData = true;
         public bool implementReadXML = true;
         public bool implementWriteXML = true;
+        public bool isSorted = false;
 
         public uint byteCount = 0;
+        public uint listItemSize = 0;
+
+        public Type listCountType;
 
         public ClassField()
         {
@@ -249,11 +370,24 @@ namespace ESPSharp.T4
         {
             get
             {
-                if (Type == typeof(byte[]))
+                if (Type.GetInterface("IEnumerable`1") != null)
                     return String.Format("{0}.SequenceEqual(other.{0})", Name);
                 else
                     return String.Format("{0} == other.{0}", Name);
             }
+        }
+    }
+
+    public class RecordField : ClassField
+    {
+        public string Tag;
+        public List<String> XMLSubNames;
+        public bool isRequired = false;
+
+        public RecordField(string Tag, Type Type, string Name, string XMLPath)
+            :base(Type, Name, XMLPath)
+        {
+            this.Tag = Tag;
         }
     }
 }

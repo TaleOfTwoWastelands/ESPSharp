@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PositionRotation : Subrecord, ICloneable<PositionRotation>, IComparable<PositionRotation>, IEquatable<PositionRotation>  
+	public partial class PositionRotation : Subrecord, ICloneable, IComparable<PositionRotation>, IEquatable<PositionRotation>  
 	{
 		public Single PositionX { get; set; }
 		public Single PositionY { get; set; }
@@ -24,7 +24,8 @@ namespace ESPSharp.Subrecords
 		public Single RotationY { get; set; }
 		public Single RotationZ { get; set; }
 
-		public PositionRotation()
+		public PositionRotation(string Tag = null)
+			:base(Tag)
 		{
 			PositionX = new Single();
 			PositionY = new Single();
@@ -131,7 +132,7 @@ namespace ESPSharp.Subrecords
 				RotationZ = subEle.ToSingle();
 		}
 
-		public PositionRotation Clone()
+		public override object Clone()
 		{
 			return new PositionRotation(this);
 		}

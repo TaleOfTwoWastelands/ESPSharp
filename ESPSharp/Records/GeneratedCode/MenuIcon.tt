@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	RecordTemplate template = new RecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "MenuIcon";
 
 	//editorID
@@ -29,7 +29,7 @@
 	//small icon
 	RecordField smallIconField = 
 		new RecordField(
-			"MICN",
+			"MICO",
 			typeof(SimpleSubrecord<string>),
 			"SmallIcon",
 			"SmallIcon"

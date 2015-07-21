@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,36 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class AddonNode : Record, IEditorID	{
+	public partial class AddonNode : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public Model Model { get; set; }
 		public SimpleSubrecord<Int32> NodeIndex { get; set; }
 		public RecordReference Sound { get; set; }
 		public AddonNodeData Data { get; set; }
+
+		public AddonNode()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			NodeIndex = new SimpleSubrecord<Int32>("DATA");
+			Data = new AddonNodeData("DNAM");
+		}
+
+		public AddonNode(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, Model Model, SimpleSubrecord<Int32> NodeIndex, RecordReference Sound, AddonNodeData Data)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.NodeIndex = NodeIndex;
+			this.Data = Data;
+		}
+
+		public AddonNode(AddonNode copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -169,6 +193,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public AddonNode Clone()
+		{
+			return new AddonNode(this);
 		}
 
 	}

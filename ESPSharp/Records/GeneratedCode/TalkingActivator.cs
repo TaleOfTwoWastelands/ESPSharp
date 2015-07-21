@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class TalkingActivator : Record, IEditorID	{
+	public partial class TalkingActivator : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -24,6 +26,24 @@ namespace ESPSharp.Records
 		public RecordReference LoopingSound { get; set; }
 		public RecordReference VoiceType { get; set; }
 		public RecordReference RadioTemplate { get; set; }
+
+		public TalkingActivator()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+		}
+
+		public TalkingActivator(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, RecordReference Script, Destructable Destructable, RecordReference LoopingSound, RecordReference VoiceType, RecordReference RadioTemplate)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+		}
+
+		public TalkingActivator(TalkingActivator copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -232,6 +252,11 @@ namespace ESPSharp.Records
 					
 				RadioTemplate.ReadXML(subEle, master);
 			}
+		}		
+
+		public TalkingActivator Clone()
+		{
+			return new TalkingActivator(this);
 		}
 
 	}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,29 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class MenuIcon : Record, IEditorID	{
+	public partial class MenuIcon : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> LargeIcon { get; set; }
 		public SimpleSubrecord<String> SmallIcon { get; set; }
+
+		public MenuIcon()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			LargeIcon = new SimpleSubrecord<String>("ICON");
+			SmallIcon = new SimpleSubrecord<String>("MICO");
+		}
+
+		public MenuIcon(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon)
+		{
+			this.EditorID = EditorID;
+			this.LargeIcon = LargeIcon;
+			this.SmallIcon = SmallIcon;
+		}
+
+		public MenuIcon(MenuIcon copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -39,7 +59,7 @@ namespace ESPSharp.Records
 
 						LargeIcon.ReadBinary(reader);
 						break;
-					case "MICN":
+					case "MICO":
 						if (SmallIcon == null)
 							SmallIcon = new SimpleSubrecord<String>();
 
@@ -106,6 +126,11 @@ namespace ESPSharp.Records
 					
 				SmallIcon.ReadXML(subEle, master);
 			}
+		}		
+
+		public MenuIcon Clone()
+		{
+			return new MenuIcon(this);
 		}
 
 	}

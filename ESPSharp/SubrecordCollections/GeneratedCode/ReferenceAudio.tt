@@ -23,6 +23,7 @@
 			"AudioLocation",
 			"AudioLocation"
 			);
+	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
 	tempField = 

@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-    public partial class Card : SubrecordCollection, ICloneable<Card>
+    public partial class Card : SubrecordCollection, ICloneable
     {
         public SimpleSubrecord<CardSuit> Suit { get; set; }
         public SimpleSubrecord<CardValue> Value { get; set; }
@@ -33,8 +33,10 @@ namespace ESPSharp.SubrecordCollections
 
         public Card(Card copyObject)
         {
+            /*
             Suit = copyObject.Suit.Clone();
             Value = copyObject.Value.Clone();
+             */
         }
 
         public override void ReadBinary(ESPReader reader)
@@ -107,7 +109,7 @@ namespace ESPSharp.SubrecordCollections
             }
         }
 
-        public Card Clone()
+        public object Clone()
         {
             return new Card(this);
         }

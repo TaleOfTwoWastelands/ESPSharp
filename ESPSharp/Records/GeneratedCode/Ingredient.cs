@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Ingredient : Record, IEditorID	{
+	public partial class Ingredient : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -26,6 +28,32 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<Single> Weight { get; set; }
 		public IngredientData Data { get; set; }
 		public List<Effect> Effects { get; set; }
+
+		public Ingredient()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			EquipmentType = new SimpleSubrecord<EquipmentType>("ETYP");
+			Weight = new SimpleSubrecord<Single>("DATA");
+			Data = new IngredientData("ENIT");
+			Effects = new List<Effect>();
+		}
+
+		public Ingredient(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference Script, SimpleSubrecord<EquipmentType> EquipmentType, SimpleSubrecord<Single> Weight, IngredientData Data, List<Effect> Effects)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.EquipmentType = EquipmentType;
+			this.Weight = Weight;
+			this.Data = Data;
+			this.Effects = Effects;
+		}
+
+		public Ingredient(Ingredient copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -291,6 +319,11 @@ namespace ESPSharp.Records
 					Effects.Add(tempEFID);
 				}
 			}
+		}		
+
+		public Ingredient Clone()
+		{
+			return new Ingredient(this);
 		}
 
 	}

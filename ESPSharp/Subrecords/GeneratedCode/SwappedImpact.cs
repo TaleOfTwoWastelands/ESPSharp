@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class SwappedImpact : Subrecord, ICloneable<SwappedImpact>, IComparable<SwappedImpact>, IEquatable<SwappedImpact>  
+	public partial class SwappedImpact : Subrecord, ICloneable, IComparable<SwappedImpact>, IEquatable<SwappedImpact>  
 	{
 		public MaterialTypeUInt MaterialType { get; set; }
 		public FormID OldImpact { get; set; }
 		public FormID NewImpact { get; set; }
 
-		public SwappedImpact()
+		public SwappedImpact(string Tag = null)
+			:base(Tag)
 		{
 			MaterialType = new MaterialTypeUInt();
 			OldImpact = new FormID();
@@ -38,8 +39,10 @@ namespace ESPSharp.Subrecords
 		public SwappedImpact(SwappedImpact copyObject)
 		{
 			MaterialType = copyObject.MaterialType;
-			OldImpact = copyObject.OldImpact.Clone();
-			NewImpact = copyObject.NewImpact.Clone();
+			if (copyObject.OldImpact != null)
+				OldImpact = (FormID)copyObject.OldImpact.Clone();
+			if (copyObject.NewImpact != null)
+				NewImpact = (FormID)copyObject.NewImpact.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -95,7 +98,7 @@ namespace ESPSharp.Subrecords
 				NewImpact.ReadXML(subEle, master);
 		}
 
-		public SwappedImpact Clone()
+		public override object Clone()
 		{
 			return new SwappedImpact(this);
 		}

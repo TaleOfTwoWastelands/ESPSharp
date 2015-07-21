@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Projectile : Record, IEditorID	{
+	public partial class Projectile : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -24,6 +26,30 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<String> MuzzleFlashModelFilename { get; set; }
 		public SimpleSubrecord<Byte[]> MuzzleFlashModelTextureHash { get; set; }
 		public SimpleSubrecord<SoundLevel> SoundLevel { get; set; }
+
+		public Projectile()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			MuzzleFlashModelFilename = new SimpleSubrecord<String>("NAM1");
+			MuzzleFlashModelTextureHash = new SimpleSubrecord<Byte[]>("NAM2");
+			SoundLevel = new SimpleSubrecord<SoundLevel>("VNAM");
+		}
+
+		public Projectile(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, Destructable Destructable, ProjectileData ProjectileData, SimpleSubrecord<String> MuzzleFlashModelFilename, SimpleSubrecord<Byte[]> MuzzleFlashModelTextureHash, SimpleSubrecord<SoundLevel> SoundLevel)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.MuzzleFlashModelFilename = MuzzleFlashModelFilename;
+			this.MuzzleFlashModelTextureHash = MuzzleFlashModelTextureHash;
+			this.SoundLevel = SoundLevel;
+		}
+
+		public Projectile(Projectile copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -232,6 +258,11 @@ namespace ESPSharp.Records
 					
 				SoundLevel.ReadXML(subEle, master);
 			}
+		}		
+
+		public Projectile Clone()
+		{
+			return new Projectile(this);
 		}
 
 	}

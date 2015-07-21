@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Water : Record, IEditorID	{
+	public partial class Water : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<String> NoiseMap { get; set; }
@@ -26,6 +28,34 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<UInt16> Damage { get; set; }
 		public WaterData Data { get; set; }
 		public RelatedWaters RelatedWaters { get; set; }
+
+		public Water()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			NoiseMap = new SimpleSubrecord<String>("NNAM");
+			Opacity = new SimpleSubrecord<Byte>("ANAM");
+			WaterFlags = new SimpleSubrecord<WaterFlags>("FNAM");
+			MaterialID = new SimpleSubrecord<String>("MNAM");
+			Damage = new SimpleSubrecord<UInt16>("DATA");
+			Data = new WaterData("DNAM");
+			RelatedWaters = new RelatedWaters("GNAM");
+		}
+
+		public Water(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<String> NoiseMap, SimpleSubrecord<Byte> Opacity, SimpleSubrecord<WaterFlags> WaterFlags, SimpleSubrecord<String> MaterialID, RecordReference Sound, RecordReference ActorEffect, SimpleSubrecord<UInt16> Damage, WaterData Data, RelatedWaters RelatedWaters)
+		{
+			this.EditorID = EditorID;
+			this.NoiseMap = NoiseMap;
+			this.Opacity = Opacity;
+			this.WaterFlags = WaterFlags;
+			this.MaterialID = MaterialID;
+			this.Damage = Damage;
+			this.Data = Data;
+			this.RelatedWaters = RelatedWaters;
+		}
+
+		public Water(Water copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -271,7 +301,13 @@ namespace ESPSharp.Records
 					
 				RelatedWaters.ReadXML(subEle, master);
 			}
+		}		
+
+		public Water Clone()
+		{
+			return new Water(this);
 		}
+
 
 		partial void ReadDamage(ESPReader reader);
 	}

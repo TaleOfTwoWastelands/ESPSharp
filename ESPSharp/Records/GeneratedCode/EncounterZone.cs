@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,26 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class EncounterZone : Record, IEditorID	{
+	public partial class EncounterZone : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public EncounterZoneData Data { get; set; }
+
+		public EncounterZone()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			Data = new EncounterZoneData("DATA");
+		}
+
+		public EncounterZone(SimpleSubrecord<String> EditorID, EncounterZoneData Data)
+		{
+			this.EditorID = EditorID;
+			this.Data = Data;
+		}
+
+		public EncounterZone(EncounterZone copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -85,6 +103,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public EncounterZone Clone()
+		{
+			return new EncounterZone(this);
 		}
 
 	}

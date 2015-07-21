@@ -1,7 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿
 <#@ output extension=".cs" #>
 <#	
-	RecordTemplate template = new RecordTemplate();
+	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "Note";
 
 	RecordField tempField;
@@ -112,7 +112,7 @@
 	tempField = 
 		new RecordField(
 			"TNAM",
-			typeof(object),
+			typeof(Subrecord),
 			"EntryData",
 			"EntryData"
 			);

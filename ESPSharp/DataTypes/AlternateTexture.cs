@@ -14,22 +14,18 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-    public partial class AlternateTexture : IESPSerializable, ICloneable<AlternateTexture>, IReferenceContainer
+    public partial class AlternateTexture : IESPSerializable, ICloneable, IReferenceContainer
     {
-        partial void ReadData(ESPReader reader)
+        partial void ReadNameBinary(ESPReader reader)
         {
             int length = reader.ReadInt32();
             Name = new String(reader.ReadChars(length));
-            TextureSet.ReadBinary(reader);
-            Index = reader.ReadInt32();
         }
 
-        partial void WriteData(ESPWriter writer)
+        partial void WriteNameBinary(ESPWriter writer)
         {
             writer.Write(Name.Length);
             writer.Write(Name.ToCharArray());
-            TextureSet.WriteBinary(writer);
-            writer.Write(Index);
         }
     }
 }

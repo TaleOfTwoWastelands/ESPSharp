@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ExplosionData : Subrecord, ICloneable<ExplosionData>, IComparable<ExplosionData>, IEquatable<ExplosionData>  
+	public partial class ExplosionData : Subrecord, ICloneable, IComparable<ExplosionData>, IEquatable<ExplosionData>  
 	{
 		public Single Force { get; set; }
 		public Single Damage { get; set; }
@@ -31,7 +31,8 @@ namespace ESPSharp.Subrecords
 		public Single RadiationRadius { get; set; }
 		public SoundLevel SoundLevel { get; set; }
 
-		public ExplosionData()
+		public ExplosionData(string Tag = null)
+			:base(Tag)
 		{
 			Force = new Single();
 			Damage = new Single();
@@ -70,12 +71,16 @@ namespace ESPSharp.Subrecords
 			Force = copyObject.Force;
 			Damage = copyObject.Damage;
 			Radius = copyObject.Radius;
-			Light = copyObject.Light.Clone();
-			Sound1 = copyObject.Sound1.Clone();
+			if (copyObject.Light != null)
+				Light = (FormID)copyObject.Light.Clone();
+			if (copyObject.Sound1 != null)
+				Sound1 = (FormID)copyObject.Sound1.Clone();
 			Flags = copyObject.Flags;
 			ISRadius = copyObject.ISRadius;
-			ImpactDataSet = copyObject.ImpactDataSet.Clone();
-			Sound2 = copyObject.Sound2.Clone();
+			if (copyObject.ImpactDataSet != null)
+				ImpactDataSet = (FormID)copyObject.ImpactDataSet.Clone();
+			if (copyObject.Sound2 != null)
+				Sound2 = (FormID)copyObject.Sound2.Clone();
 			RadiationLevel = copyObject.RadiationLevel;
 			RadiationDissipationTime = copyObject.RadiationDissipationTime;
 			RadiationRadius = copyObject.RadiationRadius;
@@ -215,7 +220,7 @@ namespace ESPSharp.Subrecords
 				SoundLevel = subEle.ToEnum<SoundLevel>();
 		}
 
-		public ExplosionData Clone()
+		public override object Clone()
 		{
 			return new ExplosionData(this);
 		}

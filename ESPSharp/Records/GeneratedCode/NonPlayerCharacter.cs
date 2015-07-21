@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class NonPlayerCharacter : Record, IEditorID	{
+	public partial class NonPlayerCharacter : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -49,6 +51,54 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<UInt16> Unknown { get; set; }
 		public SimpleSubrecord<Single> Height { get; set; }
 		public SimpleSubrecord<Single> Weight { get; set; }
+
+		public NonPlayerCharacter()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			BaseStats = new NPCBaseStats("ACBS");
+			VoiceType = new RecordReference("VTCK");
+			Race = new RecordReference("RNAM");
+			UnarmedAttackAnimation = new SimpleSubrecord<UInt16>("EAMT");
+			AIData = new AIData("AIDT");
+			Class = new RecordReference("CNAM");
+			Data = new NPCData("DATA");
+			HairColor = new SimpleSubrecord<Color>("HCLR");
+			ImpactMaterialType = new SimpleSubrecord<MaterialTypeUInt>("NAM4");
+			FaceGenGeometrySymmetric = new SimpleSubrecord<byte[]>("FGGS", new byte[4]);
+			FaceGenGeometryAsymmetric = new SimpleSubrecord<byte[]>("FGGA", new byte[4]);
+			FaceGenTexture = new SimpleSubrecord<byte[]>("FGTS", new byte[4]);
+			Unknown = new SimpleSubrecord<UInt16>("NAM5");
+			Height = new SimpleSubrecord<Single>("NAM6");
+			Weight = new SimpleSubrecord<Single>("NAM7");
+		}
+
+		public NonPlayerCharacter(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, NPCBaseStats BaseStats, List<FactionMembership> Factions, RecordReference DeathItem, RecordReference VoiceType, RecordReference Template, RecordReference Race, List<RecordReference> ActorEffects, RecordReference UnarmedAttackEffect, SimpleSubrecord<UInt16> UnarmedAttackAnimation, Destructable Destructable, RecordReference Script, List<InventoryItem> Contents, AIData AIData, List<RecordReference> Packages, RecordReference Class, NPCData Data, NPCSkills Skills, List<RecordReference> HeadParts, RecordReference HairType, SimpleSubrecord<Single> HairLength, RecordReference Eyes, SimpleSubrecord<Color> HairColor, RecordReference CombatStyle, SimpleSubrecord<MaterialTypeUInt> ImpactMaterialType, SimpleSubrecord<Byte[]> FaceGenGeometrySymmetric, SimpleSubrecord<Byte[]> FaceGenGeometryAsymmetric, SimpleSubrecord<Byte[]> FaceGenTexture, SimpleSubrecord<UInt16> Unknown, SimpleSubrecord<Single> Height, SimpleSubrecord<Single> Weight)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.BaseStats = BaseStats;
+			this.VoiceType = VoiceType;
+			this.Race = Race;
+			this.UnarmedAttackAnimation = UnarmedAttackAnimation;
+			this.AIData = AIData;
+			this.Class = Class;
+			this.Data = Data;
+			this.HairColor = HairColor;
+			this.ImpactMaterialType = ImpactMaterialType;
+			this.FaceGenGeometrySymmetric = FaceGenGeometrySymmetric;
+			this.FaceGenGeometryAsymmetric = FaceGenGeometryAsymmetric;
+			this.FaceGenTexture = FaceGenTexture;
+			this.Unknown = Unknown;
+			this.Height = Height;
+			this.Weight = Weight;
+		}
+
+		public NonPlayerCharacter(NonPlayerCharacter copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -291,8 +341,11 @@ namespace ESPSharp.Records
 			if (BaseStats != null)
 				BaseStats.WriteBinary(writer);
 			if (Factions != null)
+			{
+				Factions.Sort();
 				foreach (var item in Factions)
 					item.WriteBinary(writer);
+			}
 			if (DeathItem != null)
 				DeathItem.WriteBinary(writer);
 			if (VoiceType != null)
@@ -313,8 +366,11 @@ namespace ESPSharp.Records
 			if (Script != null)
 				Script.WriteBinary(writer);
 			if (Contents != null)
+			{
+				Contents.Sort();
 				foreach (var item in Contents)
 					item.WriteBinary(writer);
+			}
 			if (AIData != null)
 				AIData.WriteBinary(writer);
 			if (Packages != null)
@@ -327,8 +383,11 @@ namespace ESPSharp.Records
 			if (Skills != null)
 				Skills.WriteBinary(writer);
 			if (HeadParts != null)
+			{
+				HeadParts.Sort();
 				foreach (var item in HeadParts)
 					item.WriteBinary(writer);
+			}
 			if (HairType != null)
 				HairType.WriteBinary(writer);
 			if (HairLength != null)
@@ -388,6 +447,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("Factions", true, out subEle);
 				List<string> xmlNames = new List<string>{"Faction"};
 				int i = 0;
+				Factions.Sort();
 				foreach (var entry in Factions)
 				{
 					i = i % xmlNames.Count();
@@ -456,6 +516,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("Contents", true, out subEle);
 				List<string> xmlNames = new List<string>{"Item"};
 				int i = 0;
+				Contents.Sort();
 				foreach (var entry in Contents)
 				{
 					i = i % xmlNames.Count();
@@ -504,6 +565,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("HeadParts", true, out subEle);
 				List<string> xmlNames = new List<string>{"HeadPart"};
 				int i = 0;
+				HeadParts.Sort();
 				foreach (var entry in HeadParts)
 				{
 					i = i % xmlNames.Count();
@@ -842,6 +904,11 @@ namespace ESPSharp.Records
 					
 				Weight.ReadXML(subEle, master);
 			}
+		}		
+
+		public NonPlayerCharacter Clone()
+		{
+			return new NonPlayerCharacter(this);
 		}
 
 	}

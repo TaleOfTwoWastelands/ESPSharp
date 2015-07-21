@@ -14,12 +14,13 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WorldLandData : Subrecord, ICloneable<WorldLandData>, IComparable<WorldLandData>, IEquatable<WorldLandData>  
+	public partial class WorldLandData : Subrecord, ICloneable, IComparable<WorldLandData>, IEquatable<WorldLandData>  
 	{
 		public Single DefaultLandHeight { get; set; }
 		public Single DefaultWaterHeight { get; set; }
 
-		public WorldLandData()
+		public WorldLandData(string Tag = null)
+			:base(Tag)
 		{
 			DefaultLandHeight = new Single();
 			DefaultWaterHeight = new Single();
@@ -82,7 +83,7 @@ namespace ESPSharp.Subrecords
 				DefaultWaterHeight = subEle.ToSingle();
 		}
 
-		public WorldLandData Clone()
+		public override object Clone()
 		{
 			return new WorldLandData(this);
 		}

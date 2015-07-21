@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class ArmorExtraData : Subrecord, ICloneable<ArmorExtraData>, IComparable<ArmorExtraData>, IEquatable<ArmorExtraData>  
+	public partial class ArmorExtraData : Subrecord, ICloneable, IComparable<ArmorExtraData>, IEquatable<ArmorExtraData>  
 	{
 		public Int16 DamageResistance { get; set; }
 		public ArmorFlags Flags { get; set; }
 		public Single DamageThreshold { get; set; }
 		public Byte[] Unknown { get; set; }
 
-		public ArmorExtraData()
+		public ArmorExtraData(string Tag = null)
+			:base(Tag)
 		{
 			DamageResistance = new Int16();
 			Flags = new ArmorFlags();
@@ -43,7 +44,8 @@ namespace ESPSharp.Subrecords
 			DamageResistance = copyObject.DamageResistance;
 			Flags = copyObject.Flags;
 			DamageThreshold = copyObject.DamageThreshold;
-			Unknown = (Byte[])copyObject.Unknown.Clone();
+			if (copyObject.Unknown != null)
+				Unknown = (Byte[])copyObject.Unknown.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -110,7 +112,7 @@ namespace ESPSharp.Subrecords
 				Unknown = subEle.ToBytes();
 		}
 
-		public ArmorExtraData Clone()
+		public override object Clone()
 		{
 			return new ArmorExtraData(this);
 		}

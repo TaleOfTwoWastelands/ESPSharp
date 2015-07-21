@@ -364,6 +364,7 @@
 			"NoisePropertiesNoiseLayerOneAmplitudeScale",
 			"NoiseProperties/NoiseLayerOne/AmplitudeScale"
 			);
+	tempField.DefaultValue = "1";
 	template.Fields.Add(tempField);
 
 	tempField = 
@@ -372,6 +373,7 @@
 			"NoisePropertiesNoiseLayerTwoAmplitudeScale",
 			"NoiseProperties/NoiseLayerTwo/AmplitudeScale"
 			);
+	tempField.DefaultValue = "0.5f";
 	template.Fields.Add(tempField);
 
 	tempField = 
@@ -380,6 +382,7 @@
 			"NoisePropertiesNoiseLayerThreeAmplitudeScale",
 			"NoiseProperties/NoiseLayerThree/AmplitudeScale"
 			);
+	tempField.DefaultValue = "0.25f";
 	template.Fields.Add(tempField);
 
 	tempField = 

@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-    public class PackageTarget : Subrecord, ICloneable<PackageTarget>
+    public class PackageTarget : Subrecord, ICloneable
     {
         public PackageTargetType Type { get; set; }
         public dynamic Target { get; set; }
@@ -176,7 +176,7 @@ namespace ESPSharp.Subrecords
             }
         }
 
-        public PackageTarget Clone()
+        public override object Clone()
         {
             return new PackageTarget(this);
         }

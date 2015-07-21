@@ -10,7 +10,7 @@ using ESPSharp.Interfaces;
 
 namespace ESPSharp.Subrecords
 {
-    public class UndecodedSubrecord : Subrecord, ICloneable<UndecodedSubrecord>
+    public class UndecodedSubrecord : Subrecord, ICloneable
     {
         public byte[] Data { get; set; }
 
@@ -50,7 +50,7 @@ namespace ESPSharp.Subrecords
             Data = ele.ToBytes();
         }
 
-        public UndecodedSubrecord Clone()
+        public override object Clone()
         {
             throw new NotImplementedException();
         }

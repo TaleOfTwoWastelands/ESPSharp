@@ -15,13 +15,14 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class PluginHeader : Subrecord, ICloneable<PluginHeader>, IComparable<PluginHeader>, IEquatable<PluginHeader>  
+	public partial class PluginHeader : Subrecord, ICloneable, IComparable<PluginHeader>, IEquatable<PluginHeader>  
 	{
 		public Single Version { get; set; }
 		public UInt32 RecordCount { get; set; }
 		public UInt32 NextObjectID { get; set; }
 
-		public PluginHeader()
+		public PluginHeader(string Tag = null)
+			:base(Tag)
 		{
 			Version = new Single();
 			RecordCount = new UInt32();
@@ -95,7 +96,7 @@ namespace ESPSharp.Subrecords
 				NextObjectID = subEle.ToUInt32();
 		}
 
-		public PluginHeader Clone()
+		public override object Clone()
 		{
 			return new PluginHeader(this);
 		}

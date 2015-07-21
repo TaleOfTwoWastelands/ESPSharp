@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.DataTypes
 {
-    public class Comparison : IESPSerializable, ICloneable<Comparison>, IComparable<Comparison>, IEquatable<Comparison>, IReferenceContainer
+    public class Comparison : IESPSerializable, ICloneable, IComparable<Comparison>, IEquatable<Comparison>, IReferenceContainer
     {
         public ConditionFlags Flags { get; set; }
         public ConditionComparisonType Operator { get; set; }
@@ -129,7 +129,7 @@ namespace ESPSharp.DataTypes
             }
         }
 
-        public Comparison Clone()
+        public object Clone()
         {
             return new Comparison(this);
         }

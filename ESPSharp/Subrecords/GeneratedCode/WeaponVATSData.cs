@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class WeaponVATSData : Subrecord, ICloneable<WeaponVATSData>, IComparable<WeaponVATSData>, IEquatable<WeaponVATSData>  
+	public partial class WeaponVATSData : Subrecord, ICloneable, IComparable<WeaponVATSData>, IEquatable<WeaponVATSData>  
 	{
 		public FormID Effect { get; set; }
 		public Single SkillRequirement { get; set; }
@@ -25,7 +25,8 @@ namespace ESPSharp.Subrecords
 		public NoYesByte RequiresMod { get; set; }
 		public Byte[] Unused { get; set; }
 
-		public WeaponVATSData()
+		public WeaponVATSData(string Tag = null)
+			:base(Tag)
 		{
 			Effect = new FormID();
 			SkillRequirement = new Single();
@@ -49,13 +50,15 @@ namespace ESPSharp.Subrecords
 
 		public WeaponVATSData(WeaponVATSData copyObject)
 		{
-			Effect = copyObject.Effect.Clone();
+			if (copyObject.Effect != null)
+				Effect = (FormID)copyObject.Effect.Clone();
 			SkillRequirement = copyObject.SkillRequirement;
 			DamageMult = copyObject.DamageMult;
 			APCost = copyObject.APCost;
 			IsSilent = copyObject.IsSilent;
 			RequiresMod = copyObject.RequiresMod;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -144,7 +147,7 @@ namespace ESPSharp.Subrecords
 			ReadUnusedXML(ele, master);
 		}
 
-		public WeaponVATSData Clone()
+		public override object Clone()
 		{
 			return new WeaponVATSData(this);
 		}

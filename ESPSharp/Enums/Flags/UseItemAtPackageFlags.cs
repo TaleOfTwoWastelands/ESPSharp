@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ESPSharp.Enums.Flags
 {
     [Flags]
-    public enum UseItemAtPackageFlags : uint
+    public enum UseItemAtPackageFlags : ushort
     {
         SitDown = 0x02,
         AllowBuying = 0x0100,

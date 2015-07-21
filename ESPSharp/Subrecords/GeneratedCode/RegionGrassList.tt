@@ -1,0 +1,20 @@
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
+	template.ClassName = "RegionGrassList";
+	template.isComparable = false;
+	template.isReferenceable = true;
+
+	ClassField tempField;
+
+	tempField = 
+		new ClassField(
+			typeof(List<RegionGrass>),
+			"Grasses",
+			"Grasses"
+			);
+	tempField.XMLSubName = "Grass";
+	tempField.listItemSize = 8;
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

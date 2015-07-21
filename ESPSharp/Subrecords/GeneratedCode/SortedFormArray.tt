@@ -1,0 +1,21 @@
+﻿<#	
+	ClassTemplate template = new ClassTemplate();
+	template.ClassName = "SortedFormArray";
+	template.isComparable = false;
+	template.isReferenceable = false;
+
+	ClassField tempField;
+
+	tempField = 
+		new ClassField(
+			typeof(List<FormID>),
+			"Forms",
+			"Forms"
+			);
+	tempField.isSorted = true;
+	tempField.XMLSubName = "Form";
+	tempField.listItemSize = 4;
+	template.hashKey = tempField;
+	template.Fields.Add(tempField);
+#>
+<#@ include file="SubrecordTemplate.t4" once="true" #>

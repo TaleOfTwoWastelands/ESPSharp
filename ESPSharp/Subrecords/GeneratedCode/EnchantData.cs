@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class EnchantData : Subrecord, ICloneable<EnchantData>, IComparable<EnchantData>, IEquatable<EnchantData>  
+	public partial class EnchantData : Subrecord, ICloneable, IComparable<EnchantData>, IEquatable<EnchantData>  
 	{
 		public EnchantType Type { get; set; }
 		public Byte[] Unused1 { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public EnchantFlags Flags { get; set; }
 		public Byte[] Unused3 { get; set; }
 
-		public EnchantData()
+		public EnchantData(string Tag = null)
+			:base(Tag)
 		{
 			Type = new EnchantType();
 			Unused1 = new byte[4];
@@ -44,10 +45,13 @@ namespace ESPSharp.Subrecords
 		public EnchantData(EnchantData copyObject)
 		{
 			Type = copyObject.Type;
-			Unused1 = (Byte[])copyObject.Unused1.Clone();
-			Unused2 = (Byte[])copyObject.Unused2.Clone();
+			if (copyObject.Unused1 != null)
+				Unused1 = (Byte[])copyObject.Unused1.Clone();
+			if (copyObject.Unused2 != null)
+				Unused2 = (Byte[])copyObject.Unused2.Clone();
 			Flags = copyObject.Flags;
-			Unused3 = (Byte[])copyObject.Unused3.Clone();
+			if (copyObject.Unused3 != null)
+				Unused3 = (Byte[])copyObject.Unused3.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -122,7 +126,7 @@ namespace ESPSharp.Subrecords
 			ReadUnused3XML(ele, master);
 		}
 
-		public EnchantData Clone()
+		public override object Clone()
 		{
 			return new EnchantData(this);
 		}

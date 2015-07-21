@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class NamedBodyPart : SubrecordCollection, ICloneable<NamedBodyPart>, IReferenceContainer
-	{
+	public partial class NamedBodyPart : SubrecordCollection	{
 		public SimpleSubrecord<String> PartName { get; set; }
 		public BodyPart BodyPart { get; set; }
 
@@ -33,9 +32,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public NamedBodyPart(NamedBodyPart copyObject)
 		{
-			PartName = copyObject.PartName.Clone();
-			BodyPart = copyObject.BodyPart.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

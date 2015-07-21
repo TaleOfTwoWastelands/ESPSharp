@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class LocalVariableData : Subrecord, ICloneable<LocalVariableData>, IComparable<LocalVariableData>, IEquatable<LocalVariableData>  
+	public partial class LocalVariableData : Subrecord, ICloneable, IComparable<LocalVariableData>, IEquatable<LocalVariableData>  
 	{
 		public UInt32 Index { get; set; }
 		public Byte[] Unused1 { get; set; }
 		public LocalVariableFlag Flags { get; set; }
 		public Byte[] Unused2 { get; set; }
 
-		public LocalVariableData()
+		public LocalVariableData(string Tag = null)
+			:base(Tag)
 		{
 			Index = new UInt32();
 			Unused1 = new byte[12];
@@ -41,9 +42,11 @@ namespace ESPSharp.Subrecords
 		public LocalVariableData(LocalVariableData copyObject)
 		{
 			Index = copyObject.Index;
-			Unused1 = (Byte[])copyObject.Unused1.Clone();
+			if (copyObject.Unused1 != null)
+				Unused1 = (Byte[])copyObject.Unused1.Clone();
 			Flags = copyObject.Flags;
-			Unused2 = (Byte[])copyObject.Unused2.Clone();
+			if (copyObject.Unused2 != null)
+				Unused2 = (Byte[])copyObject.Unused2.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -109,7 +112,7 @@ namespace ESPSharp.Subrecords
 			ReadUnused2XML(ele, master);
 		}
 
-		public LocalVariableData Clone()
+		public override object Clone()
 		{
 			return new LocalVariableData(this);
 		}

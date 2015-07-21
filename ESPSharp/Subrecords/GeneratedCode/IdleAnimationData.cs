@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class IdleAnimationData : Subrecord, ICloneable<IdleAnimationData>, IComparable<IdleAnimationData>, IEquatable<IdleAnimationData>  
+	public partial class IdleAnimationData : Subrecord, ICloneable, IComparable<IdleAnimationData>, IEquatable<IdleAnimationData>  
 	{
 		public AnimationGroupSection AnimationGroupSection { get; set; }
 		public Byte LoopingMin { get; set; }
@@ -25,7 +25,8 @@ namespace ESPSharp.Subrecords
 		public IdleAnimationFlags Flags { get; set; }
 		public Byte Unused2 { get; set; }
 
-		public IdleAnimationData()
+		public IdleAnimationData(string Tag = null)
+			:base(Tag)
 		{
 			AnimationGroupSection = new AnimationGroupSection();
 			LoopingMin = new Byte();
@@ -139,7 +140,7 @@ namespace ESPSharp.Subrecords
 			ReadUnused2XML(ele, master);
 		}
 
-		public IdleAnimationData Clone()
+		public override object Clone()
 		{
 			return new IdleAnimationData(this);
 		}

@@ -15,14 +15,15 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RadioData : Subrecord, ICloneable<RadioData>, IComparable<RadioData>, IEquatable<RadioData>  
+	public partial class RadioData : Subrecord, ICloneable, IComparable<RadioData>, IEquatable<RadioData>  
 	{
 		public Single RangeRadius { get; set; }
 		public BroadcastRangeType BroadcastRange { get; set; }
 		public Single StaticPercentage { get; set; }
 		public FormID PositionReference { get; set; }
 
-		public RadioData()
+		public RadioData(string Tag = null)
+			:base(Tag)
 		{
 			RangeRadius = new Single();
 			BroadcastRange = new BroadcastRangeType();
@@ -43,7 +44,8 @@ namespace ESPSharp.Subrecords
 			RangeRadius = copyObject.RangeRadius;
 			BroadcastRange = copyObject.BroadcastRange;
 			StaticPercentage = copyObject.StaticPercentage;
-			PositionReference = copyObject.PositionReference.Clone();
+			if (copyObject.PositionReference != null)
+				PositionReference = (FormID)copyObject.PositionReference.Clone();
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -107,7 +109,7 @@ namespace ESPSharp.Subrecords
 				PositionReference.ReadXML(subEle, master);
 		}
 
-		public RadioData Clone()
+		public override object Clone()
 		{
 			return new RadioData(this);
 		}

@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class SoundAttenuation : Subrecord, ICloneable<SoundAttenuation>, IComparable<SoundAttenuation>, IEquatable<SoundAttenuation>  
+	public partial class SoundAttenuation : Subrecord, ICloneable, IComparable<SoundAttenuation>, IEquatable<SoundAttenuation>  
 	{
 		public Int16 Point1 { get; set; }
 		public Int16 Point2 { get; set; }
@@ -23,7 +23,8 @@ namespace ESPSharp.Subrecords
 		public Int16 Point4 { get; set; }
 		public Int16 Point5 { get; set; }
 
-		public SoundAttenuation()
+		public SoundAttenuation(string Tag = null)
+			:base(Tag)
 		{
 			Point1 = new Int16();
 			Point2 = new Int16();
@@ -119,7 +120,7 @@ namespace ESPSharp.Subrecords
 				Point5 = subEle.ToInt16();
 		}
 
-		public SoundAttenuation Clone()
+		public override object Clone()
 		{
 			return new SoundAttenuation(this);
 		}

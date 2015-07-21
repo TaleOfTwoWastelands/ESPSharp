@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class MediaLocationController : Record, IEditorID	{
+	public partial class MediaLocationController : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<Byte[]> Unknown1 { get; set; }
@@ -32,6 +34,20 @@ namespace ESPSharp.Records
 		public List<RecordReference> MediaSetsBattle { get; set; }
 		public RecordReference ConditionalFaction { get; set; }
 		public SimpleSubrecord<Byte[]> Unknown4 { get; set; }
+
+		public MediaLocationController()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public MediaLocationController(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<Byte[]> Unknown1, SimpleSubrecord<Byte[]> Unknown2, SimpleSubrecord<Byte[]> Unknown3, SimpleSubrecord<Single> LocationDelay, SimpleSubrecord<UInt32> DayStart, SimpleSubrecord<UInt32> NightStart, SimpleSubrecord<Single> RetriggerDelay, List<RecordReference> MediaSetsNeutral, List<RecordReference> MediaSetsAlly, List<RecordReference> MediaSetsFriend, List<RecordReference> MediaSetsEnemy, List<RecordReference> MediaSetsLocation, List<RecordReference> MediaSetsBattle, RecordReference ConditionalFaction, SimpleSubrecord<Byte[]> Unknown4)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public MediaLocationController(MediaLocationController copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -182,23 +198,41 @@ namespace ESPSharp.Records
 			if (RetriggerDelay != null)
 				RetriggerDelay.WriteBinary(writer);
 			if (MediaSetsNeutral != null)
+			{
+				MediaSetsNeutral.Sort();
 				foreach (var item in MediaSetsNeutral)
 					item.WriteBinary(writer);
+			}
 			if (MediaSetsAlly != null)
+			{
+				MediaSetsAlly.Sort();
 				foreach (var item in MediaSetsAlly)
 					item.WriteBinary(writer);
+			}
 			if (MediaSetsFriend != null)
+			{
+				MediaSetsFriend.Sort();
 				foreach (var item in MediaSetsFriend)
 					item.WriteBinary(writer);
+			}
 			if (MediaSetsEnemy != null)
+			{
+				MediaSetsEnemy.Sort();
 				foreach (var item in MediaSetsEnemy)
 					item.WriteBinary(writer);
+			}
 			if (MediaSetsLocation != null)
+			{
+				MediaSetsLocation.Sort();
 				foreach (var item in MediaSetsLocation)
 					item.WriteBinary(writer);
+			}
 			if (MediaSetsBattle != null)
+			{
+				MediaSetsBattle.Sort();
 				foreach (var item in MediaSetsBattle)
 					item.WriteBinary(writer);
+			}
 			if (ConditionalFaction != null)
 				ConditionalFaction.WriteBinary(writer);
 			if (Unknown4 != null)
@@ -258,6 +292,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("MediaSets/Neutral", true, out subEle);
 				List<string> xmlNames = new List<string>{"MediaSet"};
 				int i = 0;
+				MediaSetsNeutral.Sort();
 				foreach (var entry in MediaSetsNeutral)
 				{
 					i = i % xmlNames.Count();
@@ -272,6 +307,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("MediaSets/Ally", true, out subEle);
 				List<string> xmlNames = new List<string>{"MediaSet"};
 				int i = 0;
+				MediaSetsAlly.Sort();
 				foreach (var entry in MediaSetsAlly)
 				{
 					i = i % xmlNames.Count();
@@ -286,6 +322,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("MediaSets/Friend", true, out subEle);
 				List<string> xmlNames = new List<string>{"MediaSet"};
 				int i = 0;
+				MediaSetsFriend.Sort();
 				foreach (var entry in MediaSetsFriend)
 				{
 					i = i % xmlNames.Count();
@@ -300,6 +337,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("MediaSets/Enemy", true, out subEle);
 				List<string> xmlNames = new List<string>{"MediaSet"};
 				int i = 0;
+				MediaSetsEnemy.Sort();
 				foreach (var entry in MediaSetsEnemy)
 				{
 					i = i % xmlNames.Count();
@@ -314,6 +352,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("MediaSets/Location", true, out subEle);
 				List<string> xmlNames = new List<string>{"MediaSet"};
 				int i = 0;
+				MediaSetsLocation.Sort();
 				foreach (var entry in MediaSetsLocation)
 				{
 					i = i % xmlNames.Count();
@@ -328,6 +367,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("MediaSets/Battle", true, out subEle);
 				List<string> xmlNames = new List<string>{"MediaSet"};
 				int i = 0;
+				MediaSetsBattle.Sort();
 				foreach (var entry in MediaSetsBattle)
 				{
 					i = i % xmlNames.Count();
@@ -502,6 +542,11 @@ namespace ESPSharp.Records
 					
 				Unknown4.ReadXML(subEle, master);
 			}
+		}		
+
+		public MediaLocationController Clone()
+		{
+			return new MediaLocationController(this);
 		}
 
 	}

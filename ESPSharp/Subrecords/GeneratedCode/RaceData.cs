@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RaceData : Subrecord, ICloneable<RaceData>, IComparable<RaceData>, IEquatable<RaceData>  
+	public partial class RaceData : Subrecord, ICloneable, IComparable<RaceData>, IEquatable<RaceData>  
 	{
 		public ActorValuesByte SkillBonus1 { get; set; }
 		public Byte SkillBonus1Amount { get; set; }
@@ -38,7 +38,8 @@ namespace ESPSharp.Subrecords
 		public Single FemaleWeight { get; set; }
 		public RaceFlags RaceFlags { get; set; }
 
-		public RaceData()
+		public RaceData(string Tag = null)
+			:base(Tag)
 		{
 			SkillBonus1 = new ActorValuesByte();
 			SkillBonus1Amount = new Byte();
@@ -102,7 +103,8 @@ namespace ESPSharp.Subrecords
 			SkillBonus6Amount = copyObject.SkillBonus6Amount;
 			SkillBonus7 = copyObject.SkillBonus7;
 			SkillBonus7Amount = copyObject.SkillBonus7Amount;
-			Unused = (Byte[])copyObject.Unused.Clone();
+			if (copyObject.Unused != null)
+				Unused = (Byte[])copyObject.Unused.Clone();
 			MaleHeight = copyObject.MaleHeight;
 			FemaleHeight = copyObject.FemaleHeight;
 			MaleWeight = copyObject.MaleWeight;
@@ -300,7 +302,7 @@ namespace ESPSharp.Subrecords
 				RaceFlags = subEle.ToEnum<RaceFlags>();
 		}
 
-		public RaceData Clone()
+		public override object Clone()
 		{
 			return new RaceData(this);
 		}

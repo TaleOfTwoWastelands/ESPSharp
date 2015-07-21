@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Reference : Record, IEditorID	{
+	public partial class Reference : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public LinkedReferenceColor Unknown1 { get; set; }
 		public RecordReference Base { get; set; }
@@ -68,6 +70,18 @@ namespace ESPSharp.Records
 		public SimpleSubrecord<Byte[]> DistantLODData { get; set; }
 		public SimpleSubrecord<Single> Scale { get; set; }
 		public PositionRotation PositionRotation { get; set; }
+
+		public Reference()
+		{
+					}
+
+		public Reference(SimpleSubrecord<String> EditorID, LinkedReferenceColor Unknown1, RecordReference Base, RecordReference EncounterZone, SimpleSubrecord<Byte[]> RagdollData, SimpleSubrecord<Byte[]> RagdollBipedData, PrimitiveData Primitive, SimpleSubrecord<CollisionLayer> CollisionLayer, SubMarker MultiboundPrimitiveMarker, BoundHalfExtents BoundHalfExtents, TeleportDestinationData TeleportDestination, MapMarker MapMarker, ReferenceAudio Audio, SimpleSubrecord<Byte[]> Unknown2, SimpleSubrecord<Byte[]> Unknown3, RecordReference Target, SimpleSubrecord<Int32> LevelModifier, ReferencePatrolData Patrol, RadioData Radio, RecordReference Owner, SimpleSubrecord<Int32> FactionRank, LockData Lock, SimpleSubrecord<Int32> Count, SimpleSubrecord<Single> Radius, SimpleSubrecord<Single> Health, SimpleSubrecord<Single> Radiation, SimpleSubrecord<Single> Charge, ReferenceAmmo Ammo, List<WaterReflection> WaterReflections, List<RecordReference> LitWaters, List<SimpleSubrecord<Byte[]>> Decals, RecordReference LinkedReference, LinkedReferenceColor LinkedReferenceColor, SimpleSubrecord<NoYesByte> ParentActivateOnly, List<ActivateParent> ActivateParents, SimpleSubrecord<String> ActivationPrompt, EnableParent EnableParent, RecordReference Emittance, RecordReference MultiBound, SimpleSubrecord<ActionFlags> ActionFlags, SubMarker OpenByDefault, SubMarker IgnoredBySandbox, NavigationDoorLink NavigationDoorLink, FormArray PortalRooms, PlaneData PortalData, SimpleSubrecord<Byte> SpeedTreeSeed, RoomDataHeader RoomDataHeader, RecordReference LinkedRoom, PlaneData OcclusionPlaneData, LinkedOcclusionPlanes LinkedOcclusionPlanes, SimpleSubrecord<Byte[]> DistantLODData, SimpleSubrecord<Single> Scale, PositionRotation PositionRotation)
+		{
+					}
+
+		public Reference(Reference copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -1224,6 +1238,11 @@ namespace ESPSharp.Records
 					
 				PositionRotation.ReadXML(subEle, master);
 			}
+		}		
+
+		public Reference Clone()
+		{
+			return new Reference(this);
 		}
 
 	}

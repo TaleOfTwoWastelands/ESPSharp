@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class RaceHeadData : SubrecordCollection, ICloneable<RaceHeadData>
-	{
+	public partial class RaceHeadData : SubrecordCollection	{
 		public SubMarker Marker { get; set; }
 		public GenderHeadData Male { get; set; }
 		public GenderHeadData Female { get; set; }
@@ -35,9 +34,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public RaceHeadData(RaceHeadData copyObject)
 		{
-			Male = copyObject.Male.Clone();
-			Female = copyObject.Female.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

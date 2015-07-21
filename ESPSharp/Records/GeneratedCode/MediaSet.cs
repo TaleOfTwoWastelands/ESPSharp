@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class MediaSet : Record, IEditorID	{
+	public partial class MediaSet : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
 		public SimpleSubrecord<MediaSetType> Type { get; set; }
@@ -44,6 +46,20 @@ namespace ESPSharp.Records
 		public RecordReference Intro_Daytime { get; set; }
 		public RecordReference Outro_Nighttime { get; set; }
 		public SimpleSubrecord<Byte[]> Unknown { get; set; }
+
+		public MediaSet()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+		}
+
+		public MediaSet(SimpleSubrecord<String> EditorID, SimpleSubrecord<String> Name, SimpleSubrecord<MediaSetType> Type, SimpleSubrecord<String> Loop_Battle_DayOuter, SimpleSubrecord<String> Explore_DayMiddle, SimpleSubrecord<String> Suspense_DayInner, SimpleSubrecord<String> NightOuter, SimpleSubrecord<String> NightMiddle, SimpleSubrecord<String> NightInner, SimpleSubrecord<Single> DecibelLoop_Battle_DayOuter, SimpleSubrecord<Single> DecibelExplore_DayMiddle, SimpleSubrecord<Single> DecibelSuspense_DayInner, SimpleSubrecord<Single> DecibelNightOuter, SimpleSubrecord<Single> DecibelNightMiddle, SimpleSubrecord<Single> DecibelNightInner, SimpleSubrecord<Single> DayOuterBoundary, SimpleSubrecord<Single> DayMiddleBoundary, SimpleSubrecord<Single> DayInnerBoundary, SimpleSubrecord<Single> NightOuterBoundary, SimpleSubrecord<Single> NightMiddleBoundary, SimpleSubrecord<Single> NightInnerBoundary, SimpleSubrecord<MediaSetEnableFlags> EnableFlags, SimpleSubrecord<Single> WaitTime_MinTimeOn_DaytimeMin, SimpleSubrecord<Single> LoopFadeOut_LoopingRandomCrossfadeOverlap_NighttimeMin, SimpleSubrecord<Single> RecoveryTime_LayerCrossfadeTime_DaytimeMax, SimpleSubrecord<Single> NighttimeMax, RecordReference Intro_Daytime, RecordReference Outro_Nighttime, SimpleSubrecord<Byte[]> Unknown)
+		{
+			this.EditorID = EditorID;
+		}
+
+		public MediaSet(MediaSet copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -652,6 +668,11 @@ namespace ESPSharp.Records
 					
 				Unknown.ReadXML(subEle, master);
 			}
+		}		
+
+		public MediaSet Clone()
+		{
+			return new MediaSet(this);
 		}
 
 	}

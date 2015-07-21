@@ -14,8 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class RecipeOutput : SubrecordCollection, ICloneable<RecipeOutput>
-	{
+	public partial class RecipeOutput : SubrecordCollection	{
 		public RecordReference Item { get; set; }
 		public SimpleSubrecord<UInt32> Quantity { get; set; }
 
@@ -33,9 +32,7 @@ namespace ESPSharp.SubrecordCollections
 
 		public RecipeOutput(RecipeOutput copyObject)
 		{
-			Item = copyObject.Item.Clone();
-			Quantity = copyObject.Quantity.Clone();
-		}
+					}
 	
 		public override void ReadBinary(ESPReader reader)
 		{

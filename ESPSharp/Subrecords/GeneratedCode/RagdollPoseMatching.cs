@@ -15,7 +15,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Subrecords
 {
-	public partial class RagdollPoseMatching : Subrecord, ICloneable<RagdollPoseMatching>, IComparable<RagdollPoseMatching>, IEquatable<RagdollPoseMatching>  
+	public partial class RagdollPoseMatching : Subrecord, ICloneable, IComparable<RagdollPoseMatching>, IEquatable<RagdollPoseMatching>  
 	{
 		public UInt16 MatchBone1 { get; set; }
 		public UInt16 MatchBone2 { get; set; }
@@ -27,7 +27,8 @@ namespace ESPSharp.Subrecords
 		public Single MatchErrorAllowance { get; set; }
 		public Single DisplacementToDisable { get; set; }
 
-		public RagdollPoseMatching()
+		public RagdollPoseMatching(string Tag = null)
+			:base(Tag)
 		{
 			MatchBone1 = new UInt16();
 			MatchBone2 = new UInt16();
@@ -165,7 +166,7 @@ namespace ESPSharp.Subrecords
 				DisplacementToDisable = subEle.ToSingle();
 		}
 
-		public RagdollPoseMatching Clone()
+		public override object Clone()
 		{
 			return new RagdollPoseMatching(this);
 		}

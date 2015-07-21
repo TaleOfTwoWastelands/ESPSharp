@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class Book : Record, IEditorID	{
+	public partial class Book : Record, IEditorID
+	{
 		public SimpleSubrecord<String> EditorID { get; set; }
 		public ObjectBounds ObjectBounds { get; set; }
 		public SimpleSubrecord<String> Name { get; set; }
@@ -27,6 +29,28 @@ namespace ESPSharp.Records
 		public RecordReference PickUpSound { get; set; }
 		public RecordReference DropSound { get; set; }
 		public BookData Data { get; set; }
+
+		public Book()
+		{
+			EditorID = new SimpleSubrecord<String>("EDID");
+			ObjectBounds = new ObjectBounds("OBND");
+			Model = new Model();
+			Description = new SimpleSubrecord<String>("DESC");
+			Data = new BookData("DATA");
+		}
+
+		public Book(SimpleSubrecord<String> EditorID, ObjectBounds ObjectBounds, SimpleSubrecord<String> Name, Model Model, SimpleSubrecord<String> LargeIcon, SimpleSubrecord<String> SmallIcon, RecordReference Script, SimpleSubrecord<String> Description, Destructable Destructable, RecordReference PickUpSound, RecordReference DropSound, BookData Data)
+		{
+			this.EditorID = EditorID;
+			this.ObjectBounds = ObjectBounds;
+			this.Model = Model;
+			this.Description = Description;
+			this.Data = Data;
+		}
+
+		public Book(Book copyObject)
+		{
+					}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
 		{
@@ -295,6 +319,11 @@ namespace ESPSharp.Records
 					
 				Data.ReadXML(subEle, master);
 			}
+		}		
+
+		public Book Clone()
+		{
+			return new Book(this);
 		}
 
 	}
