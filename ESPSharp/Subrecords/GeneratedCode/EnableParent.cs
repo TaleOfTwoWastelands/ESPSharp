@@ -106,8 +106,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(EnableParent other)
         {
-			return Parent.CompareTo(other.Parent);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(EnableParent objA, EnableParent objB)
         {

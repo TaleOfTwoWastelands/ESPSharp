@@ -102,8 +102,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(NavMeshExternalConnection other)
         {
-			return NavigationMesh.CompareTo(other.NavigationMesh);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(NavMeshExternalConnection objA, NavMeshExternalConnection objB)
         {

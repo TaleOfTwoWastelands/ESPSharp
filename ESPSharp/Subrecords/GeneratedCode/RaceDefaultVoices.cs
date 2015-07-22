@@ -93,8 +93,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RaceDefaultVoices other)
         {
-			return MaleVoice.CompareTo(other.MaleVoice);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RaceDefaultVoices objA, RaceDefaultVoices objB)
         {

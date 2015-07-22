@@ -104,8 +104,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(DebrisData other)
         {
-			return Percentage.CompareTo(other.Percentage);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(DebrisData objA, DebrisData objB)
         {

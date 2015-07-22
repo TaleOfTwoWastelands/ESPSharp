@@ -302,14 +302,14 @@ namespace ESPSharp.T4
             ClearIndent();
         }
 
-        public void WriteCompareHashKeyCommand(ClassTemplate template, int indent = 3)
+        public void WriteCompareCommand(ClassField field, int indent = 4)
         {
             SetIndent(indent);
 
-            if (template.hashKey.Type == typeof(byte[]))
-                WriteLine("return {0}.GetHashCode().CompareTo(other.{0}.GetHashCode());", template.hashKey.Name);
+            if (field.Type == typeof(byte[]))
+                WriteLine("result = {0}.GetHashCode().CompareTo(other.{0}.GetHashCode());", field.Name);
             else
-                WriteLine("return {0}.CompareTo(other.{0});", template.hashKey.Name);
+                WriteLine("result = {0}.CompareTo(other.{0});", field.Name);
 
             ClearIndent();
         }
@@ -333,6 +333,7 @@ namespace ESPSharp.T4
         public string XMLPath;
         public string XMLSubName;
         public string DefaultValue;
+        public int sortIndex = -1;
 
         public bool hasListCount = false;
         public bool isReadOnly = false;

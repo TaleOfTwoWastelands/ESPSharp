@@ -12,6 +12,7 @@
 			"Reference",
 			"Reference"
 			);
+	tempField.sortIndex = 0;
 	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 #>

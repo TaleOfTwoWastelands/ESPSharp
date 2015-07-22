@@ -143,8 +143,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(IngestibleData other)
         {
-			return WithdrawalEffect.CompareTo(other.WithdrawalEffect);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(IngestibleData objA, IngestibleData objB)
         {

@@ -106,8 +106,16 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(FactionMembership other)
         {
-			return Faction.CompareTo(other.Faction);
-        }
+			int result = 0;
+
+			if (result == 0 && Faction != null && other.Faction != null)	
+				result = Faction.CompareTo(other.Faction);
+
+			if (result == 0 && Rank != null && other.Rank != null)	
+				result = Rank.CompareTo(other.Rank);
+
+			return result;
+		}
 
         public static bool operator >(FactionMembership objA, FactionMembership objB)
         {

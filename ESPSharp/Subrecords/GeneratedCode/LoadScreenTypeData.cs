@@ -291,8 +291,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(LoadScreenTypeData other)
         {
-			return Type.CompareTo(other.Type);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(LoadScreenTypeData objA, LoadScreenTypeData objB)
         {

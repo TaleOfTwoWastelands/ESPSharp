@@ -3,6 +3,7 @@
 <#	
 	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "PerkEffectHeader";
+	template.isComparable = true;
 
 	ClassField tempField;
 
@@ -13,6 +14,7 @@
 			"Type"
 			);
 	template.hashKey = tempField;
+	tempField.sortIndex = 2;
 	template.Fields.Add(tempField);
 
 	tempField = 
@@ -21,6 +23,7 @@
 			"Rank",
 			"Rank"
 			);
+	tempField.sortIndex = 0;
 	template.Fields.Add(tempField);
 
 	tempField = 
@@ -29,6 +32,7 @@
 			"Priority",
 			"Priority"
 			);
+	tempField.sortIndex = 1;
 	template.Fields.Add(tempField);
 #>
 <#@ include file="SubrecordTemplate.t4" once="true" #>

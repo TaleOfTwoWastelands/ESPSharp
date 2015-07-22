@@ -139,8 +139,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(TimeOfDayColors other)
         {
-			return Sunrise.CompareTo(other.Sunrise);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(TimeOfDayColors objA, TimeOfDayColors objB)
         {

@@ -322,6 +322,7 @@
 			"ActivateParents",
 			"ActivateParents"
 			);
+	tempField.isSorted = true;
 	tempField.XMLSubNames = new List<string>{"ActivateParent"};
 	template.Fields.Add(tempField);
 

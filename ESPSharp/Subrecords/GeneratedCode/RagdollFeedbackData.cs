@@ -247,8 +247,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RagdollFeedbackData other)
         {
-			return Dynamic_KeyframeBlendAmount.CompareTo(other.Dynamic_KeyframeBlendAmount);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RagdollFeedbackData objA, RagdollFeedbackData objB)
         {

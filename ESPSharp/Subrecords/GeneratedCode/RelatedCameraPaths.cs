@@ -93,8 +93,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RelatedCameraPaths other)
         {
-			return Parent.CompareTo(other.Parent);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RelatedCameraPaths objA, RelatedCameraPaths objB)
         {

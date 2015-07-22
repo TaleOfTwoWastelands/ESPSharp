@@ -117,8 +117,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(TerminalData other)
         {
-			return HackingDifficulty.CompareTo(other.HackingDifficulty);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(TerminalData objA, TerminalData objB)
         {

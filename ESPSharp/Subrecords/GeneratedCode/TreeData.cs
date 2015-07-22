@@ -163,8 +163,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(TreeData other)
         {
-			return LeafCurvature.CompareTo(other.LeafCurvature);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(TreeData objA, TreeData objB)
         {

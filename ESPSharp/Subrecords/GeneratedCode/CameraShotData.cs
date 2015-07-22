@@ -187,8 +187,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(CameraShotData other)
         {
-			return Action.CompareTo(other.Action);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(CameraShotData objA, CameraShotData objB)
         {

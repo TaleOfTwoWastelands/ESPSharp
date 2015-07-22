@@ -509,8 +509,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(DefaultObjects other)
         {
-			return Stimpack.CompareTo(other.Stimpack);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(DefaultObjects objA, DefaultObjects objB)
         {

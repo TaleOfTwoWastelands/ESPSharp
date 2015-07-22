@@ -127,8 +127,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(EffectData other)
         {
-			return Magnitude.CompareTo(other.Magnitude);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(EffectData objA, EffectData objB)
         {

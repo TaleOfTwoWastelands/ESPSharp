@@ -128,8 +128,11 @@ namespace ESPSharp.Records
 			if (Data != null)
 				Data.WriteBinary(writer);
 			if (Effects != null)
+			{
+				Effects.Sort();
 				foreach (var item in Effects)
 					item.WriteBinary(writer);
+			}
 		}
 
 		public override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -184,6 +187,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("Effects", true, out subEle);
 				List<string> xmlNames = new List<string>{"Effect"};
 				int i = 0;
+				Effects.Sort();
 				foreach (var entry in Effects)
 				{
 					i = i % xmlNames.Count();

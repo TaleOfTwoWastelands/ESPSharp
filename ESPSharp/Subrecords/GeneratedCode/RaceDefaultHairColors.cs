@@ -91,8 +91,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RaceDefaultHairColors other)
         {
-			return MaleColor.CompareTo(other.MaleColor);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RaceDefaultHairColors objA, RaceDefaultHairColors objB)
         {

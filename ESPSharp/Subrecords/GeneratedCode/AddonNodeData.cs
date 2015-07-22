@@ -95,8 +95,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(AddonNodeData other)
         {
-			return MasterParticleSystemCap.CompareTo(other.MasterParticleSystemCap);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(AddonNodeData objA, AddonNodeData objB)
         {

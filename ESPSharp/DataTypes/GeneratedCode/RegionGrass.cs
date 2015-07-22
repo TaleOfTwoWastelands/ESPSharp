@@ -90,8 +90,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(RegionGrass other)
         {
-			return Form.CompareTo(other.Form);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RegionGrass objA, RegionGrass objB)
         {

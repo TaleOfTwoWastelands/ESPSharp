@@ -105,8 +105,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(SwappedImpact other)
         {
-			return MaterialType.CompareTo(other.MaterialType);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(SwappedImpact objA, SwappedImpact objB)
         {

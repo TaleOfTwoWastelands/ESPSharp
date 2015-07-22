@@ -305,8 +305,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(MagicEffectData other)
         {
-			return AssociatedItem.CompareTo(other.AssociatedItem);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(MagicEffectData objA, MagicEffectData objB)
         {

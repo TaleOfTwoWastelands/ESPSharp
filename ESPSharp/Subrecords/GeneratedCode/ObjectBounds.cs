@@ -139,8 +139,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ObjectBounds other)
         {
-			return X1.CompareTo(other.X1);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ObjectBounds objA, ObjectBounds objB)
         {

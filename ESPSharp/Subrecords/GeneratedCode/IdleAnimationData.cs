@@ -147,8 +147,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(IdleAnimationData other)
         {
-			return AnimationGroupSection.CompareTo(other.AnimationGroupSection);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(IdleAnimationData objA, IdleAnimationData objB)
         {

@@ -497,8 +497,11 @@ namespace ESPSharp.Records
 			if (ParentActivateOnly != null)
 				ParentActivateOnly.WriteBinary(writer);
 			if (ActivateParents != null)
+			{
+				ActivateParents.Sort();
 				foreach (var item in ActivateParents)
 					item.WriteBinary(writer);
+			}
 			if (ActivationPrompt != null)
 				ActivationPrompt.WriteBinary(writer);
 			if (EnableParent != null)
@@ -742,6 +745,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("ActivateParents", true, out subEle);
 				List<string> xmlNames = new List<string>{"ActivateParent"};
 				int i = 0;
+				ActivateParents.Sort();
 				foreach (var entry in ActivateParents)
 				{
 					i = i % xmlNames.Count();

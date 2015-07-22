@@ -119,8 +119,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(LocalVariableData other)
         {
-			return Index.CompareTo(other.Index);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(LocalVariableData objA, LocalVariableData objB)
         {

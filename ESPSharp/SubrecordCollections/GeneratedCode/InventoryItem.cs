@@ -115,7 +115,15 @@ namespace ESPSharp.SubrecordCollections
 
 		public int CompareTo(InventoryItem other)
         {
-			return Data.CompareTo(other.Data);
+			int result = 0;
+
+			if (result == 0 && Data != null && other.Data != null)
+				result = Data.CompareTo(other.Data);
+
+			if (result == 0 && ExtraData != null && other.ExtraData != null)
+				result = ExtraData.CompareTo(other.ExtraData);
+
+			return result;
         }
 
         public static bool operator >(InventoryItem objA, InventoryItem objB)

@@ -202,8 +202,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(DecalData other)
         {
-			return Depth.CompareTo(other.Depth);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(DecalData objA, DecalData objB)
         {

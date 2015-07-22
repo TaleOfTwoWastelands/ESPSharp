@@ -59,6 +59,7 @@ namespace ESPSharp.Subrecords
 
 		protected override void WriteData(ESPWriter writer)
 		{
+			Placements.Sort();
 			foreach (var temp in Placements)
 			{
 				temp.WriteBinary(writer);
@@ -70,6 +71,7 @@ namespace ESPSharp.Subrecords
 			XElement subEle;
 			
 			ele.TryPathTo("Placements", true, out subEle);
+			Placements.Sort();
 			foreach (var temp in Placements)
 			{
 				XElement e = new XElement("Placement");

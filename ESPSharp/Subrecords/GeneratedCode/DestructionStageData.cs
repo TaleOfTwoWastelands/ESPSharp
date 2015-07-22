@@ -165,8 +165,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(DestructionStageData other)
         {
-			return HealthPercentage.CompareTo(other.HealthPercentage);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(DestructionStageData objA, DestructionStageData objB)
         {

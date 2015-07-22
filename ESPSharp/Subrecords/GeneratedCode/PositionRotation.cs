@@ -139,8 +139,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PositionRotation other)
         {
-			return PositionX.CompareTo(other.PositionX);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PositionRotation objA, PositionRotation objB)
         {

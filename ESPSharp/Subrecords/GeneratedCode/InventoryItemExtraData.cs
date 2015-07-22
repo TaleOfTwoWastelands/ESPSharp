@@ -102,8 +102,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(InventoryItemExtraData other)
         {
-			return Owner.CompareTo(other.Owner);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(InventoryItemExtraData objA, InventoryItemExtraData objB)
         {

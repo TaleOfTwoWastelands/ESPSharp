@@ -118,8 +118,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(AnimationSound other)
         {
-			return Sound.CompareTo(other.Sound);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(AnimationSound objA, AnimationSound objB)
         {

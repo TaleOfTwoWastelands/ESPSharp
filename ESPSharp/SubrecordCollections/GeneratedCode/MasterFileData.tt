@@ -12,7 +12,7 @@
 			"FileName",
 			"FileName"
 			);
-	template.hashKey = fileNameField;
+	fileNameField.sortIndex = 0;
 	fileNameField.isRequired = true;
 	template.Fields.Add(fileNameField);
 

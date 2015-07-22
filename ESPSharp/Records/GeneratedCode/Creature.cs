@@ -336,8 +336,11 @@ namespace ESPSharp.Records
 			if (BaseStats != null)
 				BaseStats.WriteBinary(writer);
 			if (Factions != null)
+			{
+				Factions.Sort();
 				foreach (var item in Factions)
 					item.WriteBinary(writer);
+			}
 			if (DeathItem != null)
 				DeathItem.WriteBinary(writer);
 			if (VoiceType != null)
@@ -458,6 +461,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("Factions", true, out subEle);
 				List<string> xmlNames = new List<string>{"Faction"};
 				int i = 0;
+				Factions.Sort();
 				foreach (var entry in Factions)
 				{
 					i = i % xmlNames.Count();

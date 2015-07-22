@@ -117,8 +117,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(LoadScreenLocation other)
         {
-			return Direct.CompareTo(other.Direct);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(LoadScreenLocation objA, LoadScreenLocation objB)
         {

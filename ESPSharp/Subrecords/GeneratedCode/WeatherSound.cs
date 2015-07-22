@@ -92,8 +92,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(WeatherSound other)
         {
-			return Sound.CompareTo(other.Sound);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(WeatherSound objA, WeatherSound objB)
         {

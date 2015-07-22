@@ -164,8 +164,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(TeleportDestinationData other)
         {
-			return Door.CompareTo(other.Door);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(TeleportDestinationData objA, TeleportDestinationData objB)
         {

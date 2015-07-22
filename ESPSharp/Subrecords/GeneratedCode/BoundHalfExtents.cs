@@ -103,8 +103,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(BoundHalfExtents other)
         {
-			return X.CompareTo(other.X);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(BoundHalfExtents objA, BoundHalfExtents objB)
         {

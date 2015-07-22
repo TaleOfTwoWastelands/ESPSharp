@@ -106,8 +106,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(QuestTargetData other)
         {
-			return Target.CompareTo(other.Target);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(QuestTargetData objA, QuestTargetData objB)
         {

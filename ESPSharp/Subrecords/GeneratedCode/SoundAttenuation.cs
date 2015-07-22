@@ -127,8 +127,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(SoundAttenuation other)
         {
-			return Point1.CompareTo(other.Point1);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(SoundAttenuation objA, SoundAttenuation objB)
         {

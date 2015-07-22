@@ -173,8 +173,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RagdollPoseMatching other)
         {
-			return MatchBone1.CompareTo(other.MatchBone1);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RagdollPoseMatching objA, RagdollPoseMatching objB)
         {

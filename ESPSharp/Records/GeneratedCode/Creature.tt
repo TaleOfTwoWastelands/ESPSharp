@@ -109,6 +109,7 @@
 			"Factions",
 			"Factions"
 			);
+	tempField.isSorted = true;
 	tempField.XMLSubNames = new List<string>{"Faction"};
 	template.Fields.Add(tempField);
 

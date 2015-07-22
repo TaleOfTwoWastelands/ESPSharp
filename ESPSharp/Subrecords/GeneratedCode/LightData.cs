@@ -164,8 +164,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(LightData other)
         {
-			return Radius.CompareTo(other.Radius);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(LightData objA, LightData objB)
         {

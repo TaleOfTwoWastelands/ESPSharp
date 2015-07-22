@@ -105,8 +105,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(BipedData other)
         {
-			return Slots.CompareTo(other.Slots);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(BipedData objA, BipedData objB)
         {

@@ -115,8 +115,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(BookData other)
         {
-			return Skill.CompareTo(other.Skill);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(BookData objA, BookData objB)
         {

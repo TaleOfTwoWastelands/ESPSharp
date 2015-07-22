@@ -80,8 +80,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PerkAbilityData other)
         {
-			return Ability.CompareTo(other.Ability);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PerkAbilityData objA, PerkAbilityData objB)
         {

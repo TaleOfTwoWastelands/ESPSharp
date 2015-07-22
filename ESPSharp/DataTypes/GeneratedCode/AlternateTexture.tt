@@ -1,8 +1,6 @@
 ﻿<#	
 	ClassTemplate template = new ClassTemplate();
 	template.ClassName = "AlternateTexture";
-	//template.implementReadData = false;
-	//template.implementWriteData = false;
 
 	ClassField tempField;
 
@@ -12,6 +10,7 @@
 			"Name",
 			"Name"
 			);
+	tempField.sortIndex = 0;
 	tempField.implementReadData = false;
 	tempField.implementWriteData = false;
 	template.Fields.Add(tempField);
@@ -30,6 +29,7 @@
 			"Index",
 			"Index"
 			);
+	tempField.sortIndex = 1;
 	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 #>

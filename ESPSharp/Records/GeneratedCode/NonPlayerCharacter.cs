@@ -355,8 +355,11 @@ namespace ESPSharp.Records
 			if (Race != null)
 				Race.WriteBinary(writer);
 			if (ActorEffects != null)
+			{
+				ActorEffects.Sort();
 				foreach (var item in ActorEffects)
 					item.WriteBinary(writer);
+			}
 			if (UnarmedAttackEffect != null)
 				UnarmedAttackEffect.WriteBinary(writer);
 			if (UnarmedAttackAnimation != null)
@@ -482,6 +485,7 @@ namespace ESPSharp.Records
 				ele.TryPathTo("ActorEffects", true, out subEle);
 				List<string> xmlNames = new List<string>{"ActorEffect"};
 				int i = 0;
+				ActorEffects.Sort();
 				foreach (var entry in ActorEffects)
 				{
 					i = i % xmlNames.Count();

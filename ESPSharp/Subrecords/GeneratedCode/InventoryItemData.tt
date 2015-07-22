@@ -13,6 +13,7 @@
 			"Item"
 			);
 	template.hashKey = tempField;
+	tempField.sortIndex = 0;
 	template.Fields.Add(tempField);
 
 	tempField = 
@@ -22,5 +23,6 @@
 			"Count"
 			);
 	template.Fields.Add(tempField);
+	tempField.sortIndex = 1;
 #>
 <#@ include file="SubrecordTemplate.t4" once="true" #>

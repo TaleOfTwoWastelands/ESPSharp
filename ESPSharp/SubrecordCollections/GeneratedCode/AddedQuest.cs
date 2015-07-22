@@ -128,7 +128,12 @@ namespace ESPSharp.SubrecordCollections
 
 		public int CompareTo(AddedQuest other)
         {
-			return Quest.CompareTo(other.Quest);
+			int result = 0;
+
+			if (result == 0 && Quest != null && other.Quest != null)
+				result = Quest.CompareTo(other.Quest);
+
+			return result;
         }
 
         public static bool operator >(AddedQuest objA, AddedQuest objB)

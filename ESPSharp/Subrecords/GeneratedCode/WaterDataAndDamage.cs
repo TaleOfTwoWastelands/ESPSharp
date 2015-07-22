@@ -642,8 +642,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(WaterDataAndDamage other)
         {
-			return WaterPropertiesSunPower.CompareTo(other.WaterPropertiesSunPower);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(WaterDataAndDamage objA, WaterDataAndDamage objB)
         {

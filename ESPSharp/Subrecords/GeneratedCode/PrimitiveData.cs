@@ -167,8 +167,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PrimitiveData other)
         {
-			return XBound.CompareTo(other.XBound);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PrimitiveData objA, PrimitiveData objB)
         {

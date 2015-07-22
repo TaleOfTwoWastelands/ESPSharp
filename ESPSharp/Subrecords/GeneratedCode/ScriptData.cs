@@ -141,8 +141,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ScriptData other)
         {
-			return CompiledSize.CompareTo(other.CompiledSize);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ScriptData objA, ScriptData objB)
         {

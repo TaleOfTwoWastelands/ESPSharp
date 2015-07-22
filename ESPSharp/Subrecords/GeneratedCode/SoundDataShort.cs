@@ -161,8 +161,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(SoundDataShort other)
         {
-			return MinAttenuationDistance.CompareTo(other.MinAttenuationDistance);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(SoundDataShort objA, SoundDataShort objB)
         {

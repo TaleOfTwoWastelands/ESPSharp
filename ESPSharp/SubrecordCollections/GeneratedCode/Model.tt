@@ -13,7 +13,7 @@
 			"FileName",
 			"FileName"
 			);
-	template.hashKey = tempField;
+	tempField.sortIndex = 0;
 	template.Fields.Add(tempField);
 
 	tempField = 

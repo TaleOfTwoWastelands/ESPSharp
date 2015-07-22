@@ -119,8 +119,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(DestructableHeader other)
         {
-			return Health.CompareTo(other.Health);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(DestructableHeader objA, DestructableHeader objB)
         {

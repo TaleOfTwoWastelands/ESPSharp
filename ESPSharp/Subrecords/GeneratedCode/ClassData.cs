@@ -177,8 +177,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ClassData other)
         {
-			return TagSkill1.CompareTo(other.TagSkill1);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ClassData objA, ClassData objB)
         {

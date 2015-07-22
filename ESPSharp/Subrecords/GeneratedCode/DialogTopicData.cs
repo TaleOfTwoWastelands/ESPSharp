@@ -91,8 +91,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(DialogTopicData other)
         {
-			return Type.CompareTo(other.Type);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(DialogTopicData objA, DialogTopicData objB)
         {

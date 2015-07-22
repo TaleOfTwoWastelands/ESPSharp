@@ -13,6 +13,7 @@
 	tempField.implementReadXML = false;
 	tempField.implementWriteXML = false;
 	template.hashKey = tempField;
+	tempField.sortIndex = 0;
 	tempField.isReadOnly = true;
 	template.Fields.Add(tempField);
 #>

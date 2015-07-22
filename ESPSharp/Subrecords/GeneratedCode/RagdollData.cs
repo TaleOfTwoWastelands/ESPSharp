@@ -163,8 +163,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RagdollData other)
         {
-			return DynamicBoneCount.CompareTo(other.DynamicBoneCount);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RagdollData objA, RagdollData objB)
         {

@@ -100,8 +100,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(NavMeshDoor other)
         {
-			return Door.CompareTo(other.Door);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(NavMeshDoor objA, NavMeshDoor objB)
         {

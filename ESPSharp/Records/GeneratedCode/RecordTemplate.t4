@@ -177,8 +177,15 @@ namespace ESPSharp.Records
 <# if(false) { #>
         public int CompareTo(<#= template.ClassName #> other)
         {
-			<# WriteCompareHashKeyCommand(template); #>
-        }
+			int result = 0;
+<# foreach (var field in template.Fields.Where(f => f.sortIndex >= 0).OrderBy(o => o.sortIndex)) { #>
+
+			if (result == 0 && <#= field.Name#> != null && other.<#= field.Name#> != null)	
+				<# WriteCompareCommand(field); #>
+<# } #>
+
+			return result;
+		}
 
         public static bool operator >(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
         {

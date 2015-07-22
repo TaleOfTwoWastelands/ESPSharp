@@ -111,6 +111,7 @@
 			"ActorEffects",
 			"ActorEffects"
 			);
+	tempField.isSorted = true;
 	tempField.XMLSubNames = new List<string> {"ActorEffect"};
 	template.Fields.Add(tempField);
 

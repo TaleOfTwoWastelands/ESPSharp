@@ -102,8 +102,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(WorldMapOffsetData other)
         {
-			return WorldMapScale.CompareTo(other.WorldMapScale);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(WorldMapOffsetData objA, WorldMapOffsetData objB)
         {

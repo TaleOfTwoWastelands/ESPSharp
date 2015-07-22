@@ -92,8 +92,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PlaceableWaterData other)
         {
-			return WaterType.CompareTo(other.WaterType);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PlaceableWaterData objA, PlaceableWaterData objB)
         {

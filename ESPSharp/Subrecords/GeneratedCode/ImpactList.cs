@@ -223,8 +223,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ImpactList other)
         {
-			return Stone.CompareTo(other.Stone);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ImpactList objA, ImpactList objB)
         {

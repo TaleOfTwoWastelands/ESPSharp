@@ -103,8 +103,19 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PerkEffectHeader other)
         {
-			return Type.CompareTo(other.Type);
-        }
+			int result = 0;
+
+			if (result == 0 && Rank != null && other.Rank != null)	
+				result = Rank.CompareTo(other.Rank);
+
+			if (result == 0 && Priority != null && other.Priority != null)	
+				result = Priority.CompareTo(other.Priority);
+
+			if (result == 0 && Type != null && other.Type != null)	
+				result = Type.CompareTo(other.Type);
+
+			return result;
+		}
 
         public static bool operator >(PerkEffectHeader objA, PerkEffectHeader objB)
         {

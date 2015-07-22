@@ -13,7 +13,7 @@
 			"PartName",
 			"PartName"
 			);
-	template.hashKey = tempField;
+	tempField.sortIndex = 0;
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 

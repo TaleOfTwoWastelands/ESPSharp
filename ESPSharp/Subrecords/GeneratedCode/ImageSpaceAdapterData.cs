@@ -593,8 +593,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ImageSpaceAdapterData other)
         {
-			return Duration.CompareTo(other.Duration);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ImageSpaceAdapterData objA, ImageSpaceAdapterData objB)
         {

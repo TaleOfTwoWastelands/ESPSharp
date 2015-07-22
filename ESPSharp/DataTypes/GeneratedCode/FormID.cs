@@ -71,8 +71,13 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(FormID other)
         {
-			return RawValue.CompareTo(other.RawValue);
-        }
+			int result = 0;
+
+			if (result == 0 && RawValue != null && other.RawValue != null)	
+				result = RawValue.CompareTo(other.RawValue);
+
+			return result;
+		}
 
         public static bool operator >(FormID objA, FormID objB)
         {

@@ -91,8 +91,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(EntryPointActorValMult other)
         {
-			return ActorValue.CompareTo(other.ActorValue);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(EntryPointActorValMult objA, EntryPointActorValMult objB)
         {

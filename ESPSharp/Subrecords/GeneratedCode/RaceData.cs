@@ -309,8 +309,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RaceData other)
         {
-			return MaleHeight.CompareTo(other.MaleHeight);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RaceData objA, RaceData objB)
         {

@@ -91,8 +91,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ValueWeight other)
         {
-			return Value.CompareTo(other.Value);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ValueWeight objA, ValueWeight objB)
         {

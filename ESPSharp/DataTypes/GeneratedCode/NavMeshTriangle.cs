@@ -145,8 +145,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(NavMeshTriangle other)
         {
-			return Vertex1.CompareTo(other.Vertex1);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(NavMeshTriangle objA, NavMeshTriangle objB)
         {

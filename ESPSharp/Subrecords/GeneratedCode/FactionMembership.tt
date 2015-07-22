@@ -12,6 +12,7 @@
 			"Faction",
 			"Faction"
 			);
+	tempField.sortIndex = 0;
 	template.hashKey = tempField;
 	template.Fields.Add(tempField);
 
@@ -21,6 +22,7 @@
 			"Rank",
 			"Rank"
 			);
+	tempField.sortIndex = 1;
 	template.Fields.Add(tempField);
 
 	tempField = 

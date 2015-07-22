@@ -261,8 +261,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(CombatStyleSimple other)
         {
-			return CoverSearchRadius.CompareTo(other.CoverSearchRadius);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(CombatStyleSimple objA, CombatStyleSimple objB)
         {

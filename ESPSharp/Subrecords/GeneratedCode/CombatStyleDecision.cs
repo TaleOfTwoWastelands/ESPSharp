@@ -485,8 +485,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(CombatStyleDecision other)
         {
-			return ManeuverDodgeChance.CompareTo(other.ManeuverDodgeChance);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(CombatStyleDecision objA, CombatStyleDecision objB)
         {

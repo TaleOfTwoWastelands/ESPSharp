@@ -119,8 +119,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(LinkedOcclusionPlanes other)
         {
-			return Right.CompareTo(other.Right);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(LinkedOcclusionPlanes objA, LinkedOcclusionPlanes objB)
         {

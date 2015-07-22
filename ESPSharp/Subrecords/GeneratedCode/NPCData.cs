@@ -163,8 +163,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(NPCData other)
         {
-			return BaseHealth.CompareTo(other.BaseHealth);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(NPCData objA, NPCData objB)
         {

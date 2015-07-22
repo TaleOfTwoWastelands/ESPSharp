@@ -184,8 +184,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(NavigationConnectionInfo other)
         {
-			return Unknown1.CompareTo(other.Unknown1);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(NavigationConnectionInfo objA, NavigationConnectionInfo objB)
         {

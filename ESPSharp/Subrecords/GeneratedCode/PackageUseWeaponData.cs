@@ -177,8 +177,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PackageUseWeaponData other)
         {
-			return FireCount.CompareTo(other.FireCount);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PackageUseWeaponData objA, PackageUseWeaponData objB)
         {

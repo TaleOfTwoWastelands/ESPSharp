@@ -93,8 +93,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RelatedIdleAnims other)
         {
-			return Parent.CompareTo(other.Parent);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RelatedIdleAnims objA, RelatedIdleAnims objB)
         {

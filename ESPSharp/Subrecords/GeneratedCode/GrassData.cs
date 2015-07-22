@@ -225,8 +225,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(GrassData other)
         {
-			return Density.CompareTo(other.Density);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(GrassData objA, GrassData objB)
         {

@@ -93,8 +93,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(MapMarkerData other)
         {
-			return Type.CompareTo(other.Type);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(MapMarkerData objA, MapMarkerData objB)
         {

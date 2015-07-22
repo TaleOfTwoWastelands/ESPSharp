@@ -12,6 +12,8 @@
 			"Placements",
 			"Placements"
 			);
+	tempField.isSorted = true;
+	tempField.sortIndex = 0;
 	tempField.XMLSubName = "Placement";
 	tempField.listItemSize = 28;
 	template.hashKey = tempField;

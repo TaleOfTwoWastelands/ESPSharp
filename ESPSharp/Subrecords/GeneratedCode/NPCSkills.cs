@@ -403,8 +403,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(NPCSkills other)
         {
-			return BarterValue.CompareTo(other.BarterValue);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(NPCSkills objA, NPCSkills objB)
         {

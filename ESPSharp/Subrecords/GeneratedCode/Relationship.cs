@@ -104,8 +104,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(Relationship other)
         {
-			return Faction.CompareTo(other.Faction);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(Relationship objA, Relationship objB)
         {

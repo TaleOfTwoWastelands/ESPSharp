@@ -106,8 +106,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RelatedWaters other)
         {
-			return Daytime.CompareTo(other.Daytime);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RelatedWaters objA, RelatedWaters objB)
         {

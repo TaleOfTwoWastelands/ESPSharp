@@ -92,8 +92,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ThresholdData other)
         {
-			return TriggerThreshold.CompareTo(other.TriggerThreshold);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ThresholdData objA, ThresholdData objB)
         {

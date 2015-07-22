@@ -92,8 +92,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PerkQuestStageData other)
         {
-			return Quest.CompareTo(other.Quest);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PerkQuestStageData objA, PerkQuestStageData objB)
         {

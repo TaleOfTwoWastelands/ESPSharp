@@ -145,8 +145,31 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(StaticPlacement other)
         {
-			return PositionX.CompareTo(other.PositionX);
-        }
+			int result = 0;
+
+			if (result == 0 && PositionZ != null && other.PositionZ != null)	
+				result = PositionZ.CompareTo(other.PositionZ);
+
+			if (result == 0 && PositionX != null && other.PositionX != null)	
+				result = PositionX.CompareTo(other.PositionX);
+
+			if (result == 0 && PositionY != null && other.PositionY != null)	
+				result = PositionY.CompareTo(other.PositionY);
+
+			if (result == 0 && RotationX != null && other.RotationX != null)	
+				result = RotationX.CompareTo(other.RotationX);
+
+			if (result == 0 && RotationY != null && other.RotationY != null)	
+				result = RotationY.CompareTo(other.RotationY);
+
+			if (result == 0 && RotationZ != null && other.RotationZ != null)	
+				result = RotationZ.CompareTo(other.RotationZ);
+
+			if (result == 0 && Scale != null && other.Scale != null)	
+				result = Scale.CompareTo(other.Scale);
+
+			return result;
+		}
 
         public static bool operator >(StaticPlacement objA, StaticPlacement objB)
         {

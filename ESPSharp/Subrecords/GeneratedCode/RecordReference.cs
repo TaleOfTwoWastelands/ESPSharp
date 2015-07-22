@@ -80,8 +80,13 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RecordReference other)
         {
-			return Reference.CompareTo(other.Reference);
-        }
+			int result = 0;
+
+			if (result == 0 && Reference != null && other.Reference != null)	
+				result = Reference.CompareTo(other.Reference);
+
+			return result;
+		}
 
         public static bool operator >(RecordReference objA, RecordReference objB)
         {

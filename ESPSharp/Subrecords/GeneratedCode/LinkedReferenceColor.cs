@@ -93,8 +93,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(LinkedReferenceColor other)
         {
-			return Start.CompareTo(other.Start);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(LinkedReferenceColor objA, LinkedReferenceColor objB)
         {

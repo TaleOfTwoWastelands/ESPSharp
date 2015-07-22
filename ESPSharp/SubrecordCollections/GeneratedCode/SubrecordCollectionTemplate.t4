@@ -214,7 +214,14 @@ namespace ESPSharp.SubrecordCollections
 
 		public int CompareTo(<#= template.ClassName #> other)
         {
-			return <#= template.hashKey.Name#>.CompareTo(other.<#= template.hashKey.Name#>);
+			int result = 0;
+<# foreach (var field in template.Fields.Where(f => f.sortIndex >= 0).OrderBy(o => o.sortIndex)) { #>
+
+			if (result == 0 && <#= field.Name#> != null && other.<#= field.Name#> != null)
+				result = <#= field.Name#>.CompareTo(other.<#= field.Name#>);
+<# } #>
+
+			return result;
         }
 
         public static bool operator >(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
@@ -258,7 +265,6 @@ public class SubrecordCollectionTemplate
     public string ClassName;
 	public List<SubrecordCollectionField> Fields = new List<SubrecordCollectionField>();
 	public bool startsWithMarker = false;
-	public SubrecordCollectionField hashKey = null;
 	public bool isComparable = false;
 }
 
@@ -269,6 +275,7 @@ public class SubrecordCollectionField
 	public string Name;
 	public string XMLPath;
 	public string XMLSubName;
+	public int sortIndex = -1;
 
 	public bool isRequired = false;
 	public bool isReadOnly = false;

@@ -113,7 +113,12 @@ namespace ESPSharp.SubrecordCollections
 
 		public int CompareTo(StaticCollectionPart other)
         {
-			return Static.CompareTo(other.Static);
+			int result = 0;
+
+			if (result == 0 && Static != null && other.Static != null)
+				result = Static.CompareTo(other.Static);
+
+			return result;
         }
 
         public static bool operator >(StaticCollectionPart objA, StaticCollectionPart objB)

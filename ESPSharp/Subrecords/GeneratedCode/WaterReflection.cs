@@ -92,8 +92,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(WaterReflection other)
         {
-			return Reference.CompareTo(other.Reference);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(WaterReflection objA, WaterReflection objB)
         {

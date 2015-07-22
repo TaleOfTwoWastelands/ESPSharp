@@ -22,7 +22,7 @@
 			"EmbeddedScript",
 			"EmbeddedScript"
 			);
-	template.hashKey = tempField;
+	tempField.sortIndex = 0;
 	template.Fields.Add(tempField);
 #>
 <#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

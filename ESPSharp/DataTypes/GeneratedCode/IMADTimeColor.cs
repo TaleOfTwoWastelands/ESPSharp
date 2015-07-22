@@ -121,8 +121,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(IMADTimeColor other)
         {
-			return Time.CompareTo(other.Time);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(IMADTimeColor objA, IMADTimeColor objB)
         {

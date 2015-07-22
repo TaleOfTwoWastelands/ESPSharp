@@ -85,8 +85,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(DateStamp other)
         {
-			return MonthsSince2001.CompareTo(other.MonthsSince2001);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(DateStamp objA, DateStamp objB)
         {

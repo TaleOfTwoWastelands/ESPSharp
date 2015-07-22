@@ -14,7 +14,7 @@
 			"Data",
 			"Data"
 			);
-	template.hashKey = tempField;
+	tempField.sortIndex = 0;
 	tempField.isRequired = true;
 	template.Fields.Add(tempField);
 
@@ -25,6 +25,7 @@
 			"ExtraData",
 			"ExtraData"
 			);
+	tempField.sortIndex = 1;
 	template.Fields.Add(tempField);
 #>
 <#@ include file="SubrecordCollectionTemplate.t4" once="true" #>

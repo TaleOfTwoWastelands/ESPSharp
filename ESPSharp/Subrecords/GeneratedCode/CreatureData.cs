@@ -237,8 +237,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(CreatureData other)
         {
-			return CreatureType.CompareTo(other.CreatureType);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(CreatureData objA, CreatureData objB)
         {

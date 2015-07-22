@@ -105,8 +105,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(FactionData other)
         {
-			return Flags1.CompareTo(other.Flags1);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(FactionData objA, FactionData objB)
         {

@@ -149,8 +149,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(NavigationMapInfo other)
         {
-			return NavigationMesh.CompareTo(other.NavigationMesh);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(NavigationMapInfo objA, NavigationMapInfo objB)
         {

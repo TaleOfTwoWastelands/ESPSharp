@@ -18,16 +18,16 @@ namespace ESPSharp.Subrecords
 	public partial class NavigationDoorLink : Subrecord, ICloneable, IComparable<NavigationDoorLink>, IEquatable<NavigationDoorLink>  
 	{
 		public FormID NavigationMesh { get; set; }
-		public Byte[] Unknown { get; set; }
+		public UInt32 Unknown { get; set; }
 
 		public NavigationDoorLink(string Tag = null)
 			:base(Tag)
 		{
 			NavigationMesh = new FormID();
-			Unknown = new byte[4];
+			Unknown = new UInt32();
 		}
 
-		public NavigationDoorLink(FormID NavigationMesh, Byte[] Unknown)
+		public NavigationDoorLink(FormID NavigationMesh, UInt32 Unknown)
 		{
 			this.NavigationMesh = NavigationMesh;
 			this.Unknown = Unknown;
@@ -37,8 +37,7 @@ namespace ESPSharp.Subrecords
 		{
 			if (copyObject.NavigationMesh != null)
 				NavigationMesh = (FormID)copyObject.NavigationMesh.Clone();
-			if (copyObject.Unknown != null)
-				Unknown = (Byte[])copyObject.Unknown.Clone();
+			Unknown = copyObject.Unknown;
 		}
 	
 		protected override void ReadData(ESPReader reader)
@@ -49,7 +48,7 @@ namespace ESPSharp.Subrecords
 				try
 				{
 					NavigationMesh.ReadBinary(subReader);
-					Unknown = subReader.ReadBytes(4);
+					Unknown = subReader.ReadUInt32();
 				}
 				catch
 				{
@@ -61,9 +60,6 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			NavigationMesh.WriteBinary(writer);
-			if (Unknown == null)
-				writer.Write(new byte[4]);
-			else
 			writer.Write(Unknown);
 		}
 
@@ -74,7 +70,8 @@ namespace ESPSharp.Subrecords
 			ele.TryPathTo("NavigationMesh", true, out subEle);
 			NavigationMesh.WriteXML(subEle, master);
 
-			WriteUnknownXML(ele, master);
+			ele.TryPathTo("Unknown", true, out subEle);
+			subEle.Value = Unknown.ToString();
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -84,7 +81,8 @@ namespace ESPSharp.Subrecords
 			if (ele.TryPathTo("NavigationMesh", false, out subEle))
 				NavigationMesh.ReadXML(subEle, master);
 
-			ReadUnknownXML(ele, master);
+			if (ele.TryPathTo("Unknown", false, out subEle))
+				Unknown = subEle.ToUInt32();
 		}
 
 		public override object Clone()
@@ -94,8 +92,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(NavigationDoorLink other)
         {
-			return NavigationMesh.CompareTo(other.NavigationMesh);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(NavigationDoorLink objA, NavigationDoorLink objB)
         {
@@ -130,7 +130,7 @@ namespace ESPSharp.Subrecords
 			}
 
 			return NavigationMesh == other.NavigationMesh &&
-				Unknown.SequenceEqual(other.Unknown);
+				Unknown == other.Unknown;
         }
 
         public override bool Equals(object obj)
@@ -180,9 +180,5 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
-
-		partial void ReadUnknownXML(XElement ele, ElderScrollsPlugin master);
-
-		partial void WriteUnknownXML(XElement ele, ElderScrollsPlugin master);
 	}
 }

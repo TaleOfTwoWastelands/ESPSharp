@@ -109,8 +109,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(Color other)
         {
-			return Red.CompareTo(other.Red);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(Color objA, Color objB)
         {

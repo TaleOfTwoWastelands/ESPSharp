@@ -261,8 +261,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(SoundData other)
         {
-			return Priority.CompareTo(other.Priority);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(SoundData objA, SoundData objB)
         {

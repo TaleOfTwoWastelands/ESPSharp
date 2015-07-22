@@ -127,8 +127,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PerkData other)
         {
-			return MinLevel.CompareTo(other.MinLevel);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PerkData objA, PerkData objB)
         {

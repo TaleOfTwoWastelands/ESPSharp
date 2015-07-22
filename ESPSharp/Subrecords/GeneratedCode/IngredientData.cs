@@ -105,8 +105,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(IngredientData other)
         {
-			return Value.CompareTo(other.Value);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(IngredientData objA, IngredientData objB)
         {

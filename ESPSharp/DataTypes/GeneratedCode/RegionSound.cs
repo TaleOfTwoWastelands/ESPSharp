@@ -98,8 +98,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(RegionSound other)
         {
-			return Sound.CompareTo(other.Sound);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RegionSound objA, RegionSound objB)
         {

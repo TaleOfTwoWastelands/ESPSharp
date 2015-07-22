@@ -127,8 +127,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PackageScheduleData other)
         {
-			return DayOfWeek.CompareTo(other.DayOfWeek);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PackageScheduleData objA, PackageScheduleData objB)
         {

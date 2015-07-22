@@ -103,8 +103,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PerkEntryPointData other)
         {
-			return EntryPoint.CompareTo(other.EntryPoint);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PerkEntryPointData objA, PerkEntryPointData objB)
         {

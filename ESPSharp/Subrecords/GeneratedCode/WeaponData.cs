@@ -127,8 +127,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(WeaponData other)
         {
-			return BaseDamage.CompareTo(other.BaseDamage);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(WeaponData objA, WeaponData objB)
         {

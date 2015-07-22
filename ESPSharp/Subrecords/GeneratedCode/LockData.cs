@@ -132,8 +132,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(LockData other)
         {
-			return Level.CompareTo(other.Level);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(LockData objA, LockData objB)
         {

@@ -91,8 +91,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ContainerData other)
         {
-			return Flags.CompareTo(other.Flags);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ContainerData objA, ContainerData objB)
         {

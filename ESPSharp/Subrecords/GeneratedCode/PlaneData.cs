@@ -175,8 +175,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PlaneData other)
         {
-			return Width.CompareTo(other.Width);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PlaneData objA, PlaneData objB)
         {

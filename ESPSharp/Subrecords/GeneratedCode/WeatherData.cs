@@ -247,8 +247,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(WeatherData other)
         {
-			return Classification.CompareTo(other.Classification);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(WeatherData objA, WeatherData objB)
         {

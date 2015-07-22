@@ -90,8 +90,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(WorldLandData other)
         {
-			return DefaultLandHeight.CompareTo(other.DefaultLandHeight);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(WorldLandData objA, WorldLandData objB)
         {

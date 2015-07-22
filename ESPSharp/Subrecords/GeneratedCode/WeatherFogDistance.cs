@@ -139,8 +139,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(WeatherFogDistance other)
         {
-			return DayNear.CompareTo(other.DayNear);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(WeatherFogDistance objA, WeatherFogDistance objB)
         {

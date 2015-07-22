@@ -140,8 +140,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PackageData other)
         {
-			return Type.CompareTo(other.Type);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PackageData objA, PackageData objB)
         {

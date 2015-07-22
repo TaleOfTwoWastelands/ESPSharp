@@ -197,8 +197,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(EnvironmentalColors other)
         {
-			return Ambient.CompareTo(other.Ambient);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(EnvironmentalColors objA, EnvironmentalColors objB)
         {

@@ -140,8 +140,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(NavMeshData other)
         {
-			return Cell.CompareTo(other.Cell);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(NavMeshData objA, NavMeshData objB)
         {

@@ -139,8 +139,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ImpactData other)
         {
-			return EffectDuration.CompareTo(other.EffectDuration);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ImpactData objA, ImpactData objB)
         {

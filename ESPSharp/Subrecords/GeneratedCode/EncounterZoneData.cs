@@ -126,8 +126,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(EncounterZoneData other)
         {
-			return MinimumLevel.CompareTo(other.MinimumLevel);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(EncounterZoneData objA, EncounterZoneData objB)
         {

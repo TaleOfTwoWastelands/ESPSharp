@@ -170,8 +170,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ResponseData other)
         {
-			return ResponseNumber.CompareTo(other.ResponseNumber);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ResponseData objA, ResponseData objB)
         {

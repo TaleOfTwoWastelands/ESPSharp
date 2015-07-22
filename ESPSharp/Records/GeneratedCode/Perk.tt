@@ -80,6 +80,7 @@
 			"Effects",
 			"Effects"
 			);
+	tempField.isSorted = true;
 	tempField.XMLSubNames = new List<string> {"Effect"};
 	template.Fields.Add(tempField);
 #>

@@ -91,8 +91,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(EntryPointRandRange other)
         {
-			return RandMin.CompareTo(other.RandMin);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(EntryPointRandRange objA, EntryPointRandRange objB)
         {

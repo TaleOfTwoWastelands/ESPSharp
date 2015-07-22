@@ -213,8 +213,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(AIData other)
         {
-			return Aggression.CompareTo(other.Aggression);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(AIData objA, AIData objB)
         {

@@ -190,8 +190,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(LightingTemplateData other)
         {
-			return ColorAmbient.CompareTo(other.ColorAmbient);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(LightingTemplateData objA, LightingTemplateData objB)
         {

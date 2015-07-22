@@ -14,7 +14,7 @@
 			"HeadModels",
 			"HeadModels"
 			);
-	template.hashKey = tempField;
+	tempField.sortIndex = 0;
 	tempField.XMLSubName = "HeadModel";
 	template.Fields.Add(tempField);
 #>

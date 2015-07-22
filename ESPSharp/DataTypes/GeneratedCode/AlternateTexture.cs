@@ -99,8 +99,16 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(AlternateTexture other)
         {
-			return Index.CompareTo(other.Index);
-        }
+			int result = 0;
+
+			if (result == 0 && Name != null && other.Name != null)	
+				result = Name.CompareTo(other.Name);
+
+			if (result == 0 && Index != null && other.Index != null)	
+				result = Index.CompareTo(other.Index);
+
+			return result;
+		}
 
         public static bool operator >(AlternateTexture objA, AlternateTexture objB)
         {

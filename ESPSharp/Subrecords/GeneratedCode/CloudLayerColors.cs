@@ -119,8 +119,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(CloudLayerColors other)
         {
-			return Layer0.CompareTo(other.Layer0);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(CloudLayerColors objA, CloudLayerColors objB)
         {

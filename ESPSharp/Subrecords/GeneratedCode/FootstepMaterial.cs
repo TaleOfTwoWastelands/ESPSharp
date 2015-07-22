@@ -227,8 +227,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(FootstepMaterial other)
         {
-			return ConcreteSolid.GetHashCode().CompareTo(other.ConcreteSolid.GetHashCode());
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(FootstepMaterial objA, FootstepMaterial objB)
         {

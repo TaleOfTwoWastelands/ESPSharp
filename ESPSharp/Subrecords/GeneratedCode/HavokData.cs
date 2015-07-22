@@ -103,8 +103,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(HavokData other)
         {
-			return MaterialType.CompareTo(other.MaterialType);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(HavokData objA, HavokData objB)
         {

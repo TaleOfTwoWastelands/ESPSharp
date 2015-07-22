@@ -319,8 +319,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(CombatStyleAdvanced other)
         {
-			return DodgeFatigueModMult.CompareTo(other.DodgeFatigueModMult);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(CombatStyleAdvanced objA, CombatStyleAdvanced objB)
         {

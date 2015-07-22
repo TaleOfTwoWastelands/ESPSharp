@@ -91,8 +91,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(BillboardDimensions other)
         {
-			return Width.CompareTo(other.Width);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(BillboardDimensions objA, BillboardDimensions objB)
         {

@@ -151,8 +151,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(Attributes other)
         {
-			return Strength.CompareTo(other.Strength);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(Attributes objA, Attributes objB)
         {

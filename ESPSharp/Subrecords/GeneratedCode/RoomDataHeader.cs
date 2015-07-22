@@ -95,8 +95,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RoomDataHeader other)
         {
-			return LinkedRoomsCount.CompareTo(other.LinkedRoomsCount);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RoomDataHeader objA, RoomDataHeader objB)
         {

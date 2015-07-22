@@ -99,8 +99,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(WeatherChance other)
         {
-			return Weather.CompareTo(other.Weather);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(WeatherChance objA, WeatherChance objB)
         {

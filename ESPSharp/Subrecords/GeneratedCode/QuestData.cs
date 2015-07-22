@@ -117,8 +117,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(QuestData other)
         {
-			return Priority.CompareTo(other.Priority);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(QuestData objA, QuestData objB)
         {

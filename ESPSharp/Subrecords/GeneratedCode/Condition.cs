@@ -118,8 +118,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(Condition other)
         {
-			return Function.CompareTo(other.Function);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(Condition objA, Condition objB)
         {

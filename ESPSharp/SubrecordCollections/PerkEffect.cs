@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-    public partial class PerkEffect : SubrecordCollection, ICloneable
+    public partial class PerkEffect : SubrecordCollection, ICloneable, IComparable<PerkEffect>
     {
         public PerkEffectHeader Header { get; set; }
         public Subrecord EffectData { get; set; }
@@ -391,6 +391,80 @@ namespace ESPSharp.SubrecordCollections
 
                 EndMarker.ReadXML(subEle, master);
             }
+        }
+
+        public int CompareTo(PerkEffect other)
+        {
+            int result = 0;
+
+            if (result == 0 && Header != null && other.Header != null)
+                result = Header.CompareTo(other.Header);
+
+            if (result == 0 && EffectData != null && other.EffectData != null)
+            {
+                switch (Header.Type)
+                {
+                    case PerkType.QuestStage:
+                        result = (EffectData as PerkQuestStageData).CompareTo(other.EffectData as PerkQuestStageData);
+                        break;
+                    case PerkType.Ability:
+                        result = (EffectData as PerkAbilityData).CompareTo(other.EffectData as PerkAbilityData);
+                        break;
+                    case PerkType.EntryPoint:
+                        result = (EffectData as PerkEntryPointData).CompareTo(other.EffectData as PerkEntryPointData);
+                        break;
+                }
+            }
+
+            if (result == 0 && EntryPointFunctionType != null && other.EntryPointFunctionType != null)
+                result = EntryPointFunctionType.Value.CompareTo(other.EntryPointFunctionType.Value);
+
+            if (result == 0 && EntryPointFunctionData != null && other.EntryPointFunctionData != null)
+            {
+                switch (EntryPointFunctionType.Value)
+                {
+                    case Enums.EntryPointFunctionType.None:
+                        result = (EntryPointFunctionData as SimpleSubrecord<byte[]>).Value.GetHashCode().CompareTo((other.EntryPointFunctionData as SimpleSubrecord<byte[]>).Value.GetHashCode());
+                        break;
+                    case Enums.EntryPointFunctionType.Float:
+                        result = (EntryPointFunctionData as SimpleSubrecord<float>).Value.CompareTo((other.EntryPointFunctionData as SimpleSubrecord<float>).Value);
+                        break;
+                    case Enums.EntryPointFunctionType.FloatFloat:
+                        result = (EntryPointFunctionData as EntryPointRandRange).CompareTo(other.EntryPointFunctionData as EntryPointRandRange);
+                        break;
+                    case Enums.EntryPointFunctionType.LeveledItem:
+                        result = (EntryPointFunctionData as RecordReference).CompareTo(other.EntryPointFunctionData as RecordReference);
+                        break;
+                    case Enums.EntryPointFunctionType.Script:
+                        result = (EntryPointFunctionData as SimpleSubrecord<byte[]>).Value.GetHashCode().CompareTo((other.EntryPointFunctionData as SimpleSubrecord<byte[]>).Value.GetHashCode());
+                        break;
+                    case Enums.EntryPointFunctionType.ActorValueMult:
+                        result = (EntryPointFunctionData as EntryPointActorValMult).CompareTo(other.EntryPointFunctionData as EntryPointActorValMult);
+                        break;
+                }
+            }
+
+            return result;
+        }
+
+        public static bool operator >(PerkEffect objA, PerkEffect objB)
+        {
+            return objA.CompareTo(objB) > 0;
+        }
+
+        public static bool operator >=(PerkEffect objA, PerkEffect objB)
+        {
+            return objA.CompareTo(objB) >= 0;
+        }
+
+        public static bool operator <(PerkEffect objA, PerkEffect objB)
+        {
+            return objA.CompareTo(objB) < 0;
+        }
+
+        public static bool operator <=(PerkEffect objA, PerkEffect objB)
+        {
+            return objA.CompareTo(objB) <= 0;
         }
 
         public object Clone()

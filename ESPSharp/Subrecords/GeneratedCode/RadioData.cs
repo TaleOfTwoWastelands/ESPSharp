@@ -116,8 +116,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(RadioData other)
         {
-			return PositionReference.CompareTo(other.PositionReference);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RadioData objA, RadioData objB)
         {

@@ -85,8 +85,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(XYFloat other)
         {
-			return X.CompareTo(other.X);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(XYFloat objA, XYFloat objB)
         {

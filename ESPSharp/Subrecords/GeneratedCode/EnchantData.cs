@@ -133,8 +133,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(EnchantData other)
         {
-			return Type.CompareTo(other.Type);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(EnchantData objA, EnchantData objB)
         {

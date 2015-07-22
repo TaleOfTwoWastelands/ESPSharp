@@ -115,8 +115,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(CloudLayerSpeed other)
         {
-			return Layer0.CompareTo(other.Layer0);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(CloudLayerSpeed objA, CloudLayerSpeed objB)
         {

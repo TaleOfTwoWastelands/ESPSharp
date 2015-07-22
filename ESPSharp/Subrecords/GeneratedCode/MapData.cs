@@ -139,8 +139,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(MapData other)
         {
-			return UsableXSize.CompareTo(other.UsableXSize);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(MapData objA, MapData objB)
         {

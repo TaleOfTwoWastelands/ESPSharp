@@ -140,8 +140,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ClimateTiming other)
         {
-			return SunriseBegin.CompareTo(other.SunriseBegin);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ClimateTiming objA, ClimateTiming objB)
         {

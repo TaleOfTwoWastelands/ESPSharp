@@ -103,8 +103,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(PluginHeader other)
         {
-			return RecordCount.CompareTo(other.RecordCount);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(PluginHeader objA, PluginHeader objB)
         {

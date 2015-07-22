@@ -302,8 +302,10 @@ namespace ESPSharp.DataTypes
 
         public int CompareTo(RegionObject other)
         {
-			return Object.CompareTo(other.Object);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(RegionObject objA, RegionObject objB)
         {

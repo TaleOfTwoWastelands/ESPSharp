@@ -483,8 +483,10 @@ namespace ESPSharp.Subrecords
 
         public int CompareTo(ImageSpaceData other)
         {
-			return Brightness.CompareTo(other.Brightness);
-        }
+			int result = 0;
+
+			return result;
+		}
 
         public static bool operator >(ImageSpaceData objA, ImageSpaceData objB)
         {
