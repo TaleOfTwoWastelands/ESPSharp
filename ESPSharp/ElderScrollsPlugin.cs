@@ -20,7 +20,8 @@ namespace ESPSharp
     public class ElderScrollsPlugin : IDisposable
     {
         public static List<ElderScrollsPlugin> LoadedPlugins = new List<ElderScrollsPlugin>();
-        public static Dictionary<uint, List<RecordView>> LoadedRecordViews = new Dictionary<uint, List<RecordView>>();
+        public static Dictionary<uint, List<RecordView>> LoadedRecordViews = new Dictionary<uint, List<RecordView>>();        
+        public static List<KeyValuePair<string, bool>> pluginLocations = new List<KeyValuePair<string, bool>>();
 
         protected string name = "";
         public List<string> Masters = new List<string>();
@@ -203,13 +204,36 @@ namespace ESPSharp
 
                     if (master == null)
                     {
+                        string masterFile = FindMaster(masterData.FileName.Value);
+
+                        if (masterFile == null) throw new FileNotFoundException(masterData.FileName.Value + " could not be found.");
+
                         master = new ElderScrollsPlugin(masterData.FileName.Value);
-                        master.Read(masterData.FileName.Value);
+                        master.Read(masterFile);
                     }
 
                     Masters.Add(masterData.FileName.Value);
                 }
             }
+        }
+
+        protected string FindMaster(string masterToFind)
+        {
+            if (File.Exists(masterToFind))
+                return masterToFind;
+
+            foreach (var kvp in pluginLocations)
+            {
+                string directory = kvp.Key;
+                bool recursive = kvp.Value;
+
+                var file = Directory.EnumerateFiles(directory, masterToFind, recursive ? SearchOption.AllDirectories : SearchOption.AllDirectories).FirstOrDefault();
+
+                if (file != null)
+                    return file;
+            }
+
+            return null;
         }
     }
 }

@@ -6,11 +6,39 @@ using System.Threading.Tasks;
 using ESPSharp;
 using System.IO;
 using System.IO.MemoryMappedFiles;
+using Microsoft.Win32;
 
 class Program
 {
     static void Main(string[] args)
     {
+        if (File.Exists("PluginSearchLocations.csv"))
+        {
+            using (FileStream stream = new FileStream("PluginSearchLocations.csv", FileMode.Open, FileAccess.Read))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string line;
+                string file;
+                bool recursive;
+
+                while(!reader.EndOfStream)
+                {
+                    line = reader.ReadLine();
+                    var split = line.Split(',');
+                    if (split.Count() > 0)
+                    {
+                        file = split[0];
+                        if (split.Count() > 1)
+                            recursive = Boolean.Parse(split[1]);
+                        else
+                            recursive = false;
+
+                        ElderScrollsPlugin.pluginLocations.Add(new KeyValuePair<string, bool>(file, recursive));
+                    }
+                }
+            }
+        }
+
         foreach (string file in args)
         {
             string outDir = Path.GetFileNameWithoutExtension(file);
