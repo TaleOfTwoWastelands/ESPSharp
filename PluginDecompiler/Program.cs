@@ -7,36 +7,54 @@ using ESPSharp;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using Microsoft.Win32;
+using System.Xml.Linq;
+using System.Reflection;
 
 class Program
 {
     static void Main(string[] args)
     {
-        if (File.Exists("PluginSearchLocations.csv"))
+        bool useFormIDStartPoint = false;
+        uint formIDStartPoint = 0;
+
+        if (!File.Exists("PluginDecompilerConfig.xml"))
         {
-            using (FileStream stream = new FileStream("PluginSearchLocations.csv", FileMode.Open, FileAccess.Read))
-            using (StreamReader reader = new StreamReader(stream))
+            XDocument configXML = new XDocument();
+            XElement settingsRoot = new XElement("Settings");
+            XElement ele;
+            string localDirectory = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
+
+            configXML.Add(settingsRoot);
+
+            ele = new XElement("PluginSearchLocations");
+            ele.Add(new XComment("A list of places where PluginDecompiler should search for parent plugins."));
+            ele.Add(new XComment("Element (\"LocalDirectory\" in the example below) name does not matter."));
+            ele.Add(new XComment("Directory is an absoulte file path, Recursive (true/false) is whether or not it should search sub folders for plugins (great for Mod Organizer users)."));
+            ele.Add(new XElement("LocalDirectory", new XElement("Directory", localDirectory), new XElement("Recursive", false)));
+            settingsRoot.Add(ele);
+
+            ele = new XElement("FormIDStartPoint");
+            ele.Add(new XComment("PluginDecompiler can tell the GECK and FNVEdit to start numbering formIDs at a specific point."));
+            ele.Add(new XComment("This is good for collaboration and group projects to minimize formID conflicts when adding new forms."));
+            ele.Add(new XComment("Enabled is a simple true/false value. StartPoint is read as a hexidecimal number, limited to 6 digits."));
+            ele.Add(new XElement("Enabled", false));
+            ele.Add(new XElement("StartPoint", "000000"));
+            settingsRoot.Add(ele);
+
+            configXML.Save("PluginDecompilerConfig.xml");
+        }
+        else
+        {
+            XDocument configXML = XDocument.Load("PluginDecompilerConfig.xml");
+
+            foreach (XElement ele in configXML.Element("Settings").Element("PluginSearchLocations").Elements())
             {
-                string line;
-                string file;
-                bool recursive;
-
-                while(!reader.EndOfStream)
-                {
-                    line = reader.ReadLine();
-                    var split = line.Split(',');
-                    if (split.Count() > 0)
-                    {
-                        file = split[0];
-                        if (split.Count() > 1)
-                            recursive = Boolean.Parse(split[1]);
-                        else
-                            recursive = false;
-
-                        ElderScrollsPlugin.pluginLocations.Add(new KeyValuePair<string, bool>(file, recursive));
-                    }
-                }
+                if (ele.Element("Directory") != null && ele.Element("Recursive") != null)
+                    ElderScrollsPlugin.pluginLocations.Add(new KeyValuePair<string, bool>(ele.Element("Directory").Value, ele.Element("Recursive").ToBoolean()));
             }
+
+            useFormIDStartPoint = configXML.Element("Settings").Element("FormIDStartPoint").Element("Enabled").ToBoolean();
+            formIDStartPoint = UInt32.Parse(configXML.Element("Settings").Element("FormIDStartPoint").Element("StartPoint").Value, System.Globalization.NumberStyles.HexNumber);
         }
 
         foreach (string file in args)
@@ -52,6 +70,13 @@ class Program
                     outFile = Path.ChangeExtension(file, "esm");
                 else
                     outFile = Path.ChangeExtension(file, "esp");
+
+                if (useFormIDStartPoint)
+                {
+                    var header = plugin.Header.Record as ESPSharp.Records.Header;
+                    header.FileHeader.NextObjectID = formIDStartPoint;
+                    plugin.Header = new RecordView(header);
+                }
 
                 using (FileStream stream = new FileStream(outFile, FileMode.Create, FileAccess.ReadWrite))
                 using (ESPWriter writer = new ESPWriter(stream))
