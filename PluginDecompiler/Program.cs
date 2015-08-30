@@ -61,9 +61,13 @@ class Program
         {
             string outDir = Path.GetFileNameWithoutExtension(file);
             ElderScrollsPlugin plugin = new ElderScrollsPlugin();
+
             if (outDir == Path.GetFileName(file))
             {
-                plugin = ElderScrollsPlugin.ReadXML(file);
+                if (ElderScrollsPlugin.LoadedPlugins.Any(esp => esp.FileName == file))
+                    plugin = ElderScrollsPlugin.LoadedPlugins.First(esp => esp.FileName == file);
+                else
+                    plugin = ElderScrollsPlugin.ReadXML(file);
 
                 string outFile;
                 if (plugin.Header.Record.Flags.HasFlag(ESPSharp.Enums.Flags.RecordFlag.IsMasterFile))
@@ -86,7 +90,10 @@ class Program
             }
             else
             {
-                plugin.ReadBinary(file);
+                if (ElderScrollsPlugin.LoadedPlugins.Any(esp => esp.FileName == file))
+                    plugin = ElderScrollsPlugin.LoadedPlugins.First(esp => esp.FileName == file);
+                else
+                    plugin.ReadBinary(file);
 
                 if (Directory.Exists(outDir))
                     Directory.Delete(outDir, true);
@@ -95,5 +102,6 @@ class Program
                 plugin.WriteXML(outDir);
             }
         }
+        ;
     }
 }

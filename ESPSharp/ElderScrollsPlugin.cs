@@ -23,7 +23,6 @@ namespace ESPSharp
         public static Dictionary<uint, List<RecordView>> LoadedRecordViews = new Dictionary<uint, List<RecordView>>();        
         public static List<KeyValuePair<string, bool>> pluginLocations = new List<KeyValuePair<string, bool>>();
 
-        protected string name = "";
         public List<string> Masters = new List<string>();
         public RecordView Header;
         public List<Group> TopGroups = new List<Group>();
@@ -32,20 +31,20 @@ namespace ESPSharp
 
         protected MemoryMappedFile mmf;
 
-        public string Name
+        public string ProperName
         {
             get
             {
                 if (Header.Flags.HasFlag(RecordFlag.IsMasterFile))
-                    return name + ".esm";
+                    return Name + ".esm";
                 else
-                    return name + ".esp";
-            }
-            protected set
-            {
-                name = Path.GetFileNameWithoutExtension(value);
+                    return Name + ".esp";
             }
         }
+
+        public string Name { get; protected set; }
+
+        public string FileName { get; protected set; }
 
         public ElderScrollsPlugin()
         {
@@ -69,8 +68,12 @@ namespace ESPSharp
 
         public void WriteXML(string destinationFolder)
         {
-            Header.Record.WriteXML(Path.Combine(destinationFolder, "Header.xml"), this);
+            var headerLocation = Path.Combine(destinationFolder, "Header.xml");
+            Header.Record.WriteXML(headerLocation, this);
 //.Where(g => g.ToString() != "Interior Cells" && g.ToString() != "Worldspaces" && g.ToString() != "Dialog Topics")
+            var xml = XDocument.Load(headerLocation);
+            xml.Element("Record").Add(new XElement("FileName", FileName));
+            xml.Save(headerLocation);
 #if PARALLEL
             Parallel.ForEach(TopGroups, group =>
             {
@@ -91,12 +94,15 @@ namespace ESPSharp
         public static ElderScrollsPlugin ReadXML(string sourceFolder)
         {
             ElderScrollsPlugin outPlug = new ElderScrollsPlugin();
-            outPlug.name = Path.GetDirectoryName(sourceFolder);
-            outPlug.Header = new RecordView(Path.Combine(sourceFolder, "Header.xml"));
+            var headerLocation = Path.Combine(sourceFolder, "Header.xml");
+            var xml = XDocument.Load(headerLocation);
+            outPlug.FileName = xml.Element("Record").Element("FileName").Value;
+            outPlug.Name = Path.GetDirectoryName(sourceFolder);
+            outPlug.Header = new RecordView(headerLocation);
 
             outPlug.ReadMasters();
 
-            outPlug.Masters.Add(outPlug.Name);
+            outPlug.Masters.Add(outPlug.FileName);
 
             foreach (var folder in Directory.EnumerateDirectories(sourceFolder, "*.*", SearchOption.TopDirectoryOnly))
             {
@@ -129,7 +135,8 @@ namespace ESPSharp
 
         public void ReadBinary(string file)
         {
-            name = Path.GetFileNameWithoutExtension(file);
+            FileName = Path.GetFileName(file);
+            Name = Path.GetFileNameWithoutExtension(file);
             FileInfo fi = new FileInfo(file);
             mmf = MemoryMappedFile.CreateFromFile(file, FileMode.Open, Path.GetFileNameWithoutExtension(file), fi.Length, MemoryMappedFileAccess.Read);
 
@@ -142,7 +149,7 @@ namespace ESPSharp
 
                 ReadMasters();
 
-                Masters.Add(Name);
+                Masters.Add(FileName);
 
                 while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
@@ -200,7 +207,7 @@ namespace ESPSharp
             {
                 foreach (var masterData in headRec.MasterFiles)
                 {
-                    ElderScrollsPlugin master = ElderScrollsPlugin.LoadedPlugins.FirstOrDefault(esp => esp.Name == masterData.FileName.Value);
+                    ElderScrollsPlugin master = ElderScrollsPlugin.LoadedPlugins.FirstOrDefault(esp => esp.FileName == masterData.FileName.Value);
 
                     if (master == null)
                     {

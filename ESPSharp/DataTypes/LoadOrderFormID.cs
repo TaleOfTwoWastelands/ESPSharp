@@ -18,7 +18,7 @@ namespace ESPSharp.DataTypes
                 fileIndex = (uint)(file.Masters.Count - 1);
 
             string masterName = file.Masters[(int)fileIndex];
-            ElderScrollsPlugin master = ElderScrollsPlugin.LoadedPlugins.FirstOrDefault(esp => esp.Name == masterName);
+            ElderScrollsPlugin master = ElderScrollsPlugin.LoadedPlugins.FirstOrDefault(esp => esp.FileName == masterName);
 
             if (master == null)
                 throw new Exception();
