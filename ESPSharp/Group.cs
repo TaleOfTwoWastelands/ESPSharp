@@ -56,6 +56,8 @@ namespace ESPSharp
             foreach (var view in ChildRecordViews)
             {
                 var record = view.Record;
+                if (record.Flags.HasFlag(RecordFlag.Deleted))
+                    continue;
                 record.WriteXML(Path.Combine(destinationFolder, record.ToString() + ".xml"), master);
             }
         }
