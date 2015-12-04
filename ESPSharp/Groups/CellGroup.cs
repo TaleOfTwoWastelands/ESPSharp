@@ -7,7 +7,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp
 {
-    class CellGroup : Group, ISubgroup
+    public class CellGroup : Group, ISubgroup
     {
         public FormID Cell { get; protected set; }
 

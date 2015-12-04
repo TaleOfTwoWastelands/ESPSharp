@@ -156,11 +156,20 @@ namespace ESPSharp
 
                     group.GroupAdded += (g) => AllGroups.Add(g);
                     group.RecordViewAdded += (r) => RecordViews.Add(r);
-                    TopGroups.Add(group);
-                    AllGroups.Add(group);
 
                     group.ReadBinary(reader, mmf);
-                }
+
+					var index = TopGroups.FindIndex(g => ((TopGroup)g).RecordType.Equals(((TopGroup)group).RecordType));
+					if (index > 0)
+						group.MergeGroup(TopGroups[index]);
+					else
+					{
+						TopGroups.Add(group);
+						AllGroups.Add(group);
+					}
+
+					
+				}
             }
 
             ElderScrollsPlugin.LoadedPlugins.Add(this);

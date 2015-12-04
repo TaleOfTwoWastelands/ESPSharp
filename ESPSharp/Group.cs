@@ -274,6 +274,14 @@ namespace ESPSharp
             return outGroup;
         }
 
+	    public void MergeGroup(Group group)
+	    {
+			group.ChildRecordViews.UnionWith(ChildRecordViews);
+			group.AllRecordViews.UnionWith(AllRecordViews);
+			group.Children = group.Children.Union(Children).ToList();
+		    group.AllSubgroups = group.AllSubgroups.Union(AllSubgroups).ToList();
+	    }
+
         public override abstract string ToString();
     }
 }
