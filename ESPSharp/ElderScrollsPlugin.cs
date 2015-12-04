@@ -22,7 +22,6 @@ namespace ESPSharp
         public static List<ElderScrollsPlugin> LoadedPlugins = new List<ElderScrollsPlugin>();
         public static Dictionary<uint, List<RecordView>> LoadedRecordViews = new Dictionary<uint, List<RecordView>>();        
         public static List<KeyValuePair<string, bool>> pluginLocations = new List<KeyValuePair<string, bool>>();
-
         public List<string> Masters = new List<string>();
         public RecordView Header;
         public List<Group> TopGroups = new List<Group>();
@@ -141,7 +140,7 @@ namespace ESPSharp
             mmf = MemoryMappedFile.CreateFromFile(file, FileMode.Open, Path.GetFileNameWithoutExtension(file), fi.Length, MemoryMappedFileAccess.Read);
 
             using (MemoryMappedViewStream stream = mmf.CreateViewStream(0, fi.Length, MemoryMappedFileAccess.Read))
-            using (ESPReader reader = new ESPReader(stream))
+            using (ESPReader reader = new ESPReader(stream, this))
             {
                 Header = new RecordView(reader, mmf);
 

@@ -80,7 +80,7 @@ namespace ESPSharp.Subrecords
         protected override void ReadData(ESPReader reader)
         {
             using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-            using (ESPReader subReader = new ESPReader(stream))
+            using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
             {
                 try
                 {

@@ -143,7 +143,14 @@ namespace ESPSharp
 
         public override string ToString()
         {
-            return tagToNameDictionary[RecordType];
+            try
+            {
+                return tagToNameDictionary[RecordType];
+            }
+            catch
+            {
+                return "UnknownTag" + RecordType;
+            }
         }
     }
 }

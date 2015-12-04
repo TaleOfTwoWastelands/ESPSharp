@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
 using ESPSharp.Interfaces;
+using ESPSharp.Enums.Flags;
 
 namespace ESPSharp
 {
     public class ESPReader : BinaryReader
     {
-        public ESPReader(Stream stream)
-            : base(stream, Utility.WesternEncoding) { }
+        public ElderScrollsPlugin Plugin { get; set; }
+
+        public ESPReader(Stream stream, ElderScrollsPlugin plugin)
+            : base(stream, Utility.WesternEncoding)
+        {
+            Plugin = plugin;
+        }
 
         public string ReadTag()
         {

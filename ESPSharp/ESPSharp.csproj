@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,9 +34,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.TextTemplating.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.VisualStudio.TextTemplating.12.0\v4.0_12.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.TextTemplating.12.0.dll</HintPath>
+      <HintPath>..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.VisualStudio.TextTemplating.14.0\v4.0_14.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.TextTemplating.14.0.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -360,6 +360,7 @@
     <Compile Include="Interfaces\IESPSerializable.cs" />
     <Compile Include="Interfaces\IReferenceContainer.cs" />
     <Compile Include="ISubgroup.cs" />
+    <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Record.cs" />
     <Compile Include="Groups\TopGroup.cs" />
@@ -367,11 +368,6 @@
     <Compile Include="Groups\WorldGroup.cs" />
     <Compile Include="Records\Challenge.cs" />
     <Compile Include="Records\GameSetting.cs" />
-    <Compile Include="Records\GeneratedCode\AcousticSpaceCopy.cs">
-      <DependentUpon>AcousticSpaceCopy.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Records\GeneratedCode\AcousticSpace.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -760,10 +756,6 @@
     <None Include="DataTypes\GeneratedCode\XYZFloat.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>XYZFloat.cs</LastGenOutput>
-    </None>
-    <None Include="Records\GeneratedCode\AcousticSpaceCopy.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AcousticSpaceCopy.cs</LastGenOutput>
     </None>
     <None Include="Records\GeneratedCode\NavigationMesh.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -2602,8 +2594,11 @@
     <Compile Include="Subrecords\InventoryItemExtraData.cs" />
     <Compile Include="Subrecords\PackageTarget.cs" />
     <Compile Include="Subrecords\SimpleSubrecord.cs" />
+    <Compile Include="Subrecords\SubDLString.cs" />
+    <Compile Include="Subrecords\SubILString.cs" />
     <Compile Include="Subrecords\SubMarker.cs" />
     <Compile Include="Subrecords\SubNullStringList.cs" />
+    <Compile Include="Subrecords\SubString.cs" />
     <Compile Include="Subrecords\UndecodedSubrecord.cs" />
     <Compile Include="T4\ClassTemplate.cs" />
     <Compile Include="Utility.cs" />
@@ -3055,10 +3050,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
-    <None Include="DataTypes\GeneratedCode\AlternateTexture.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AlternateTexture.cs</LastGenOutput>
-    </None>
     <None Include="DataTypes\GeneratedCode\Color.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Color.cs</LastGenOutput>
@@ -3247,7 +3238,15 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataTypes\GeneratedCode\AlternateTexture.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AlternateTexture.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -10,6 +10,45 @@ namespace ESPSharp
 {
     public static class Extensions
     {
+        public static Dictionary<int, char> HexDict = new Dictionary<int, char>()
+        {
+            {0, '0'},
+            {1, '1'},
+            {2, '2'},
+            {3, '3'},
+            {4, '4'},
+            {5, '5'},
+            {6, '6'},
+            {7, '7'},
+            {8, '8'},
+            {9, '9'},
+            {10, 'A'},
+            {11, 'B'},
+            {12, 'C'},
+            {13, 'D'},
+            {14, 'E'},
+            {15, 'F'}
+        };
+
+        public static Dictionary<char, byte> ReverseHexDict = new Dictionary<char, byte>()
+        {
+            {'0', 0},
+            {'1', 1},
+            {'2', 2},
+            {'3', 3},
+            {'4', 4},
+            {'5', 5},
+            {'6', 6},
+            {'7', 7},
+            {'8', 8},
+            {'9', 9},
+            {'A', 10},
+            {'B', 11},
+            {'C', 12},
+            {'D', 13},
+            {'E', 14},
+            {'F', 15}
+        };
 
         #region XElementExtensions
         public static T ToEnum<T>(this XElement ele)
@@ -76,7 +115,20 @@ namespace ESPSharp
 
         public static byte[] ToBytes(this XElement ele)
         {
-            return Convert.FromBase64String(ele.Value);
+            using (MemoryStream stream = new MemoryStream())
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            {
+                byte b;
+                foreach (string hex in ele.Value.Split(' '))
+                {
+                    b = ReverseHexDict[hex[1]];
+                    b += (byte)(ReverseHexDict[hex[0]] << 4);
+
+                    writer.Write(b);
+                }
+
+                return stream.ToArray();
+            }
         }
 
         public static char[] ToChars(this XElement ele)
@@ -128,7 +180,16 @@ namespace ESPSharp
 
         public static string ToHex(this byte[] bytes)
         {
-            return bytes.ToBase64();
+            StringBuilder builder = new StringBuilder();
+
+            foreach (var b in bytes)
+            {
+                builder.Append(HexDict[(b & 0xf0) >> 4]);
+                builder.Append(HexDict[b & 0x0f]);
+                builder.Append(" ");
+            }
+
+            return builder.ToString();
         }
 
         public static string FriendlyName(this Type type)

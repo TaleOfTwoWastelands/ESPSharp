@@ -22,7 +22,8 @@ class Program
             XDocument configXML = new XDocument();
             XElement settingsRoot = new XElement("Settings");
             XElement ele;
-            string localDirectory = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
+            string localDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            ElderScrollsPlugin.pluginLocations.Add(new KeyValuePair<string, bool>(localDirectory, false));
 
             configXML.Add(settingsRoot);
 
@@ -83,7 +84,7 @@ class Program
                 }
 
                 using (FileStream stream = new FileStream(outFile, FileMode.Create, FileAccess.ReadWrite))
-                using (ESPWriter writer = new ESPWriter(stream))
+                using (ESPWriter writer = new ESPWriter(stream, plugin))
                 {
                     plugin.WriteBinary(writer);
                 }

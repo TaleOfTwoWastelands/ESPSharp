@@ -61,7 +61,7 @@ class Program
             operationStart = DateTime.Now;
             WriteLog(logFile,String.Format("{0} - Writing {1} binary...", operationStart.ToLongTimeString(), file));
             using (FileStream stream = new FileStream("NEW" + file, FileMode.Create, FileAccess.ReadWrite))
-            using (ESPWriter writer = new ESPWriter(stream))
+            using (ESPWriter writer = new ESPWriter(stream, plugin))
             {
                 plugin.WriteBinary(writer);
             }
