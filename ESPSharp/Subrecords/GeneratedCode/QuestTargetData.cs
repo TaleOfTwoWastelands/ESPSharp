@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public QuestTargetFlags Flags { get; set; }
 		public Byte[] Unused { get; set; }
 
+
 		public QuestTargetData(string Tag = null)
 			:base(Tag)
 		{
 			Target = new FormID();
 			Flags = new QuestTargetFlags();
 			Unused = new byte[3];
+
 		}
 
 		public QuestTargetData(FormID Target, QuestTargetFlags Flags, Byte[] Unused)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Target = Target;
 			this.Flags = Flags;
 			this.Unused = Unused;
+
 		}
 
 		public QuestTargetData(QuestTargetData copyObject)
@@ -43,18 +62,20 @@ namespace ESPSharp.Subrecords
 			Flags = copyObject.Flags;
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Target.ReadBinary(subReader);
 					Flags = subReader.ReadEnum<QuestTargetFlags>();
 					Unused = subReader.ReadBytes(3);
+
 				}
 				catch
 				{
@@ -71,6 +92,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[3]);
 			else
 			writer.Write(Unused);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -84,6 +106,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			WriteUnusedXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -97,6 +120,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<QuestTargetFlags>();
 
 			ReadUnusedXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -104,9 +128,11 @@ namespace ESPSharp.Subrecords
 			return new QuestTargetData(this);
 		}
 
+
         public int CompareTo(QuestTargetData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -130,6 +156,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(QuestTargetData other)
         {
@@ -196,8 +224,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

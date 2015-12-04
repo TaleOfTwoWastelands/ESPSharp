@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public NoYesByte IsPlayable { get; set; }
 		public NoYesByte IsHidden { get; set; }
 
+
 		public PerkData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Ranks = new Byte();
 			IsPlayable = new NoYesByte();
 			IsHidden = new NoYesByte();
+
 		}
 
 		public PerkData(NoYesByte IsTrait, Byte MinLevel, Byte Ranks, NoYesByte IsPlayable, NoYesByte IsHidden)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Ranks = Ranks;
 			this.IsPlayable = IsPlayable;
 			this.IsHidden = IsHidden;
+
 		}
 
 		public PerkData(PerkData copyObject)
@@ -49,12 +68,13 @@ namespace ESPSharp.Subrecords
 			Ranks = copyObject.Ranks;
 			IsPlayable = copyObject.IsPlayable;
 			IsHidden = copyObject.IsHidden;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -63,6 +83,7 @@ namespace ESPSharp.Subrecords
 					Ranks = subReader.ReadByte();
 					IsPlayable = subReader.ReadEnum<NoYesByte>();
 					IsHidden = subReader.ReadEnum<NoYesByte>();
+
 				}
 				catch
 				{
@@ -78,6 +99,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Ranks);
 			writer.Write((Byte)IsPlayable);
 			writer.Write((Byte)IsHidden);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -98,6 +120,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("IsHidden", true, out subEle);
 			subEle.Value = IsHidden.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -118,6 +141,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("IsHidden", false, out subEle))
 				IsHidden = subEle.ToEnum<NoYesByte>();
+
 		}
 
 		public override object Clone()
@@ -125,9 +149,11 @@ namespace ESPSharp.Subrecords
 			return new PerkData(this);
 		}
 
+
         public int CompareTo(PerkData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -151,6 +177,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PerkData other)
         {
@@ -218,5 +246,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +40,7 @@ namespace ESPSharp.Subrecords
 		public ScriptType Type { get; set; }
 		public ScriptFlags Flags { get; set; }
 
+
 		public ScriptData(string Tag = null)
 			:base(Tag)
 		{
@@ -33,6 +50,7 @@ namespace ESPSharp.Subrecords
 			VariableCount = new UInt32();
 			Type = new ScriptType();
 			Flags = new ScriptFlags();
+
 		}
 
 		public ScriptData(Byte[] Unused, UInt32 ReferenceCount, UInt32 CompiledSize, UInt32 VariableCount, ScriptType Type, ScriptFlags Flags)
@@ -43,6 +61,7 @@ namespace ESPSharp.Subrecords
 			this.VariableCount = VariableCount;
 			this.Type = Type;
 			this.Flags = Flags;
+
 		}
 
 		public ScriptData(ScriptData copyObject)
@@ -54,12 +73,13 @@ namespace ESPSharp.Subrecords
 			VariableCount = copyObject.VariableCount;
 			Type = copyObject.Type;
 			Flags = copyObject.Flags;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -69,6 +89,7 @@ namespace ESPSharp.Subrecords
 					VariableCount = subReader.ReadUInt32();
 					Type = subReader.ReadEnum<ScriptType>();
 					Flags = subReader.ReadEnum<ScriptFlags>();
+
 				}
 				catch
 				{
@@ -88,6 +109,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(VariableCount);
 			writer.Write((UInt16)Type);
 			writer.Write((UInt16)Flags);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -110,6 +132,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -132,6 +155,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Flags", false, out subEle))
 				Flags = subEle.ToEnum<ScriptFlags>();
+
 		}
 
 		public override object Clone()
@@ -139,9 +163,11 @@ namespace ESPSharp.Subrecords
 			return new ScriptData(this);
 		}
 
+
         public int CompareTo(ScriptData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -165,6 +191,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ScriptData other)
         {
@@ -234,8 +262,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

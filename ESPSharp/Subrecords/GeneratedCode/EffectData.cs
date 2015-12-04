@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public EffectType Type { get; set; }
 		public ActorValues ActorValue { get; set; }
 
+
 		public EffectData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Duration = new UInt32();
 			Type = new EffectType();
 			ActorValue = new ActorValues();
+
 		}
 
 		public EffectData(UInt32 Magnitude, UInt32 Area, UInt32 Duration, EffectType Type, ActorValues ActorValue)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Duration = Duration;
 			this.Type = Type;
 			this.ActorValue = ActorValue;
+
 		}
 
 		public EffectData(EffectData copyObject)
@@ -49,12 +68,13 @@ namespace ESPSharp.Subrecords
 			Duration = copyObject.Duration;
 			Type = copyObject.Type;
 			ActorValue = copyObject.ActorValue;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -63,6 +83,7 @@ namespace ESPSharp.Subrecords
 					Duration = subReader.ReadUInt32();
 					Type = subReader.ReadEnum<EffectType>();
 					ActorValue = subReader.ReadEnum<ActorValues>();
+
 				}
 				catch
 				{
@@ -78,6 +99,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Duration);
 			writer.Write((UInt32)Type);
 			writer.Write((Int32)ActorValue);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -98,6 +120,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("ActorValue", true, out subEle);
 			subEle.Value = ActorValue.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -118,6 +141,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("ActorValue", false, out subEle))
 				ActorValue = subEle.ToEnum<ActorValues>();
+
 		}
 
 		public override object Clone()
@@ -125,9 +149,11 @@ namespace ESPSharp.Subrecords
 			return new EffectData(this);
 		}
 
+
         public int CompareTo(EffectData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -151,6 +177,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(EffectData other)
         {
@@ -218,5 +246,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,15 +34,18 @@ namespace ESPSharp.Subrecords
 	{
 		public List<UInt32> Seeds { get; set; }
 
+
 		public SpeedtreeSeeds(string Tag = null)
 			:base(Tag)
 		{
 			Seeds = new List<UInt32>();
+
 		}
 
 		public SpeedtreeSeeds(List<UInt32> Seeds)
 		{
 			this.Seeds = Seeds;
+
 		}
 
 		public SpeedtreeSeeds(SpeedtreeSeeds copyObject)
@@ -34,12 +53,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Seeds != null)
 				foreach(var temp in copyObject.Seeds)
 					Seeds.Add(temp);
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -47,6 +67,7 @@ namespace ESPSharp.Subrecords
 					{
 						Seeds.Add(subReader.ReadUInt32());
 					}
+
 				}
 				catch
 				{
@@ -61,6 +82,7 @@ namespace ESPSharp.Subrecords
 			{
 				writer.Write(temp);
 			}
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -72,6 +94,7 @@ namespace ESPSharp.Subrecords
 			{
 				subEle.Add(new XElement("Seed", temp));
 			}
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -83,12 +106,15 @@ namespace ESPSharp.Subrecords
 				{
 					Seeds.Add(e.ToUInt32());
 				}
+
 		}
 
 		public override object Clone()
 		{
 			return new SpeedtreeSeeds(this);
 		}
+
+
 
         public bool Equals(SpeedtreeSeeds other)
         {
@@ -152,5 +178,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

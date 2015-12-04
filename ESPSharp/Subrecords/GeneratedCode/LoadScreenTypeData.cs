@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +52,7 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unknown2 { get; set; }
 		public UInt32 Stats { get; set; }
 
+
 		public LoadScreenTypeData(string Tag = null)
 			:base(Tag)
 		{
@@ -57,6 +74,7 @@ namespace ESPSharp.Subrecords
 			Font2Blue = new Single();
 			Unknown2 = new byte[4];
 			Stats = new UInt32();
+
 		}
 
 		public LoadScreenTypeData(LoadScreenTypeEnum Type, UInt32 X, UInt32 Y, UInt32 Width, UInt32 Height, Single Orientation, FontType Font1, Single Font1Red, Single Font1Green, Single Font1Blue, FontAlignment Font1Alignment, Byte[] Unknown1, FontType Font2, Single Font2Red, Single Font2Green, Single Font2Blue, Byte[] Unknown2, UInt32 Stats)
@@ -79,6 +97,7 @@ namespace ESPSharp.Subrecords
 			this.Font2Blue = Font2Blue;
 			this.Unknown2 = Unknown2;
 			this.Stats = Stats;
+
 		}
 
 		public LoadScreenTypeData(LoadScreenTypeData copyObject)
@@ -103,12 +122,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Unknown2 != null)
 				Unknown2 = (Byte[])copyObject.Unknown2.Clone();
 			Stats = copyObject.Stats;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -130,6 +150,7 @@ namespace ESPSharp.Subrecords
 					Font2Blue = subReader.ReadSingle();
 					Unknown2 = subReader.ReadBytes(4);
 					Stats = subReader.ReadUInt32();
+
 				}
 				catch
 				{
@@ -164,6 +185,7 @@ namespace ESPSharp.Subrecords
 			else
 			writer.Write(Unknown2);
 			writer.Write(Stats);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -223,6 +245,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Stats", true, out subEle);
 			subEle.Value = Stats.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -282,6 +305,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Stats", false, out subEle))
 				Stats = subEle.ToUInt32();
+
 		}
 
 		public override object Clone()
@@ -289,9 +313,11 @@ namespace ESPSharp.Subrecords
 			return new LoadScreenTypeData(this);
 		}
 
+
         public int CompareTo(LoadScreenTypeData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -315,6 +341,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(LoadScreenTypeData other)
         {
@@ -395,5 +423,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

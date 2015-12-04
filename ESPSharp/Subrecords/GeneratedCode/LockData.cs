@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public LockFlags Flags { get; set; }
 		public Byte[] Unknown { get; set; }
 
+
 		public LockData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Key = new FormID();
 			Flags = new LockFlags();
 			Unknown = new byte[11];
+
 		}
 
 		public LockData(Byte Level, Byte[] Unused, FormID Key, LockFlags Flags, Byte[] Unknown)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Key = Key;
 			this.Flags = Flags;
 			this.Unknown = Unknown;
+
 		}
 
 		public LockData(LockData copyObject)
@@ -52,12 +71,13 @@ namespace ESPSharp.Subrecords
 			Flags = copyObject.Flags;
 			if (copyObject.Unknown != null)
 				Unknown = (Byte[])copyObject.Unknown.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -66,6 +86,7 @@ namespace ESPSharp.Subrecords
 					Key.ReadBinary(subReader);
 					Flags = subReader.ReadEnum<LockFlags>();
 					Unknown = subReader.ReadBytes(11);
+
 				}
 				catch
 				{
@@ -87,6 +108,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[11]);
 			else
 			writer.Write(Unknown);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -105,6 +127,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			WriteUnknownXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -123,6 +146,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<LockFlags>();
 
 			ReadUnknownXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -130,9 +154,11 @@ namespace ESPSharp.Subrecords
 			return new LockData(this);
 		}
 
+
         public int CompareTo(LockData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -156,6 +182,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(LockData other)
         {
@@ -224,12 +252,21 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnknownXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnknownXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

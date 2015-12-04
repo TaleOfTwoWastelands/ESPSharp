@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public FormID Bottom { get; set; }
 		public FormID Top { get; set; }
 
+
 		public LinkedOcclusionPlanes(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			Left = new FormID();
 			Bottom = new FormID();
 			Top = new FormID();
+
 		}
 
 		public LinkedOcclusionPlanes(FormID Right, FormID Left, FormID Bottom, FormID Top)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.Left = Left;
 			this.Bottom = Bottom;
 			this.Top = Top;
+
 		}
 
 		public LinkedOcclusionPlanes(LinkedOcclusionPlanes copyObject)
@@ -49,12 +68,13 @@ namespace ESPSharp.Subrecords
 				Bottom = (FormID)copyObject.Bottom.Clone();
 			if (copyObject.Top != null)
 				Top = (FormID)copyObject.Top.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -62,6 +82,7 @@ namespace ESPSharp.Subrecords
 					Left.ReadBinary(subReader);
 					Bottom.ReadBinary(subReader);
 					Top.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -76,6 +97,7 @@ namespace ESPSharp.Subrecords
 			Left.WriteBinary(writer);
 			Bottom.WriteBinary(writer);
 			Top.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -93,6 +115,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Top", true, out subEle);
 			Top.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -110,6 +133,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Top", false, out subEle))
 				Top.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -117,9 +141,11 @@ namespace ESPSharp.Subrecords
 			return new LinkedOcclusionPlanes(this);
 		}
 
+
         public int CompareTo(LinkedOcclusionPlanes other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -143,6 +169,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(LinkedOcclusionPlanes other)
         {
@@ -209,5 +237,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +68,7 @@ namespace ESPSharp.Subrecords
 		public ImageSpaceFlags Flags { get; set; }
 		public Byte[] Unused2 { get; set; }
 
+
 		public ImageSpaceData(string Tag = null)
 			:base(Tag)
 		{
@@ -89,6 +106,7 @@ namespace ESPSharp.Subrecords
 			Unused1 = new byte[16];
 			Flags = new ImageSpaceFlags();
 			Unused2 = new byte[3];
+
 		}
 
 		public ImageSpaceData(Single HDREyeAdaptSpeed, Single HDRBlurRadius, Single HDRBlurPasses, Single HDREmissiveMult, Single HDRLUMTarget, Single HDRLUMUpperClamp, Single HDRBrightScale, Single HDRBrightClamp, Single HDRLUMRampNoTex, Single HDRLUMRampMin, Single HDRLUMRampMax, Single HDRSunlightDimmer, Single HDRGrassDimmer, Single HDRTreeDimmer, Single HDRSkinDimmer, Single BloomBlurRadius, Single BloomAlphaMultInterior, Single BloomAlphaMultExterior, Single GetHitBlurRadius, Single GetHitBlurDampingConstant, Single NightEyeTintColorRed, Single NightEyeTintColorGreen, Single NightEyeTintColorBlue, Single Brightness, Single CinematicSaturation, Single CinematicContrastAvgLUMValue, Single CinematicContrastValue, Single CinematicBrightnessTintColorRed, Single CinematicBrightnessTintColorGreen, Single CinematicBrightnessTintColorBlue, Single CinematicBrightnessTintValue, Byte[] Unused1, ImageSpaceFlags Flags, Byte[] Unused2)
@@ -127,6 +145,7 @@ namespace ESPSharp.Subrecords
 			this.Unused1 = Unused1;
 			this.Flags = Flags;
 			this.Unused2 = Unused2;
+
 		}
 
 		public ImageSpaceData(ImageSpaceData copyObject)
@@ -167,12 +186,13 @@ namespace ESPSharp.Subrecords
 			Flags = copyObject.Flags;
 			if (copyObject.Unused2 != null)
 				Unused2 = (Byte[])copyObject.Unused2.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -210,6 +230,7 @@ namespace ESPSharp.Subrecords
 					Unused1 = subReader.ReadBytes(16);
 					Flags = subReader.ReadEnum<ImageSpaceFlags>();
 					Unused2 = subReader.ReadBytes(3);
+
 				}
 				catch
 				{
@@ -260,6 +281,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[3]);
 			else
 			writer.Write(Unused2);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -367,6 +389,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Unused2", true, out subEle);
 			subEle.Value = Unused2.ToHex();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -474,6 +497,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Unused2", false, out subEle))
 				Unused2 = subEle.ToBytes();
+
 		}
 
 		public override object Clone()
@@ -481,9 +505,11 @@ namespace ESPSharp.Subrecords
 			return new ImageSpaceData(this);
 		}
 
+
         public int CompareTo(ImageSpaceData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -507,6 +533,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ImageSpaceData other)
         {
@@ -603,5 +631,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

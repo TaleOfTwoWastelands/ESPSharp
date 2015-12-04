@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public FormID ConsumedAmmo { get; set; }
 		public Single ConsumedPercentage { get; set; }
 
+
 		public AmmoExtraData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Weight = new Single();
 			ConsumedAmmo = new FormID();
 			ConsumedPercentage = new Single();
+
 		}
 
 		public AmmoExtraData(UInt32 ProjectilesPerShot, FormID Projectile, Single Weight, FormID ConsumedAmmo, Single ConsumedPercentage)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Weight = Weight;
 			this.ConsumedAmmo = ConsumedAmmo;
 			this.ConsumedPercentage = ConsumedPercentage;
+
 		}
 
 		public AmmoExtraData(AmmoExtraData copyObject)
@@ -51,12 +70,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.ConsumedAmmo != null)
 				ConsumedAmmo = (FormID)copyObject.ConsumedAmmo.Clone();
 			ConsumedPercentage = copyObject.ConsumedPercentage;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -65,6 +85,7 @@ namespace ESPSharp.Subrecords
 					Weight = subReader.ReadSingle();
 					ConsumedAmmo.ReadBinary(subReader);
 					ConsumedPercentage = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -80,6 +101,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Weight);
 			ConsumedAmmo.WriteBinary(writer);
 			writer.Write(ConsumedPercentage);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -100,6 +122,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("ConsumedPercentage", true, out subEle);
 			subEle.Value = ConsumedPercentage.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -120,6 +143,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("ConsumedPercentage", false, out subEle))
 				ConsumedPercentage = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -127,9 +151,11 @@ namespace ESPSharp.Subrecords
 			return new AmmoExtraData(this);
 		}
 
+
         public int CompareTo(AmmoExtraData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -153,6 +179,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(AmmoExtraData other)
         {
@@ -220,5 +248,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

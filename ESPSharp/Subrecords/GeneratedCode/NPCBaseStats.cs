@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +44,7 @@ namespace ESPSharp.Subrecords
 		public Int16 DispositionBase { get; set; }
 		public ActorTemplateFlags TemplateFlags { get; set; }
 
+
 		public NPCBaseStats(string Tag = null)
 			:base(Tag)
 		{
@@ -41,6 +58,7 @@ namespace ESPSharp.Subrecords
 			Karma = new Single();
 			DispositionBase = new Int16();
 			TemplateFlags = new ActorTemplateFlags();
+
 		}
 
 		public NPCBaseStats(NPCFlags Flags, UInt16 Fatigue, UInt16 BarterGold, Int16 Level, UInt16 CalcMin, UInt16 CalcMax, UInt16 SpeedMultiplier, Single Karma, Int16 DispositionBase, ActorTemplateFlags TemplateFlags)
@@ -55,6 +73,7 @@ namespace ESPSharp.Subrecords
 			this.Karma = Karma;
 			this.DispositionBase = DispositionBase;
 			this.TemplateFlags = TemplateFlags;
+
 		}
 
 		public NPCBaseStats(NPCBaseStats copyObject)
@@ -69,12 +88,13 @@ namespace ESPSharp.Subrecords
 			Karma = copyObject.Karma;
 			DispositionBase = copyObject.DispositionBase;
 			TemplateFlags = copyObject.TemplateFlags;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -88,6 +108,7 @@ namespace ESPSharp.Subrecords
 					Karma = subReader.ReadSingle();
 					DispositionBase = subReader.ReadInt16();
 					TemplateFlags = subReader.ReadEnum<ActorTemplateFlags>();
+
 				}
 				catch
 				{
@@ -108,6 +129,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Karma);
 			writer.Write(DispositionBase);
 			writer.Write((UInt16)TemplateFlags);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -143,6 +165,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("TemplateFlags", true, out subEle);
 			subEle.Value = TemplateFlags.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -178,6 +201,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("TemplateFlags", false, out subEle))
 				TemplateFlags = subEle.ToEnum<ActorTemplateFlags>();
+
 		}
 
 		public override object Clone()
@@ -185,9 +209,11 @@ namespace ESPSharp.Subrecords
 			return new NPCBaseStats(this);
 		}
 
+
         public int CompareTo(NPCBaseStats other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -211,6 +237,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(NPCBaseStats other)
         {
@@ -283,5 +311,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +40,7 @@ namespace ESPSharp.Subrecords
 		public Byte Volatility { get; set; }
 		public MoonData MoonData { get; set; }
 
+
 		public ClimateTiming(string Tag = null)
 			:base(Tag)
 		{
@@ -33,6 +50,7 @@ namespace ESPSharp.Subrecords
 			SunsetEnd = new Byte();
 			Volatility = new Byte();
 			MoonData = new MoonData();
+
 		}
 
 		public ClimateTiming(Byte SunriseBegin, Byte SunriseEnd, Byte SunsetBegin, Byte SunsetEnd, Byte Volatility, MoonData MoonData)
@@ -43,6 +61,7 @@ namespace ESPSharp.Subrecords
 			this.SunsetEnd = SunsetEnd;
 			this.Volatility = Volatility;
 			this.MoonData = MoonData;
+
 		}
 
 		public ClimateTiming(ClimateTiming copyObject)
@@ -54,12 +73,13 @@ namespace ESPSharp.Subrecords
 			Volatility = copyObject.Volatility;
 			if (copyObject.MoonData != null)
 				MoonData = (MoonData)copyObject.MoonData.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -69,6 +89,7 @@ namespace ESPSharp.Subrecords
 					SunsetEnd = subReader.ReadByte();
 					Volatility = subReader.ReadByte();
 					MoonData.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -85,6 +106,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(SunsetEnd);
 			writer.Write(Volatility);
 			MoonData.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -108,6 +130,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("MoonData", true, out subEle);
 			MoonData.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -131,6 +154,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("MoonData", false, out subEle))
 				MoonData.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -138,9 +162,11 @@ namespace ESPSharp.Subrecords
 			return new ClimateTiming(this);
 		}
 
+
         public int CompareTo(ClimateTiming other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -164,6 +190,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ClimateTiming other)
         {
@@ -232,5 +260,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +44,7 @@ namespace ESPSharp.Subrecords
 		public Single TimeMin { get; set; }
 		public Single TargetPercentBetweenActors { get; set; }
 
+
 		public CameraShotData(string Tag = null)
 			:base(Tag)
 		{
@@ -41,6 +58,7 @@ namespace ESPSharp.Subrecords
 			TimeMax = new Single();
 			TimeMin = new Single();
 			TargetPercentBetweenActors = new Single();
+
 		}
 
 		public CameraShotData(CameraShotAction Action, CameraShotSubject Location, CameraShotSubject Target, CameraShotFlags Flags, Single TimeMultiplierPlayer, Single TimeMultiplierTarget, Single TimeMultiplierGlobal, Single TimeMax, Single TimeMin, Single TargetPercentBetweenActors)
@@ -55,6 +73,7 @@ namespace ESPSharp.Subrecords
 			this.TimeMax = TimeMax;
 			this.TimeMin = TimeMin;
 			this.TargetPercentBetweenActors = TargetPercentBetweenActors;
+
 		}
 
 		public CameraShotData(CameraShotData copyObject)
@@ -69,12 +88,13 @@ namespace ESPSharp.Subrecords
 			TimeMax = copyObject.TimeMax;
 			TimeMin = copyObject.TimeMin;
 			TargetPercentBetweenActors = copyObject.TargetPercentBetweenActors;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -88,6 +108,7 @@ namespace ESPSharp.Subrecords
 					TimeMax = subReader.ReadSingle();
 					TimeMin = subReader.ReadSingle();
 					TargetPercentBetweenActors = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -108,6 +129,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(TimeMax);
 			writer.Write(TimeMin);
 			writer.Write(TargetPercentBetweenActors);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -143,6 +165,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("TargetPercentBetweenActors", true, out subEle);
 			subEle.Value = TargetPercentBetweenActors.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -178,6 +201,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("TargetPercentBetweenActors", false, out subEle))
 				TargetPercentBetweenActors = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -185,9 +209,11 @@ namespace ESPSharp.Subrecords
 			return new CameraShotData(this);
 		}
 
+
         public int CompareTo(CameraShotData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -211,6 +237,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(CameraShotData other)
         {
@@ -283,5 +311,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

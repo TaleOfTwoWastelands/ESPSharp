@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +54,7 @@ namespace ESPSharp.Subrecords
 		public Single FemaleWeight { get; set; }
 		public RaceFlags RaceFlags { get; set; }
 
+
 		public RaceData(string Tag = null)
 			:base(Tag)
 		{
@@ -61,6 +78,7 @@ namespace ESPSharp.Subrecords
 			MaleWeight = new Single();
 			FemaleWeight = new Single();
 			RaceFlags = new RaceFlags();
+
 		}
 
 		public RaceData(ActorValuesByte SkillBonus1, Byte SkillBonus1Amount, ActorValuesByte SkillBonus2, Byte SkillBonus2Amount, ActorValuesByte SkillBonus3, Byte SkillBonus3Amount, ActorValuesByte SkillBonus4, Byte SkillBonus4Amount, ActorValuesByte SkillBonus5, Byte SkillBonus5Amount, ActorValuesByte SkillBonus6, Byte SkillBonus6Amount, ActorValuesByte SkillBonus7, Byte SkillBonus7Amount, Byte[] Unused, Single MaleHeight, Single FemaleHeight, Single MaleWeight, Single FemaleWeight, RaceFlags RaceFlags)
@@ -85,6 +103,7 @@ namespace ESPSharp.Subrecords
 			this.MaleWeight = MaleWeight;
 			this.FemaleWeight = FemaleWeight;
 			this.RaceFlags = RaceFlags;
+
 		}
 
 		public RaceData(RaceData copyObject)
@@ -110,12 +129,13 @@ namespace ESPSharp.Subrecords
 			MaleWeight = copyObject.MaleWeight;
 			FemaleWeight = copyObject.FemaleWeight;
 			RaceFlags = copyObject.RaceFlags;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -139,6 +159,7 @@ namespace ESPSharp.Subrecords
 					MaleWeight = subReader.ReadSingle();
 					FemaleWeight = subReader.ReadSingle();
 					RaceFlags = subReader.ReadEnum<RaceFlags>();
+
 				}
 				catch
 				{
@@ -172,6 +193,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(MaleWeight);
 			writer.Write(FemaleWeight);
 			writer.Write((UInt32)RaceFlags);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -236,6 +258,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = RaceFlags.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -300,6 +323,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Flags", false, out subEle))
 				RaceFlags = subEle.ToEnum<RaceFlags>();
+
 		}
 
 		public override object Clone()
@@ -307,9 +331,11 @@ namespace ESPSharp.Subrecords
 			return new RaceData(this);
 		}
 
+
         public int CompareTo(RaceData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -333,6 +359,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RaceData other)
         {
@@ -416,8 +444,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

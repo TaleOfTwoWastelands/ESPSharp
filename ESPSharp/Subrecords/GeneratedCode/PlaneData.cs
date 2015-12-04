@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +43,7 @@ namespace ESPSharp.Subrecords
 		public Single RotationQuaternion3 { get; set; }
 		public Single RotationQuaternion4 { get; set; }
 
+
 		public PlaneData(string Tag = null)
 			:base(Tag)
 		{
@@ -39,6 +56,7 @@ namespace ESPSharp.Subrecords
 			RotationQuaternion2 = new Single();
 			RotationQuaternion3 = new Single();
 			RotationQuaternion4 = new Single();
+
 		}
 
 		public PlaneData(Single Width, Single Height, Single PositionX, Single PositionY, Single PositionZ, Single RotationQuaternion1, Single RotationQuaternion2, Single RotationQuaternion3, Single RotationQuaternion4)
@@ -52,6 +70,7 @@ namespace ESPSharp.Subrecords
 			this.RotationQuaternion2 = RotationQuaternion2;
 			this.RotationQuaternion3 = RotationQuaternion3;
 			this.RotationQuaternion4 = RotationQuaternion4;
+
 		}
 
 		public PlaneData(PlaneData copyObject)
@@ -65,12 +84,13 @@ namespace ESPSharp.Subrecords
 			RotationQuaternion2 = copyObject.RotationQuaternion2;
 			RotationQuaternion3 = copyObject.RotationQuaternion3;
 			RotationQuaternion4 = copyObject.RotationQuaternion4;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -83,6 +103,7 @@ namespace ESPSharp.Subrecords
 					RotationQuaternion2 = subReader.ReadSingle();
 					RotationQuaternion3 = subReader.ReadSingle();
 					RotationQuaternion4 = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -102,6 +123,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(RotationQuaternion2);
 			writer.Write(RotationQuaternion3);
 			writer.Write(RotationQuaternion4);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -134,6 +156,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Rotation/Quaternion4", true, out subEle);
 			subEle.Value = RotationQuaternion4.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -166,6 +189,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Rotation/Quaternion4", false, out subEle))
 				RotationQuaternion4 = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -173,9 +197,11 @@ namespace ESPSharp.Subrecords
 			return new PlaneData(this);
 		}
 
+
         public int CompareTo(PlaneData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -199,6 +225,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PlaneData other)
         {
@@ -270,5 +298,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

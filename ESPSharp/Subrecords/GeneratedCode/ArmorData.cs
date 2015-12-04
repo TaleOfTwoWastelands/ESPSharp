@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public Int32 MaxCondition { get; set; }
 		public Single Weight { get; set; }
 
+
 		public ArmorData(string Tag = null)
 			:base(Tag)
 		{
 			Value = new Int32();
 			MaxCondition = new Int32();
 			Weight = new Single();
+
 		}
 
 		public ArmorData(Int32 Value, Int32 MaxCondition, Single Weight)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Value = Value;
 			this.MaxCondition = MaxCondition;
 			this.Weight = Weight;
+
 		}
 
 		public ArmorData(ArmorData copyObject)
@@ -41,18 +60,20 @@ namespace ESPSharp.Subrecords
 			Value = copyObject.Value;
 			MaxCondition = copyObject.MaxCondition;
 			Weight = copyObject.Weight;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Value = subReader.ReadInt32();
 					MaxCondition = subReader.ReadInt32();
 					Weight = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -66,6 +87,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Value);
 			writer.Write(MaxCondition);
 			writer.Write(Weight);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -80,6 +102,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Weight", true, out subEle);
 			subEle.Value = Weight.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -94,6 +117,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Weight", false, out subEle))
 				Weight = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -101,9 +125,11 @@ namespace ESPSharp.Subrecords
 			return new ArmorData(this);
 		}
 
+
         public int CompareTo(ArmorData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -127,6 +153,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ArmorData other)
         {
@@ -192,5 +220,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

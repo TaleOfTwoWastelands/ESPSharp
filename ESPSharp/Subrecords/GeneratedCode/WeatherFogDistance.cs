@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +40,7 @@ namespace ESPSharp.Subrecords
 		public Single DayPower { get; set; }
 		public Single NightPower { get; set; }
 
+
 		public WeatherFogDistance(string Tag = null)
 			:base(Tag)
 		{
@@ -33,6 +50,7 @@ namespace ESPSharp.Subrecords
 			NightFar = new Single();
 			DayPower = new Single();
 			NightPower = new Single();
+
 		}
 
 		public WeatherFogDistance(Single DayNear, Single DayFar, Single NightNear, Single NightFar, Single DayPower, Single NightPower)
@@ -43,6 +61,7 @@ namespace ESPSharp.Subrecords
 			this.NightFar = NightFar;
 			this.DayPower = DayPower;
 			this.NightPower = NightPower;
+
 		}
 
 		public WeatherFogDistance(WeatherFogDistance copyObject)
@@ -53,12 +72,13 @@ namespace ESPSharp.Subrecords
 			NightFar = copyObject.NightFar;
 			DayPower = copyObject.DayPower;
 			NightPower = copyObject.NightPower;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -68,6 +88,7 @@ namespace ESPSharp.Subrecords
 					NightFar = subReader.ReadSingle();
 					DayPower = subReader.ReadSingle();
 					NightPower = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -84,6 +105,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(NightFar);
 			writer.Write(DayPower);
 			writer.Write(NightPower);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -107,6 +129,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Night/Power", true, out subEle);
 			subEle.Value = NightPower.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -130,6 +153,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Night/Power", false, out subEle))
 				NightPower = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -137,9 +161,11 @@ namespace ESPSharp.Subrecords
 			return new WeatherFogDistance(this);
 		}
 
+
         public int CompareTo(WeatherFogDistance other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -163,6 +189,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WeatherFogDistance other)
         {
@@ -231,5 +259,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +37,7 @@ namespace ESPSharp.Subrecords
 		public List<FormID> Unknown3 { get; set; }
 		public List<FormID> Doors { get; set; }
 
+
 		public NavigationConnectionInfo(string Tag = null)
 			:base(Tag)
 		{
@@ -28,6 +45,7 @@ namespace ESPSharp.Subrecords
 			Unknown2 = new List<FormID>();
 			Unknown3 = new List<FormID>();
 			Doors = new List<FormID>();
+
 		}
 
 		public NavigationConnectionInfo(FormID Unknown1, List<FormID> Unknown2, List<FormID> Unknown3, List<FormID> Doors)
@@ -36,6 +54,7 @@ namespace ESPSharp.Subrecords
 			this.Unknown2 = Unknown2;
 			this.Unknown3 = Unknown3;
 			this.Doors = Doors;
+
 		}
 
 		public NavigationConnectionInfo(NavigationConnectionInfo copyObject)
@@ -51,12 +70,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Doors != null)
 				foreach(var temp in copyObject.Doors)
 					Doors.Add((FormID)temp.Clone());
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -85,6 +105,7 @@ namespace ESPSharp.Subrecords
 						temp.ReadBinary(subReader);
 						Doors.Add(temp);
 					}
+
 				}
 				catch
 				{
@@ -111,6 +132,7 @@ namespace ESPSharp.Subrecords
 			{
 				temp.WriteBinary(writer);
 			}
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -143,6 +165,7 @@ namespace ESPSharp.Subrecords
 				temp.WriteXML(e, master);
 				subEle.Add(e);
 			}
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -175,6 +198,7 @@ namespace ESPSharp.Subrecords
 					temp.ReadXML(e, master);
 					Doors.Add(temp);
 				}
+
 		}
 
 		public override object Clone()
@@ -182,9 +206,11 @@ namespace ESPSharp.Subrecords
 			return new NavigationConnectionInfo(this);
 		}
 
+
         public int CompareTo(NavigationConnectionInfo other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -208,6 +234,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(NavigationConnectionInfo other)
         {
@@ -274,5 +302,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public FormID NavigationMesh { get; set; }
 		public UInt32 Unknown { get; set; }
 
+
 		public NavigationDoorLink(string Tag = null)
 			:base(Tag)
 		{
 			NavigationMesh = new FormID();
 			Unknown = new UInt32();
+
 		}
 
 		public NavigationDoorLink(FormID NavigationMesh, UInt32 Unknown)
 		{
 			this.NavigationMesh = NavigationMesh;
 			this.Unknown = Unknown;
+
 		}
 
 		public NavigationDoorLink(NavigationDoorLink copyObject)
@@ -38,17 +57,19 @@ namespace ESPSharp.Subrecords
 			if (copyObject.NavigationMesh != null)
 				NavigationMesh = (FormID)copyObject.NavigationMesh.Clone();
 			Unknown = copyObject.Unknown;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					NavigationMesh.ReadBinary(subReader);
 					Unknown = subReader.ReadUInt32();
+
 				}
 				catch
 				{
@@ -61,6 +82,7 @@ namespace ESPSharp.Subrecords
 		{
 			NavigationMesh.WriteBinary(writer);
 			writer.Write(Unknown);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -72,6 +94,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Unknown", true, out subEle);
 			subEle.Value = Unknown.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -83,6 +106,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
 				Unknown = subEle.ToUInt32();
+
 		}
 
 		public override object Clone()
@@ -90,9 +114,11 @@ namespace ESPSharp.Subrecords
 			return new NavigationDoorLink(this);
 		}
 
+
         public int CompareTo(NavigationDoorLink other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -116,6 +142,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(NavigationDoorLink other)
         {
@@ -180,5 +208,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

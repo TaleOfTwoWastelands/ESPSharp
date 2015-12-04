@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public TimeOfDayColors Layer2 { get; set; }
 		public TimeOfDayColors Layer3 { get; set; }
 
+
 		public CloudLayerColors(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			Layer1 = new TimeOfDayColors();
 			Layer2 = new TimeOfDayColors();
 			Layer3 = new TimeOfDayColors();
+
 		}
 
 		public CloudLayerColors(TimeOfDayColors Layer0, TimeOfDayColors Layer1, TimeOfDayColors Layer2, TimeOfDayColors Layer3)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.Layer1 = Layer1;
 			this.Layer2 = Layer2;
 			this.Layer3 = Layer3;
+
 		}
 
 		public CloudLayerColors(CloudLayerColors copyObject)
@@ -49,12 +68,13 @@ namespace ESPSharp.Subrecords
 				Layer2 = (TimeOfDayColors)copyObject.Layer2.Clone();
 			if (copyObject.Layer3 != null)
 				Layer3 = (TimeOfDayColors)copyObject.Layer3.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -62,6 +82,7 @@ namespace ESPSharp.Subrecords
 					Layer1.ReadBinary(subReader);
 					Layer2.ReadBinary(subReader);
 					Layer3.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -76,6 +97,7 @@ namespace ESPSharp.Subrecords
 			Layer1.WriteBinary(writer);
 			Layer2.WriteBinary(writer);
 			Layer3.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -93,6 +115,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Layer3", true, out subEle);
 			Layer3.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -110,6 +133,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Layer3", false, out subEle))
 				Layer3.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -117,9 +141,11 @@ namespace ESPSharp.Subrecords
 			return new CloudLayerColors(this);
 		}
 
+
         public int CompareTo(CloudLayerColors other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -143,6 +169,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(CloudLayerColors other)
         {
@@ -209,5 +237,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

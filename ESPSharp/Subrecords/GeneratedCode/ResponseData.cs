@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +42,7 @@ namespace ESPSharp.Subrecords
 		public NoYesByte UseEmotionAnimation { get; set; }
 		public Byte[] Unused3 { get; set; }
 
+
 		public ResponseData(string Tag = null)
 			:base(Tag)
 		{
@@ -37,6 +54,7 @@ namespace ESPSharp.Subrecords
 			Sound = new FormID();
 			UseEmotionAnimation = new NoYesByte();
 			Unused3 = new byte[3];
+
 		}
 
 		public ResponseData(EmotionType Emotion, Int32 EmotionValue, Byte[] Unused1, Byte ResponseNumber, Byte[] Unused2, FormID Sound, NoYesByte UseEmotionAnimation, Byte[] Unused3)
@@ -49,6 +67,7 @@ namespace ESPSharp.Subrecords
 			this.Sound = Sound;
 			this.UseEmotionAnimation = UseEmotionAnimation;
 			this.Unused3 = Unused3;
+
 		}
 
 		public ResponseData(ResponseData copyObject)
@@ -65,12 +84,13 @@ namespace ESPSharp.Subrecords
 			UseEmotionAnimation = copyObject.UseEmotionAnimation;
 			if (copyObject.Unused3 != null)
 				Unused3 = (Byte[])copyObject.Unused3.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -82,6 +102,7 @@ namespace ESPSharp.Subrecords
 					Sound.ReadBinary(subReader);
 					UseEmotionAnimation = subReader.ReadEnum<NoYesByte>();
 					Unused3 = subReader.ReadBytes(3);
+
 				}
 				catch
 				{
@@ -109,6 +130,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[3]);
 			else
 			writer.Write(Unused3);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -135,6 +157,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = UseEmotionAnimation.ToString();
 
 			WriteUnused3XML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -161,6 +184,7 @@ namespace ESPSharp.Subrecords
 				UseEmotionAnimation = subEle.ToEnum<NoYesByte>();
 
 			ReadUnused3XML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -168,9 +192,11 @@ namespace ESPSharp.Subrecords
 			return new ResponseData(this);
 		}
 
+
         public int CompareTo(ResponseData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -194,6 +220,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ResponseData other)
         {
@@ -265,16 +293,27 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void ReadUnused3XML(XElement ele, ElderScrollsPlugin master);
+
+
 
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused3XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

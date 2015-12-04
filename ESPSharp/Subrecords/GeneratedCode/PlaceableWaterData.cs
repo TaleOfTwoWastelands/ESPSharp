@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public PlaceableWaterFlags Flags { get; set; }
 		public FormID WaterType { get; set; }
 
+
 		public PlaceableWaterData(string Tag = null)
 			:base(Tag)
 		{
 			Flags = new PlaceableWaterFlags();
 			WaterType = new FormID();
+
 		}
 
 		public PlaceableWaterData(PlaceableWaterFlags Flags, FormID WaterType)
 		{
 			this.Flags = Flags;
 			this.WaterType = WaterType;
+
 		}
 
 		public PlaceableWaterData(PlaceableWaterData copyObject)
@@ -38,17 +57,19 @@ namespace ESPSharp.Subrecords
 			Flags = copyObject.Flags;
 			if (copyObject.WaterType != null)
 				WaterType = (FormID)copyObject.WaterType.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Flags = subReader.ReadEnum<PlaceableWaterFlags>();
 					WaterType.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -61,6 +82,7 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write((UInt32)Flags);
 			WaterType.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -72,6 +94,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("WaterType", true, out subEle);
 			WaterType.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -83,6 +106,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("WaterType", false, out subEle))
 				WaterType.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -90,9 +114,11 @@ namespace ESPSharp.Subrecords
 			return new PlaceableWaterData(this);
 		}
 
+
         public int CompareTo(PlaceableWaterData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -116,6 +142,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PlaceableWaterData other)
         {
@@ -180,5 +208,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

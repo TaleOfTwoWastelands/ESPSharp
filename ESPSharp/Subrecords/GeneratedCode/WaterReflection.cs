@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public FormID Reference { get; set; }
 		public WaterReflectionFlags Flags { get; set; }
 
+
 		public WaterReflection(string Tag = null)
 			:base(Tag)
 		{
 			Reference = new FormID();
 			Flags = new WaterReflectionFlags();
+
 		}
 
 		public WaterReflection(FormID Reference, WaterReflectionFlags Flags)
 		{
 			this.Reference = Reference;
 			this.Flags = Flags;
+
 		}
 
 		public WaterReflection(WaterReflection copyObject)
@@ -38,17 +57,19 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Reference != null)
 				Reference = (FormID)copyObject.Reference.Clone();
 			Flags = copyObject.Flags;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Reference.ReadBinary(subReader);
 					Flags = subReader.ReadEnum<WaterReflectionFlags>();
+
 				}
 				catch
 				{
@@ -61,6 +82,7 @@ namespace ESPSharp.Subrecords
 		{
 			Reference.WriteBinary(writer);
 			writer.Write((UInt32)Flags);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -72,6 +94,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -83,6 +106,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Flags", false, out subEle))
 				Flags = subEle.ToEnum<WaterReflectionFlags>();
+
 		}
 
 		public override object Clone()
@@ -90,9 +114,11 @@ namespace ESPSharp.Subrecords
 			return new WaterReflection(this);
 		}
 
+
         public int CompareTo(WaterReflection other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -116,6 +142,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WaterReflection other)
         {
@@ -180,5 +208,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

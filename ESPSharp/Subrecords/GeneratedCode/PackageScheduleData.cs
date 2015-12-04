@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public SByte Time { get; set; }
 		public Int32 Duration { get; set; }
 
+
 		public PackageScheduleData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Date = new Byte();
 			Time = new SByte();
 			Duration = new Int32();
+
 		}
 
 		public PackageScheduleData(SByte Month, PackageScheduleDays DayOfWeek, Byte Date, SByte Time, Int32 Duration)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Date = Date;
 			this.Time = Time;
 			this.Duration = Duration;
+
 		}
 
 		public PackageScheduleData(PackageScheduleData copyObject)
@@ -49,12 +68,13 @@ namespace ESPSharp.Subrecords
 			Date = copyObject.Date;
 			Time = copyObject.Time;
 			Duration = copyObject.Duration;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -63,6 +83,7 @@ namespace ESPSharp.Subrecords
 					Date = subReader.ReadByte();
 					Time = subReader.ReadSByte();
 					Duration = subReader.ReadInt32();
+
 				}
 				catch
 				{
@@ -78,6 +99,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Date);
 			writer.Write(Time);
 			writer.Write(Duration);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -98,6 +120,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Duration", true, out subEle);
 			subEle.Value = Duration.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -118,6 +141,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Duration", false, out subEle))
 				Duration = subEle.ToInt32();
+
 		}
 
 		public override object Clone()
@@ -125,9 +149,11 @@ namespace ESPSharp.Subrecords
 			return new PackageScheduleData(this);
 		}
 
+
         public int CompareTo(PackageScheduleData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -151,6 +177,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PackageScheduleData other)
         {
@@ -218,5 +246,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

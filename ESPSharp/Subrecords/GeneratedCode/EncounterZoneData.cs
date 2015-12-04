@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public EncounterZoneFlags Flags { get; set; }
 		public Byte Unused { get; set; }
 
+
 		public EncounterZoneData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			MinimumLevel = new Byte();
 			Flags = new EncounterZoneFlags();
 			Unused = new Byte();
+
 		}
 
 		public EncounterZoneData(FormID Owner, Byte OwnerRank, Byte MinimumLevel, EncounterZoneFlags Flags, Byte Unused)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.MinimumLevel = MinimumLevel;
 			this.Flags = Flags;
 			this.Unused = Unused;
+
 		}
 
 		public EncounterZoneData(EncounterZoneData copyObject)
@@ -50,12 +69,13 @@ namespace ESPSharp.Subrecords
 			MinimumLevel = copyObject.MinimumLevel;
 			Flags = copyObject.Flags;
 			Unused = copyObject.Unused;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -64,6 +84,7 @@ namespace ESPSharp.Subrecords
 					MinimumLevel = subReader.ReadByte();
 					Flags = subReader.ReadEnum<EncounterZoneFlags>();
 					Unused = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -79,6 +100,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(MinimumLevel);
 			writer.Write((Byte)Flags);
 			writer.Write(Unused);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -98,6 +120,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			WriteUnusedXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -117,6 +140,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<EncounterZoneFlags>();
 
 			ReadUnusedXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -124,9 +148,11 @@ namespace ESPSharp.Subrecords
 			return new EncounterZoneData(this);
 		}
 
+
         public int CompareTo(EncounterZoneData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -150,6 +176,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(EncounterZoneData other)
         {
@@ -218,8 +246,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

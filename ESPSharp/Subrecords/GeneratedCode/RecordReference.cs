@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,31 +35,36 @@ namespace ESPSharp.Subrecords
 	{
 		public FormID Reference { get; set; }
 
+
 		public RecordReference(string Tag = null)
 			:base(Tag)
 		{
 			Reference = new FormID();
+
 		}
 
 		public RecordReference(FormID Reference)
 		{
 			this.Reference = Reference;
+
 		}
 
 		public RecordReference(RecordReference copyObject)
 		{
 			if (copyObject.Reference != null)
 				Reference = (FormID)copyObject.Reference.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Reference.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -55,6 +76,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			Reference.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -63,6 +85,7 @@ namespace ESPSharp.Subrecords
 			
 			ele.TryPathTo("Reference", true, out subEle);
 			Reference.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -71,6 +94,7 @@ namespace ESPSharp.Subrecords
 			
 			if (ele.TryPathTo("Reference", false, out subEle))
 				Reference.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -78,12 +102,16 @@ namespace ESPSharp.Subrecords
 			return new RecordReference(this);
 		}
 
+
         public int CompareTo(RecordReference other)
         {
 			int result = 0;
 
+
 			if (result == 0 && Reference != null && other.Reference != null)	
 				result = Reference.CompareTo(other.Reference);
+
+
 
 			return result;
 		}
@@ -107,6 +135,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RecordReference other)
         {
@@ -170,5 +200,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

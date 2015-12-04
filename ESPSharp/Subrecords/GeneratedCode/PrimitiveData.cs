@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +42,7 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unknown { get; set; }
 		public PrimitiveType Type { get; set; }
 
+
 		public PrimitiveData(string Tag = null)
 			:base(Tag)
 		{
@@ -37,6 +54,7 @@ namespace ESPSharp.Subrecords
 			Blue = new Single();
 			Unknown = new byte[4];
 			Type = new PrimitiveType();
+
 		}
 
 		public PrimitiveData(Single XBound, Single YBound, Single ZBound, Single Red, Single Green, Single Blue, Byte[] Unknown, PrimitiveType Type)
@@ -49,6 +67,7 @@ namespace ESPSharp.Subrecords
 			this.Blue = Blue;
 			this.Unknown = Unknown;
 			this.Type = Type;
+
 		}
 
 		public PrimitiveData(PrimitiveData copyObject)
@@ -62,12 +81,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Unknown != null)
 				Unknown = (Byte[])copyObject.Unknown.Clone();
 			Type = copyObject.Type;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -79,6 +99,7 @@ namespace ESPSharp.Subrecords
 					Blue = subReader.ReadSingle();
 					Unknown = subReader.ReadBytes(4);
 					Type = subReader.ReadEnum<PrimitiveType>();
+
 				}
 				catch
 				{
@@ -100,6 +121,7 @@ namespace ESPSharp.Subrecords
 			else
 			writer.Write(Unknown);
 			writer.Write((UInt32)Type);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -129,6 +151,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Type", true, out subEle);
 			subEle.Value = Type.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -158,6 +181,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Type", false, out subEle))
 				Type = subEle.ToEnum<PrimitiveType>();
+
 		}
 
 		public override object Clone()
@@ -165,9 +189,11 @@ namespace ESPSharp.Subrecords
 			return new PrimitiveData(this);
 		}
 
+
         public int CompareTo(PrimitiveData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -191,6 +217,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PrimitiveData other)
         {
@@ -261,5 +289,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

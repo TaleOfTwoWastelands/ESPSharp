@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +62,7 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unused { get; set; }
 		public Single LimbReplacementScale { get; set; }
 
+
 		public BodyPartInfo(string Tag = null)
 			:base(Tag)
 		{
@@ -77,6 +94,7 @@ namespace ESPSharp.Subrecords
 			ExplosionDecalCount = new Byte();
 			Unused = new byte[2];
 			LimbReplacementScale = new Single();
+
 		}
 
 		public BodyPartInfo(Single DamageMultiplier, BodyPartDataFlags Flags, BodyPartType Type, Byte HealthPercent, ActorValuesByte ActorValue, Byte ToHitChance, Byte ExplosionChance, UInt16 ExplosionDebrisCount, FormID ExplosionDebris, FormID Explosion, Single TrackingMaxAngle, Single ExplosionDebrisScale, Int32 SeverableDebrisCount, FormID SeverableDebris, FormID SeverableExplosion, Single SeverableDebrisScale, Single GoreEffectsTranslateX, Single GoreEffectsTranslateY, Single GoreEffectsTranslateZ, Single GoreEffectsRotationX, Single GoreEffectsRotationY, Single GoreEffectsRotationZ, FormID SeverableImpactDataSet, FormID ExplosionImpactDataSet, Byte SeverableDecalCount, Byte ExplosionDecalCount, Byte[] Unused, Single LimbReplacementScale)
@@ -109,6 +127,7 @@ namespace ESPSharp.Subrecords
 			this.ExplosionDecalCount = ExplosionDecalCount;
 			this.Unused = Unused;
 			this.LimbReplacementScale = LimbReplacementScale;
+
 		}
 
 		public BodyPartInfo(BodyPartInfo copyObject)
@@ -148,12 +167,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
 			LimbReplacementScale = copyObject.LimbReplacementScale;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -185,6 +205,7 @@ namespace ESPSharp.Subrecords
 					ExplosionDecalCount = subReader.ReadByte();
 					Unused = subReader.ReadBytes(2);
 					LimbReplacementScale = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -226,6 +247,7 @@ namespace ESPSharp.Subrecords
 			else
 			writer.Write(Unused);
 			writer.Write(LimbReplacementScale);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -314,6 +336,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("LimbReplacementScale", true, out subEle);
 			subEle.Value = LimbReplacementScale.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -402,6 +425,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("LimbReplacementScale", false, out subEle))
 				LimbReplacementScale = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -409,9 +433,11 @@ namespace ESPSharp.Subrecords
 			return new BodyPartInfo(this);
 		}
 
+
         public int CompareTo(BodyPartInfo other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -435,6 +461,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(BodyPartInfo other)
         {
@@ -526,8 +554,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

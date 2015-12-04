@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public NoYesShort ModulatesVoice { get; set; }
 		public Byte[] Unknown { get; set; }
 
+
 		public ArmorAddonData(string Tag = null)
 			:base(Tag)
 		{
 			ArmorRating = new Int16();
 			ModulatesVoice = new NoYesShort();
 			Unknown = new byte[8];
+
 		}
 
 		public ArmorAddonData(Int16 ArmorRating, NoYesShort ModulatesVoice, Byte[] Unknown)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.ArmorRating = ArmorRating;
 			this.ModulatesVoice = ModulatesVoice;
 			this.Unknown = Unknown;
+
 		}
 
 		public ArmorAddonData(ArmorAddonData copyObject)
@@ -42,18 +61,20 @@ namespace ESPSharp.Subrecords
 			ModulatesVoice = copyObject.ModulatesVoice;
 			if (copyObject.Unknown != null)
 				Unknown = (Byte[])copyObject.Unknown.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					ArmorRating = subReader.ReadInt16();
 					ModulatesVoice = subReader.ReadEnum<NoYesShort>();
 					Unknown = subReader.ReadBytes(8);
+
 				}
 				catch
 				{
@@ -70,6 +91,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[8]);
 			else
 			writer.Write(Unknown);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -84,6 +106,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Unknown", true, out subEle);
 			subEle.Value = Unknown.ToHex();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -98,6 +121,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
 				Unknown = subEle.ToBytes();
+
 		}
 
 		public override object Clone()
@@ -105,9 +129,11 @@ namespace ESPSharp.Subrecords
 			return new ArmorAddonData(this);
 		}
 
+
         public int CompareTo(ArmorAddonData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -131,6 +157,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ArmorAddonData other)
         {
@@ -196,5 +224,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

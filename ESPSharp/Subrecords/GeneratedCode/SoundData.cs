@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +50,7 @@ namespace ESPSharp.Subrecords
 		public Int32 Priority { get; set; }
 		public Byte[] Unknown { get; set; }
 
+
 		public SoundData(string Tag = null)
 			:base(Tag)
 		{
@@ -53,6 +70,7 @@ namespace ESPSharp.Subrecords
 			ReverbAttenuationControl = new Int16();
 			Priority = new Int32();
 			Unknown = new byte[8];
+
 		}
 
 		public SoundData(Byte MinAttenuationDistance, Byte MaxAttenuationDistance, SByte FrequencyAdjustmentPercentage, Byte Unused, SoundDataFlags SoundDataFlags, Int16 StaticAttenuationcdB, Byte StopTime, Byte StartTime, Int16 AttenuationCurvePoint1, Int16 AttenuationCurvePoint2, Int16 AttenuationCurvePoint3, Int16 AttenuationCurvePoint4, Int16 AttenuationCurvePoint5, Int16 ReverbAttenuationControl, Int32 Priority, Byte[] Unknown)
@@ -73,6 +91,7 @@ namespace ESPSharp.Subrecords
 			this.ReverbAttenuationControl = ReverbAttenuationControl;
 			this.Priority = Priority;
 			this.Unknown = Unknown;
+
 		}
 
 		public SoundData(SoundData copyObject)
@@ -94,12 +113,13 @@ namespace ESPSharp.Subrecords
 			Priority = copyObject.Priority;
 			if (copyObject.Unknown != null)
 				Unknown = (Byte[])copyObject.Unknown.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -119,6 +139,7 @@ namespace ESPSharp.Subrecords
 					ReverbAttenuationControl = subReader.ReadInt16();
 					Priority = subReader.ReadInt32();
 					Unknown = subReader.ReadBytes(8);
+
 				}
 				catch
 				{
@@ -148,6 +169,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[8]);
 			else
 			writer.Write(Unknown);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -200,6 +222,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Unknown", true, out subEle);
 			subEle.Value = Unknown.ToHex();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -252,6 +275,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
 				Unknown = subEle.ToBytes();
+
 		}
 
 		public override object Clone()
@@ -259,9 +283,11 @@ namespace ESPSharp.Subrecords
 			return new SoundData(this);
 		}
 
+
         public int CompareTo(SoundData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -285,6 +311,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(SoundData other)
         {
@@ -364,8 +392,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

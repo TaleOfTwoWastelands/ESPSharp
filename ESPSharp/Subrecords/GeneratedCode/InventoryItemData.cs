@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public FormID Item { get; set; }
 		public Int32 Count { get; set; }
 
+
 		public InventoryItemData(string Tag = null)
 			:base(Tag)
 		{
 			Item = new FormID();
 			Count = new Int32();
+
 		}
 
 		public InventoryItemData(FormID Item, Int32 Count)
 		{
 			this.Item = Item;
 			this.Count = Count;
+
 		}
 
 		public InventoryItemData(InventoryItemData copyObject)
@@ -38,17 +57,19 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Item != null)
 				Item = (FormID)copyObject.Item.Clone();
 			Count = copyObject.Count;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Item.ReadBinary(subReader);
 					Count = subReader.ReadInt32();
+
 				}
 				catch
 				{
@@ -61,6 +82,7 @@ namespace ESPSharp.Subrecords
 		{
 			Item.WriteBinary(writer);
 			writer.Write(Count);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -72,6 +94,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Count", true, out subEle);
 			subEle.Value = Count.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -83,6 +106,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Count", false, out subEle))
 				Count = subEle.ToInt32();
+
 		}
 
 		public override object Clone()
@@ -90,15 +114,21 @@ namespace ESPSharp.Subrecords
 			return new InventoryItemData(this);
 		}
 
+
         public int CompareTo(InventoryItemData other)
         {
 			int result = 0;
 
+
 			if (result == 0 && Item != null && other.Item != null)	
 				result = Item.CompareTo(other.Item);
 
+
+
 			if (result == 0 && Count != null && other.Count != null)	
 				result = Count.CompareTo(other.Count);
+
+
 
 			return result;
 		}
@@ -122,6 +152,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(InventoryItemData other)
         {
@@ -186,5 +218,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public EnchantFlags Flags { get; set; }
 		public Byte[] Unused3 { get; set; }
 
+
 		public EnchantData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Unused2 = new byte[4];
 			Flags = new EnchantFlags();
 			Unused3 = new byte[3];
+
 		}
 
 		public EnchantData(EnchantType Type, Byte[] Unused1, Byte[] Unused2, EnchantFlags Flags, Byte[] Unused3)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Unused2 = Unused2;
 			this.Flags = Flags;
 			this.Unused3 = Unused3;
+
 		}
 
 		public EnchantData(EnchantData copyObject)
@@ -52,12 +71,13 @@ namespace ESPSharp.Subrecords
 			Flags = copyObject.Flags;
 			if (copyObject.Unused3 != null)
 				Unused3 = (Byte[])copyObject.Unused3.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -66,6 +86,7 @@ namespace ESPSharp.Subrecords
 					Unused2 = subReader.ReadBytes(4);
 					Flags = subReader.ReadEnum<EnchantFlags>();
 					Unused3 = subReader.ReadBytes(3);
+
 				}
 				catch
 				{
@@ -90,6 +111,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[3]);
 			else
 			writer.Write(Unused3);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -107,6 +129,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			WriteUnused3XML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -124,6 +147,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<EnchantFlags>();
 
 			ReadUnused3XML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -131,9 +155,11 @@ namespace ESPSharp.Subrecords
 			return new EnchantData(this);
 		}
 
+
         public int CompareTo(EnchantData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -157,6 +183,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(EnchantData other)
         {
@@ -225,16 +253,27 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void ReadUnused3XML(XElement ele, ElderScrollsPlugin master);
+
+
 
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused3XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

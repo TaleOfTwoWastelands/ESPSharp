@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public Single Y { get; set; }
 		public Single Z { get; set; }
 
+
 		public BoundHalfExtents(string Tag = null)
 			:base(Tag)
 		{
 			X = new Single();
 			Y = new Single();
 			Z = new Single();
+
 		}
 
 		public BoundHalfExtents(Single X, Single Y, Single Z)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.X = X;
 			this.Y = Y;
 			this.Z = Z;
+
 		}
 
 		public BoundHalfExtents(BoundHalfExtents copyObject)
@@ -41,18 +60,20 @@ namespace ESPSharp.Subrecords
 			X = copyObject.X;
 			Y = copyObject.Y;
 			Z = copyObject.Z;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					X = subReader.ReadSingle();
 					Y = subReader.ReadSingle();
 					Z = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -66,6 +87,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(X);
 			writer.Write(Y);
 			writer.Write(Z);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -80,6 +102,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Z", true, out subEle);
 			subEle.Value = Z.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -94,6 +117,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Z", false, out subEle))
 				Z = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -101,9 +125,11 @@ namespace ESPSharp.Subrecords
 			return new BoundHalfExtents(this);
 		}
 
+
         public int CompareTo(BoundHalfExtents other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -127,6 +153,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(BoundHalfExtents other)
         {
@@ -192,5 +220,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +77,7 @@ namespace ESPSharp.Subrecords
 		public Color FadeColor { get; set; }
 		public NoYes MotionBlurStrength { get; set; }
 
+
 		public ImageSpaceAdapterData(string Tag = null)
 			:base(Tag)
 		{
@@ -107,6 +124,7 @@ namespace ESPSharp.Subrecords
 			RadialBlurDownStart = new UInt32();
 			FadeColor = new Color();
 			MotionBlurStrength = new NoYes();
+
 		}
 
 		public ImageSpaceAdapterData(NoYes IsAnimatable, Single Duration, UInt32 HDREyeAdaptSpeedMult, UInt32 HDREyeAdaptSpeedAdd, UInt32 HDRBloomBlurRadiusMult, UInt32 HDRBloomBlurRadiusAdd, UInt32 HDRBloomThresholdMult, UInt32 HDRBloomThresholdAdd, UInt32 HDRBloomScaleMult, UInt32 HDRBloomScaleAdd, UInt32 HDRTargetLumMinMult, UInt32 HDRTargetLumMinAdd, UInt32 HDRTargetLumMaxMult, UInt32 HDRTargetLumMaxAdd, UInt32 HDRSunlightScaleMult, UInt32 HDRSunlightScaleAdd, UInt32 HDRSkyScaleMult, UInt32 HDRSkyScaleAdd, Byte[] Unknown1, UInt32 CinematicSaturationMult, UInt32 CinematicSaturationAdd, UInt32 CinematicBrightnessMult, UInt32 CinematicBrightnessAdd, UInt32 CinematicContrastMult, UInt32 CinematicContrastAdd, Byte[] Unknown2, Color TintColor, UInt32 BlurRadius, UInt32 DoubleVisionStrength, UInt32 RadialBlurStrength, UInt32 RadialBlurRampUp, UInt32 RadialBlurStart, NoYes RadialBlurUseTarget, UInt32 RadialBlurCenterX, UInt32 RadialBlurCenterY, UInt32 DepthOfFieldStrength, UInt32 DepthOfFieldDistance, UInt32 DepthOfFieldRange, NoYes DepthOfFieldUseTarget, UInt32 RadialBlurRampDown, UInt32 RadialBlurDownStart, Color FadeColor, NoYes MotionBlurStrength)
@@ -154,6 +172,7 @@ namespace ESPSharp.Subrecords
 			this.RadialBlurDownStart = RadialBlurDownStart;
 			this.FadeColor = FadeColor;
 			this.MotionBlurStrength = MotionBlurStrength;
+
 		}
 
 		public ImageSpaceAdapterData(ImageSpaceAdapterData copyObject)
@@ -205,12 +224,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.FadeColor != null)
 				FadeColor = (Color)copyObject.FadeColor.Clone();
 			MotionBlurStrength = copyObject.MotionBlurStrength;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -257,6 +277,7 @@ namespace ESPSharp.Subrecords
 					RadialBlurDownStart = subReader.ReadUInt32();
 					FadeColor.ReadBinary(subReader);
 					MotionBlurStrength = subReader.ReadEnum<NoYes>();
+
 				}
 				catch
 				{
@@ -316,6 +337,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(RadialBlurDownStart);
 			FadeColor.WriteBinary(writer);
 			writer.Write((UInt32)MotionBlurStrength);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -450,6 +472,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("MotionBlurStrength", true, out subEle);
 			subEle.Value = MotionBlurStrength.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -584,6 +607,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("MotionBlurStrength", false, out subEle))
 				MotionBlurStrength = subEle.ToEnum<NoYes>();
+
 		}
 
 		public override object Clone()
@@ -591,9 +615,11 @@ namespace ESPSharp.Subrecords
 			return new ImageSpaceAdapterData(this);
 		}
 
+
         public int CompareTo(ImageSpaceAdapterData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -617,6 +643,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ImageSpaceAdapterData other)
         {
@@ -722,5 +750,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

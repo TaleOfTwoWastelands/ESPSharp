@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public FormID Quest { get; set; }
 		public UInt32 QuestStage { get; set; }
 
+
 		public PerkQuestStageData(string Tag = null)
 			:base(Tag)
 		{
 			Quest = new FormID();
 			QuestStage = new UInt32();
+
 		}
 
 		public PerkQuestStageData(FormID Quest, UInt32 QuestStage)
 		{
 			this.Quest = Quest;
 			this.QuestStage = QuestStage;
+
 		}
 
 		public PerkQuestStageData(PerkQuestStageData copyObject)
@@ -38,17 +57,19 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Quest != null)
 				Quest = (FormID)copyObject.Quest.Clone();
 			QuestStage = copyObject.QuestStage;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Quest.ReadBinary(subReader);
 					QuestStage = subReader.ReadUInt32();
+
 				}
 				catch
 				{
@@ -61,6 +82,7 @@ namespace ESPSharp.Subrecords
 		{
 			Quest.WriteBinary(writer);
 			writer.Write(QuestStage);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -72,6 +94,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("QuestStage", true, out subEle);
 			subEle.Value = QuestStage.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -83,6 +106,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("QuestStage", false, out subEle))
 				QuestStage = subEle.ToUInt32();
+
 		}
 
 		public override object Clone()
@@ -90,9 +114,11 @@ namespace ESPSharp.Subrecords
 			return new PerkQuestStageData(this);
 		}
 
+
         public int CompareTo(PerkQuestStageData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -116,6 +142,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PerkQuestStageData other)
         {
@@ -180,5 +208,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

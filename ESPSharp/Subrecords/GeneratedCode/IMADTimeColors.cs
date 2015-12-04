@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,15 +34,18 @@ namespace ESPSharp.Subrecords
 	{
 		public List<IMADTimeColor> TimeColors { get; set; }
 
+
 		public IMADTimeColors(string Tag = null)
 			:base(Tag)
 		{
 			TimeColors = new List<IMADTimeColor>();
+
 		}
 
 		public IMADTimeColors(List<IMADTimeColor> TimeColors)
 		{
 			this.TimeColors = TimeColors;
+
 		}
 
 		public IMADTimeColors(IMADTimeColors copyObject)
@@ -34,12 +53,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.TimeColors != null)
 				foreach(var temp in copyObject.TimeColors)
 					TimeColors.Add((IMADTimeColor)temp.Clone());
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -49,6 +69,7 @@ namespace ESPSharp.Subrecords
 						temp.ReadBinary(subReader);
 						TimeColors.Add(temp);
 					}
+
 				}
 				catch
 				{
@@ -63,6 +84,7 @@ namespace ESPSharp.Subrecords
 			{
 				temp.WriteBinary(writer);
 			}
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -76,6 +98,7 @@ namespace ESPSharp.Subrecords
 				temp.WriteXML(e, master);
 				subEle.Add(e);
 			}
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -89,12 +112,15 @@ namespace ESPSharp.Subrecords
 					temp.ReadXML(e, master);
 					TimeColors.Add(temp);
 				}
+
 		}
 
 		public override object Clone()
 		{
 			return new IMADTimeColors(this);
 		}
+
+
 
         public bool Equals(IMADTimeColors other)
         {
@@ -158,5 +184,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

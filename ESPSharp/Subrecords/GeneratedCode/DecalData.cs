@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +45,7 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unused { get; set; }
 		public Color Color { get; set; }
 
+
 		public DecalData(string Tag = null)
 			:base(Tag)
 		{
@@ -43,6 +60,7 @@ namespace ESPSharp.Subrecords
 			DecalFlags = new DecalDataFlags();
 			Unused = new byte[2];
 			Color = new Color();
+
 		}
 
 		public DecalData(Single MinWidth, Single MaxWidth, Single MinHeight, Single MaxHeight, Single Depth, Single Shininess, Single ParallaxScale, Byte ParallaxPasses, DecalDataFlags DecalFlags, Byte[] Unused, Color Color)
@@ -58,6 +76,7 @@ namespace ESPSharp.Subrecords
 			this.DecalFlags = DecalFlags;
 			this.Unused = Unused;
 			this.Color = Color;
+
 		}
 
 		public DecalData(DecalData copyObject)
@@ -75,12 +94,13 @@ namespace ESPSharp.Subrecords
 				Unused = (Byte[])copyObject.Unused.Clone();
 			if (copyObject.Color != null)
 				Color = (Color)copyObject.Color.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -95,6 +115,7 @@ namespace ESPSharp.Subrecords
 					DecalFlags = subReader.ReadEnum<DecalDataFlags>();
 					Unused = subReader.ReadBytes(2);
 					Color.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -119,6 +140,7 @@ namespace ESPSharp.Subrecords
 			else
 			writer.Write(Unused);
 			Color.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -156,6 +178,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Color", true, out subEle);
 			Color.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -193,6 +216,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Color", false, out subEle))
 				Color.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -200,9 +224,11 @@ namespace ESPSharp.Subrecords
 			return new DecalData(this);
 		}
 
+
         public int CompareTo(DecalData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -226,6 +252,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(DecalData other)
         {
@@ -300,8 +328,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public FormID Sound { get; set; }
 		public WeatherType Type { get; set; }
 
+
 		public WeatherSound(string Tag = null)
 			:base(Tag)
 		{
 			Sound = new FormID();
 			Type = new WeatherType();
+
 		}
 
 		public WeatherSound(FormID Sound, WeatherType Type)
 		{
 			this.Sound = Sound;
 			this.Type = Type;
+
 		}
 
 		public WeatherSound(WeatherSound copyObject)
@@ -38,17 +57,19 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Sound != null)
 				Sound = (FormID)copyObject.Sound.Clone();
 			Type = copyObject.Type;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Sound.ReadBinary(subReader);
 					Type = subReader.ReadEnum<WeatherType>();
+
 				}
 				catch
 				{
@@ -61,6 +82,7 @@ namespace ESPSharp.Subrecords
 		{
 			Sound.WriteBinary(writer);
 			writer.Write((UInt32)Type);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -72,6 +94,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Type", true, out subEle);
 			subEle.Value = Type.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -83,6 +106,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Type", false, out subEle))
 				Type = subEle.ToEnum<WeatherType>();
+
 		}
 
 		public override object Clone()
@@ -90,9 +114,11 @@ namespace ESPSharp.Subrecords
 			return new WeatherSound(this);
 		}
 
+
         public int CompareTo(WeatherSound other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -116,6 +142,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WeatherSound other)
         {
@@ -180,5 +208,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

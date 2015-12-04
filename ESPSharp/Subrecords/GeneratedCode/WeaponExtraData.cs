@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,6 +93,7 @@ namespace ESPSharp.Subrecords
 		public Single ImpulseDistance { get; set; }
 		public UInt32 SkillRequirement { get; set; }
 
+
 		public WeaponExtraData(string Tag = null)
 			:base(Tag)
 		{
@@ -139,6 +156,7 @@ namespace ESPSharp.Subrecords
 			Mod3ValueB = new Single();
 			ImpulseDistance = new Single();
 			SkillRequirement = new UInt32();
+
 		}
 
 		public WeaponExtraData(WeaponAnimationType AnimationType, Single AnimationMultiplier, Single Reach, WeaponDataFlags1 Flags1, WeaponGripAnimationType GripAnimation, Byte AmmoUse, WeaponReloadAnimationType ReloadAnimation, Single MinSpread, Single Spread, Byte[] Unknown, Single SightFOV, Single Unknown2, FormID Projectile, Byte BaseVATSToHitChance, WeaponAttackAnimationType AttackAnimation, Byte ProjectileCount, EmbeddedWeaponActorValue EmbeddedWeaponActorValue, Single MinRange, Single MaxRange, LimbKillBehavior LimbKillBehavior, WeaponDataFlags2 Flags2, Single AttackAnimationMultiplier, Single FireRate, Single ActionPointCost, Single RumbleLeftMotorStrength, Single RumbleRightMotorStrength, Single RumbleDuration, Single DamageToWeaponMult, Single AttackShotsPerSecond, Single ReloadTime, Single JamTime, Single AimArc, ActorValues Skill, WeaponRumblePattern RumblePattern, Single RumbleWavelength, Single LimbDamageMult, ActorValues ResistanceType, Single SightUsage, Single SemiAutomaticFireDelayMin, Single SemiAutomaticFireDelayMax, Single Unknown3, WeaponModEffect Mod1Effect, WeaponModEffect Mod2Effect, WeaponModEffect Mod3Effect, Single Mod1ValueA, Single Mod2ValueA, Single Mod3ValueA, WeaponPowerAttackAnimation PowerAttackAnimation, UInt32 StrengthRequirement, Byte Unknown4, WeaponReloadAnimationType Mod1ReloadAnimation, Byte[] Unknown5, Single AmmoRegenRate, Single KillImpulse, Single Mod1ValueB, Single Mod2ValueB, Single Mod3ValueB, Single ImpulseDistance, UInt32 SkillRequirement)
@@ -202,6 +220,7 @@ namespace ESPSharp.Subrecords
 			this.Mod3ValueB = Mod3ValueB;
 			this.ImpulseDistance = ImpulseDistance;
 			this.SkillRequirement = SkillRequirement;
+
 		}
 
 		public WeaponExtraData(WeaponExtraData copyObject)
@@ -268,12 +287,13 @@ namespace ESPSharp.Subrecords
 			Mod3ValueB = copyObject.Mod3ValueB;
 			ImpulseDistance = copyObject.ImpulseDistance;
 			SkillRequirement = copyObject.SkillRequirement;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -336,6 +356,7 @@ namespace ESPSharp.Subrecords
 					Mod3ValueB = subReader.ReadSingle();
 					ImpulseDistance = subReader.ReadSingle();
 					SkillRequirement = subReader.ReadUInt32();
+
 				}
 				catch
 				{
@@ -411,6 +432,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Mod3ValueB);
 			writer.Write(ImpulseDistance);
 			writer.Write(SkillRequirement);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -593,6 +615,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("SkillRequirement", true, out subEle);
 			subEle.Value = SkillRequirement.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -775,6 +798,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("SkillRequirement", false, out subEle))
 				SkillRequirement = subEle.ToUInt32();
+
 		}
 
 		public override object Clone()
@@ -782,9 +806,11 @@ namespace ESPSharp.Subrecords
 			return new WeaponExtraData(this);
 		}
 
+
         public int CompareTo(WeaponExtraData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -808,6 +834,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WeaponExtraData other)
         {
@@ -929,5 +957,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

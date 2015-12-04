@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public String Model { get; set; }
 		public NoYesByte HasCollisionData { get; set; }
 
+
 		public DebrisData(string Tag = null)
 			:base(Tag)
 		{
 			Percentage = new Byte();
 			Model = "";
 			HasCollisionData = new NoYesByte();
+
 		}
 
 		public DebrisData(Byte Percentage, String Model, NoYesByte HasCollisionData)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Percentage = Percentage;
 			this.Model = Model;
 			this.HasCollisionData = HasCollisionData;
+
 		}
 
 		public DebrisData(DebrisData copyObject)
@@ -42,18 +61,20 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Model != null)
 				Model = (String)copyObject.Model.Clone();
 			HasCollisionData = copyObject.HasCollisionData;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Percentage = subReader.ReadByte();
 					Model = subReader.ReadString();
 					HasCollisionData = subReader.ReadEnum<NoYesByte>();
+
 				}
 				catch
 				{
@@ -67,6 +88,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Percentage);
 			writer.Write(Model);
 			writer.Write((Byte)HasCollisionData);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -81,6 +103,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("HasCollisionData", true, out subEle);
 			subEle.Value = HasCollisionData.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -95,6 +118,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("HasCollisionData", false, out subEle))
 				HasCollisionData = subEle.ToEnum<NoYesByte>();
+
 		}
 
 		public override object Clone()
@@ -102,9 +126,11 @@ namespace ESPSharp.Subrecords
 			return new DebrisData(this);
 		}
 
+
         public int CompareTo(DebrisData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -128,6 +154,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(DebrisData other)
         {
@@ -193,5 +221,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

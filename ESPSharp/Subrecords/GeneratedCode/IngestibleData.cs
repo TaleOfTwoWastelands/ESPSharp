@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +40,7 @@ namespace ESPSharp.Subrecords
 		public Single AddictionChance { get; set; }
 		public FormID SoundConsume { get; set; }
 
+
 		public IngestibleData(string Tag = null)
 			:base(Tag)
 		{
@@ -33,6 +50,7 @@ namespace ESPSharp.Subrecords
 			WithdrawalEffect = new FormID();
 			AddictionChance = new Single();
 			SoundConsume = new FormID();
+
 		}
 
 		public IngestibleData(Int32 Value, IngestibleFlags Flags, Byte[] Unused, FormID WithdrawalEffect, Single AddictionChance, FormID SoundConsume)
@@ -43,6 +61,7 @@ namespace ESPSharp.Subrecords
 			this.WithdrawalEffect = WithdrawalEffect;
 			this.AddictionChance = AddictionChance;
 			this.SoundConsume = SoundConsume;
+
 		}
 
 		public IngestibleData(IngestibleData copyObject)
@@ -56,12 +75,13 @@ namespace ESPSharp.Subrecords
 			AddictionChance = copyObject.AddictionChance;
 			if (copyObject.SoundConsume != null)
 				SoundConsume = (FormID)copyObject.SoundConsume.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -71,6 +91,7 @@ namespace ESPSharp.Subrecords
 					WithdrawalEffect.ReadBinary(subReader);
 					AddictionChance = subReader.ReadSingle();
 					SoundConsume.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -90,6 +111,7 @@ namespace ESPSharp.Subrecords
 			WithdrawalEffect.WriteBinary(writer);
 			writer.Write(AddictionChance);
 			SoundConsume.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -112,6 +134,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("ConsumeSound", true, out subEle);
 			SoundConsume.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -134,6 +157,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("ConsumeSound", false, out subEle))
 				SoundConsume.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -141,9 +165,11 @@ namespace ESPSharp.Subrecords
 			return new IngestibleData(this);
 		}
 
+
         public int CompareTo(IngestibleData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -167,6 +193,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(IngestibleData other)
         {
@@ -236,8 +264,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

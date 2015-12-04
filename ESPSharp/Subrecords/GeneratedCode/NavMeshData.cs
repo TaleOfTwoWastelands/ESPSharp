@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +40,7 @@ namespace ESPSharp.Subrecords
 		public UInt32 NVCACount { get; set; }
 		public UInt32 DoorsCount { get; set; }
 
+
 		public NavMeshData(string Tag = null)
 			:base(Tag)
 		{
@@ -33,6 +50,7 @@ namespace ESPSharp.Subrecords
 			ExternalConnectionsCount = new UInt32();
 			NVCACount = new UInt32();
 			DoorsCount = new UInt32();
+
 		}
 
 		public NavMeshData(FormID Cell, UInt32 VertexCount, UInt32 TriangleCount, UInt32 ExternalConnectionsCount, UInt32 NVCACount, UInt32 DoorsCount)
@@ -43,6 +61,7 @@ namespace ESPSharp.Subrecords
 			this.ExternalConnectionsCount = ExternalConnectionsCount;
 			this.NVCACount = NVCACount;
 			this.DoorsCount = DoorsCount;
+
 		}
 
 		public NavMeshData(NavMeshData copyObject)
@@ -54,12 +73,13 @@ namespace ESPSharp.Subrecords
 			ExternalConnectionsCount = copyObject.ExternalConnectionsCount;
 			NVCACount = copyObject.NVCACount;
 			DoorsCount = copyObject.DoorsCount;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -69,6 +89,7 @@ namespace ESPSharp.Subrecords
 					ExternalConnectionsCount = subReader.ReadUInt32();
 					NVCACount = subReader.ReadUInt32();
 					DoorsCount = subReader.ReadUInt32();
+
 				}
 				catch
 				{
@@ -85,6 +106,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(ExternalConnectionsCount);
 			writer.Write(NVCACount);
 			writer.Write(DoorsCount);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -108,6 +130,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("DoorsCount", true, out subEle);
 			subEle.Value = DoorsCount.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -131,6 +154,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("DoorsCount", false, out subEle))
 				DoorsCount = subEle.ToUInt32();
+
 		}
 
 		public override object Clone()
@@ -138,9 +162,11 @@ namespace ESPSharp.Subrecords
 			return new NavMeshData(this);
 		}
 
+
         public int CompareTo(NavMeshData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -164,6 +190,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(NavMeshData other)
         {
@@ -232,5 +260,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

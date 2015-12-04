@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public Int16 BaseDamage { get; set; }
 		public Byte ClipSize { get; set; }
 
+
 		public WeaponData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Weight = new Single();
 			BaseDamage = new Int16();
 			ClipSize = new Byte();
+
 		}
 
 		public WeaponData(Int32 Value, Int32 Health, Single Weight, Int16 BaseDamage, Byte ClipSize)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Weight = Weight;
 			this.BaseDamage = BaseDamage;
 			this.ClipSize = ClipSize;
+
 		}
 
 		public WeaponData(WeaponData copyObject)
@@ -49,12 +68,13 @@ namespace ESPSharp.Subrecords
 			Weight = copyObject.Weight;
 			BaseDamage = copyObject.BaseDamage;
 			ClipSize = copyObject.ClipSize;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -63,6 +83,7 @@ namespace ESPSharp.Subrecords
 					Weight = subReader.ReadSingle();
 					BaseDamage = subReader.ReadInt16();
 					ClipSize = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -78,6 +99,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Weight);
 			writer.Write(BaseDamage);
 			writer.Write(ClipSize);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -98,6 +120,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("ClipSize", true, out subEle);
 			subEle.Value = ClipSize.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -118,6 +141,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("ClipSize", false, out subEle))
 				ClipSize = subEle.ToByte();
+
 		}
 
 		public override object Clone()
@@ -125,9 +149,11 @@ namespace ESPSharp.Subrecords
 			return new WeaponData(this);
 		}
 
+
         public int CompareTo(WeaponData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -151,6 +177,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WeaponData other)
         {
@@ -218,5 +246,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

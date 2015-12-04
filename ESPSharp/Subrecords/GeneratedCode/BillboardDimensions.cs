@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,34 +36,39 @@ namespace ESPSharp.Subrecords
 		public Single Width { get; set; }
 		public Single Height { get; set; }
 
+
 		public BillboardDimensions(string Tag = null)
 			:base(Tag)
 		{
 			Width = new Single();
 			Height = new Single();
+
 		}
 
 		public BillboardDimensions(Single Width, Single Height)
 		{
 			this.Width = Width;
 			this.Height = Height;
+
 		}
 
 		public BillboardDimensions(BillboardDimensions copyObject)
 		{
 			Width = copyObject.Width;
 			Height = copyObject.Height;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Width = subReader.ReadSingle();
 					Height = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -60,6 +81,7 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write(Width);
 			writer.Write(Height);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -71,6 +93,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Height", true, out subEle);
 			subEle.Value = Height.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -82,6 +105,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Height", false, out subEle))
 				Height = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -89,9 +113,11 @@ namespace ESPSharp.Subrecords
 			return new BillboardDimensions(this);
 		}
 
+
         public int CompareTo(BillboardDimensions other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -115,6 +141,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(BillboardDimensions other)
         {
@@ -179,5 +207,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

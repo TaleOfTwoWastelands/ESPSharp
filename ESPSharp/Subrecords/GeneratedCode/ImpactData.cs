@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +40,7 @@ namespace ESPSharp.Subrecords
 		public SoundLevel SoundLevel { get; set; }
 		public YesNoUInt HasDecalData { get; set; }
 
+
 		public ImpactData(string Tag = null)
 			:base(Tag)
 		{
@@ -33,6 +50,7 @@ namespace ESPSharp.Subrecords
 			PlacementRadius = new Single();
 			SoundLevel = new SoundLevel();
 			HasDecalData = new YesNoUInt();
+
 		}
 
 		public ImpactData(Single EffectDuration, ImpactOrientation EffectOrientation, Single AngleThreshold, Single PlacementRadius, SoundLevel SoundLevel, YesNoUInt HasDecalData)
@@ -43,6 +61,7 @@ namespace ESPSharp.Subrecords
 			this.PlacementRadius = PlacementRadius;
 			this.SoundLevel = SoundLevel;
 			this.HasDecalData = HasDecalData;
+
 		}
 
 		public ImpactData(ImpactData copyObject)
@@ -53,12 +72,13 @@ namespace ESPSharp.Subrecords
 			PlacementRadius = copyObject.PlacementRadius;
 			SoundLevel = copyObject.SoundLevel;
 			HasDecalData = copyObject.HasDecalData;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -68,6 +88,7 @@ namespace ESPSharp.Subrecords
 					PlacementRadius = subReader.ReadSingle();
 					SoundLevel = subReader.ReadEnum<SoundLevel>();
 					HasDecalData = subReader.ReadEnum<YesNoUInt>();
+
 				}
 				catch
 				{
@@ -84,6 +105,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(PlacementRadius);
 			writer.Write((UInt32)SoundLevel);
 			writer.Write((UInt32)HasDecalData);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -107,6 +129,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("HasDecalData", true, out subEle);
 			subEle.Value = HasDecalData.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -130,6 +153,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("HasDecalData", false, out subEle))
 				HasDecalData = subEle.ToEnum<YesNoUInt>();
+
 		}
 
 		public override object Clone()
@@ -137,9 +161,11 @@ namespace ESPSharp.Subrecords
 			return new ImpactData(this);
 		}
 
+
         public int CompareTo(ImpactData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -163,6 +189,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ImpactData other)
         {
@@ -231,5 +259,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

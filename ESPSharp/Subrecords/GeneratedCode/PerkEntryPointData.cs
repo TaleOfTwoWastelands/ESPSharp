@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public PerkFunction Function { get; set; }
 		public Byte PerkConditionTabCount { get; set; }
 
+
 		public PerkEntryPointData(string Tag = null)
 			:base(Tag)
 		{
 			EntryPoint = new EntryPoint();
 			Function = new PerkFunction();
 			PerkConditionTabCount = new Byte();
+
 		}
 
 		public PerkEntryPointData(EntryPoint EntryPoint, PerkFunction Function, Byte PerkConditionTabCount)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.EntryPoint = EntryPoint;
 			this.Function = Function;
 			this.PerkConditionTabCount = PerkConditionTabCount;
+
 		}
 
 		public PerkEntryPointData(PerkEntryPointData copyObject)
@@ -41,18 +60,20 @@ namespace ESPSharp.Subrecords
 			EntryPoint = copyObject.EntryPoint;
 			Function = copyObject.Function;
 			PerkConditionTabCount = copyObject.PerkConditionTabCount;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					EntryPoint = subReader.ReadEnum<EntryPoint>();
 					Function = subReader.ReadEnum<PerkFunction>();
 					PerkConditionTabCount = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -66,6 +87,7 @@ namespace ESPSharp.Subrecords
 			writer.Write((Byte)EntryPoint);
 			writer.Write((Byte)Function);
 			writer.Write(PerkConditionTabCount);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -80,6 +102,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("PerkConditionTabCount", true, out subEle);
 			subEle.Value = PerkConditionTabCount.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -94,6 +117,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("PerkConditionTabCount", false, out subEle))
 				PerkConditionTabCount = subEle.ToByte();
+
 		}
 
 		public override object Clone()
@@ -101,9 +125,11 @@ namespace ESPSharp.Subrecords
 			return new PerkEntryPointData(this);
 		}
 
+
         public int CompareTo(PerkEntryPointData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -127,6 +153,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PerkEntryPointData other)
         {
@@ -192,5 +220,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +42,7 @@ namespace ESPSharp.Subrecords
 		public Byte StopTime { get; set; }
 		public Byte StartTime { get; set; }
 
+
 		public SoundDataShort(string Tag = null)
 			:base(Tag)
 		{
@@ -37,6 +54,7 @@ namespace ESPSharp.Subrecords
 			StaticAttenuationcdB = new Int16();
 			StopTime = new Byte();
 			StartTime = new Byte();
+
 		}
 
 		public SoundDataShort(Byte MinAttenuationDistance, Byte MaxAttenuationDistance, SByte FrequencyAdjustmentPercentage, Byte Unused, SoundDataFlags SoundDataFlags, Int16 StaticAttenuationcdB, Byte StopTime, Byte StartTime)
@@ -49,6 +67,7 @@ namespace ESPSharp.Subrecords
 			this.StaticAttenuationcdB = StaticAttenuationcdB;
 			this.StopTime = StopTime;
 			this.StartTime = StartTime;
+
 		}
 
 		public SoundDataShort(SoundDataShort copyObject)
@@ -61,12 +80,13 @@ namespace ESPSharp.Subrecords
 			StaticAttenuationcdB = copyObject.StaticAttenuationcdB;
 			StopTime = copyObject.StopTime;
 			StartTime = copyObject.StartTime;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -78,6 +98,7 @@ namespace ESPSharp.Subrecords
 					StaticAttenuationcdB = subReader.ReadInt16();
 					StopTime = subReader.ReadByte();
 					StartTime = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -96,6 +117,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(StaticAttenuationcdB);
 			writer.Write(StopTime);
 			writer.Write(StartTime);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -124,6 +146,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Time/Start", true, out subEle);
 			subEle.Value = StartTime.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -152,6 +175,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Time/Start", false, out subEle))
 				StartTime = subEle.ToByte();
+
 		}
 
 		public override object Clone()
@@ -159,9 +183,11 @@ namespace ESPSharp.Subrecords
 			return new SoundDataShort(this);
 		}
 
+
         public int CompareTo(SoundDataShort other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -185,6 +211,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(SoundDataShort other)
         {
@@ -256,8 +284,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

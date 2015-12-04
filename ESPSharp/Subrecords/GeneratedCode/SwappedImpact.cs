@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public FormID OldImpact { get; set; }
 		public FormID NewImpact { get; set; }
 
+
 		public SwappedImpact(string Tag = null)
 			:base(Tag)
 		{
 			MaterialType = new MaterialTypeUInt();
 			OldImpact = new FormID();
 			NewImpact = new FormID();
+
 		}
 
 		public SwappedImpact(MaterialTypeUInt MaterialType, FormID OldImpact, FormID NewImpact)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.MaterialType = MaterialType;
 			this.OldImpact = OldImpact;
 			this.NewImpact = NewImpact;
+
 		}
 
 		public SwappedImpact(SwappedImpact copyObject)
@@ -43,18 +62,20 @@ namespace ESPSharp.Subrecords
 				OldImpact = (FormID)copyObject.OldImpact.Clone();
 			if (copyObject.NewImpact != null)
 				NewImpact = (FormID)copyObject.NewImpact.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					MaterialType = subReader.ReadEnum<MaterialTypeUInt>();
 					OldImpact.ReadBinary(subReader);
 					NewImpact.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -68,6 +89,7 @@ namespace ESPSharp.Subrecords
 			writer.Write((UInt32)MaterialType);
 			OldImpact.WriteBinary(writer);
 			NewImpact.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -82,6 +104,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("NewImpact", true, out subEle);
 			NewImpact.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -96,6 +119,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("NewImpact", false, out subEle))
 				NewImpact.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -103,9 +127,11 @@ namespace ESPSharp.Subrecords
 			return new SwappedImpact(this);
 		}
 
+
         public int CompareTo(SwappedImpact other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -129,6 +155,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(SwappedImpact other)
         {
@@ -194,5 +222,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +42,7 @@ namespace ESPSharp.Subrecords
 		public UInt32 Value { get; set; }
 		public Single Weight { get; set; }
 
+
 		public LightData(string Tag = null)
 			:base(Tag)
 		{
@@ -37,6 +54,7 @@ namespace ESPSharp.Subrecords
 			FOV = new Single();
 			Value = new UInt32();
 			Weight = new Single();
+
 		}
 
 		public LightData(Int32 Time, UInt32 Radius, Color Color, LightFlags Flags, Single FalloffExponent, Single FOV, UInt32 Value, Single Weight)
@@ -49,6 +67,7 @@ namespace ESPSharp.Subrecords
 			this.FOV = FOV;
 			this.Value = Value;
 			this.Weight = Weight;
+
 		}
 
 		public LightData(LightData copyObject)
@@ -62,12 +81,13 @@ namespace ESPSharp.Subrecords
 			FOV = copyObject.FOV;
 			Value = copyObject.Value;
 			Weight = copyObject.Weight;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -79,6 +99,7 @@ namespace ESPSharp.Subrecords
 					FOV = subReader.ReadSingle();
 					Value = subReader.ReadUInt32();
 					Weight = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -97,6 +118,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(FOV);
 			writer.Write(Value);
 			writer.Write(Weight);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -126,6 +148,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Weight", true, out subEle);
 			subEle.Value = Weight.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -155,6 +178,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Weight", false, out subEle))
 				Weight = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -162,9 +186,11 @@ namespace ESPSharp.Subrecords
 			return new LightData(this);
 		}
 
+
         public int CompareTo(LightData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -188,6 +214,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(LightData other)
         {
@@ -258,5 +286,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

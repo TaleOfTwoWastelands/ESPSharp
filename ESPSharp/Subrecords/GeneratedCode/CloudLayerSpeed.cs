@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public Byte Layer2 { get; set; }
 		public Byte Layer3 { get; set; }
 
+
 		public CloudLayerSpeed(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			Layer1 = new Byte();
 			Layer2 = new Byte();
 			Layer3 = new Byte();
+
 		}
 
 		public CloudLayerSpeed(Byte Layer0, Byte Layer1, Byte Layer2, Byte Layer3)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.Layer1 = Layer1;
 			this.Layer2 = Layer2;
 			this.Layer3 = Layer3;
+
 		}
 
 		public CloudLayerSpeed(CloudLayerSpeed copyObject)
@@ -45,12 +64,13 @@ namespace ESPSharp.Subrecords
 			Layer1 = copyObject.Layer1;
 			Layer2 = copyObject.Layer2;
 			Layer3 = copyObject.Layer3;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -58,6 +78,7 @@ namespace ESPSharp.Subrecords
 					Layer1 = subReader.ReadByte();
 					Layer2 = subReader.ReadByte();
 					Layer3 = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -72,6 +93,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Layer1);
 			writer.Write(Layer2);
 			writer.Write(Layer3);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -89,6 +111,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Layer3", true, out subEle);
 			subEle.Value = Layer3.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -106,6 +129,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Layer3", false, out subEle))
 				Layer3 = subEle.ToByte();
+
 		}
 
 		public override object Clone()
@@ -113,9 +137,11 @@ namespace ESPSharp.Subrecords
 			return new CloudLayerSpeed(this);
 		}
 
+
         public int CompareTo(CloudLayerSpeed other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -139,6 +165,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(CloudLayerSpeed other)
         {
@@ -205,5 +233,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

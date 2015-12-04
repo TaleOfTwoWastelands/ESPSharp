@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public UInt32 OwnerData { get; set; }
 		public Single Condition { get; set; }
 
+
 		public InventoryItemExtraData(string Tag = null)
 			:base(Tag)
 		{
 			Owner = new FormID();
 			OwnerData = new UInt32();
 			Condition = new Single();
+
 		}
 
 		public InventoryItemExtraData(FormID Owner, UInt32 OwnerData, Single Condition)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Owner = Owner;
 			this.OwnerData = OwnerData;
 			this.Condition = Condition;
+
 		}
 
 		public InventoryItemExtraData(InventoryItemExtraData copyObject)
@@ -42,18 +61,20 @@ namespace ESPSharp.Subrecords
 				Owner = (FormID)copyObject.Owner.Clone();
 			OwnerData = copyObject.OwnerData;
 			Condition = copyObject.Condition;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Owner.ReadBinary(subReader);
 					OwnerData = subReader.ReadUInt32();
 					Condition = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -67,6 +88,7 @@ namespace ESPSharp.Subrecords
 			Owner.WriteBinary(writer);
 			writer.Write(OwnerData);
 			writer.Write(Condition);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -80,6 +102,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Condition", true, out subEle);
 			subEle.Value = Condition.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -93,6 +116,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Condition", false, out subEle))
 				Condition = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -100,9 +124,11 @@ namespace ESPSharp.Subrecords
 			return new InventoryItemExtraData(this);
 		}
 
+
         public int CompareTo(InventoryItemExtraData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -126,6 +152,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(InventoryItemExtraData other)
         {
@@ -192,8 +220,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadOwnerDataXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteOwnerDataXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

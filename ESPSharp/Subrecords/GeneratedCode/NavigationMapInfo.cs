@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +40,7 @@ namespace ESPSharp.Subrecords
 		public Int16 GridY { get; set; }
 		public Byte[] Unknown2 { get; set; }
 
+
 		public NavigationMapInfo(string Tag = null)
 			:base(Tag)
 		{
@@ -33,6 +50,7 @@ namespace ESPSharp.Subrecords
 			GridX = new Int16();
 			GridY = new Int16();
 			Unknown2 = new byte[4];
+
 		}
 
 		public NavigationMapInfo(Byte[] Unknown1, FormID NavigationMesh, FormID Location, Int16 GridX, Int16 GridY, Byte[] Unknown2)
@@ -43,6 +61,7 @@ namespace ESPSharp.Subrecords
 			this.GridX = GridX;
 			this.GridY = GridY;
 			this.Unknown2 = Unknown2;
+
 		}
 
 		public NavigationMapInfo(NavigationMapInfo copyObject)
@@ -57,12 +76,13 @@ namespace ESPSharp.Subrecords
 			GridY = copyObject.GridY;
 			if (copyObject.Unknown2 != null)
 				Unknown2 = (Byte[])copyObject.Unknown2.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -72,6 +92,7 @@ namespace ESPSharp.Subrecords
 					GridX = subReader.ReadInt16();
 					GridY = subReader.ReadInt16();
 					ReadUnknown2Binary(subReader);
+
 				}
 				catch
 				{
@@ -94,6 +115,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[4]);
 			else
 			writer.Write(Unknown2);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -117,6 +139,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Unknown2", true, out subEle);
 			subEle.Value = Unknown2.ToHex();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -140,6 +163,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Unknown2", false, out subEle))
 				Unknown2 = subEle.ToBytes();
+
 		}
 
 		public override object Clone()
@@ -147,9 +171,11 @@ namespace ESPSharp.Subrecords
 			return new NavigationMapInfo(this);
 		}
 
+
         public int CompareTo(NavigationMapInfo other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -173,6 +199,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(NavigationMapInfo other)
         {
@@ -242,6 +270,12 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
 		partial void ReadUnknown2Binary(ESPReader reader);
+
+
+
+
 	}
 }

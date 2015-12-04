@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public Int32 Value { get; set; }
 		public Byte ClipRounds { get; set; }
 
+
 		public AmmoData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Unused = new byte[3];
 			Value = new Int32();
 			ClipRounds = new Byte();
+
 		}
 
 		public AmmoData(Single Speed, WeaponFlags Flags, Byte[] Unused, Int32 Value, Byte ClipRounds)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Unused = Unused;
 			this.Value = Value;
 			this.ClipRounds = ClipRounds;
+
 		}
 
 		public AmmoData(AmmoData copyObject)
@@ -50,12 +69,13 @@ namespace ESPSharp.Subrecords
 				Unused = (Byte[])copyObject.Unused.Clone();
 			Value = copyObject.Value;
 			ClipRounds = copyObject.ClipRounds;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -64,6 +84,7 @@ namespace ESPSharp.Subrecords
 					Unused = subReader.ReadBytes(3);
 					Value = subReader.ReadInt32();
 					ClipRounds = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -82,6 +103,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Unused);
 			writer.Write(Value);
 			writer.Write(ClipRounds);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -101,6 +123,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("ClipRounds", true, out subEle);
 			subEle.Value = ClipRounds.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -120,6 +143,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("ClipRounds", false, out subEle))
 				ClipRounds = subEle.ToByte();
+
 		}
 
 		public override object Clone()
@@ -127,9 +151,11 @@ namespace ESPSharp.Subrecords
 			return new AmmoData(this);
 		}
 
+
         public int CompareTo(AmmoData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -153,6 +179,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(AmmoData other)
         {
@@ -221,8 +249,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

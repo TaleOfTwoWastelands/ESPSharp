@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +68,7 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unused5 { get; set; }
 		public Single MeleeRushingPowerAttackDistanceMult { get; set; }
 
+
 		public CombatStyleDecision(string Tag = null)
 			:base(Tag)
 		{
@@ -89,6 +106,7 @@ namespace ESPSharp.Subrecords
 			MeleeRushingPowerAttackChance = new Byte();
 			Unused5 = new byte[2];
 			MeleeRushingPowerAttackDistanceMult = new Single();
+
 		}
 
 		public CombatStyleDecision(Byte ManeuverDodgeChance, Byte ManeuverSidestepChance, Byte[] Unused1, Single ManeuverDodgeLRTimerMin, Single ManeuverDodgeLRTimerMax, Single ManeuverDodgeForwardTimerMin, Single ManeuverDodgeForwardTimerMax, Single ManeuverDodgeBackwardTimerMin, Single ManeuverDodgeBackwardTimerMax, Single ManeuverDodgeIdleTimerMin, Single ManeuverDodgeIdleTimerMax, Byte MeleeBlockChance, Byte MeleeAttackChance, Byte[] Unused2, Single MeleeRecoilStaggerBonusToAttack, Single MeleeUnconsciousBonusToAttack, Single MeleeHandToHandBonusToAttack, Byte MeleePowerAttackChance, Byte[] Unused3, Single MeleePowerAttackRecoilStaggerBonus, Single MeleePowerAttackUnconsciousBonus, Byte MeleePowerAttackNormal, Byte MeleePowerAttackForward, Byte MeleePowerAttackBack, Byte MeleePowerAttackLeft, Byte MeleePowerAttackRight, Byte[] Unused4, Single MeleeHoldTimerMin, Single MeleeHoldTimerMax, CombatStyleFlags Flags, Byte ManeuverAcrobaticDodgeChance, Byte MeleeRushingPowerAttackChance, Byte[] Unused5, Single MeleeRushingPowerAttackDistanceMult)
@@ -127,6 +145,7 @@ namespace ESPSharp.Subrecords
 			this.MeleeRushingPowerAttackChance = MeleeRushingPowerAttackChance;
 			this.Unused5 = Unused5;
 			this.MeleeRushingPowerAttackDistanceMult = MeleeRushingPowerAttackDistanceMult;
+
 		}
 
 		public CombatStyleDecision(CombatStyleDecision copyObject)
@@ -170,12 +189,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Unused5 != null)
 				Unused5 = (Byte[])copyObject.Unused5.Clone();
 			MeleeRushingPowerAttackDistanceMult = copyObject.MeleeRushingPowerAttackDistanceMult;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -213,6 +233,7 @@ namespace ESPSharp.Subrecords
 					MeleeRushingPowerAttackChance = subReader.ReadByte();
 					Unused5 = subReader.ReadBytes(2);
 					MeleeRushingPowerAttackDistanceMult = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -272,6 +293,7 @@ namespace ESPSharp.Subrecords
 			else
 			writer.Write(Unused5);
 			writer.Write(MeleeRushingPowerAttackDistanceMult);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -374,6 +396,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Melee/PowerAttack/DistanceMult", true, out subEle);
 			subEle.Value = MeleeRushingPowerAttackDistanceMult.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -476,6 +499,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Melee/PowerAttack/DistanceMult", false, out subEle))
 				MeleeRushingPowerAttackDistanceMult = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -483,9 +507,11 @@ namespace ESPSharp.Subrecords
 			return new CombatStyleDecision(this);
 		}
 
+
         public int CompareTo(CombatStyleDecision other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -509,6 +535,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(CombatStyleDecision other)
         {
@@ -606,24 +634,39 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void ReadUnused3XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused4XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void ReadUnused5XML(XElement ele, ElderScrollsPlugin master);
+
+
 
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void WriteUnused3XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused4XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused5XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

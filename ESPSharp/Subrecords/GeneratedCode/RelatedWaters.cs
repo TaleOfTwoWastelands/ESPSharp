@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public FormID Nighttime { get; set; }
 		public FormID Underwater { get; set; }
 
+
 		public RelatedWaters(string Tag = null)
 			:base(Tag)
 		{
 			Daytime = new FormID();
 			Nighttime = new FormID();
 			Underwater = new FormID();
+
 		}
 
 		public RelatedWaters(FormID Daytime, FormID Nighttime, FormID Underwater)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Daytime = Daytime;
 			this.Nighttime = Nighttime;
 			this.Underwater = Underwater;
+
 		}
 
 		public RelatedWaters(RelatedWaters copyObject)
@@ -44,18 +63,20 @@ namespace ESPSharp.Subrecords
 				Nighttime = (FormID)copyObject.Nighttime.Clone();
 			if (copyObject.Underwater != null)
 				Underwater = (FormID)copyObject.Underwater.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Daytime.ReadBinary(subReader);
 					Nighttime.ReadBinary(subReader);
 					Underwater.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -69,6 +90,7 @@ namespace ESPSharp.Subrecords
 			Daytime.WriteBinary(writer);
 			Nighttime.WriteBinary(writer);
 			Underwater.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -83,6 +105,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Underwater", true, out subEle);
 			Underwater.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -97,6 +120,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Underwater", false, out subEle))
 				Underwater.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -104,9 +128,11 @@ namespace ESPSharp.Subrecords
 			return new RelatedWaters(this);
 		}
 
+
         public int CompareTo(RelatedWaters other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -130,6 +156,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RelatedWaters other)
         {
@@ -195,5 +223,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

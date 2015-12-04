@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,15 +34,18 @@ namespace ESPSharp.Subrecords
 	{
 		public List<RegionSound> Sounds { get; set; }
 
+
 		public RegionSoundList(string Tag = null)
 			:base(Tag)
 		{
 			Sounds = new List<RegionSound>();
+
 		}
 
 		public RegionSoundList(List<RegionSound> Sounds)
 		{
 			this.Sounds = Sounds;
+
 		}
 
 		public RegionSoundList(RegionSoundList copyObject)
@@ -34,12 +53,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Sounds != null)
 				foreach(var temp in copyObject.Sounds)
 					Sounds.Add((RegionSound)temp.Clone());
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -49,6 +69,7 @@ namespace ESPSharp.Subrecords
 						temp.ReadBinary(subReader);
 						Sounds.Add(temp);
 					}
+
 				}
 				catch
 				{
@@ -63,6 +84,7 @@ namespace ESPSharp.Subrecords
 			{
 				temp.WriteBinary(writer);
 			}
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -76,6 +98,7 @@ namespace ESPSharp.Subrecords
 				temp.WriteXML(e, master);
 				subEle.Add(e);
 			}
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -89,12 +112,15 @@ namespace ESPSharp.Subrecords
 					temp.ReadXML(e, master);
 					Sounds.Add(temp);
 				}
+
 		}
 
 		public override object Clone()
 		{
 			return new RegionSoundList(this);
 		}
+
+
 
         public bool Equals(RegionSoundList other)
         {
@@ -158,5 +184,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

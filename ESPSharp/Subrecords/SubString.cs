@@ -47,7 +47,7 @@ namespace ESPSharp.Subrecords
             {
                 try
                 {
-                    if (subReader.Plugin.Header.Flags.HasFlag(RecordFlag.Localized) && size == 4)
+                    if (false)//subReader.Plugin.Header.Flags.HasFlag(RecordFlag.Localized) && size == 4)
                     {
                         LocalizedID = subReader.ReadUInt32();
                         if (LocalizedID == 0)

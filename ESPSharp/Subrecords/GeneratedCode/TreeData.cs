@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +42,7 @@ namespace ESPSharp.Subrecords
 		public Single RockSpeed { get; set; }
 		public Single RustleSpeed { get; set; }
 
+
 		public TreeData(string Tag = null)
 			:base(Tag)
 		{
@@ -37,6 +54,7 @@ namespace ESPSharp.Subrecords
 			ShadowRadius = new Int32();
 			RockSpeed = new Single();
 			RustleSpeed = new Single();
+
 		}
 
 		public TreeData(Single LeafCurvature, Single MinLeafAngle, Single MaxLeafAngle, Single BranchDimmingValue, Single LeafDimmingValue, Int32 ShadowRadius, Single RockSpeed, Single RustleSpeed)
@@ -49,6 +67,7 @@ namespace ESPSharp.Subrecords
 			this.ShadowRadius = ShadowRadius;
 			this.RockSpeed = RockSpeed;
 			this.RustleSpeed = RustleSpeed;
+
 		}
 
 		public TreeData(TreeData copyObject)
@@ -61,12 +80,13 @@ namespace ESPSharp.Subrecords
 			ShadowRadius = copyObject.ShadowRadius;
 			RockSpeed = copyObject.RockSpeed;
 			RustleSpeed = copyObject.RustleSpeed;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -78,6 +98,7 @@ namespace ESPSharp.Subrecords
 					ShadowRadius = subReader.ReadInt32();
 					RockSpeed = subReader.ReadSingle();
 					RustleSpeed = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -96,6 +117,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(ShadowRadius);
 			writer.Write(RockSpeed);
 			writer.Write(RustleSpeed);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -125,6 +147,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("RustleSpeed", true, out subEle);
 			subEle.Value = RustleSpeed.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -154,6 +177,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("RustleSpeed", false, out subEle))
 				RustleSpeed = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -161,9 +185,11 @@ namespace ESPSharp.Subrecords
 			return new TreeData(this);
 		}
 
+
         public int CompareTo(TreeData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -187,6 +213,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(TreeData other)
         {
@@ -257,5 +285,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

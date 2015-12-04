@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,6 +112,7 @@ namespace ESPSharp.Subrecords
 		public Single AddonModelsScaleTimeIn { get; set; }
 		public Single AddonModelsScaleTimeOut { get; set; }
 
+
 		public EffectShaderData(string Tag = null)
 			:base(Tag)
 		{
@@ -177,6 +194,7 @@ namespace ESPSharp.Subrecords
 			AddonModelsScaleOut = new Single();
 			AddonModelsScaleTimeIn = new Single();
 			AddonModelsScaleTimeOut = new Single();
+
 		}
 
 		public EffectShaderData(EffectShaderFlags Flags, Byte[] Unused, BlendMode MembraneShaderSourceBlendMode, BlendOperation MembraneShaderBlendOperation, ZTestFunction MembraneShaderZTestFunction, Color Fill_TextureEffectColor, Single Fill_TextureEffectAlphaFadeTimeIn, Single Fill_TextureEffectAlphaFadeTimeFull, Single Fill_TextureEffectAlphaFadeTimeOut, Single Fill_TextureEffectAlphaPersistentRatio, Single Fill_TextureEffectAlphaPulseAmplitude, Single Fill_TextureEffectAlphaPulseFrequency, Single Fill_TextureEffectTextureAnimationSpeedU, Single Fill_TextureEffectTextureAnimationSpeedV, Single EdgeEffectFallOff, Color EdgeEffectColor, Single EdgeEffectAlphaFadeTimeIn, Single EdgeEffectAlphaFadeTimeFull, Single EdgeEffectAlphaFadeTimeOut, Single EdgeEffectAlphaPersistentRatio, Single EdgeEffectAlphaPulseAmplitude, Single EdgeEffectAlphaPulseFrequency, Single EdgeEffectFill_TextureEffectFullAlphaRatio, Single EdgeEffectFullAlphaRatio, BlendMode MembraneShaderDestBlendMode, BlendMode ParticleShaderSourceBlendMode, BlendOperation ParticleShaderBlendOperation, ZTestFunction ParticleShaderZTestFunction, BlendMode ParticleShaderDestBlendMode, Single ParticleShaderBirthTimeRampUp, Single ParticleShaderBirthTimeFull, Single ParticleShaderBirthTimeRampDown, Single ParticleShaderFullBirthRatio, Single ParticleShaderPersistentBirthRatio, Single ParticleShaderLifetimeBase, Single ParticleShaderLifetimeVariance, Single ParticleShaderNormalMovementInitialSpeed, Single ParticleShaderNormalMovementAcceleration, Single ParticleShaderInitialVelocity1, Single ParticleShaderInitialVelocity2, Single ParticleShaderInitialVelocity3, Single ParticleShaderAcceleration1, Single ParticleShaderAcceleration2, Single ParticleShaderAcceleration3, Single ParticleShaderScaleKey1, Single ParticleShaderScaleKey2, Single ParticleShaderScaleKey1Time, Single ParticleShaderScaleKey2Time, Color ParticleShaderColorKey1, Color ParticleShaderColorKey2, Color ParticleShaderColorKey3, Single ParticleShaderColorKey1Alpha, Single ParticleShaderColorKey2Alpha, Single ParticleShaderColorKey3Alpha, Single ParticleShaderColorKey1Time, Single ParticleShaderColorKey2Time, Single ParticleShaderColorKey3Time, Single ParticleShaderInitSpeedAlongNormalVariance, Single ParticleShaderInitialRotationValue, Single ParticleShaderInitialRotationVariance, Single ParticleShaderRotationSpeedValue, Single ParticleShaderRotationSpeedVariance, FormID AddonModelsModel, Single HolesTimeStart, Single HolesTimeEnd, Single HolesValueStart, Single HolesValueEnd, Single EdgeWidth, Color EdgeColor, Single ExplosionWindSpeed, UInt32 TextureCountU, UInt32 TextureCountV, Single AddonModelsFadeTimeIn, Single AddonModelsFadeTimeOut, Single AddonModelsScaleIn, Single AddonModelsScaleOut, Single AddonModelsScaleTimeIn, Single AddonModelsScaleTimeOut)
@@ -259,6 +277,7 @@ namespace ESPSharp.Subrecords
 			this.AddonModelsScaleOut = AddonModelsScaleOut;
 			this.AddonModelsScaleTimeIn = AddonModelsScaleTimeIn;
 			this.AddonModelsScaleTimeOut = AddonModelsScaleTimeOut;
+
 		}
 
 		public EffectShaderData(EffectShaderData copyObject)
@@ -349,12 +368,13 @@ namespace ESPSharp.Subrecords
 			AddonModelsScaleOut = copyObject.AddonModelsScaleOut;
 			AddonModelsScaleTimeIn = copyObject.AddonModelsScaleTimeIn;
 			AddonModelsScaleTimeOut = copyObject.AddonModelsScaleTimeOut;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -436,6 +456,7 @@ namespace ESPSharp.Subrecords
 					AddonModelsScaleOut = subReader.ReadSingle();
 					AddonModelsScaleTimeIn = subReader.ReadSingle();
 					AddonModelsScaleTimeOut = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -527,6 +548,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(AddonModelsScaleOut);
 			writer.Write(AddonModelsScaleTimeIn);
 			writer.Write(AddonModelsScaleTimeOut);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -765,6 +787,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("AddonModels/ScaleTime/Out", true, out subEle);
 			subEle.Value = AddonModelsScaleTimeOut.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -1003,6 +1026,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("AddonModels/ScaleTime/Out", false, out subEle))
 				AddonModelsScaleTimeOut = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -1010,9 +1034,11 @@ namespace ESPSharp.Subrecords
 			return new EffectShaderData(this);
 		}
 
+
         public int CompareTo(EffectShaderData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -1036,6 +1062,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(EffectShaderData other)
         {
@@ -1177,8 +1205,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

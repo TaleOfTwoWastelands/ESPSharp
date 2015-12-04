@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public FormID Category { get; set; }
 		public FormID SubCategory { get; set; }
 
+
 		public RecipeData(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			Level = new UInt32();
 			Category = new FormID();
 			SubCategory = new FormID();
+
 		}
 
 		public RecipeData(ActorValues Skill, UInt32 Level, FormID Category, FormID SubCategory)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.Level = Level;
 			this.Category = Category;
 			this.SubCategory = SubCategory;
+
 		}
 
 		public RecipeData(RecipeData copyObject)
@@ -47,12 +66,13 @@ namespace ESPSharp.Subrecords
 				Category = (FormID)copyObject.Category.Clone();
 			if (copyObject.SubCategory != null)
 				SubCategory = (FormID)copyObject.SubCategory.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -60,6 +80,7 @@ namespace ESPSharp.Subrecords
 					Level = subReader.ReadUInt32();
 					Category.ReadBinary(subReader);
 					SubCategory.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -74,6 +95,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Level);
 			Category.WriteBinary(writer);
 			SubCategory.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -91,6 +113,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("SubCategory", true, out subEle);
 			SubCategory.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -108,6 +131,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("SubCategory", false, out subEle))
 				SubCategory.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -115,9 +139,11 @@ namespace ESPSharp.Subrecords
 			return new RecipeData(this);
 		}
 
+
         public int CompareTo(RecipeData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -141,6 +167,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RecipeData other)
         {
@@ -207,5 +235,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

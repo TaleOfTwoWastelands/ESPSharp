@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unused { get; set; }
 		public PackageDialogType Type { get; set; }
 
+
 		public PackageDialogData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Flags = new PackageDialogFlags();
 			Unused = new byte[4];
 			Type = new PackageDialogType();
+
 		}
 
 		public PackageDialogData(Single FOV, FormID Topic, PackageDialogFlags Flags, Byte[] Unused, PackageDialogType Type)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Flags = Flags;
 			this.Unused = Unused;
 			this.Type = Type;
+
 		}
 
 		public PackageDialogData(PackageDialogData copyObject)
@@ -51,12 +70,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
 			Type = copyObject.Type;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -65,6 +85,7 @@ namespace ESPSharp.Subrecords
 					Flags = subReader.ReadEnum<PackageDialogFlags>();
 					Unused = subReader.ReadBytes(4);
 					Type = subReader.ReadEnum<PackageDialogType>();
+
 				}
 				catch
 				{
@@ -83,6 +104,7 @@ namespace ESPSharp.Subrecords
 			else
 			writer.Write(Unused);
 			writer.Write((UInt32)Type);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -102,6 +124,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Type", true, out subEle);
 			subEle.Value = Type.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -121,6 +144,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Type", false, out subEle))
 				Type = subEle.ToEnum<PackageDialogType>();
+
 		}
 
 		public override object Clone()
@@ -128,9 +152,11 @@ namespace ESPSharp.Subrecords
 			return new PackageDialogData(this);
 		}
 
+
         public int CompareTo(PackageDialogData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -154,6 +180,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PackageDialogData other)
         {
@@ -222,8 +250,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

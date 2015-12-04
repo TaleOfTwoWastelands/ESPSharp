@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public UInt32 TriggerThreshold { get; set; }
 		public FormID Effect { get; set; }
 
+
 		public ThresholdData(string Tag = null)
 			:base(Tag)
 		{
 			TriggerThreshold = new UInt32();
 			Effect = new FormID();
+
 		}
 
 		public ThresholdData(UInt32 TriggerThreshold, FormID Effect)
 		{
 			this.TriggerThreshold = TriggerThreshold;
 			this.Effect = Effect;
+
 		}
 
 		public ThresholdData(ThresholdData copyObject)
@@ -38,17 +57,19 @@ namespace ESPSharp.Subrecords
 			TriggerThreshold = copyObject.TriggerThreshold;
 			if (copyObject.Effect != null)
 				Effect = (FormID)copyObject.Effect.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					TriggerThreshold = subReader.ReadUInt32();
 					Effect.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -61,6 +82,7 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write(TriggerThreshold);
 			Effect.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -72,6 +94,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Effect", true, out subEle);
 			Effect.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -83,6 +106,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Effect", false, out subEle))
 				Effect.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -90,9 +114,11 @@ namespace ESPSharp.Subrecords
 			return new ThresholdData(this);
 		}
 
+
         public int CompareTo(ThresholdData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -116,6 +142,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ThresholdData other)
         {
@@ -180,5 +208,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

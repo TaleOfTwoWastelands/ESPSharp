@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +43,7 @@ namespace ESPSharp.Subrecords
 		public Single PauseBetweenVolleysMax { get; set; }
 		public Byte[] Unused { get; set; }
 
+
 		public PackageUseWeaponData(string Tag = null)
 			:base(Tag)
 		{
@@ -39,6 +56,7 @@ namespace ESPSharp.Subrecords
 			PauseBetweenVolleysMin = new Single();
 			PauseBetweenVolleysMax = new Single();
 			Unused = new byte[4];
+
 		}
 
 		public PackageUseWeaponData(PackageUseWeaponFlags Flags, PackageUseWeaponFireRate FireRate, PackageUseWeaponFireCount FireCount, UInt16 NumberOfBursts, UInt16 ShotsPerVolleyMin, UInt16 ShotsPerVolleyMax, Single PauseBetweenVolleysMin, Single PauseBetweenVolleysMax, Byte[] Unused)
@@ -52,6 +70,7 @@ namespace ESPSharp.Subrecords
 			this.PauseBetweenVolleysMin = PauseBetweenVolleysMin;
 			this.PauseBetweenVolleysMax = PauseBetweenVolleysMax;
 			this.Unused = Unused;
+
 		}
 
 		public PackageUseWeaponData(PackageUseWeaponData copyObject)
@@ -66,12 +85,13 @@ namespace ESPSharp.Subrecords
 			PauseBetweenVolleysMax = copyObject.PauseBetweenVolleysMax;
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -84,6 +104,7 @@ namespace ESPSharp.Subrecords
 					PauseBetweenVolleysMin = subReader.ReadSingle();
 					PauseBetweenVolleysMax = subReader.ReadSingle();
 					Unused = subReader.ReadBytes(4);
+
 				}
 				catch
 				{
@@ -106,6 +127,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[4]);
 			else
 			writer.Write(Unused);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -137,6 +159,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = PauseBetweenVolleysMax.ToString("G15");
 
 			WriteUnusedXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -168,6 +191,7 @@ namespace ESPSharp.Subrecords
 				PauseBetweenVolleysMax = subEle.ToSingle();
 
 			ReadUnusedXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -175,9 +199,11 @@ namespace ESPSharp.Subrecords
 			return new PackageUseWeaponData(this);
 		}
 
+
         public int CompareTo(PackageUseWeaponData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -201,6 +227,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PackageUseWeaponData other)
         {
@@ -273,8 +301,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,17 +35,20 @@ namespace ESPSharp.Subrecords
 		public FormID Parent { get; set; }
 		public Single Delay { get; set; }
 
+
 		public ActivateParent(string Tag = null)
 			:base(Tag)
 		{
 			Parent = new FormID();
 			Delay = new Single();
+
 		}
 
 		public ActivateParent(FormID Parent, Single Delay)
 		{
 			this.Parent = Parent;
 			this.Delay = Delay;
+
 		}
 
 		public ActivateParent(ActivateParent copyObject)
@@ -37,17 +56,19 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Parent != null)
 				Parent = (FormID)copyObject.Parent.Clone();
 			Delay = copyObject.Delay;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Parent.ReadBinary(subReader);
 					Delay = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -60,6 +81,7 @@ namespace ESPSharp.Subrecords
 		{
 			Parent.WriteBinary(writer);
 			writer.Write(Delay);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -71,6 +93,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Delay", true, out subEle);
 			subEle.Value = Delay.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -82,6 +105,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Delay", false, out subEle))
 				Delay = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -89,9 +113,11 @@ namespace ESPSharp.Subrecords
 			return new ActivateParent(this);
 		}
 
+
         public int CompareTo(ActivateParent other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -115,6 +141,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ActivateParent other)
         {
@@ -179,5 +207,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

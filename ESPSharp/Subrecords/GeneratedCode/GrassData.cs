@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +47,7 @@ namespace ESPSharp.Subrecords
 		public GrassFlags Flags { get; set; }
 		public Byte[] Unused3 { get; set; }
 
+
 		public GrassData(string Tag = null)
 			:base(Tag)
 		{
@@ -47,6 +64,7 @@ namespace ESPSharp.Subrecords
 			WavePeriod = new Single();
 			Flags = new GrassFlags();
 			Unused3 = new byte[3];
+
 		}
 
 		public GrassData(Byte Density, Byte MinSlope, Byte MaxSlope, Byte Unused1, UInt16 UnitFromWaterAmount, Byte[] Unused2, UnitFromWaterType UnitFromWaterType, Single PositionRange, Single HeightRange, Single ColorRange, Single WavePeriod, GrassFlags Flags, Byte[] Unused3)
@@ -64,6 +82,7 @@ namespace ESPSharp.Subrecords
 			this.WavePeriod = WavePeriod;
 			this.Flags = Flags;
 			this.Unused3 = Unused3;
+
 		}
 
 		public GrassData(GrassData copyObject)
@@ -83,12 +102,13 @@ namespace ESPSharp.Subrecords
 			Flags = copyObject.Flags;
 			if (copyObject.Unused3 != null)
 				Unused3 = (Byte[])copyObject.Unused3.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -105,6 +125,7 @@ namespace ESPSharp.Subrecords
 					WavePeriod = subReader.ReadSingle();
 					Flags = subReader.ReadEnum<GrassFlags>();
 					Unused3 = subReader.ReadBytes(3);
+
 				}
 				catch
 				{
@@ -134,6 +155,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[3]);
 			else
 			writer.Write(Unused3);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -175,6 +197,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			WriteUnused3XML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -216,6 +239,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<GrassFlags>();
 
 			ReadUnused3XML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -223,9 +247,11 @@ namespace ESPSharp.Subrecords
 			return new GrassData(this);
 		}
 
+
         public int CompareTo(GrassData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -249,6 +275,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(GrassData other)
         {
@@ -325,16 +353,27 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void ReadUnused3XML(XElement ele, ElderScrollsPlugin master);
+
+
 
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused3XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

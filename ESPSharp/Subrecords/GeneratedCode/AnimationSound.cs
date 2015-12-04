@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unused { get; set; }
 		public AnimationSoundType Type { get; set; }
 
+
 		public AnimationSound(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			Chance = new Byte();
 			Unused = new byte[3];
 			Type = new AnimationSoundType();
+
 		}
 
 		public AnimationSound(FormID Sound, Byte Chance, Byte[] Unused, AnimationSoundType Type)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.Chance = Chance;
 			this.Unused = Unused;
 			this.Type = Type;
+
 		}
 
 		public AnimationSound(AnimationSound copyObject)
@@ -47,12 +66,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
 			Type = copyObject.Type;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -60,6 +80,7 @@ namespace ESPSharp.Subrecords
 					Chance = subReader.ReadByte();
 					Unused = subReader.ReadBytes(3);
 					Type = subReader.ReadEnum<AnimationSoundType>();
+
 				}
 				catch
 				{
@@ -77,6 +98,7 @@ namespace ESPSharp.Subrecords
 			else
 			writer.Write(Unused);
 			writer.Write((UInt32)Type);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -93,6 +115,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Type", true, out subEle);
 			subEle.Value = Type.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -109,6 +132,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Type", false, out subEle))
 				Type = subEle.ToEnum<AnimationSoundType>();
+
 		}
 
 		public override object Clone()
@@ -116,9 +140,11 @@ namespace ESPSharp.Subrecords
 			return new AnimationSound(this);
 		}
 
+
         public int CompareTo(AnimationSound other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -142,6 +168,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(AnimationSound other)
         {
@@ -209,8 +237,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

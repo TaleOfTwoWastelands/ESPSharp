@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public Int32 Value { get; set; }
 		public Single Weight { get; set; }
 
+
 		public BookData(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			Skill = new ActorValuesByte();
 			Value = new Int32();
 			Weight = new Single();
+
 		}
 
 		public BookData(BookFlags Flags, ActorValuesByte Skill, Int32 Value, Single Weight)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.Skill = Skill;
 			this.Value = Value;
 			this.Weight = Weight;
+
 		}
 
 		public BookData(BookData copyObject)
@@ -45,12 +64,13 @@ namespace ESPSharp.Subrecords
 			Skill = copyObject.Skill;
 			Value = copyObject.Value;
 			Weight = copyObject.Weight;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -58,6 +78,7 @@ namespace ESPSharp.Subrecords
 					Skill = subReader.ReadEnum<ActorValuesByte>();
 					Value = subReader.ReadInt32();
 					Weight = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -72,6 +93,7 @@ namespace ESPSharp.Subrecords
 			writer.Write((SByte)Skill);
 			writer.Write(Value);
 			writer.Write(Weight);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -89,6 +111,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Weight", true, out subEle);
 			subEle.Value = Weight.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -106,6 +129,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Weight", false, out subEle))
 				Weight = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -113,9 +137,11 @@ namespace ESPSharp.Subrecords
 			return new BookData(this);
 		}
 
+
         public int CompareTo(BookData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -139,6 +165,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(BookData other)
         {
@@ -205,5 +233,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

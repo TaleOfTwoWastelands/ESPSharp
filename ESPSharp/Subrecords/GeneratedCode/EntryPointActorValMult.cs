@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,34 +36,39 @@ namespace ESPSharp.Subrecords
 		public ActorValues ActorValue { get; set; }
 		public Single Multiplier { get; set; }
 
+
 		public EntryPointActorValMult(string Tag = null)
 			:base(Tag)
 		{
 			ActorValue = new ActorValues();
 			Multiplier = new Single();
+
 		}
 
 		public EntryPointActorValMult(ActorValues ActorValue, Single Multiplier)
 		{
 			this.ActorValue = ActorValue;
 			this.Multiplier = Multiplier;
+
 		}
 
 		public EntryPointActorValMult(EntryPointActorValMult copyObject)
 		{
 			ActorValue = copyObject.ActorValue;
 			Multiplier = copyObject.Multiplier;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					ActorValue = subReader.ReadEnum<ActorValues>();
 					Multiplier = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -60,6 +81,7 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write((Int32)ActorValue);
 			writer.Write(Multiplier);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -71,6 +93,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Multiplier", true, out subEle);
 			subEle.Value = Multiplier.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -82,6 +105,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Multiplier", false, out subEle))
 				Multiplier = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -89,9 +113,11 @@ namespace ESPSharp.Subrecords
 			return new EntryPointActorValMult(this);
 		}
 
+
         public int CompareTo(EntryPointActorValMult other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -115,6 +141,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(EntryPointActorValMult other)
         {
@@ -179,5 +207,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

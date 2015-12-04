@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +48,7 @@ namespace ESPSharp.Subrecords
 		public FormID WinningsQuest { get; set; }
 		public NoYes DealerStayOnSoft17 { get; set; }
 
+
 		public CasinoData(string Tag = null)
 			:base(Tag)
 		{
@@ -49,6 +66,7 @@ namespace ESPSharp.Subrecords
 			Currency = new FormID();
 			WinningsQuest = new FormID();
 			DealerStayOnSoft17 = new NoYes();
+
 		}
 
 		public CasinoData(Single DecksPercentBeforeShuffle, Single BlackjackPayoutRatio, UInt32 SlotReelStop1, UInt32 SlotReelStop2, UInt32 SlotReelStop3, UInt32 SlotReelStop4, UInt32 SlotReelStop5, UInt32 SlotReelStop6, UInt32 SlotReelStopW, UInt32 NumberOfDecks, UInt32 MaxWinnings, FormID Currency, FormID WinningsQuest, NoYes DealerStayOnSoft17)
@@ -67,6 +85,7 @@ namespace ESPSharp.Subrecords
 			this.Currency = Currency;
 			this.WinningsQuest = WinningsQuest;
 			this.DealerStayOnSoft17 = DealerStayOnSoft17;
+
 		}
 
 		public CasinoData(CasinoData copyObject)
@@ -87,12 +106,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.WinningsQuest != null)
 				WinningsQuest = (FormID)copyObject.WinningsQuest.Clone();
 			DealerStayOnSoft17 = copyObject.DealerStayOnSoft17;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -110,6 +130,7 @@ namespace ESPSharp.Subrecords
 					Currency.ReadBinary(subReader);
 					WinningsQuest.ReadBinary(subReader);
 					DealerStayOnSoft17 = subReader.ReadEnum<NoYes>();
+
 				}
 				catch
 				{
@@ -134,6 +155,7 @@ namespace ESPSharp.Subrecords
 			Currency.WriteBinary(writer);
 			WinningsQuest.WriteBinary(writer);
 			writer.Write((UInt32)DealerStayOnSoft17);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -181,6 +203,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("DealerStayOnSoft17", true, out subEle);
 			subEle.Value = DealerStayOnSoft17.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -228,6 +251,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("DealerStayOnSoft17", false, out subEle))
 				DealerStayOnSoft17 = subEle.ToEnum<NoYes>();
+
 		}
 
 		public override object Clone()
@@ -235,9 +259,11 @@ namespace ESPSharp.Subrecords
 			return new CasinoData(this);
 		}
 
+
         public int CompareTo(CasinoData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -261,6 +287,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(CasinoData other)
         {
@@ -337,5 +365,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

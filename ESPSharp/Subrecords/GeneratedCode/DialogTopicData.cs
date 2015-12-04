@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,34 +36,39 @@ namespace ESPSharp.Subrecords
 		public DialogType Type { get; set; }
 		public DialogFlags Flags { get; set; }
 
+
 		public DialogTopicData(string Tag = null)
 			:base(Tag)
 		{
 			Type = new DialogType();
 			Flags = new DialogFlags();
+
 		}
 
 		public DialogTopicData(DialogType Type, DialogFlags Flags)
 		{
 			this.Type = Type;
 			this.Flags = Flags;
+
 		}
 
 		public DialogTopicData(DialogTopicData copyObject)
 		{
 			Type = copyObject.Type;
 			Flags = copyObject.Flags;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Type = subReader.ReadEnum<DialogType>();
 					Flags = subReader.ReadEnum<DialogFlags>();
+
 				}
 				catch
 				{
@@ -60,6 +81,7 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write((Byte)Type);
 			writer.Write((Byte)Flags);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -71,6 +93,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -82,6 +105,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Flags", false, out subEle))
 				Flags = subEle.ToEnum<DialogFlags>();
+
 		}
 
 		public override object Clone()
@@ -89,9 +113,11 @@ namespace ESPSharp.Subrecords
 			return new DialogTopicData(this);
 		}
 
+
         public int CompareTo(DialogTopicData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -115,6 +141,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(DialogTopicData other)
         {
@@ -179,5 +207,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

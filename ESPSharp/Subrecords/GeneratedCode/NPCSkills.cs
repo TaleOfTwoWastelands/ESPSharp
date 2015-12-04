@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +62,7 @@ namespace ESPSharp.Subrecords
 		public Byte SurvivalOffset { get; set; }
 		public Byte UnarmedOffset { get; set; }
 
+
 		public NPCSkills(string Tag = null)
 			:base(Tag)
 		{
@@ -77,6 +94,7 @@ namespace ESPSharp.Subrecords
 			SpeechOffset = new Byte();
 			SurvivalOffset = new Byte();
 			UnarmedOffset = new Byte();
+
 		}
 
 		public NPCSkills(Byte BarterValue, Byte BigGunsValue, Byte EnergyWeaponsValue, Byte ExplosivesValue, Byte LockpickValue, Byte MedicineValue, Byte MeleeWeaponsValue, Byte RepairValue, Byte ScienceValue, Byte GunsValue, Byte SneakValue, Byte SpeechValue, Byte SurvivalValue, Byte UnarmedValue, Byte BarterOffset, Byte BigGunsOffset, Byte EnergyWeaponsOffset, Byte ExplosivesOffset, Byte LockpickOffset, Byte MedicineOffset, Byte MeleeWeaponsOffset, Byte RepairOffset, Byte ScienceOffset, Byte GunsOffset, Byte SneakOffset, Byte SpeechOffset, Byte SurvivalOffset, Byte UnarmedOffset)
@@ -109,6 +127,7 @@ namespace ESPSharp.Subrecords
 			this.SpeechOffset = SpeechOffset;
 			this.SurvivalOffset = SurvivalOffset;
 			this.UnarmedOffset = UnarmedOffset;
+
 		}
 
 		public NPCSkills(NPCSkills copyObject)
@@ -141,12 +160,13 @@ namespace ESPSharp.Subrecords
 			SpeechOffset = copyObject.SpeechOffset;
 			SurvivalOffset = copyObject.SurvivalOffset;
 			UnarmedOffset = copyObject.UnarmedOffset;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -178,6 +198,7 @@ namespace ESPSharp.Subrecords
 					SpeechOffset = subReader.ReadByte();
 					SurvivalOffset = subReader.ReadByte();
 					UnarmedOffset = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -216,6 +237,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(SpeechOffset);
 			writer.Write(SurvivalOffset);
 			writer.Write(UnarmedOffset);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -305,6 +327,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Unarmed/Offset", true, out subEle);
 			subEle.Value = UnarmedOffset.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -394,6 +417,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Unarmed/Offset", false, out subEle))
 				UnarmedOffset = subEle.ToByte();
+
 		}
 
 		public override object Clone()
@@ -401,9 +425,11 @@ namespace ESPSharp.Subrecords
 			return new NPCSkills(this);
 		}
 
+
         public int CompareTo(NPCSkills other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -427,6 +453,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(NPCSkills other)
         {
@@ -517,5 +545,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +81,7 @@ namespace ESPSharp.Subrecords
 		public Single NoisePropertiesNoiseLayerThreeAmplitudeScale { get; set; }
 		public UInt16 Damage { get; set; }
 
+
 		public WaterDataAndDamage(string Tag = null)
 			:base(Tag)
 		{
@@ -115,6 +132,7 @@ namespace ESPSharp.Subrecords
 			NoisePropertiesNoiseLayerTwoAmplitudeScale = 0.5f;
 			NoisePropertiesNoiseLayerThreeAmplitudeScale = 0.25f;
 			Damage = new UInt16();
+
 		}
 
 		public WaterDataAndDamage(Byte[] Unknown, Single WaterPropertiesSunPower, Single WaterPropertiesReflectivityAmount, Single WaterPropertiesFresnelAmount, Byte[] Unused1, Single FogPropertiesAboveWaterFogNearPlaneDistance, Single FogPropertiesAboveWaterFogFarPlaneDistance, Color ColorShallow, Color ColorDeep, Color ColorReflection, Byte[] Unused2, Single RainSimulatorForce, Single RainSimulatorVelocity, Single RainSimulatorFalloff, Single RainSimulatorDampener, Single DisplacementSimulatorStartingSize, Single DisplacementSimulatorForce, Single DisplacementSimulatorVelocity, Single DisplacementSimulatorFalloff, Single DisplacementSimulatorDampener, Single RainSimulatorStartingSize, Single NoisePropertiesNormalsNoiseScale, Single NoisePropertiesNoiseLayerOneWindDirection, Single NoisePropertiesNoiseLayerTwoWindDirection, Single NoisePropertiesNoiseLayerThreeWindDirection, Single NoisePropertiesNoiseLayerOneWindSpeed, Single NoisePropertiesNoiseLayerTwoWindSpeed, Single NoisePropertiesNoiseLayerThreeWindSpeed, Single NoisePropertiesNormalsDepthFalloffStart, Single NoisePropertiesNormalsDepthFalloffEnd, Single FogPropertiesAboveWaterFogAmount, Single NoisePropertiesNormalsUVScale, Single FogPropertiesUnderWaterFogAmount, Single FogPropertiesUnderWaterFogNearPlaneDistance, Single FogPropertiesUnderWaterFogFarPlaneDistance, Single WaterPropertiesDistortionAmount, Single WaterPropertiesShininess, Single WaterPropertiesReflectionHDRMult, Single WaterPropertiesLightRadius, Single WaterPropertiesLightBrightness, Single NoisePropertiesNoiseLayerOneUVScale, Single NoisePropertiesNoiseLayerTwoUVScale, Single NoisePropertiesNoiseLayerThreeUVScale, Single NoisePropertiesNoiseLayerOneAmplitudeScale, Single NoisePropertiesNoiseLayerTwoAmplitudeScale, Single NoisePropertiesNoiseLayerThreeAmplitudeScale, UInt16 Damage)
@@ -166,6 +184,7 @@ namespace ESPSharp.Subrecords
 			this.NoisePropertiesNoiseLayerTwoAmplitudeScale = NoisePropertiesNoiseLayerTwoAmplitudeScale;
 			this.NoisePropertiesNoiseLayerThreeAmplitudeScale = NoisePropertiesNoiseLayerThreeAmplitudeScale;
 			this.Damage = Damage;
+
 		}
 
 		public WaterDataAndDamage(WaterDataAndDamage copyObject)
@@ -223,12 +242,13 @@ namespace ESPSharp.Subrecords
 			NoisePropertiesNoiseLayerTwoAmplitudeScale = copyObject.NoisePropertiesNoiseLayerTwoAmplitudeScale;
 			NoisePropertiesNoiseLayerThreeAmplitudeScale = copyObject.NoisePropertiesNoiseLayerThreeAmplitudeScale;
 			Damage = copyObject.Damage;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -279,6 +299,7 @@ namespace ESPSharp.Subrecords
 					NoisePropertiesNoiseLayerTwoAmplitudeScale = subReader.ReadSingle();
 					NoisePropertiesNoiseLayerThreeAmplitudeScale = subReader.ReadSingle();
 					Damage = subReader.ReadUInt16();
+
 				}
 				catch
 				{
@@ -345,6 +366,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(NoisePropertiesNoiseLayerTwoAmplitudeScale);
 			writer.Write(NoisePropertiesNoiseLayerThreeAmplitudeScale);
 			writer.Write(Damage);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -489,6 +511,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Damage", true, out subEle);
 			subEle.Value = Damage.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -633,6 +656,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Damage", false, out subEle))
 				Damage = subEle.ToUInt16();
+
 		}
 
 		public override object Clone()
@@ -640,9 +664,11 @@ namespace ESPSharp.Subrecords
 			return new WaterDataAndDamage(this);
 		}
 
+
         public int CompareTo(WaterDataAndDamage other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -666,6 +692,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WaterDataAndDamage other)
         {
@@ -776,12 +804,21 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +47,7 @@ namespace ESPSharp.Subrecords
 		public Single RadiationRadius { get; set; }
 		public SoundLevel SoundLevel { get; set; }
 
+
 		public ExplosionData(string Tag = null)
 			:base(Tag)
 		{
@@ -47,6 +64,7 @@ namespace ESPSharp.Subrecords
 			RadiationDissipationTime = new Single();
 			RadiationRadius = new Single();
 			SoundLevel = new SoundLevel();
+
 		}
 
 		public ExplosionData(Single Force, Single Damage, Single Radius, FormID Light, FormID Sound1, ExplosionFlags Flags, Single ISRadius, FormID ImpactDataSet, FormID Sound2, Single RadiationLevel, Single RadiationDissipationTime, Single RadiationRadius, SoundLevel SoundLevel)
@@ -64,6 +82,7 @@ namespace ESPSharp.Subrecords
 			this.RadiationDissipationTime = RadiationDissipationTime;
 			this.RadiationRadius = RadiationRadius;
 			this.SoundLevel = SoundLevel;
+
 		}
 
 		public ExplosionData(ExplosionData copyObject)
@@ -85,12 +104,13 @@ namespace ESPSharp.Subrecords
 			RadiationDissipationTime = copyObject.RadiationDissipationTime;
 			RadiationRadius = copyObject.RadiationRadius;
 			SoundLevel = copyObject.SoundLevel;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -107,6 +127,7 @@ namespace ESPSharp.Subrecords
 					RadiationDissipationTime = subReader.ReadSingle();
 					RadiationRadius = subReader.ReadSingle();
 					SoundLevel = subReader.ReadEnum<SoundLevel>();
+
 				}
 				catch
 				{
@@ -130,6 +151,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(RadiationDissipationTime);
 			writer.Write(RadiationRadius);
 			writer.Write((UInt32)SoundLevel);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -174,6 +196,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("SoundLevel", true, out subEle);
 			subEle.Value = SoundLevel.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -218,6 +241,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("SoundLevel", false, out subEle))
 				SoundLevel = subEle.ToEnum<SoundLevel>();
+
 		}
 
 		public override object Clone()
@@ -225,9 +249,11 @@ namespace ESPSharp.Subrecords
 			return new ExplosionData(this);
 		}
 
+
         public int CompareTo(ExplosionData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -251,6 +277,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ExplosionData other)
         {
@@ -326,5 +354,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

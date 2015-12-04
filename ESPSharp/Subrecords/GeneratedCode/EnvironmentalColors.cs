@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +44,7 @@ namespace ESPSharp.Subrecords
 		public TimeOfDayColors Horizon { get; set; }
 		public TimeOfDayColors Unused2 { get; set; }
 
+
 		public EnvironmentalColors(string Tag = null)
 			:base(Tag)
 		{
@@ -41,6 +58,7 @@ namespace ESPSharp.Subrecords
 			SkyLower = new TimeOfDayColors();
 			Horizon = new TimeOfDayColors();
 			Unused2 = new TimeOfDayColors();
+
 		}
 
 		public EnvironmentalColors(TimeOfDayColors SkyUpper, TimeOfDayColors Fog, TimeOfDayColors Unused1, TimeOfDayColors Ambient, TimeOfDayColors Sunlight, TimeOfDayColors Sun, TimeOfDayColors Stars, TimeOfDayColors SkyLower, TimeOfDayColors Horizon, TimeOfDayColors Unused2)
@@ -55,6 +73,7 @@ namespace ESPSharp.Subrecords
 			this.SkyLower = SkyLower;
 			this.Horizon = Horizon;
 			this.Unused2 = Unused2;
+
 		}
 
 		public EnvironmentalColors(EnvironmentalColors copyObject)
@@ -79,12 +98,13 @@ namespace ESPSharp.Subrecords
 				Horizon = (TimeOfDayColors)copyObject.Horizon.Clone();
 			if (copyObject.Unused2 != null)
 				Unused2 = (TimeOfDayColors)copyObject.Unused2.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -98,6 +118,7 @@ namespace ESPSharp.Subrecords
 					SkyLower.ReadBinary(subReader);
 					Horizon.ReadBinary(subReader);
 					Unused2.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -118,6 +139,7 @@ namespace ESPSharp.Subrecords
 			SkyLower.WriteBinary(writer);
 			Horizon.WriteBinary(writer);
 			Unused2.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -153,6 +175,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Unused2", true, out subEle);
 			Unused2.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -188,6 +211,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Unused2", false, out subEle))
 				Unused2.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -195,9 +219,11 @@ namespace ESPSharp.Subrecords
 			return new EnvironmentalColors(this);
 		}
 
+
         public int CompareTo(EnvironmentalColors other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -221,6 +247,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(EnvironmentalColors other)
         {
@@ -293,5 +321,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

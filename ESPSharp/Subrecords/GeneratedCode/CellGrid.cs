@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public Int32 Y { get; set; }
 		public ForceHideLandFlags ForceHideLand { get; set; }
 
+
 		public CellGrid(string Tag = null)
 			:base(Tag)
 		{
 			X = new Int32();
 			Y = new Int32();
 			ForceHideLand = new ForceHideLandFlags();
+
 		}
 
 		public CellGrid(Int32 X, Int32 Y, ForceHideLandFlags ForceHideLand)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.X = X;
 			this.Y = Y;
 			this.ForceHideLand = ForceHideLand;
+
 		}
 
 		public CellGrid(CellGrid copyObject)
@@ -41,18 +60,20 @@ namespace ESPSharp.Subrecords
 			X = copyObject.X;
 			Y = copyObject.Y;
 			ForceHideLand = copyObject.ForceHideLand;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					X = subReader.ReadInt32();
 					Y = subReader.ReadInt32();
 					ForceHideLand = subReader.ReadEnum<ForceHideLandFlags>();
+
 				}
 				catch
 				{
@@ -66,6 +87,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(X);
 			writer.Write(Y);
 			writer.Write((UInt32)ForceHideLand);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -80,6 +102,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("ForceHideLand", true, out subEle);
 			subEle.Value = ForceHideLand.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -94,6 +117,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("ForceHideLand", false, out subEle))
 				ForceHideLand = subEle.ToEnum<ForceHideLandFlags>();
+
 		}
 
 		public override object Clone()
@@ -101,9 +125,11 @@ namespace ESPSharp.Subrecords
 			return new CellGrid(this);
 		}
 
+
         public int CompareTo(CellGrid other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -127,6 +153,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(CellGrid other)
         {
@@ -192,5 +220,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

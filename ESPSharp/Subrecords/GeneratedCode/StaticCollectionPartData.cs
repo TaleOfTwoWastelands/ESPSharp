@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,15 +34,18 @@ namespace ESPSharp.Subrecords
 	{
 		public List<StaticPlacement> Placements { get; set; }
 
+
 		public StaticCollectionPartData(string Tag = null)
 			:base(Tag)
 		{
 			Placements = new List<StaticPlacement>();
+
 		}
 
 		public StaticCollectionPartData(List<StaticPlacement> Placements)
 		{
 			this.Placements = Placements;
+
 		}
 
 		public StaticCollectionPartData(StaticCollectionPartData copyObject)
@@ -34,12 +53,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Placements != null)
 				foreach(var temp in copyObject.Placements)
 					Placements.Add((StaticPlacement)temp.Clone());
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -49,6 +69,7 @@ namespace ESPSharp.Subrecords
 						temp.ReadBinary(subReader);
 						Placements.Add(temp);
 					}
+
 				}
 				catch
 				{
@@ -64,6 +85,7 @@ namespace ESPSharp.Subrecords
 			{
 				temp.WriteBinary(writer);
 			}
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -78,6 +100,7 @@ namespace ESPSharp.Subrecords
 				temp.WriteXML(e, master);
 				subEle.Add(e);
 			}
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -91,12 +114,15 @@ namespace ESPSharp.Subrecords
 					temp.ReadXML(e, master);
 					Placements.Add(temp);
 				}
+
 		}
 
 		public override object Clone()
 		{
 			return new StaticCollectionPartData(this);
 		}
+
+
 
         public bool Equals(StaticCollectionPartData other)
         {
@@ -160,5 +186,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

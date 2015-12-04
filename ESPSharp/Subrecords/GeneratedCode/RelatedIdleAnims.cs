@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public FormID Parent { get; set; }
 		public FormID Sibling { get; set; }
 
+
 		public RelatedIdleAnims(string Tag = null)
 			:base(Tag)
 		{
 			Parent = new FormID();
 			Sibling = new FormID();
+
 		}
 
 		public RelatedIdleAnims(FormID Parent, FormID Sibling)
 		{
 			this.Parent = Parent;
 			this.Sibling = Sibling;
+
 		}
 
 		public RelatedIdleAnims(RelatedIdleAnims copyObject)
@@ -39,17 +58,19 @@ namespace ESPSharp.Subrecords
 				Parent = (FormID)copyObject.Parent.Clone();
 			if (copyObject.Sibling != null)
 				Sibling = (FormID)copyObject.Sibling.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Parent.ReadBinary(subReader);
 					Sibling.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -62,6 +83,7 @@ namespace ESPSharp.Subrecords
 		{
 			Parent.WriteBinary(writer);
 			Sibling.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -73,6 +95,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Sibling", true, out subEle);
 			Sibling.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -84,6 +107,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Sibling", false, out subEle))
 				Sibling.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -91,9 +115,11 @@ namespace ESPSharp.Subrecords
 			return new RelatedIdleAnims(this);
 		}
 
+
         public int CompareTo(RelatedIdleAnims other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -117,6 +143,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RelatedIdleAnims other)
         {
@@ -181,5 +209,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public DestructableFlags Flags { get; set; }
 		public Byte[] Unknown { get; set; }
 
+
 		public DestructableHeader(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			Count = new Byte();
 			Flags = new DestructableFlags();
 			Unknown = new byte[2];
+
 		}
 
 		public DestructableHeader(Int32 Health, Byte Count, DestructableFlags Flags, Byte[] Unknown)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.Count = Count;
 			this.Flags = Flags;
 			this.Unknown = Unknown;
+
 		}
 
 		public DestructableHeader(DestructableHeader copyObject)
@@ -46,12 +65,13 @@ namespace ESPSharp.Subrecords
 			Flags = copyObject.Flags;
 			if (copyObject.Unknown != null)
 				Unknown = (Byte[])copyObject.Unknown.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -59,6 +79,7 @@ namespace ESPSharp.Subrecords
 					Count = subReader.ReadByte();
 					Flags = subReader.ReadEnum<DestructableFlags>();
 					Unknown = subReader.ReadBytes(2);
+
 				}
 				catch
 				{
@@ -76,6 +97,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[2]);
 			else
 			writer.Write(Unknown);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -93,6 +115,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Unknown", true, out subEle);
 			subEle.Value = Unknown.ToHex();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -110,6 +133,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
 				Unknown = subEle.ToBytes();
+
 		}
 
 		public override object Clone()
@@ -117,9 +141,11 @@ namespace ESPSharp.Subrecords
 			return new DestructableHeader(this);
 		}
 
+
         public int CompareTo(DestructableHeader other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -143,6 +169,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(DestructableHeader other)
         {
@@ -209,5 +237,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

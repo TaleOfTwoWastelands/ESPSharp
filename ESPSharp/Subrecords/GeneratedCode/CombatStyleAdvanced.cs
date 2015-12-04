@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +55,7 @@ namespace ESPSharp.Subrecords
 		public Single PowerAttackFatigueModBase { get; set; }
 		public Single PowerAttackFatigueModMult { get; set; }
 
+
 		public CombatStyleAdvanced(string Tag = null)
 			:base(Tag)
 		{
@@ -63,6 +80,7 @@ namespace ESPSharp.Subrecords
 			AttackDuringBlockMult = new Single();
 			PowerAttackFatigueModBase = new Single();
 			PowerAttackFatigueModMult = new Single();
+
 		}
 
 		public CombatStyleAdvanced(Single DodgeFatigueModMult, Single DodgeFatigueModBase, Single EncumbSpeedModBase, Single EncumbSpeedModMult, Single DodgeWhileUnderAttackMult, Single DodgeNotUnderAttackMult, Single DodgeBackWhileUnderAttackMult, Single DodgeBackNotUnderAttackMult, Single DodgeForwardWhileAttackingMult, Single DodgeForwardNotAttackingMult, Single BlockSkillModifierMult, Single BlockSkillModifierBase, Single BlockWhileUnderAttackMult, Single BlockNotUnderAttackMult, Single AttackSkillModifierMult, Single AttackSkillModifierBase, Single AttackWhileUnderAttackMult, Single AttackNotUnderAttackMult, Single AttackDuringBlockMult, Single PowerAttackFatigueModBase, Single PowerAttackFatigueModMult)
@@ -88,6 +106,7 @@ namespace ESPSharp.Subrecords
 			this.AttackDuringBlockMult = AttackDuringBlockMult;
 			this.PowerAttackFatigueModBase = PowerAttackFatigueModBase;
 			this.PowerAttackFatigueModMult = PowerAttackFatigueModMult;
+
 		}
 
 		public CombatStyleAdvanced(CombatStyleAdvanced copyObject)
@@ -113,12 +132,13 @@ namespace ESPSharp.Subrecords
 			AttackDuringBlockMult = copyObject.AttackDuringBlockMult;
 			PowerAttackFatigueModBase = copyObject.PowerAttackFatigueModBase;
 			PowerAttackFatigueModMult = copyObject.PowerAttackFatigueModMult;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -143,6 +163,7 @@ namespace ESPSharp.Subrecords
 					AttackDuringBlockMult = subReader.ReadSingle();
 					PowerAttackFatigueModBase = subReader.ReadSingle();
 					PowerAttackFatigueModMult = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -174,6 +195,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(AttackDuringBlockMult);
 			writer.Write(PowerAttackFatigueModBase);
 			writer.Write(PowerAttackFatigueModMult);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -242,6 +264,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("PowerAttackFatigueMod/Mult", true, out subEle);
 			subEle.Value = PowerAttackFatigueModMult.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -310,6 +333,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("PowerAttackFatigueMod/Mult", false, out subEle))
 				PowerAttackFatigueModMult = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -317,9 +341,11 @@ namespace ESPSharp.Subrecords
 			return new CombatStyleAdvanced(this);
 		}
 
+
         public int CompareTo(CombatStyleAdvanced other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -343,6 +369,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(CombatStyleAdvanced other)
         {
@@ -426,5 +454,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

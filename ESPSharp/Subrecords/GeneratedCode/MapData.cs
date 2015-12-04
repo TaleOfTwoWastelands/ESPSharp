@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +40,7 @@ namespace ESPSharp.Subrecords
 		public Int16 MaxX { get; set; }
 		public Int16 MaxY { get; set; }
 
+
 		public MapData(string Tag = null)
 			:base(Tag)
 		{
@@ -33,6 +50,7 @@ namespace ESPSharp.Subrecords
 			MinY = new Int16();
 			MaxX = new Int16();
 			MaxY = new Int16();
+
 		}
 
 		public MapData(Int32 UsableXSize, Int32 UsableYSize, Int16 MinX, Int16 MinY, Int16 MaxX, Int16 MaxY)
@@ -43,6 +61,7 @@ namespace ESPSharp.Subrecords
 			this.MinY = MinY;
 			this.MaxX = MaxX;
 			this.MaxY = MaxY;
+
 		}
 
 		public MapData(MapData copyObject)
@@ -53,12 +72,13 @@ namespace ESPSharp.Subrecords
 			MinY = copyObject.MinY;
 			MaxX = copyObject.MaxX;
 			MaxY = copyObject.MaxY;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -68,6 +88,7 @@ namespace ESPSharp.Subrecords
 					MinY = subReader.ReadInt16();
 					MaxX = subReader.ReadInt16();
 					MaxY = subReader.ReadInt16();
+
 				}
 				catch
 				{
@@ -84,6 +105,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(MinY);
 			writer.Write(MaxX);
 			writer.Write(MaxY);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -107,6 +129,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("MaxY", true, out subEle);
 			subEle.Value = MaxY.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -130,6 +153,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("MaxY", false, out subEle))
 				MaxY = subEle.ToInt16();
+
 		}
 
 		public override object Clone()
@@ -137,9 +161,11 @@ namespace ESPSharp.Subrecords
 			return new MapData(this);
 		}
 
+
         public int CompareTo(MapData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -163,6 +189,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(MapData other)
         {
@@ -231,5 +259,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

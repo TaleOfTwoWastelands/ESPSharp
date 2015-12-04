@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +42,7 @@ namespace ESPSharp.Subrecords
 		public Single RotationZ { get; set; }
 		public YesNoUInt Alarm { get; set; }
 
+
 		public TeleportDestinationData(string Tag = null)
 			:base(Tag)
 		{
@@ -37,6 +54,7 @@ namespace ESPSharp.Subrecords
 			RotationY = new Single();
 			RotationZ = new Single();
 			Alarm = new YesNoUInt();
+
 		}
 
 		public TeleportDestinationData(FormID Door, Single PositionX, Single PositionY, Single PositionZ, Single RotationX, Single RotationY, Single RotationZ, YesNoUInt Alarm)
@@ -49,6 +67,7 @@ namespace ESPSharp.Subrecords
 			this.RotationY = RotationY;
 			this.RotationZ = RotationZ;
 			this.Alarm = Alarm;
+
 		}
 
 		public TeleportDestinationData(TeleportDestinationData copyObject)
@@ -62,12 +81,13 @@ namespace ESPSharp.Subrecords
 			RotationY = copyObject.RotationY;
 			RotationZ = copyObject.RotationZ;
 			Alarm = copyObject.Alarm;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -79,6 +99,7 @@ namespace ESPSharp.Subrecords
 					RotationY = subReader.ReadSingle();
 					RotationZ = subReader.ReadSingle();
 					Alarm = subReader.ReadEnum<YesNoUInt>();
+
 				}
 				catch
 				{
@@ -97,6 +118,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(RotationY);
 			writer.Write(RotationZ);
 			writer.Write((UInt32)Alarm);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -126,6 +148,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Alarm", true, out subEle);
 			subEle.Value = Alarm.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -155,6 +178,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Alarm", false, out subEle))
 				Alarm = subEle.ToEnum<YesNoUInt>();
+
 		}
 
 		public override object Clone()
@@ -162,9 +186,11 @@ namespace ESPSharp.Subrecords
 			return new TeleportDestinationData(this);
 		}
 
+
         public int CompareTo(TeleportDestinationData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -188,6 +214,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(TeleportDestinationData other)
         {
@@ -258,5 +286,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

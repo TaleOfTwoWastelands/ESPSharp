@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +48,7 @@ namespace ESPSharp.Subrecords
 		public Byte Agility { get; set; }
 		public Byte Luck { get; set; }
 
+
 		public CreatureData(string Tag = null)
 			:base(Tag)
 		{
@@ -49,6 +66,7 @@ namespace ESPSharp.Subrecords
 			Intelligence = new Byte();
 			Agility = new Byte();
 			Luck = new Byte();
+
 		}
 
 		public CreatureData(CreatureType CreatureType, Byte CombatSkill, Byte MagicSkill, Byte StealthSkill, Int16 Health, Byte[] Unused, Int16 Damage, Byte Strength, Byte Perception, Byte Endurance, Byte Charisma, Byte Intelligence, Byte Agility, Byte Luck)
@@ -67,6 +85,7 @@ namespace ESPSharp.Subrecords
 			this.Intelligence = Intelligence;
 			this.Agility = Agility;
 			this.Luck = Luck;
+
 		}
 
 		public CreatureData(CreatureData copyObject)
@@ -86,12 +105,13 @@ namespace ESPSharp.Subrecords
 			Intelligence = copyObject.Intelligence;
 			Agility = copyObject.Agility;
 			Luck = copyObject.Luck;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -109,6 +129,7 @@ namespace ESPSharp.Subrecords
 					Intelligence = subReader.ReadByte();
 					Agility = subReader.ReadByte();
 					Luck = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -136,6 +157,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Intelligence);
 			writer.Write(Agility);
 			writer.Write(Luck);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -182,6 +204,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Luck", true, out subEle);
 			subEle.Value = Luck.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -228,6 +251,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Luck", false, out subEle))
 				Luck = subEle.ToByte();
+
 		}
 
 		public override object Clone()
@@ -235,9 +259,11 @@ namespace ESPSharp.Subrecords
 			return new CreatureData(this);
 		}
 
+
         public int CompareTo(CreatureData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -261,6 +287,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(CreatureData other)
         {
@@ -338,8 +366,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

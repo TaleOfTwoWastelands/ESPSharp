@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public MapMarkerType Type { get; set; }
 		public Byte[] Unused { get; set; }
 
+
 		public MapMarkerData(string Tag = null)
 			:base(Tag)
 		{
 			Type = new MapMarkerType();
 			Unused = new byte[1];
+
 		}
 
 		public MapMarkerData(MapMarkerType Type, Byte[] Unused)
 		{
 			this.Type = Type;
 			this.Unused = Unused;
+
 		}
 
 		public MapMarkerData(MapMarkerData copyObject)
@@ -38,17 +57,19 @@ namespace ESPSharp.Subrecords
 			Type = copyObject.Type;
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Type = subReader.ReadEnum<MapMarkerType>();
 					Unused = subReader.ReadBytes(1);
+
 				}
 				catch
 				{
@@ -64,6 +85,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[1]);
 			else
 			writer.Write(Unused);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -74,6 +96,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Type.ToString();
 
 			WriteUnusedXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -84,6 +107,7 @@ namespace ESPSharp.Subrecords
 				Type = subEle.ToEnum<MapMarkerType>();
 
 			ReadUnusedXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -91,9 +115,11 @@ namespace ESPSharp.Subrecords
 			return new MapMarkerData(this);
 		}
 
+
         public int CompareTo(MapMarkerData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -117,6 +143,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(MapMarkerData other)
         {
@@ -182,8 +210,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

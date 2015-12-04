@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public NextSpeaker NextSpeaker { get; set; }
 		public DialogResponseFlags Flags { get; set; }
 
+
 		public DialogResponseData(string Tag = null)
 			:base(Tag)
 		{
 			Type = new DialogResponseType();
 			NextSpeaker = new NextSpeaker();
 			Flags = new DialogResponseFlags();
+
 		}
 
 		public DialogResponseData(DialogResponseType Type, NextSpeaker NextSpeaker, DialogResponseFlags Flags)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Type = Type;
 			this.NextSpeaker = NextSpeaker;
 			this.Flags = Flags;
+
 		}
 
 		public DialogResponseData(DialogResponseData copyObject)
@@ -41,18 +60,20 @@ namespace ESPSharp.Subrecords
 			Type = copyObject.Type;
 			NextSpeaker = copyObject.NextSpeaker;
 			Flags = copyObject.Flags;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Type = subReader.ReadEnum<DialogResponseType>();
 					NextSpeaker = subReader.ReadEnum<NextSpeaker>();
 					Flags = subReader.ReadEnum<DialogResponseFlags>();
+
 				}
 				catch
 				{
@@ -66,6 +87,7 @@ namespace ESPSharp.Subrecords
 			writer.Write((Byte)Type);
 			writer.Write((Byte)NextSpeaker);
 			writer.Write((UInt16)Flags);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -80,6 +102,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Flags", true, out subEle);
 			subEle.Value = Flags.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -94,6 +117,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Flags", false, out subEle))
 				Flags = subEle.ToEnum<DialogResponseFlags>();
+
 		}
 
 		public override object Clone()
@@ -101,9 +125,11 @@ namespace ESPSharp.Subrecords
 			return new DialogResponseData(this);
 		}
 
+
         public int CompareTo(DialogResponseData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -127,6 +153,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(DialogResponseData other)
         {
@@ -192,5 +220,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

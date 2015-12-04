@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public SpellFlags Flags { get; set; }
 		public Byte[] Unused { get; set; }
 
+
 		public SpellData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Level = new UInt32();
 			Flags = new SpellFlags();
 			Unused = new byte[3];
+
 		}
 
 		public SpellData(SpellType Type, UInt32 Cost, UInt32 Level, SpellFlags Flags, Byte[] Unused)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Level = Level;
 			this.Flags = Flags;
 			this.Unused = Unused;
+
 		}
 
 		public SpellData(SpellData copyObject)
@@ -50,12 +69,13 @@ namespace ESPSharp.Subrecords
 			Flags = copyObject.Flags;
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -64,6 +84,7 @@ namespace ESPSharp.Subrecords
 					Level = subReader.ReadUInt32();
 					Flags = subReader.ReadEnum<SpellFlags>();
 					Unused = subReader.ReadBytes(3);
+
 				}
 				catch
 				{
@@ -82,6 +103,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[3]);
 			else
 			writer.Write(Unused);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -101,6 +123,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			WriteUnusedXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -120,6 +143,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<SpellFlags>();
 
 			ReadUnusedXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -127,9 +151,11 @@ namespace ESPSharp.Subrecords
 			return new SpellData(this);
 		}
 
+
         public int CompareTo(SpellData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -153,6 +179,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(SpellData other)
         {
@@ -221,8 +249,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

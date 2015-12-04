@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +42,7 @@ namespace ESPSharp.Subrecords
 		public NoYesByte PoseMatching { get; set; }
 		public Byte Unused2 { get; set; }
 
+
 		public RagdollData(string Tag = null)
 			:base(Tag)
 		{
@@ -37,6 +54,7 @@ namespace ESPSharp.Subrecords
 			GrabIKEnabled = new NoYesByte();
 			PoseMatching = new NoYesByte();
 			Unused2 = new Byte();
+
 		}
 
 		public RagdollData(UInt32 DynamicBoneCount, Byte[] Unused1, NoYesByte FeedbackEnabled, NoYesByte FootIKEnabled, NoYesByte LookIKEnabled, NoYesByte GrabIKEnabled, NoYesByte PoseMatching, Byte Unused2)
@@ -49,6 +67,7 @@ namespace ESPSharp.Subrecords
 			this.GrabIKEnabled = GrabIKEnabled;
 			this.PoseMatching = PoseMatching;
 			this.Unused2 = Unused2;
+
 		}
 
 		public RagdollData(RagdollData copyObject)
@@ -62,12 +81,13 @@ namespace ESPSharp.Subrecords
 			GrabIKEnabled = copyObject.GrabIKEnabled;
 			PoseMatching = copyObject.PoseMatching;
 			Unused2 = copyObject.Unused2;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -79,6 +99,7 @@ namespace ESPSharp.Subrecords
 					GrabIKEnabled = subReader.ReadEnum<NoYesByte>();
 					PoseMatching = subReader.ReadEnum<NoYesByte>();
 					Unused2 = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -100,6 +121,7 @@ namespace ESPSharp.Subrecords
 			writer.Write((Byte)GrabIKEnabled);
 			writer.Write((Byte)PoseMatching);
 			writer.Write(Unused2);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -127,6 +149,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = PoseMatching.ToString();
 
 			WriteUnused2XML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -154,6 +177,7 @@ namespace ESPSharp.Subrecords
 				PoseMatching = subEle.ToEnum<NoYesByte>();
 
 			ReadUnused2XML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -161,9 +185,11 @@ namespace ESPSharp.Subrecords
 			return new RagdollData(this);
 		}
 
+
         public int CompareTo(RagdollData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -187,6 +213,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RagdollData other)
         {
@@ -258,12 +286,21 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

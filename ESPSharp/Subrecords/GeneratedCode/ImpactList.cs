@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +46,7 @@ namespace ESPSharp.Subrecords
 		public FormID OrganicBug { get; set; }
 		public FormID OrganicGlow { get; set; }
 
+
 		public ImpactList(string Tag = null)
 			:base(Tag)
 		{
@@ -45,6 +62,7 @@ namespace ESPSharp.Subrecords
 			HollowMetal = new FormID();
 			OrganicBug = new FormID();
 			OrganicGlow = new FormID();
+
 		}
 
 		public ImpactList(FormID Stone, FormID Dirt, FormID Grass, FormID Glass, FormID Metal, FormID Wood, FormID Organic, FormID Cloth, FormID Water, FormID HollowMetal, FormID OrganicBug, FormID OrganicGlow)
@@ -61,6 +79,7 @@ namespace ESPSharp.Subrecords
 			this.HollowMetal = HollowMetal;
 			this.OrganicBug = OrganicBug;
 			this.OrganicGlow = OrganicGlow;
+
 		}
 
 		public ImpactList(ImpactList copyObject)
@@ -89,12 +108,13 @@ namespace ESPSharp.Subrecords
 				OrganicBug = (FormID)copyObject.OrganicBug.Clone();
 			if (copyObject.OrganicGlow != null)
 				OrganicGlow = (FormID)copyObject.OrganicGlow.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -110,6 +130,7 @@ namespace ESPSharp.Subrecords
 					HollowMetal.ReadBinary(subReader);
 					OrganicBug.ReadBinary(subReader);
 					OrganicGlow.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -132,6 +153,7 @@ namespace ESPSharp.Subrecords
 			HollowMetal.WriteBinary(writer);
 			OrganicBug.WriteBinary(writer);
 			OrganicGlow.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -173,6 +195,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("OrganicGlow", true, out subEle);
 			OrganicGlow.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -214,6 +237,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("OrganicGlow", false, out subEle))
 				OrganicGlow.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -221,9 +245,11 @@ namespace ESPSharp.Subrecords
 			return new ImpactList(this);
 		}
 
+
         public int CompareTo(ImpactList other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -247,6 +273,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ImpactList other)
         {
@@ -321,5 +349,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

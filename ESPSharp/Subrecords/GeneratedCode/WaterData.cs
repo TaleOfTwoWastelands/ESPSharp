@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,6 +80,7 @@ namespace ESPSharp.Subrecords
 		public Single NoisePropertiesNoiseLayerTwoAmplitudeScale { get; set; }
 		public Single NoisePropertiesNoiseLayerThreeAmplitudeScale { get; set; }
 
+
 		public WaterData(string Tag = null)
 			:base(Tag)
 		{
@@ -113,6 +130,7 @@ namespace ESPSharp.Subrecords
 			NoisePropertiesNoiseLayerOneAmplitudeScale = 1;
 			NoisePropertiesNoiseLayerTwoAmplitudeScale = 0.5f;
 			NoisePropertiesNoiseLayerThreeAmplitudeScale = 0.25f;
+
 		}
 
 		public WaterData(Byte[] Unknown, Single WaterPropertiesSunPower, Single WaterPropertiesReflectivityAmount, Single WaterPropertiesFresnelAmount, Byte[] Unused1, Single FogPropertiesAboveWaterFogNearPlaneDistance, Single FogPropertiesAboveWaterFogFarPlaneDistance, Color ColorShallow, Color ColorDeep, Color ColorReflection, Byte[] Unused2, Single RainSimulatorForce, Single RainSimulatorVelocity, Single RainSimulatorFalloff, Single RainSimulatorDampener, Single DisplacementSimulatorStartingSize, Single DisplacementSimulatorForce, Single DisplacementSimulatorVelocity, Single DisplacementSimulatorFalloff, Single DisplacementSimulatorDampener, Single RainSimulatorStartingSize, Single NoisePropertiesNormalsNoiseScale, Single NoisePropertiesNoiseLayerOneWindDirection, Single NoisePropertiesNoiseLayerTwoWindDirection, Single NoisePropertiesNoiseLayerThreeWindDirection, Single NoisePropertiesNoiseLayerOneWindSpeed, Single NoisePropertiesNoiseLayerTwoWindSpeed, Single NoisePropertiesNoiseLayerThreeWindSpeed, Single NoisePropertiesNormalsDepthFalloffStart, Single NoisePropertiesNormalsDepthFalloffEnd, Single FogPropertiesAboveWaterFogAmount, Single NoisePropertiesNormalsUVScale, Single FogPropertiesUnderWaterFogAmount, Single FogPropertiesUnderWaterFogNearPlaneDistance, Single FogPropertiesUnderWaterFogFarPlaneDistance, Single WaterPropertiesDistortionAmount, Single WaterPropertiesShininess, Single WaterPropertiesReflectionHDRMult, Single WaterPropertiesLightRadius, Single WaterPropertiesLightBrightness, Single NoisePropertiesNoiseLayerOneUVScale, Single NoisePropertiesNoiseLayerTwoUVScale, Single NoisePropertiesNoiseLayerThreeUVScale, Single NoisePropertiesNoiseLayerOneAmplitudeScale, Single NoisePropertiesNoiseLayerTwoAmplitudeScale, Single NoisePropertiesNoiseLayerThreeAmplitudeScale)
@@ -163,6 +181,7 @@ namespace ESPSharp.Subrecords
 			this.NoisePropertiesNoiseLayerOneAmplitudeScale = NoisePropertiesNoiseLayerOneAmplitudeScale;
 			this.NoisePropertiesNoiseLayerTwoAmplitudeScale = NoisePropertiesNoiseLayerTwoAmplitudeScale;
 			this.NoisePropertiesNoiseLayerThreeAmplitudeScale = NoisePropertiesNoiseLayerThreeAmplitudeScale;
+
 		}
 
 		public WaterData(WaterData copyObject)
@@ -219,12 +238,13 @@ namespace ESPSharp.Subrecords
 			NoisePropertiesNoiseLayerOneAmplitudeScale = copyObject.NoisePropertiesNoiseLayerOneAmplitudeScale;
 			NoisePropertiesNoiseLayerTwoAmplitudeScale = copyObject.NoisePropertiesNoiseLayerTwoAmplitudeScale;
 			NoisePropertiesNoiseLayerThreeAmplitudeScale = copyObject.NoisePropertiesNoiseLayerThreeAmplitudeScale;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -274,6 +294,7 @@ namespace ESPSharp.Subrecords
 					NoisePropertiesNoiseLayerOneAmplitudeScale = subReader.ReadSingle();
 					NoisePropertiesNoiseLayerTwoAmplitudeScale = subReader.ReadSingle();
 					NoisePropertiesNoiseLayerThreeAmplitudeScale = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -339,6 +360,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(NoisePropertiesNoiseLayerOneAmplitudeScale);
 			writer.Write(NoisePropertiesNoiseLayerTwoAmplitudeScale);
 			writer.Write(NoisePropertiesNoiseLayerThreeAmplitudeScale);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -480,6 +502,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("NoiseProperties/NoiseLayerThree/AmplitudeScale", true, out subEle);
 			subEle.Value = NoisePropertiesNoiseLayerThreeAmplitudeScale.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -621,6 +644,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("NoiseProperties/NoiseLayerThree/AmplitudeScale", false, out subEle))
 				NoisePropertiesNoiseLayerThreeAmplitudeScale = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -628,9 +652,11 @@ namespace ESPSharp.Subrecords
 			return new WaterData(this);
 		}
 
+
         public int CompareTo(WaterData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -654,6 +680,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WaterData other)
         {
@@ -763,12 +791,21 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

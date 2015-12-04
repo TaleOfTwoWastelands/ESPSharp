@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +46,7 @@ namespace ESPSharp.Subrecords
 		public AggroRadiusBehaviorFlags AggroRadiusBehavior { get; set; }
 		public Int32 AggroRadius { get; set; }
 
+
 		public AIData(string Tag = null)
 			:base(Tag)
 		{
@@ -45,6 +62,7 @@ namespace ESPSharp.Subrecords
 			Assistance = new AssistanceType();
 			AggroRadiusBehavior = new AggroRadiusBehaviorFlags();
 			AggroRadius = new Int32();
+
 		}
 
 		public AIData(AggressionType Aggression, ConfidenceType Confidence, Byte EnergyLevel, Byte Responsibility, MoodType Mood, Byte[] Unused, ServicesFlag Services, Skills Teaches, Byte MaxTrainingLevel, AssistanceType Assistance, AggroRadiusBehaviorFlags AggroRadiusBehavior, Int32 AggroRadius)
@@ -61,6 +79,7 @@ namespace ESPSharp.Subrecords
 			this.Assistance = Assistance;
 			this.AggroRadiusBehavior = AggroRadiusBehavior;
 			this.AggroRadius = AggroRadius;
+
 		}
 
 		public AIData(AIData copyObject)
@@ -78,12 +97,13 @@ namespace ESPSharp.Subrecords
 			Assistance = copyObject.Assistance;
 			AggroRadiusBehavior = copyObject.AggroRadiusBehavior;
 			AggroRadius = copyObject.AggroRadius;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -99,6 +119,7 @@ namespace ESPSharp.Subrecords
 					Assistance = subReader.ReadEnum<AssistanceType>();
 					AggroRadiusBehavior = subReader.ReadEnum<AggroRadiusBehaviorFlags>();
 					AggroRadius = subReader.ReadInt32();
+
 				}
 				catch
 				{
@@ -124,6 +145,7 @@ namespace ESPSharp.Subrecords
 			writer.Write((Byte)Assistance);
 			writer.Write((Byte)AggroRadiusBehavior);
 			writer.Write(AggroRadius);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -164,6 +186,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("AggroRadius", true, out subEle);
 			subEle.Value = AggroRadius.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -204,6 +227,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("AggroRadius", false, out subEle))
 				AggroRadius = subEle.ToInt32();
+
 		}
 
 		public override object Clone()
@@ -211,9 +235,11 @@ namespace ESPSharp.Subrecords
 			return new AIData(this);
 		}
 
+
         public int CompareTo(AIData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -237,6 +263,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(AIData other)
         {
@@ -312,8 +340,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

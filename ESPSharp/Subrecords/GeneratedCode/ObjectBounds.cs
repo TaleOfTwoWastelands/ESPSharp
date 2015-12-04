@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +40,7 @@ namespace ESPSharp.Subrecords
 		public Int16 Y2 { get; set; }
 		public Int16 Z2 { get; set; }
 
+
 		public ObjectBounds(string Tag = null)
 			:base(Tag)
 		{
@@ -33,6 +50,7 @@ namespace ESPSharp.Subrecords
 			X2 = new Int16();
 			Y2 = new Int16();
 			Z2 = new Int16();
+
 		}
 
 		public ObjectBounds(Int16 X1, Int16 Y1, Int16 Z1, Int16 X2, Int16 Y2, Int16 Z2)
@@ -43,6 +61,7 @@ namespace ESPSharp.Subrecords
 			this.X2 = X2;
 			this.Y2 = Y2;
 			this.Z2 = Z2;
+
 		}
 
 		public ObjectBounds(ObjectBounds copyObject)
@@ -53,12 +72,13 @@ namespace ESPSharp.Subrecords
 			X2 = copyObject.X2;
 			Y2 = copyObject.Y2;
 			Z2 = copyObject.Z2;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -68,6 +88,7 @@ namespace ESPSharp.Subrecords
 					X2 = subReader.ReadInt16();
 					Y2 = subReader.ReadInt16();
 					Z2 = subReader.ReadInt16();
+
 				}
 				catch
 				{
@@ -84,6 +105,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(X2);
 			writer.Write(Y2);
 			writer.Write(Z2);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -107,6 +129,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Point2/Z", true, out subEle);
 			subEle.Value = Z2.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -130,6 +153,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Point2/Z", false, out subEle))
 				Z2 = subEle.ToInt16();
+
 		}
 
 		public override object Clone()
@@ -137,9 +161,11 @@ namespace ESPSharp.Subrecords
 			return new ObjectBounds(this);
 		}
 
+
         public int CompareTo(ObjectBounds other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -163,6 +189,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ObjectBounds other)
         {
@@ -231,5 +259,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

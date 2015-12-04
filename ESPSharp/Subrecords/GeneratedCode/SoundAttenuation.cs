@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public Int16 Point4 { get; set; }
 		public Int16 Point5 { get; set; }
 
+
 		public SoundAttenuation(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Point3 = new Int16();
 			Point4 = new Int16();
 			Point5 = new Int16();
+
 		}
 
 		public SoundAttenuation(Int16 Point1, Int16 Point2, Int16 Point3, Int16 Point4, Int16 Point5)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Point3 = Point3;
 			this.Point4 = Point4;
 			this.Point5 = Point5;
+
 		}
 
 		public SoundAttenuation(SoundAttenuation copyObject)
@@ -49,12 +68,13 @@ namespace ESPSharp.Subrecords
 			Point3 = copyObject.Point3;
 			Point4 = copyObject.Point4;
 			Point5 = copyObject.Point5;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -63,6 +83,7 @@ namespace ESPSharp.Subrecords
 					Point3 = subReader.ReadInt16();
 					Point4 = subReader.ReadInt16();
 					Point5 = subReader.ReadInt16();
+
 				}
 				catch
 				{
@@ -78,6 +99,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Point3);
 			writer.Write(Point4);
 			writer.Write(Point5);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -98,6 +120,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Point5", true, out subEle);
 			subEle.Value = Point5.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -118,6 +141,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Point5", false, out subEle))
 				Point5 = subEle.ToInt16();
+
 		}
 
 		public override object Clone()
@@ -125,9 +149,11 @@ namespace ESPSharp.Subrecords
 			return new SoundAttenuation(this);
 		}
 
+
         public int CompareTo(SoundAttenuation other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -151,6 +177,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(SoundAttenuation other)
         {
@@ -218,5 +246,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

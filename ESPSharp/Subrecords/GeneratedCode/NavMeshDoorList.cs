@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,15 +34,18 @@ namespace ESPSharp.Subrecords
 	{
 		public List<NavMeshDoor> Doors { get; set; }
 
+
 		public NavMeshDoorList(string Tag = null)
 			:base(Tag)
 		{
 			Doors = new List<NavMeshDoor>();
+
 		}
 
 		public NavMeshDoorList(List<NavMeshDoor> Doors)
 		{
 			this.Doors = Doors;
+
 		}
 
 		public NavMeshDoorList(NavMeshDoorList copyObject)
@@ -34,12 +53,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Doors != null)
 				foreach(var temp in copyObject.Doors)
 					Doors.Add((NavMeshDoor)temp.Clone());
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -49,6 +69,7 @@ namespace ESPSharp.Subrecords
 						temp.ReadBinary(subReader);
 						Doors.Add(temp);
 					}
+
 				}
 				catch
 				{
@@ -63,6 +84,7 @@ namespace ESPSharp.Subrecords
 			{
 				temp.WriteBinary(writer);
 			}
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -76,6 +98,7 @@ namespace ESPSharp.Subrecords
 				temp.WriteXML(e, master);
 				subEle.Add(e);
 			}
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -89,12 +112,15 @@ namespace ESPSharp.Subrecords
 					temp.ReadXML(e, master);
 					Doors.Add(temp);
 				}
+
 		}
 
 		public override object Clone()
 		{
 			return new NavMeshDoorList(this);
 		}
+
+
 
         public bool Equals(NavMeshDoorList other)
         {
@@ -158,5 +184,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

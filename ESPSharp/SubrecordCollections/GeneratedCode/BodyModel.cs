@@ -14,7 +14,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.SubrecordCollections
 {
-	public partial class BodyModel : SubrecordCollection, IReferenceContainer	{
+	public partial class BodyModel : SubrecordCollection	{
 		public SimpleSubrecord<BodyPartIndex> Index { get; set; }
 		public SimpleSubrecord<String> LargeIcon { get; set; }
 		public SimpleSubrecord<String> SmallIcon { get; set; }

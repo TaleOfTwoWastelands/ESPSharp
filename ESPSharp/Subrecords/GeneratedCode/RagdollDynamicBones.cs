@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,15 +34,18 @@ namespace ESPSharp.Subrecords
 	{
 		public List<UInt16> Bones { get; set; }
 
+
 		public RagdollDynamicBones(string Tag = null)
 			:base(Tag)
 		{
 			Bones = new List<UInt16>();
+
 		}
 
 		public RagdollDynamicBones(List<UInt16> Bones)
 		{
 			this.Bones = Bones;
+
 		}
 
 		public RagdollDynamicBones(RagdollDynamicBones copyObject)
@@ -34,12 +53,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Bones != null)
 				foreach(var temp in copyObject.Bones)
 					Bones.Add(temp);
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -47,6 +67,7 @@ namespace ESPSharp.Subrecords
 					{
 						Bones.Add(subReader.ReadUInt16());
 					}
+
 				}
 				catch
 				{
@@ -61,6 +82,7 @@ namespace ESPSharp.Subrecords
 			{
 				writer.Write(temp);
 			}
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -72,6 +94,7 @@ namespace ESPSharp.Subrecords
 			{
 				subEle.Add(new XElement("Bone", temp));
 			}
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -83,12 +106,15 @@ namespace ESPSharp.Subrecords
 				{
 					Bones.Add(e.ToUInt16());
 				}
+
 		}
 
 		public override object Clone()
 		{
 			return new RagdollDynamicBones(this);
 		}
+
+
 
         public bool Equals(RagdollDynamicBones other)
         {
@@ -152,5 +178,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public FormID Parent { get; set; }
 		public FormID PreviousSibling { get; set; }
 
+
 		public RelatedCameraPaths(string Tag = null)
 			:base(Tag)
 		{
 			Parent = new FormID();
 			PreviousSibling = new FormID();
+
 		}
 
 		public RelatedCameraPaths(FormID Parent, FormID PreviousSibling)
 		{
 			this.Parent = Parent;
 			this.PreviousSibling = PreviousSibling;
+
 		}
 
 		public RelatedCameraPaths(RelatedCameraPaths copyObject)
@@ -39,17 +58,19 @@ namespace ESPSharp.Subrecords
 				Parent = (FormID)copyObject.Parent.Clone();
 			if (copyObject.PreviousSibling != null)
 				PreviousSibling = (FormID)copyObject.PreviousSibling.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Parent.ReadBinary(subReader);
 					PreviousSibling.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -62,6 +83,7 @@ namespace ESPSharp.Subrecords
 		{
 			Parent.WriteBinary(writer);
 			PreviousSibling.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -73,6 +95,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("PreviousSibling", true, out subEle);
 			PreviousSibling.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -84,6 +107,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("PreviousSibling", false, out subEle))
 				PreviousSibling.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -91,9 +115,11 @@ namespace ESPSharp.Subrecords
 			return new RelatedCameraPaths(this);
 		}
 
+
         public int CompareTo(RelatedCameraPaths other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -117,6 +143,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RelatedCameraPaths other)
         {
@@ -181,5 +209,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

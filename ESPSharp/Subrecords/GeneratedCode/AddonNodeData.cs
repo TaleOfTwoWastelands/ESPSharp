@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public UInt16 MasterParticleSystemCap { get; set; }
 		public Byte[] Unknown { get; set; }
 
+
 		public AddonNodeData(string Tag = null)
 			:base(Tag)
 		{
 			MasterParticleSystemCap = new UInt16();
 			Unknown = new byte[2];
+
 		}
 
 		public AddonNodeData(UInt16 MasterParticleSystemCap, Byte[] Unknown)
 		{
 			this.MasterParticleSystemCap = MasterParticleSystemCap;
 			this.Unknown = Unknown;
+
 		}
 
 		public AddonNodeData(AddonNodeData copyObject)
@@ -38,17 +57,19 @@ namespace ESPSharp.Subrecords
 			MasterParticleSystemCap = copyObject.MasterParticleSystemCap;
 			if (copyObject.Unknown != null)
 				Unknown = (Byte[])copyObject.Unknown.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					MasterParticleSystemCap = subReader.ReadUInt16();
 					Unknown = subReader.ReadBytes(2);
+
 				}
 				catch
 				{
@@ -64,6 +85,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[2]);
 			else
 			writer.Write(Unknown);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -75,6 +97,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Unknown", true, out subEle);
 			subEle.Value = Unknown.ToHex();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -86,6 +109,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Unknown", false, out subEle))
 				Unknown = subEle.ToBytes();
+
 		}
 
 		public override object Clone()
@@ -93,9 +117,11 @@ namespace ESPSharp.Subrecords
 			return new AddonNodeData(this);
 		}
 
+
         public int CompareTo(AddonNodeData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -119,6 +145,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(AddonNodeData other)
         {
@@ -183,5 +211,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

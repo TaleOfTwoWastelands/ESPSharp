@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public Byte Rank { get; set; }
 		public Byte Priority { get; set; }
 
+
 		public PerkEffectHeader(string Tag = null)
 			:base(Tag)
 		{
 			Type = new PerkType();
 			Rank = new Byte();
 			Priority = new Byte();
+
 		}
 
 		public PerkEffectHeader(PerkType Type, Byte Rank, Byte Priority)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Type = Type;
 			this.Rank = Rank;
 			this.Priority = Priority;
+
 		}
 
 		public PerkEffectHeader(PerkEffectHeader copyObject)
@@ -41,18 +60,20 @@ namespace ESPSharp.Subrecords
 			Type = copyObject.Type;
 			Rank = copyObject.Rank;
 			Priority = copyObject.Priority;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Type = subReader.ReadEnum<PerkType>();
 					Rank = subReader.ReadByte();
 					Priority = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -66,6 +87,7 @@ namespace ESPSharp.Subrecords
 			writer.Write((Byte)Type);
 			writer.Write(Rank);
 			writer.Write(Priority);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -80,6 +102,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Priority", true, out subEle);
 			subEle.Value = Priority.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -94,6 +117,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Priority", false, out subEle))
 				Priority = subEle.ToByte();
+
 		}
 
 		public override object Clone()
@@ -101,18 +125,26 @@ namespace ESPSharp.Subrecords
 			return new PerkEffectHeader(this);
 		}
 
+
         public int CompareTo(PerkEffectHeader other)
         {
 			int result = 0;
 
+
 			if (result == 0 && Rank != null && other.Rank != null)	
 				result = Rank.CompareTo(other.Rank);
+
+
 
 			if (result == 0 && Priority != null && other.Priority != null)	
 				result = Priority.CompareTo(other.Priority);
 
+
+
 			if (result == 0 && Type != null && other.Type != null)	
 				result = Type.CompareTo(other.Type);
+
+
 
 			return result;
 		}
@@ -136,6 +168,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PerkEffectHeader other)
         {
@@ -201,5 +235,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

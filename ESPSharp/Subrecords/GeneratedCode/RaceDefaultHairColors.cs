@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,34 +36,39 @@ namespace ESPSharp.Subrecords
 		public HairColor MaleColor { get; set; }
 		public HairColor FemaleColor { get; set; }
 
+
 		public RaceDefaultHairColors(string Tag = null)
 			:base(Tag)
 		{
 			MaleColor = new HairColor();
 			FemaleColor = new HairColor();
+
 		}
 
 		public RaceDefaultHairColors(HairColor MaleColor, HairColor FemaleColor)
 		{
 			this.MaleColor = MaleColor;
 			this.FemaleColor = FemaleColor;
+
 		}
 
 		public RaceDefaultHairColors(RaceDefaultHairColors copyObject)
 		{
 			MaleColor = copyObject.MaleColor;
 			FemaleColor = copyObject.FemaleColor;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					MaleColor = subReader.ReadEnum<HairColor>();
 					FemaleColor = subReader.ReadEnum<HairColor>();
+
 				}
 				catch
 				{
@@ -60,6 +81,7 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write((Byte)MaleColor);
 			writer.Write((Byte)FemaleColor);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -71,6 +93,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Female", true, out subEle);
 			subEle.Value = FemaleColor.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -82,6 +105,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Female", false, out subEle))
 				FemaleColor = subEle.ToEnum<HairColor>();
+
 		}
 
 		public override object Clone()
@@ -89,9 +113,11 @@ namespace ESPSharp.Subrecords
 			return new RaceDefaultHairColors(this);
 		}
 
+
         public int CompareTo(RaceDefaultHairColors other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -115,6 +141,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RaceDefaultHairColors other)
         {
@@ -179,5 +207,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

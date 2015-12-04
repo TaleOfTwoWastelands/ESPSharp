@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public Int16 IndirectGridY { get; set; }
 		public Int16 IndirectGridX { get; set; }
 
+
 		public LoadScreenLocation(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			IndirectWorld = new FormID();
 			IndirectGridY = new Int16();
 			IndirectGridX = new Int16();
+
 		}
 
 		public LoadScreenLocation(FormID Direct, FormID IndirectWorld, Int16 IndirectGridY, Int16 IndirectGridX)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.IndirectWorld = IndirectWorld;
 			this.IndirectGridY = IndirectGridY;
 			this.IndirectGridX = IndirectGridX;
+
 		}
 
 		public LoadScreenLocation(LoadScreenLocation copyObject)
@@ -47,12 +66,13 @@ namespace ESPSharp.Subrecords
 				IndirectWorld = (FormID)copyObject.IndirectWorld.Clone();
 			IndirectGridY = copyObject.IndirectGridY;
 			IndirectGridX = copyObject.IndirectGridX;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -60,6 +80,7 @@ namespace ESPSharp.Subrecords
 					IndirectWorld.ReadBinary(subReader);
 					IndirectGridY = subReader.ReadInt16();
 					IndirectGridX = subReader.ReadInt16();
+
 				}
 				catch
 				{
@@ -74,6 +95,7 @@ namespace ESPSharp.Subrecords
 			IndirectWorld.WriteBinary(writer);
 			writer.Write(IndirectGridY);
 			writer.Write(IndirectGridX);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -91,6 +113,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Indirect/GridX", true, out subEle);
 			subEle.Value = IndirectGridX.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -108,6 +131,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Indirect/GridX", false, out subEle))
 				IndirectGridX = subEle.ToInt16();
+
 		}
 
 		public override object Clone()
@@ -115,9 +139,11 @@ namespace ESPSharp.Subrecords
 			return new LoadScreenLocation(this);
 		}
 
+
         public int CompareTo(LoadScreenLocation other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -141,6 +167,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(LoadScreenLocation other)
         {
@@ -207,5 +235,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

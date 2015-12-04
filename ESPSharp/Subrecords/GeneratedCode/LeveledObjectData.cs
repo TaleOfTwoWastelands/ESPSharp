@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public Int16 Count { get; set; }
 		public Byte[] Unused2 { get; set; }
 
+
 		public LeveledObjectData(string Tag = null)
 			:base(Tag)
 		{
@@ -31,6 +48,7 @@ namespace ESPSharp.Subrecords
 			Reference = new FormID();
 			Count = new Int16();
 			Unused2 = new byte[2];
+
 		}
 
 		public LeveledObjectData(Int16 Level, Byte[] Unused1, FormID Reference, Int16 Count, Byte[] Unused2)
@@ -40,6 +58,7 @@ namespace ESPSharp.Subrecords
 			this.Reference = Reference;
 			this.Count = Count;
 			this.Unused2 = Unused2;
+
 		}
 
 		public LeveledObjectData(LeveledObjectData copyObject)
@@ -52,12 +71,13 @@ namespace ESPSharp.Subrecords
 			Count = copyObject.Count;
 			if (copyObject.Unused2 != null)
 				Unused2 = (Byte[])copyObject.Unused2.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -66,6 +86,7 @@ namespace ESPSharp.Subrecords
 					Reference.ReadBinary(subReader);
 					Count = subReader.ReadInt16();
 					Unused2 = subReader.ReadBytes(2);
+
 				}
 				catch
 				{
@@ -87,6 +108,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[2]);
 			else
 			writer.Write(Unused2);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -105,6 +127,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Count.ToString();
 
 			WriteUnused2XML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -123,6 +146,7 @@ namespace ESPSharp.Subrecords
 				Count = subEle.ToInt16();
 
 			ReadUnused2XML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -130,9 +154,11 @@ namespace ESPSharp.Subrecords
 			return new LeveledObjectData(this);
 		}
 
+
         public int CompareTo(LeveledObjectData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -156,6 +182,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(LeveledObjectData other)
         {
@@ -224,12 +252,21 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

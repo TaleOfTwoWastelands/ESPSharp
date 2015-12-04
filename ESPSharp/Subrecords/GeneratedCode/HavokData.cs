@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public Byte Friction { get; set; }
 		public Byte Restitution { get; set; }
 
+
 		public HavokData(string Tag = null)
 			:base(Tag)
 		{
 			MaterialType = new MaterialType();
 			Friction = new Byte();
 			Restitution = new Byte();
+
 		}
 
 		public HavokData(MaterialType MaterialType, Byte Friction, Byte Restitution)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.MaterialType = MaterialType;
 			this.Friction = Friction;
 			this.Restitution = Restitution;
+
 		}
 
 		public HavokData(HavokData copyObject)
@@ -41,18 +60,20 @@ namespace ESPSharp.Subrecords
 			MaterialType = copyObject.MaterialType;
 			Friction = copyObject.Friction;
 			Restitution = copyObject.Restitution;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					MaterialType = subReader.ReadEnum<MaterialType>();
 					Friction = subReader.ReadByte();
 					Restitution = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -66,6 +87,7 @@ namespace ESPSharp.Subrecords
 			writer.Write((Byte)MaterialType);
 			writer.Write(Friction);
 			writer.Write(Restitution);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -80,6 +102,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Restitution", true, out subEle);
 			subEle.Value = Restitution.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -94,6 +117,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Restitution", false, out subEle))
 				Restitution = subEle.ToByte();
+
 		}
 
 		public override object Clone()
@@ -101,9 +125,11 @@ namespace ESPSharp.Subrecords
 			return new HavokData(this);
 		}
 
+
         public int CompareTo(HavokData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -127,6 +153,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(HavokData other)
         {
@@ -192,5 +220,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

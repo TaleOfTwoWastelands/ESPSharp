@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public BipedDataFlags Flags { get; set; }
 		public Byte[] Unused { get; set; }
 
+
 		public BipedData(string Tag = null)
 			:base(Tag)
 		{
 			Slots = new BodySlotFlags();
 			Flags = new BipedDataFlags();
 			Unused = new byte[3];
+
 		}
 
 		public BipedData(BodySlotFlags Slots, BipedDataFlags Flags, Byte[] Unused)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Slots = Slots;
 			this.Flags = Flags;
 			this.Unused = Unused;
+
 		}
 
 		public BipedData(BipedData copyObject)
@@ -42,18 +61,20 @@ namespace ESPSharp.Subrecords
 			Flags = copyObject.Flags;
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Slots = subReader.ReadEnum<BodySlotFlags>();
 					Flags = subReader.ReadEnum<BipedDataFlags>();
 					Unused = subReader.ReadBytes(3);
+
 				}
 				catch
 				{
@@ -70,6 +91,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[3]);
 			else
 			writer.Write(Unused);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -83,6 +105,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			WriteUnusedXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -96,6 +119,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<BipedDataFlags>();
 
 			ReadUnusedXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -103,9 +127,11 @@ namespace ESPSharp.Subrecords
 			return new BipedData(this);
 		}
 
+
         public int CompareTo(BipedData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -129,6 +155,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(BipedData other)
         {
@@ -195,8 +223,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +44,7 @@ namespace ESPSharp.Subrecords
 		public Single FogClipDistance { get; set; }
 		public Single FogPower { get; set; }
 
+
 		public CellLighting(string Tag = null)
 			:base(Tag)
 		{
@@ -41,6 +58,7 @@ namespace ESPSharp.Subrecords
 			DirectionalFade = new Single();
 			FogClipDistance = new Single();
 			FogPower = new Single();
+
 		}
 
 		public CellLighting(Color ColorAmbient, Color ColorDirectional, Color FogColor, Single FogNear, Single FogFar, Int32 DirectionalRotationXY, Int32 DirectionalRotationZ, Single DirectionalFade, Single FogClipDistance, Single FogPower)
@@ -55,6 +73,7 @@ namespace ESPSharp.Subrecords
 			this.DirectionalFade = DirectionalFade;
 			this.FogClipDistance = FogClipDistance;
 			this.FogPower = FogPower;
+
 		}
 
 		public CellLighting(CellLighting copyObject)
@@ -72,12 +91,13 @@ namespace ESPSharp.Subrecords
 			DirectionalFade = copyObject.DirectionalFade;
 			FogClipDistance = copyObject.FogClipDistance;
 			FogPower = copyObject.FogPower;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -91,6 +111,7 @@ namespace ESPSharp.Subrecords
 					DirectionalFade = subReader.ReadSingle();
 					FogClipDistance = subReader.ReadSingle();
 					FogPower = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -111,6 +132,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(DirectionalFade);
 			writer.Write(FogClipDistance);
 			writer.Write(FogPower);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -146,6 +168,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Fog/Power", true, out subEle);
 			subEle.Value = FogPower.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -181,6 +204,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Fog/Power", false, out subEle))
 				FogPower = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -188,9 +212,11 @@ namespace ESPSharp.Subrecords
 			return new CellLighting(this);
 		}
 
+
         public int CompareTo(CellLighting other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -214,6 +240,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(CellLighting other)
         {
@@ -286,5 +314,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

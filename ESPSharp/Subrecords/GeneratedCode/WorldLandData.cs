@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,34 +35,39 @@ namespace ESPSharp.Subrecords
 		public Single DefaultLandHeight { get; set; }
 		public Single DefaultWaterHeight { get; set; }
 
+
 		public WorldLandData(string Tag = null)
 			:base(Tag)
 		{
 			DefaultLandHeight = new Single();
 			DefaultWaterHeight = new Single();
+
 		}
 
 		public WorldLandData(Single DefaultLandHeight, Single DefaultWaterHeight)
 		{
 			this.DefaultLandHeight = DefaultLandHeight;
 			this.DefaultWaterHeight = DefaultWaterHeight;
+
 		}
 
 		public WorldLandData(WorldLandData copyObject)
 		{
 			DefaultLandHeight = copyObject.DefaultLandHeight;
 			DefaultWaterHeight = copyObject.DefaultWaterHeight;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					DefaultLandHeight = subReader.ReadSingle();
 					DefaultWaterHeight = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -59,6 +80,7 @@ namespace ESPSharp.Subrecords
 		{
 			writer.Write(DefaultLandHeight);
 			writer.Write(DefaultWaterHeight);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -70,6 +92,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("DefaultWaterHeight", true, out subEle);
 			subEle.Value = DefaultWaterHeight.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -81,6 +104,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("DefaultWaterHeight", false, out subEle))
 				DefaultWaterHeight = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -88,9 +112,11 @@ namespace ESPSharp.Subrecords
 			return new WorldLandData(this);
 		}
 
+
         public int CompareTo(WorldLandData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -114,6 +140,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WorldLandData other)
         {
@@ -178,5 +206,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

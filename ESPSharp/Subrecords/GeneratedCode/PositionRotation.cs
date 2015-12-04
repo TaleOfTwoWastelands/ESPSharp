@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +40,7 @@ namespace ESPSharp.Subrecords
 		public Single RotationY { get; set; }
 		public Single RotationZ { get; set; }
 
+
 		public PositionRotation(string Tag = null)
 			:base(Tag)
 		{
@@ -33,6 +50,7 @@ namespace ESPSharp.Subrecords
 			RotationX = new Single();
 			RotationY = new Single();
 			RotationZ = new Single();
+
 		}
 
 		public PositionRotation(Single PositionX, Single PositionY, Single PositionZ, Single RotationX, Single RotationY, Single RotationZ)
@@ -43,6 +61,7 @@ namespace ESPSharp.Subrecords
 			this.RotationX = RotationX;
 			this.RotationY = RotationY;
 			this.RotationZ = RotationZ;
+
 		}
 
 		public PositionRotation(PositionRotation copyObject)
@@ -53,12 +72,13 @@ namespace ESPSharp.Subrecords
 			RotationX = copyObject.RotationX;
 			RotationY = copyObject.RotationY;
 			RotationZ = copyObject.RotationZ;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -68,6 +88,7 @@ namespace ESPSharp.Subrecords
 					RotationX = subReader.ReadSingle();
 					RotationY = subReader.ReadSingle();
 					RotationZ = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -84,6 +105,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(RotationX);
 			writer.Write(RotationY);
 			writer.Write(RotationZ);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -107,6 +129,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Rotation/Z", true, out subEle);
 			subEle.Value = RotationZ.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -130,6 +153,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Rotation/Z", false, out subEle))
 				RotationZ = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -137,9 +161,11 @@ namespace ESPSharp.Subrecords
 			return new PositionRotation(this);
 		}
 
+
         public int CompareTo(PositionRotation other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -163,6 +189,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PositionRotation other)
         {
@@ -231,5 +259,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

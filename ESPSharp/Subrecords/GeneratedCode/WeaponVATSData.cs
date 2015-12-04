@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +41,7 @@ namespace ESPSharp.Subrecords
 		public NoYesByte RequiresMod { get; set; }
 		public Byte[] Unused { get; set; }
 
+
 		public WeaponVATSData(string Tag = null)
 			:base(Tag)
 		{
@@ -35,6 +52,7 @@ namespace ESPSharp.Subrecords
 			IsSilent = new NoYesByte();
 			RequiresMod = new NoYesByte();
 			Unused = new byte[2];
+
 		}
 
 		public WeaponVATSData(FormID Effect, Single SkillRequirement, Single DamageMult, Single APCost, NoYesByte IsSilent, NoYesByte RequiresMod, Byte[] Unused)
@@ -46,6 +64,7 @@ namespace ESPSharp.Subrecords
 			this.IsSilent = IsSilent;
 			this.RequiresMod = RequiresMod;
 			this.Unused = Unused;
+
 		}
 
 		public WeaponVATSData(WeaponVATSData copyObject)
@@ -59,12 +78,13 @@ namespace ESPSharp.Subrecords
 			RequiresMod = copyObject.RequiresMod;
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -75,6 +95,7 @@ namespace ESPSharp.Subrecords
 					IsSilent = subReader.ReadEnum<NoYesByte>();
 					RequiresMod = subReader.ReadEnum<NoYesByte>();
 					Unused = subReader.ReadBytes(2);
+
 				}
 				catch
 				{
@@ -95,6 +116,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[2]);
 			else
 			writer.Write(Unused);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -120,6 +142,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = RequiresMod.ToString();
 
 			WriteUnusedXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -145,6 +168,7 @@ namespace ESPSharp.Subrecords
 				RequiresMod = subEle.ToEnum<NoYesByte>();
 
 			ReadUnusedXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -152,9 +176,11 @@ namespace ESPSharp.Subrecords
 			return new WeaponVATSData(this);
 		}
 
+
         public int CompareTo(WeaponVATSData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -178,6 +204,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WeaponVATSData other)
         {
@@ -248,8 +276,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

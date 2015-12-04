@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public Byte Rank { get; set; }
 		public Byte[] Unused { get; set; }
 
+
 		public FactionMembership(string Tag = null)
 			:base(Tag)
 		{
 			Faction = new FormID();
 			Rank = new Byte();
 			Unused = new byte[3];
+
 		}
 
 		public FactionMembership(FormID Faction, Byte Rank, Byte[] Unused)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Faction = Faction;
 			this.Rank = Rank;
 			this.Unused = Unused;
+
 		}
 
 		public FactionMembership(FactionMembership copyObject)
@@ -43,18 +62,20 @@ namespace ESPSharp.Subrecords
 			Rank = copyObject.Rank;
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Faction.ReadBinary(subReader);
 					Rank = subReader.ReadByte();
 					Unused = subReader.ReadBytes(3);
+
 				}
 				catch
 				{
@@ -71,6 +92,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[3]);
 			else
 			writer.Write(Unused);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -84,6 +106,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Rank.ToString();
 
 			WriteUnusedXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -97,6 +120,7 @@ namespace ESPSharp.Subrecords
 				Rank = subEle.ToByte();
 
 			ReadUnusedXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -104,15 +128,21 @@ namespace ESPSharp.Subrecords
 			return new FactionMembership(this);
 		}
 
+
         public int CompareTo(FactionMembership other)
         {
 			int result = 0;
 
+
 			if (result == 0 && Faction != null && other.Faction != null)	
 				result = Faction.CompareTo(other.Faction);
 
+
+
 			if (result == 0 && Rank != null && other.Rank != null)	
 				result = Rank.CompareTo(other.Rank);
+
+
 
 			return result;
 		}
@@ -136,6 +166,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(FactionMembership other)
         {
@@ -202,8 +234,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

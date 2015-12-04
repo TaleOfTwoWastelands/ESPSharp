@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +42,7 @@ namespace ESPSharp.Subrecords
 		public FormID Debris { get; set; }
 		public Int32 DebrisCount { get; set; }
 
+
 		public DestructionStageData(string Tag = null)
 			:base(Tag)
 		{
@@ -37,6 +54,7 @@ namespace ESPSharp.Subrecords
 			Explosion = new FormID();
 			Debris = new FormID();
 			DebrisCount = new Int32();
+
 		}
 
 		public DestructionStageData(Byte HealthPercentage, Byte Index, Byte Stage, DestructionStageFlags Flags, Int32 SelfDamagePerSecond, FormID Explosion, FormID Debris, Int32 DebrisCount)
@@ -49,6 +67,7 @@ namespace ESPSharp.Subrecords
 			this.Explosion = Explosion;
 			this.Debris = Debris;
 			this.DebrisCount = DebrisCount;
+
 		}
 
 		public DestructionStageData(DestructionStageData copyObject)
@@ -63,12 +82,13 @@ namespace ESPSharp.Subrecords
 			if (copyObject.Debris != null)
 				Debris = (FormID)copyObject.Debris.Clone();
 			DebrisCount = copyObject.DebrisCount;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -80,6 +100,7 @@ namespace ESPSharp.Subrecords
 					Explosion.ReadBinary(subReader);
 					Debris.ReadBinary(subReader);
 					DebrisCount = subReader.ReadInt32();
+
 				}
 				catch
 				{
@@ -98,6 +119,7 @@ namespace ESPSharp.Subrecords
 			Explosion.WriteBinary(writer);
 			Debris.WriteBinary(writer);
 			writer.Write(DebrisCount);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -127,6 +149,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("DebrisCount", true, out subEle);
 			subEle.Value = DebrisCount.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -156,6 +179,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("DebrisCount", false, out subEle))
 				DebrisCount = subEle.ToInt32();
+
 		}
 
 		public override object Clone()
@@ -163,9 +187,11 @@ namespace ESPSharp.Subrecords
 			return new DestructionStageData(this);
 		}
 
+
         public int CompareTo(DestructionStageData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -189,6 +215,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(DestructionStageData other)
         {
@@ -259,5 +287,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public Int32 Modifier { get; set; }
 		public RelationshipCombatReaction CombatReaction { get; set; }
 
+
 		public Relationship(string Tag = null)
 			:base(Tag)
 		{
 			Faction = new FormID();
 			Modifier = new Int32();
 			CombatReaction = new RelationshipCombatReaction();
+
 		}
 
 		public Relationship(FormID Faction, Int32 Modifier, RelationshipCombatReaction CombatReaction)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Faction = Faction;
 			this.Modifier = Modifier;
 			this.CombatReaction = CombatReaction;
+
 		}
 
 		public Relationship(Relationship copyObject)
@@ -42,18 +61,20 @@ namespace ESPSharp.Subrecords
 				Faction = (FormID)copyObject.Faction.Clone();
 			Modifier = copyObject.Modifier;
 			CombatReaction = copyObject.CombatReaction;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Faction.ReadBinary(subReader);
 					Modifier = subReader.ReadInt32();
 					CombatReaction = subReader.ReadEnum<RelationshipCombatReaction>();
+
 				}
 				catch
 				{
@@ -67,6 +88,7 @@ namespace ESPSharp.Subrecords
 			Faction.WriteBinary(writer);
 			writer.Write(Modifier);
 			writer.Write((UInt32)CombatReaction);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -81,6 +103,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("CombatReaction", true, out subEle);
 			subEle.Value = CombatReaction.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -95,6 +118,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("CombatReaction", false, out subEle))
 				CombatReaction = subEle.ToEnum<RelationshipCombatReaction>();
+
 		}
 
 		public override object Clone()
@@ -102,9 +126,11 @@ namespace ESPSharp.Subrecords
 			return new Relationship(this);
 		}
 
+
         public int CompareTo(Relationship other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -128,6 +154,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(Relationship other)
         {
@@ -193,5 +221,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

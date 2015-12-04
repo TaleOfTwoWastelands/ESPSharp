@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +56,7 @@ namespace ESPSharp.Subrecords
 		public Single ZRotation { get; set; }
 		public Single BouncyMult { get; set; }
 
+
 		public ProjectileData(string Tag = null)
 			:base(Tag)
 		{
@@ -65,6 +82,7 @@ namespace ESPSharp.Subrecords
 			YRotation = new Single();
 			ZRotation = new Single();
 			BouncyMult = new Single();
+
 		}
 
 		public ProjectileData(ProjectileFlags Flags, ProjectileType Type, Single Gravity, Single Speed, Single Range, FormID Light, FormID MuzzleFlashLight, Single TracerChance, Single ExplosionAltTriggerProximity, Single ExplosionAltTriggerTimer, FormID Explosion, FormID Sound, Single MuzzleFlashDuration, Single FadeDuration, Single ImpactForce, FormID SoundCountdown, FormID Sounddisable, FormID DefaultWeaponSource, Single XRotation, Single YRotation, Single ZRotation, Single BouncyMult)
@@ -91,6 +109,7 @@ namespace ESPSharp.Subrecords
 			this.YRotation = YRotation;
 			this.ZRotation = ZRotation;
 			this.BouncyMult = BouncyMult;
+
 		}
 
 		public ProjectileData(ProjectileData copyObject)
@@ -124,12 +143,13 @@ namespace ESPSharp.Subrecords
 			YRotation = copyObject.YRotation;
 			ZRotation = copyObject.ZRotation;
 			BouncyMult = copyObject.BouncyMult;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -155,6 +175,7 @@ namespace ESPSharp.Subrecords
 					YRotation = subReader.ReadSingle();
 					ZRotation = subReader.ReadSingle();
 					BouncyMult = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -187,6 +208,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(YRotation);
 			writer.Write(ZRotation);
 			writer.Write(BouncyMult);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -258,6 +280,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("BouncyMult", true, out subEle);
 			subEle.Value = BouncyMult.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -329,6 +352,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("BouncyMult", false, out subEle))
 				BouncyMult = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -336,9 +360,11 @@ namespace ESPSharp.Subrecords
 			return new ProjectileData(this);
 		}
 
+
         public int CompareTo(ProjectileData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -362,6 +388,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ProjectileData other)
         {
@@ -446,5 +474,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,31 +35,36 @@ namespace ESPSharp.Subrecords
 	{
 		public FormID Ability { get; set; }
 
+
 		public PerkAbilityData(string Tag = null)
 			:base(Tag)
 		{
 			Ability = new FormID();
+
 		}
 
 		public PerkAbilityData(FormID Ability)
 		{
 			this.Ability = Ability;
+
 		}
 
 		public PerkAbilityData(PerkAbilityData copyObject)
 		{
 			if (copyObject.Ability != null)
 				Ability = (FormID)copyObject.Ability.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Ability.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -55,6 +76,7 @@ namespace ESPSharp.Subrecords
 		protected override void WriteData(ESPWriter writer)
 		{
 			Ability.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -63,6 +85,7 @@ namespace ESPSharp.Subrecords
 			
 			ele.TryPathTo("Ability", true, out subEle);
 			Ability.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -71,6 +94,7 @@ namespace ESPSharp.Subrecords
 			
 			if (ele.TryPathTo("Ability", false, out subEle))
 				Ability.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -78,9 +102,11 @@ namespace ESPSharp.Subrecords
 			return new PerkAbilityData(this);
 		}
 
+
         public int CompareTo(PerkAbilityData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -104,6 +130,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PerkAbilityData other)
         {
@@ -167,5 +195,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

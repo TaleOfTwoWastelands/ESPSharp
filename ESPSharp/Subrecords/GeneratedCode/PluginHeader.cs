@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public UInt32 RecordCount { get; set; }
 		public UInt32 NextObjectID { get; set; }
 
+
 		public PluginHeader(string Tag = null)
 			:base(Tag)
 		{
 			Version = new Single();
 			RecordCount = new UInt32();
 			NextObjectID = new UInt32();
+
 		}
 
 		public PluginHeader(Single Version, UInt32 RecordCount, UInt32 NextObjectID)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Version = Version;
 			this.RecordCount = RecordCount;
 			this.NextObjectID = NextObjectID;
+
 		}
 
 		public PluginHeader(PluginHeader copyObject)
@@ -41,18 +60,20 @@ namespace ESPSharp.Subrecords
 			Version = copyObject.Version;
 			RecordCount = copyObject.RecordCount;
 			NextObjectID = copyObject.NextObjectID;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Version = subReader.ReadSingle();
 					RecordCount = subReader.ReadUInt32();
 					NextObjectID = subReader.ReadUInt32();
+
 				}
 				catch
 				{
@@ -66,6 +87,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(Version);
 			writer.Write(RecordCount);
 			writer.Write(NextObjectID);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -80,6 +102,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("NextObjectID", true, out subEle);
 			subEle.Value = NextObjectID.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -94,6 +117,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("NextObjectID", false, out subEle))
 				NextObjectID = subEle.ToUInt32();
+
 		}
 
 		public override object Clone()
@@ -101,9 +125,11 @@ namespace ESPSharp.Subrecords
 			return new PluginHeader(this);
 		}
 
+
         public int CompareTo(PluginHeader other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -127,6 +153,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PluginHeader other)
         {
@@ -192,5 +220,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

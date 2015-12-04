@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public Byte Priority { get; set; }
 		public Byte[] Unused { get; set; }
 
+
 		public RegionDataHeader(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			Flags = new RegionDataFlags();
 			Priority = new Byte();
 			Unused = new byte[2];
+
 		}
 
 		public RegionDataHeader(RegionDataType Type, RegionDataFlags Flags, Byte Priority, Byte[] Unused)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.Flags = Flags;
 			this.Priority = Priority;
 			this.Unused = Unused;
+
 		}
 
 		public RegionDataHeader(RegionDataHeader copyObject)
@@ -46,12 +65,13 @@ namespace ESPSharp.Subrecords
 			Priority = copyObject.Priority;
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -59,6 +79,7 @@ namespace ESPSharp.Subrecords
 					Flags = subReader.ReadEnum<RegionDataFlags>();
 					Priority = subReader.ReadByte();
 					Unused = subReader.ReadBytes(2);
+
 				}
 				catch
 				{
@@ -76,6 +97,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[2]);
 			else
 			writer.Write(Unused);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -92,6 +114,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Priority.ToString();
 
 			WriteUnusedXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -108,6 +131,7 @@ namespace ESPSharp.Subrecords
 				Priority = subEle.ToByte();
 
 			ReadUnusedXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -115,9 +139,11 @@ namespace ESPSharp.Subrecords
 			return new RegionDataHeader(this);
 		}
 
+
         public int CompareTo(RegionDataHeader other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -141,6 +167,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RegionDataHeader other)
         {
@@ -208,8 +236,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

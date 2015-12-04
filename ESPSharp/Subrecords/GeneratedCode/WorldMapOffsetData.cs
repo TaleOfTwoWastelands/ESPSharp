@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,12 +36,14 @@ namespace ESPSharp.Subrecords
 		public Single CellXOffset { get; set; }
 		public Single CellYOffset { get; set; }
 
+
 		public WorldMapOffsetData(string Tag = null)
 			:base(Tag)
 		{
 			WorldMapScale = new Single();
 			CellXOffset = new Single();
 			CellYOffset = new Single();
+
 		}
 
 		public WorldMapOffsetData(Single WorldMapScale, Single CellXOffset, Single CellYOffset)
@@ -33,6 +51,7 @@ namespace ESPSharp.Subrecords
 			this.WorldMapScale = WorldMapScale;
 			this.CellXOffset = CellXOffset;
 			this.CellYOffset = CellYOffset;
+
 		}
 
 		public WorldMapOffsetData(WorldMapOffsetData copyObject)
@@ -40,18 +59,20 @@ namespace ESPSharp.Subrecords
 			WorldMapScale = copyObject.WorldMapScale;
 			CellXOffset = copyObject.CellXOffset;
 			CellYOffset = copyObject.CellYOffset;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					WorldMapScale = subReader.ReadSingle();
 					CellXOffset = subReader.ReadSingle();
 					CellYOffset = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -65,6 +86,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(WorldMapScale);
 			writer.Write(CellXOffset);
 			writer.Write(CellYOffset);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -79,6 +101,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Offset/CellY", true, out subEle);
 			subEle.Value = CellYOffset.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -93,6 +116,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Offset/CellY", false, out subEle))
 				CellYOffset = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -100,9 +124,11 @@ namespace ESPSharp.Subrecords
 			return new WorldMapOffsetData(this);
 		}
 
+
         public int CompareTo(WorldMapOffsetData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -126,6 +152,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WorldMapOffsetData other)
         {
@@ -191,5 +219,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

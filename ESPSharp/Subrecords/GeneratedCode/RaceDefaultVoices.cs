@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public FormID MaleVoice { get; set; }
 		public FormID FemaleVoice { get; set; }
 
+
 		public RaceDefaultVoices(string Tag = null)
 			:base(Tag)
 		{
 			MaleVoice = new FormID();
 			FemaleVoice = new FormID();
+
 		}
 
 		public RaceDefaultVoices(FormID MaleVoice, FormID FemaleVoice)
 		{
 			this.MaleVoice = MaleVoice;
 			this.FemaleVoice = FemaleVoice;
+
 		}
 
 		public RaceDefaultVoices(RaceDefaultVoices copyObject)
@@ -39,17 +58,19 @@ namespace ESPSharp.Subrecords
 				MaleVoice = (FormID)copyObject.MaleVoice.Clone();
 			if (copyObject.FemaleVoice != null)
 				FemaleVoice = (FormID)copyObject.FemaleVoice.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					MaleVoice.ReadBinary(subReader);
 					FemaleVoice.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -62,6 +83,7 @@ namespace ESPSharp.Subrecords
 		{
 			MaleVoice.WriteBinary(writer);
 			FemaleVoice.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -73,6 +95,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Female", true, out subEle);
 			FemaleVoice.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -84,6 +107,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Female", false, out subEle))
 				FemaleVoice.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -91,9 +115,11 @@ namespace ESPSharp.Subrecords
 			return new RaceDefaultVoices(this);
 		}
 
+
         public int CompareTo(RaceDefaultVoices other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -117,6 +143,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RaceDefaultVoices other)
         {
@@ -181,5 +209,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

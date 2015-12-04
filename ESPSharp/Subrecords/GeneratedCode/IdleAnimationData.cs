@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +41,7 @@ namespace ESPSharp.Subrecords
 		public IdleAnimationFlags Flags { get; set; }
 		public Byte Unused2 { get; set; }
 
+
 		public IdleAnimationData(string Tag = null)
 			:base(Tag)
 		{
@@ -35,6 +52,7 @@ namespace ESPSharp.Subrecords
 			ReplayDelay = new Int16();
 			Flags = new IdleAnimationFlags();
 			Unused2 = new Byte();
+
 		}
 
 		public IdleAnimationData(AnimationGroupSection AnimationGroupSection, Byte LoopingMin, Byte LoopingMax, Byte Unused1, Int16 ReplayDelay, IdleAnimationFlags Flags, Byte Unused2)
@@ -46,6 +64,7 @@ namespace ESPSharp.Subrecords
 			this.ReplayDelay = ReplayDelay;
 			this.Flags = Flags;
 			this.Unused2 = Unused2;
+
 		}
 
 		public IdleAnimationData(IdleAnimationData copyObject)
@@ -57,12 +76,13 @@ namespace ESPSharp.Subrecords
 			ReplayDelay = copyObject.ReplayDelay;
 			Flags = copyObject.Flags;
 			Unused2 = copyObject.Unused2;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -73,6 +93,7 @@ namespace ESPSharp.Subrecords
 					ReplayDelay = subReader.ReadInt16();
 					Flags = subReader.ReadEnum<IdleAnimationFlags>();
 					Unused2 = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -90,6 +111,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(ReplayDelay);
 			writer.Write((Byte)Flags);
 			writer.Write(Unused2);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -114,6 +136,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			WriteUnused2XML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -138,6 +161,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<IdleAnimationFlags>();
 
 			ReadUnused2XML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -145,9 +169,11 @@ namespace ESPSharp.Subrecords
 			return new IdleAnimationData(this);
 		}
 
+
         public int CompareTo(IdleAnimationData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -171,6 +197,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(IdleAnimationData other)
         {
@@ -241,12 +269,21 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

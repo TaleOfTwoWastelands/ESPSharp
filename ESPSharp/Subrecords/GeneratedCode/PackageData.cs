@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +39,7 @@ namespace ESPSharp.Subrecords
 		public dynamic TypeFlags { get; set; }
 		public Byte[] Unused2 { get; set; }
 
+
 		public PackageData(string Tag = null)
 			:base(Tag)
 		{
@@ -32,6 +49,7 @@ namespace ESPSharp.Subrecords
 			FalloutBehaviorFlags = new FalloutBehaviorFlags();
 			TypeFlags = 0;
 			Unused2 = new byte[2];
+
 		}
 
 		public PackageData(PackageFlags Flags, PackageType Type, Byte[] Unused1, FalloutBehaviorFlags FalloutBehaviorFlags, dynamic TypeFlags, Byte[] Unused2)
@@ -42,6 +60,7 @@ namespace ESPSharp.Subrecords
 			this.FalloutBehaviorFlags = FalloutBehaviorFlags;
 			this.TypeFlags = TypeFlags;
 			this.Unused2 = Unused2;
+
 		}
 
 		public PackageData(PackageData copyObject)
@@ -54,12 +73,13 @@ namespace ESPSharp.Subrecords
 			TypeFlags = copyObject.TypeFlags;
 			if (copyObject.Unused2 != null)
 				Unused2 = (Byte[])copyObject.Unused2.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -69,6 +89,7 @@ namespace ESPSharp.Subrecords
 					FalloutBehaviorFlags = subReader.ReadEnum<FalloutBehaviorFlags>();
 					ReadTypeFlagsBinary(subReader);
 					Unused2 = subReader.ReadBytes(2);
+
 				}
 				catch
 				{
@@ -91,6 +112,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[2]);
 			else
 			writer.Write(Unused2);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -111,6 +133,7 @@ namespace ESPSharp.Subrecords
 			WriteTypeFlagsXML(ele, master);
 
 			WriteUnused2XML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -131,6 +154,7 @@ namespace ESPSharp.Subrecords
 			ReadTypeFlagsXML(ele, master);
 
 			ReadUnused2XML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -138,9 +162,11 @@ namespace ESPSharp.Subrecords
 			return new PackageData(this);
 		}
 
+
         public int CompareTo(PackageData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -164,6 +190,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(PackageData other)
         {
@@ -233,20 +261,33 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
 		partial void ReadTypeFlagsBinary(ESPReader reader);
+
+
 
 		partial void WriteTypeFlagsBinary(ESPWriter writer);
 
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadTypeFlagsXML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
+
+
 
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteTypeFlagsXML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

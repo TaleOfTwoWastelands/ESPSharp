@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public FunctionTarget RunOn { get; set; }
 		public FormID RunOnReference { get; set; }
 
+
 		public Condition(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			Function = new Function();
 			RunOn = new FunctionTarget();
 			RunOnReference = new FormID();
+
 		}
 
 		public Condition(Comparison Comparison, Function Function, FunctionTarget RunOn, FormID RunOnReference)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.Function = Function;
 			this.RunOn = RunOn;
 			this.RunOnReference = RunOnReference;
+
 		}
 
 		public Condition(Condition copyObject)
@@ -48,12 +67,13 @@ namespace ESPSharp.Subrecords
 			RunOn = copyObject.RunOn;
 			if (copyObject.RunOnReference != null)
 				RunOnReference = (FormID)copyObject.RunOnReference.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -61,6 +81,7 @@ namespace ESPSharp.Subrecords
 					Function.ReadBinary(subReader);
 					RunOn = subReader.ReadEnum<FunctionTarget>();
 					RunOnReference.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -75,6 +96,7 @@ namespace ESPSharp.Subrecords
 			Function.WriteBinary(writer);
 			writer.Write((UInt32)RunOn);
 			RunOnReference.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -92,6 +114,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("RunOnReference", true, out subEle);
 			RunOnReference.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -109,6 +132,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("RunOnReference", false, out subEle))
 				RunOnReference.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -116,9 +140,11 @@ namespace ESPSharp.Subrecords
 			return new Condition(this);
 		}
 
+
         public int CompareTo(Condition other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -142,6 +168,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(Condition other)
         {
@@ -208,5 +236,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public Single StaticPercentage { get; set; }
 		public FormID PositionReference { get; set; }
 
+
 		public RadioData(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			BroadcastRange = new BroadcastRangeType();
 			StaticPercentage = new Single();
 			PositionReference = new FormID();
+
 		}
 
 		public RadioData(Single RangeRadius, BroadcastRangeType BroadcastRange, Single StaticPercentage, FormID PositionReference)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.BroadcastRange = BroadcastRange;
 			this.StaticPercentage = StaticPercentage;
 			this.PositionReference = PositionReference;
+
 		}
 
 		public RadioData(RadioData copyObject)
@@ -46,12 +65,13 @@ namespace ESPSharp.Subrecords
 			StaticPercentage = copyObject.StaticPercentage;
 			if (copyObject.PositionReference != null)
 				PositionReference = (FormID)copyObject.PositionReference.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -59,6 +79,7 @@ namespace ESPSharp.Subrecords
 					BroadcastRange = subReader.ReadEnum<BroadcastRangeType>();
 					StaticPercentage = subReader.ReadSingle();
 					PositionReference.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -73,6 +94,7 @@ namespace ESPSharp.Subrecords
 			writer.Write((UInt32)BroadcastRange);
 			writer.Write(StaticPercentage);
 			PositionReference.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -90,6 +112,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("PositionReference", true, out subEle);
 			PositionReference.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -107,6 +130,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("PositionReference", false, out subEle))
 				PositionReference.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -114,9 +138,11 @@ namespace ESPSharp.Subrecords
 			return new RadioData(this);
 		}
 
+
         public int CompareTo(RadioData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -140,6 +166,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RadioData other)
         {
@@ -206,5 +234,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

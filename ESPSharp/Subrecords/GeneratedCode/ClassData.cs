@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +43,7 @@ namespace ESPSharp.Subrecords
 		public Byte MaxTrainingLevel { get; set; }
 		public Byte[] Unused { get; set; }
 
+
 		public ClassData(string Tag = null)
 			:base(Tag)
 		{
@@ -39,6 +56,7 @@ namespace ESPSharp.Subrecords
 			TrainingSkill = new Skills();
 			MaxTrainingLevel = new Byte();
 			Unused = new byte[2];
+
 		}
 
 		public ClassData(ActorValues TagSkill1, ActorValues TagSkill2, ActorValues TagSkill3, ActorValues TagSkill4, ClassDataFlag ClassDataFlags, ServicesFlag Services, Skills TrainingSkill, Byte MaxTrainingLevel, Byte[] Unused)
@@ -52,6 +70,7 @@ namespace ESPSharp.Subrecords
 			this.TrainingSkill = TrainingSkill;
 			this.MaxTrainingLevel = MaxTrainingLevel;
 			this.Unused = Unused;
+
 		}
 
 		public ClassData(ClassData copyObject)
@@ -66,12 +85,13 @@ namespace ESPSharp.Subrecords
 			MaxTrainingLevel = copyObject.MaxTrainingLevel;
 			if (copyObject.Unused != null)
 				Unused = (Byte[])copyObject.Unused.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -84,6 +104,7 @@ namespace ESPSharp.Subrecords
 					TrainingSkill = subReader.ReadEnum<Skills>();
 					MaxTrainingLevel = subReader.ReadByte();
 					Unused = subReader.ReadBytes(2);
+
 				}
 				catch
 				{
@@ -106,6 +127,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[2]);
 			else
 			writer.Write(Unused);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -137,6 +159,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = MaxTrainingLevel.ToString();
 
 			WriteUnusedXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -168,6 +191,7 @@ namespace ESPSharp.Subrecords
 				MaxTrainingLevel = subEle.ToByte();
 
 			ReadUnusedXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -175,9 +199,11 @@ namespace ESPSharp.Subrecords
 			return new ClassData(this);
 		}
 
+
         public int CompareTo(ClassData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -201,6 +227,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(ClassData other)
         {
@@ -273,8 +301,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

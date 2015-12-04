@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +49,7 @@ namespace ESPSharp.Subrecords
 		public Single ProjectilePositionMaxVelocity { get; set; }
 		public Single MeleePositionMaxVelocity { get; set; }
 
+
 		public RagdollFeedbackData(string Tag = null)
 			:base(Tag)
 		{
@@ -51,6 +68,7 @@ namespace ESPSharp.Subrecords
 			PositionMaxAngularVelocity = new Single();
 			ProjectilePositionMaxVelocity = new Single();
 			MeleePositionMaxVelocity = new Single();
+
 		}
 
 		public RagdollFeedbackData(Single Dynamic_KeyframeBlendAmount, Single HierarchyGain, Single PositionGain, Single VelocityGain, Single AccelerationGain, Single SnapGain, Single VelocityDamping, Single SnapMaxLinearVelocity, Single SnapMaxAngularVelocity, Single SnapMaxLinearDistance, Single SnapMaxAngularDistance, Single PositionMaxLinearVelocity, Single PositionMaxAngularVelocity, Single ProjectilePositionMaxVelocity, Single MeleePositionMaxVelocity)
@@ -70,6 +88,7 @@ namespace ESPSharp.Subrecords
 			this.PositionMaxAngularVelocity = PositionMaxAngularVelocity;
 			this.ProjectilePositionMaxVelocity = ProjectilePositionMaxVelocity;
 			this.MeleePositionMaxVelocity = MeleePositionMaxVelocity;
+
 		}
 
 		public RagdollFeedbackData(RagdollFeedbackData copyObject)
@@ -89,12 +108,13 @@ namespace ESPSharp.Subrecords
 			PositionMaxAngularVelocity = copyObject.PositionMaxAngularVelocity;
 			ProjectilePositionMaxVelocity = copyObject.ProjectilePositionMaxVelocity;
 			MeleePositionMaxVelocity = copyObject.MeleePositionMaxVelocity;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -113,6 +133,7 @@ namespace ESPSharp.Subrecords
 					PositionMaxAngularVelocity = subReader.ReadSingle();
 					ProjectilePositionMaxVelocity = subReader.ReadSingle();
 					MeleePositionMaxVelocity = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -138,6 +159,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(PositionMaxAngularVelocity);
 			writer.Write(ProjectilePositionMaxVelocity);
 			writer.Write(MeleePositionMaxVelocity);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -188,6 +210,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("MeleePositionMaxVelocity", true, out subEle);
 			subEle.Value = MeleePositionMaxVelocity.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -238,6 +261,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("MeleePositionMaxVelocity", false, out subEle))
 				MeleePositionMaxVelocity = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -245,9 +269,11 @@ namespace ESPSharp.Subrecords
 			return new RagdollFeedbackData(this);
 		}
 
+
         public int CompareTo(RagdollFeedbackData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -271,6 +297,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RagdollFeedbackData other)
         {
@@ -348,5 +376,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

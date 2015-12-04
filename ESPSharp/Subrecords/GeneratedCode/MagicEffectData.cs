@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +53,7 @@ namespace ESPSharp.Subrecords
 		public MagicEffectArchetype Archetype { get; set; }
 		public ActorValues ActorValue { get; set; }
 
+
 		public MagicEffectData(string Tag = null)
 			:base(Tag)
 		{
@@ -59,6 +76,7 @@ namespace ESPSharp.Subrecords
 			ConstantEffectBarterFactor = new Single();
 			Archetype = new MagicEffectArchetype();
 			ActorValue = new ActorValues();
+
 		}
 
 		public MagicEffectData(MagicEffectFlags MagicEffectFlags, Single BaseCost, FormID AssociatedItem, MagicSchool MagicSchool, ActorValues ResistanceType, UInt16 Unknown, Byte[] Unused, FormID Light, Single ProjectileSpeed, FormID EffectShader, FormID ObjectDisplayShader, FormID EffectSound, FormID BoltSound, FormID HitSound, FormID AreaSound, Single ConstantEffectEnchantmentFactor, Single ConstantEffectBarterFactor, MagicEffectArchetype Archetype, ActorValues ActorValue)
@@ -82,6 +100,7 @@ namespace ESPSharp.Subrecords
 			this.ConstantEffectBarterFactor = ConstantEffectBarterFactor;
 			this.Archetype = Archetype;
 			this.ActorValue = ActorValue;
+
 		}
 
 		public MagicEffectData(MagicEffectData copyObject)
@@ -114,12 +133,13 @@ namespace ESPSharp.Subrecords
 			ConstantEffectBarterFactor = copyObject.ConstantEffectBarterFactor;
 			Archetype = copyObject.Archetype;
 			ActorValue = copyObject.ActorValue;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -142,6 +162,7 @@ namespace ESPSharp.Subrecords
 					ConstantEffectBarterFactor = subReader.ReadSingle();
 					Archetype = subReader.ReadEnum<MagicEffectArchetype>();
 					ActorValue = subReader.ReadEnum<ActorValues>();
+
 				}
 				catch
 				{
@@ -174,6 +195,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(ConstantEffectBarterFactor);
 			writer.Write((UInt32)Archetype);
 			writer.Write((Int32)ActorValue);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -235,6 +257,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("ActorValue", true, out subEle);
 			subEle.Value = ActorValue.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -296,6 +319,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("ActorValue", false, out subEle))
 				ActorValue = subEle.ToEnum<ActorValues>();
+
 		}
 
 		public override object Clone()
@@ -303,9 +327,11 @@ namespace ESPSharp.Subrecords
 			return new MagicEffectData(this);
 		}
 
+
         public int CompareTo(MagicEffectData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -329,6 +355,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(MagicEffectData other)
         {
@@ -411,8 +439,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

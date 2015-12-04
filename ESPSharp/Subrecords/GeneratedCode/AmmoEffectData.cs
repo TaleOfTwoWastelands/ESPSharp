@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public AmmoEffectOperation Operation { get; set; }
 		public Single Value { get; set; }
 
+
 		public AmmoEffectData(string Tag = null)
 			:base(Tag)
 		{
 			Type = new AmmoEffectType();
 			Operation = new AmmoEffectOperation();
 			Value = new Single();
+
 		}
 
 		public AmmoEffectData(AmmoEffectType Type, AmmoEffectOperation Operation, Single Value)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Type = Type;
 			this.Operation = Operation;
 			this.Value = Value;
+
 		}
 
 		public AmmoEffectData(AmmoEffectData copyObject)
@@ -41,18 +60,20 @@ namespace ESPSharp.Subrecords
 			Type = copyObject.Type;
 			Operation = copyObject.Operation;
 			Value = copyObject.Value;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Type = subReader.ReadEnum<AmmoEffectType>();
 					Operation = subReader.ReadEnum<AmmoEffectOperation>();
 					Value = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -66,6 +87,7 @@ namespace ESPSharp.Subrecords
 			writer.Write((UInt32)Type);
 			writer.Write((UInt32)Operation);
 			writer.Write(Value);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -80,6 +102,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Value", true, out subEle);
 			subEle.Value = Value.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -94,6 +117,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Value", false, out subEle))
 				Value = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -101,9 +125,11 @@ namespace ESPSharp.Subrecords
 			return new AmmoEffectData(this);
 		}
 
+
         public int CompareTo(AmmoEffectData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -127,6 +153,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(AmmoEffectData other)
         {
@@ -192,5 +220,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

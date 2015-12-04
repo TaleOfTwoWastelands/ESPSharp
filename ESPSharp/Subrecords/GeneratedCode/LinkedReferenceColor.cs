@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +36,20 @@ namespace ESPSharp.Subrecords
 		public Color Start { get; set; }
 		public Color End { get; set; }
 
+
 		public LinkedReferenceColor(string Tag = null)
 			:base(Tag)
 		{
 			Start = new Color();
 			End = new Color();
+
 		}
 
 		public LinkedReferenceColor(Color Start, Color End)
 		{
 			this.Start = Start;
 			this.End = End;
+
 		}
 
 		public LinkedReferenceColor(LinkedReferenceColor copyObject)
@@ -39,17 +58,19 @@ namespace ESPSharp.Subrecords
 				Start = (Color)copyObject.Start.Clone();
 			if (copyObject.End != null)
 				End = (Color)copyObject.End.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Start.ReadBinary(subReader);
 					End.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -62,6 +83,7 @@ namespace ESPSharp.Subrecords
 		{
 			Start.WriteBinary(writer);
 			End.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -73,6 +95,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("End", true, out subEle);
 			End.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -84,6 +107,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("End", false, out subEle))
 				End.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -91,9 +115,11 @@ namespace ESPSharp.Subrecords
 			return new LinkedReferenceColor(this);
 		}
 
+
         public int CompareTo(LinkedReferenceColor other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -117,6 +143,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(LinkedReferenceColor other)
         {
@@ -181,5 +209,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +38,7 @@ namespace ESPSharp.Subrecords
 		public LocalVariableFlag Flags { get; set; }
 		public Byte[] Unused2 { get; set; }
 
+
 		public LocalVariableData(string Tag = null)
 			:base(Tag)
 		{
@@ -29,6 +46,7 @@ namespace ESPSharp.Subrecords
 			Unused1 = new byte[12];
 			Flags = new LocalVariableFlag();
 			Unused2 = new byte[7];
+
 		}
 
 		public LocalVariableData(UInt32 Index, Byte[] Unused1, LocalVariableFlag Flags, Byte[] Unused2)
@@ -37,6 +55,7 @@ namespace ESPSharp.Subrecords
 			this.Unused1 = Unused1;
 			this.Flags = Flags;
 			this.Unused2 = Unused2;
+
 		}
 
 		public LocalVariableData(LocalVariableData copyObject)
@@ -47,12 +66,13 @@ namespace ESPSharp.Subrecords
 			Flags = copyObject.Flags;
 			if (copyObject.Unused2 != null)
 				Unused2 = (Byte[])copyObject.Unused2.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -60,6 +80,7 @@ namespace ESPSharp.Subrecords
 					Unused1 = subReader.ReadBytes(12);
 					Flags = subReader.ReadEnum<LocalVariableFlag>();
 					Unused2 = subReader.ReadBytes(7);
+
 				}
 				catch
 				{
@@ -80,6 +101,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[7]);
 			else
 			writer.Write(Unused2);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -95,6 +117,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			WriteUnused2XML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -110,6 +133,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<LocalVariableFlag>();
 
 			ReadUnused2XML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -117,9 +141,11 @@ namespace ESPSharp.Subrecords
 			return new LocalVariableData(this);
 		}
 
+
         public int CompareTo(LocalVariableData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -143,6 +169,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(LocalVariableData other)
         {
@@ -210,12 +238,21 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

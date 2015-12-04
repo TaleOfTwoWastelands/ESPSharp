@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +68,7 @@ namespace ESPSharp.Subrecords
 		public FormID ItemDetectedEffect { get; set; }
 		public FormID CateyeMobileEffect { get; set; }
 
+
 		public DefaultObjects(string Tag = null)
 			:base(Tag)
 		{
@@ -89,6 +106,7 @@ namespace ESPSharp.Subrecords
 			SpotterEffect = new FormID();
 			ItemDetectedEffect = new FormID();
 			CateyeMobileEffect = new FormID();
+
 		}
 
 		public DefaultObjects(FormID Stimpack, FormID SuperStimpack, FormID RadX, FormID RadAway, FormID MedX, FormID PerkParalysis, FormID PlayerFaction, FormID MysteriousStrangerNPC, FormID MysteriousStrangerFaction, FormID DefaultMusic, FormID BattleMusic, FormID DeathMusic, FormID SuccessMusic, FormID LevelUpMusic, FormID PlayerVoiceMale, FormID PlayerVoiceMaleChild, FormID PlayerVoiceFemale, FormID PlayerVoiceFemaleChild, FormID EatPackageDefaultFood, FormID EveryActorAbility, FormID DrugWearsOffImageSpace, FormID DoctorsBag, FormID MissFortuneNPC, FormID MissFortuneFaction, FormID MeltdownExplosion, FormID UnarmedPowerAttackForward, FormID UnarmedPowerAttackBackward, FormID UnarmedPowerAttackLeft, FormID UnarmedPowerAttackRight, FormID UnarmedPowerAttackCrouch, FormID UnarmedPowerAttackCounter, FormID SpotterEffect, FormID ItemDetectedEffect, FormID CateyeMobileEffect)
@@ -127,6 +145,7 @@ namespace ESPSharp.Subrecords
 			this.SpotterEffect = SpotterEffect;
 			this.ItemDetectedEffect = ItemDetectedEffect;
 			this.CateyeMobileEffect = CateyeMobileEffect;
+
 		}
 
 		public DefaultObjects(DefaultObjects copyObject)
@@ -199,12 +218,13 @@ namespace ESPSharp.Subrecords
 				ItemDetectedEffect = (FormID)copyObject.ItemDetectedEffect.Clone();
 			if (copyObject.CateyeMobileEffect != null)
 				CateyeMobileEffect = (FormID)copyObject.CateyeMobileEffect.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -242,6 +262,7 @@ namespace ESPSharp.Subrecords
 					SpotterEffect.ReadBinary(subReader);
 					ItemDetectedEffect.ReadBinary(subReader);
 					CateyeMobileEffect.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -286,6 +307,7 @@ namespace ESPSharp.Subrecords
 			SpotterEffect.WriteBinary(writer);
 			ItemDetectedEffect.WriteBinary(writer);
 			CateyeMobileEffect.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -393,6 +415,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("CateyeMobileEffect", true, out subEle);
 			CateyeMobileEffect.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -500,6 +523,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("CateyeMobileEffect", false, out subEle))
 				CateyeMobileEffect.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -507,9 +531,11 @@ namespace ESPSharp.Subrecords
 			return new DefaultObjects(this);
 		}
 
+
         public int CompareTo(DefaultObjects other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -533,6 +559,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(DefaultObjects other)
         {
@@ -629,5 +657,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

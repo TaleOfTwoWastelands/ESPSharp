@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +37,14 @@ namespace ESPSharp.Subrecords
 		public EnableParentFlags Flags { get; set; }
 		public Byte[] Unknown { get; set; }
 
+
 		public EnableParent(string Tag = null)
 			:base(Tag)
 		{
 			Parent = new FormID();
 			Flags = new EnableParentFlags();
 			Unknown = new byte[3];
+
 		}
 
 		public EnableParent(FormID Parent, EnableParentFlags Flags, Byte[] Unknown)
@@ -34,6 +52,7 @@ namespace ESPSharp.Subrecords
 			this.Parent = Parent;
 			this.Flags = Flags;
 			this.Unknown = Unknown;
+
 		}
 
 		public EnableParent(EnableParent copyObject)
@@ -43,18 +62,20 @@ namespace ESPSharp.Subrecords
 			Flags = copyObject.Flags;
 			if (copyObject.Unknown != null)
 				Unknown = (Byte[])copyObject.Unknown.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
 					Parent.ReadBinary(subReader);
 					Flags = subReader.ReadEnum<EnableParentFlags>();
 					Unknown = subReader.ReadBytes(3);
+
 				}
 				catch
 				{
@@ -71,6 +92,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[3]);
 			else
 			writer.Write(Unknown);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -84,6 +106,7 @@ namespace ESPSharp.Subrecords
 			subEle.Value = Flags.ToString();
 
 			WriteUnknownXML(ele, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -97,6 +120,7 @@ namespace ESPSharp.Subrecords
 				Flags = subEle.ToEnum<EnableParentFlags>();
 
 			ReadUnknownXML(ele, master);
+
 		}
 
 		public override object Clone()
@@ -104,9 +128,11 @@ namespace ESPSharp.Subrecords
 			return new EnableParent(this);
 		}
 
+
         public int CompareTo(EnableParent other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -130,6 +156,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(EnableParent other)
         {
@@ -196,8 +224,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnknownXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnknownXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

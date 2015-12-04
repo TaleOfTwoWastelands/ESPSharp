@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +40,7 @@ namespace ESPSharp.Subrecords
 		public Byte[] Unused2 { get; set; }
 		public FormID Effect { get; set; }
 
+
 		public WeaponCriticalHitData(string Tag = null)
 			:base(Tag)
 		{
@@ -33,6 +50,7 @@ namespace ESPSharp.Subrecords
 			Flags = new WeaponCritFlags();
 			Unused2 = new byte[3];
 			Effect = new FormID();
+
 		}
 
 		public WeaponCriticalHitData(UInt16 Damage, Byte[] Unused1, Single ChanceMult, WeaponCritFlags Flags, Byte[] Unused2, FormID Effect)
@@ -43,6 +61,7 @@ namespace ESPSharp.Subrecords
 			this.Flags = Flags;
 			this.Unused2 = Unused2;
 			this.Effect = Effect;
+
 		}
 
 		public WeaponCriticalHitData(WeaponCriticalHitData copyObject)
@@ -56,12 +75,13 @@ namespace ESPSharp.Subrecords
 				Unused2 = (Byte[])copyObject.Unused2.Clone();
 			if (copyObject.Effect != null)
 				Effect = (FormID)copyObject.Effect.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -71,6 +91,7 @@ namespace ESPSharp.Subrecords
 					Flags = subReader.ReadEnum<WeaponCritFlags>();
 					Unused2 = subReader.ReadBytes(3);
 					Effect.ReadBinary(subReader);
+
 				}
 				catch
 				{
@@ -93,6 +114,7 @@ namespace ESPSharp.Subrecords
 			else
 			writer.Write(Unused2);
 			Effect.WriteBinary(writer);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -114,6 +136,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Effect", true, out subEle);
 			Effect.WriteXML(subEle, master);
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -135,6 +158,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Effect", false, out subEle))
 				Effect.ReadXML(subEle, master);
+
 		}
 
 		public override object Clone()
@@ -142,9 +166,11 @@ namespace ESPSharp.Subrecords
 			return new WeaponCriticalHitData(this);
 		}
 
+
         public int CompareTo(WeaponCriticalHitData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -168,6 +194,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WeaponCriticalHitData other)
         {
@@ -237,12 +265,21 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnused1XML(XElement ele, ElderScrollsPlugin master);
+
 
 		partial void ReadUnused2XML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnused1XML(XElement ele, ElderScrollsPlugin master);
 
+
 		partial void WriteUnused2XML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

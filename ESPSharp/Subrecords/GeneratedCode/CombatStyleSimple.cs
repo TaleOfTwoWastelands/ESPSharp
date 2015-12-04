@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +50,7 @@ namespace ESPSharp.Subrecords
 		public Single SemiAutoFiringDelayMultMin { get; set; }
 		public Single SemiAutoFiringDelayMultMax { get; set; }
 
+
 		public CombatStyleSimple(string Tag = null)
 			:base(Tag)
 		{
@@ -53,6 +70,7 @@ namespace ESPSharp.Subrecords
 			CombatRadius = new Single();
 			SemiAutoFiringDelayMultMin = new Single();
 			SemiAutoFiringDelayMultMax = new Single();
+
 		}
 
 		public CombatStyleSimple(Single CoverSearchRadius, Single TakeCoverChance, Single WaitTimerMin, Single WaitTimerMax, Single WaitToFireTimerMin, Single WaitToFireTimerMax, Single FireTimerMin, Single FireTimerMax, Single RangedWeaponRangeMultMin, Byte[] Unused, WeaponRestrictions WeaponRestrictions, Single RangedWeaponRangeMultMax, Single MaxTargetingFOV, Single CombatRadius, Single SemiAutoFiringDelayMultMin, Single SemiAutoFiringDelayMultMax)
@@ -73,6 +91,7 @@ namespace ESPSharp.Subrecords
 			this.CombatRadius = CombatRadius;
 			this.SemiAutoFiringDelayMultMin = SemiAutoFiringDelayMultMin;
 			this.SemiAutoFiringDelayMultMax = SemiAutoFiringDelayMultMax;
+
 		}
 
 		public CombatStyleSimple(CombatStyleSimple copyObject)
@@ -94,12 +113,13 @@ namespace ESPSharp.Subrecords
 			CombatRadius = copyObject.CombatRadius;
 			SemiAutoFiringDelayMultMin = copyObject.SemiAutoFiringDelayMultMin;
 			SemiAutoFiringDelayMultMax = copyObject.SemiAutoFiringDelayMultMax;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -119,6 +139,7 @@ namespace ESPSharp.Subrecords
 					CombatRadius = subReader.ReadSingle();
 					SemiAutoFiringDelayMultMin = subReader.ReadSingle();
 					SemiAutoFiringDelayMultMax = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -148,6 +169,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(CombatRadius);
 			writer.Write(SemiAutoFiringDelayMultMin);
 			writer.Write(SemiAutoFiringDelayMultMax);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -200,6 +222,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("SemiAutoFiringDelayMult/Max", true, out subEle);
 			subEle.Value = SemiAutoFiringDelayMultMax.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -252,6 +275,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("SemiAutoFiringDelayMult/Max", false, out subEle))
 				SemiAutoFiringDelayMultMax = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -259,9 +283,11 @@ namespace ESPSharp.Subrecords
 			return new CombatStyleSimple(this);
 		}
 
+
         public int CompareTo(CombatStyleSimple other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -285,6 +311,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(CombatStyleSimple other)
         {
@@ -364,8 +392,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

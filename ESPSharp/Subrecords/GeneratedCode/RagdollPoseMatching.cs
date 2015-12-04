@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +43,7 @@ namespace ESPSharp.Subrecords
 		public Single MatchErrorAllowance { get; set; }
 		public Single DisplacementToDisable { get; set; }
 
+
 		public RagdollPoseMatching(string Tag = null)
 			:base(Tag)
 		{
@@ -39,6 +56,7 @@ namespace ESPSharp.Subrecords
 			PoseActivationDelayTime = new Single();
 			MatchErrorAllowance = new Single();
 			DisplacementToDisable = new Single();
+
 		}
 
 		public RagdollPoseMatching(UInt16 MatchBone1, UInt16 MatchBone2, UInt16 MatchBone3, NoYesByte DisableOnMove, Byte Unused, Single MotorsStrength, Single PoseActivationDelayTime, Single MatchErrorAllowance, Single DisplacementToDisable)
@@ -52,6 +70,7 @@ namespace ESPSharp.Subrecords
 			this.PoseActivationDelayTime = PoseActivationDelayTime;
 			this.MatchErrorAllowance = MatchErrorAllowance;
 			this.DisplacementToDisable = DisplacementToDisable;
+
 		}
 
 		public RagdollPoseMatching(RagdollPoseMatching copyObject)
@@ -65,12 +84,13 @@ namespace ESPSharp.Subrecords
 			PoseActivationDelayTime = copyObject.PoseActivationDelayTime;
 			MatchErrorAllowance = copyObject.MatchErrorAllowance;
 			DisplacementToDisable = copyObject.DisplacementToDisable;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -83,6 +103,7 @@ namespace ESPSharp.Subrecords
 					PoseActivationDelayTime = subReader.ReadSingle();
 					MatchErrorAllowance = subReader.ReadSingle();
 					DisplacementToDisable = subReader.ReadSingle();
+
 				}
 				catch
 				{
@@ -102,6 +123,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(PoseActivationDelayTime);
 			writer.Write(MatchErrorAllowance);
 			writer.Write(DisplacementToDisable);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -133,6 +155,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("DisplacementToDisable", true, out subEle);
 			subEle.Value = DisplacementToDisable.ToString("G15");
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -164,6 +187,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("DisplacementToDisable", false, out subEle))
 				DisplacementToDisable = subEle.ToSingle();
+
 		}
 
 		public override object Clone()
@@ -171,9 +195,11 @@ namespace ESPSharp.Subrecords
 			return new RagdollPoseMatching(this);
 		}
 
+
         public int CompareTo(RagdollPoseMatching other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -197,6 +223,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(RagdollPoseMatching other)
         {
@@ -269,8 +297,15 @@ namespace ESPSharp.Subrecords
             return !objA.Equals(objB);
         }
 
+
+
+
+
 		partial void ReadUnusedXML(XElement ele, ElderScrollsPlugin master);
 
+
+
 		partial void WriteUnusedXML(XElement ele, ElderScrollsPlugin master);
+
 	}
 }

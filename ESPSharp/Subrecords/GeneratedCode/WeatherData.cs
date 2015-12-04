@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +49,7 @@ namespace ESPSharp.Subrecords
 		public Byte LightningColorGreen { get; set; }
 		public Byte LightningColorBlue { get; set; }
 
+
 		public WeatherData(string Tag = null)
 			:base(Tag)
 		{
@@ -51,6 +68,7 @@ namespace ESPSharp.Subrecords
 			LightningColorRed = new Byte();
 			LightningColorGreen = new Byte();
 			LightningColorBlue = new Byte();
+
 		}
 
 		public WeatherData(Byte WindSpeed, Byte CloudSpeedLower, Byte CloudSpeedUpper, Byte TransitionDelta, Byte SunGlare, Byte SunDamage, Byte PrecipitationBeginFadeIn, Byte PrecipitationEndFadeOut, Byte Thunder_LightningBeginFadeIn, Byte Thunder_LightningEndFadeOut, Byte Thunder_LightningFrequency, WeatherClassification Classification, Byte LightningColorRed, Byte LightningColorGreen, Byte LightningColorBlue)
@@ -70,6 +88,7 @@ namespace ESPSharp.Subrecords
 			this.LightningColorRed = LightningColorRed;
 			this.LightningColorGreen = LightningColorGreen;
 			this.LightningColorBlue = LightningColorBlue;
+
 		}
 
 		public WeatherData(WeatherData copyObject)
@@ -89,12 +108,13 @@ namespace ESPSharp.Subrecords
 			LightningColorRed = copyObject.LightningColorRed;
 			LightningColorGreen = copyObject.LightningColorGreen;
 			LightningColorBlue = copyObject.LightningColorBlue;
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -113,6 +133,7 @@ namespace ESPSharp.Subrecords
 					LightningColorRed = subReader.ReadByte();
 					LightningColorGreen = subReader.ReadByte();
 					LightningColorBlue = subReader.ReadByte();
+
 				}
 				catch
 				{
@@ -138,6 +159,7 @@ namespace ESPSharp.Subrecords
 			writer.Write(LightningColorRed);
 			writer.Write(LightningColorGreen);
 			writer.Write(LightningColorBlue);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -188,6 +210,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("LightningColor/Blue", true, out subEle);
 			subEle.Value = LightningColorBlue.ToString();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -238,6 +261,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("LightningColor/Blue", false, out subEle))
 				LightningColorBlue = subEle.ToByte();
+
 		}
 
 		public override object Clone()
@@ -245,9 +269,11 @@ namespace ESPSharp.Subrecords
 			return new WeatherData(this);
 		}
 
+
         public int CompareTo(WeatherData other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -271,6 +297,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(WeatherData other)
         {
@@ -348,5 +376,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }

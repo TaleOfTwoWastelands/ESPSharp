@@ -1,4 +1,20 @@
 ﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +44,7 @@ namespace ESPSharp.Subrecords
 		public Byte[] Grass { get; set; }
 		public Byte[] Water { get; set; }
 
+
 		public FootstepMaterial(string Tag = null)
 			:base(Tag)
 		{
@@ -41,6 +58,7 @@ namespace ESPSharp.Subrecords
 			Dirt = new byte[30];
 			Grass = new byte[30];
 			Water = new byte[30];
+
 		}
 
 		public FootstepMaterial(Byte[] ConcreteSolid, Byte[] ConcreteBroken, Byte[] MetalSolid, Byte[] MetalHollow, Byte[] MetalSheet, Byte[] Wood, Byte[] Sand, Byte[] Dirt, Byte[] Grass, Byte[] Water)
@@ -55,6 +73,7 @@ namespace ESPSharp.Subrecords
 			this.Dirt = Dirt;
 			this.Grass = Grass;
 			this.Water = Water;
+
 		}
 
 		public FootstepMaterial(FootstepMaterial copyObject)
@@ -79,12 +98,13 @@ namespace ESPSharp.Subrecords
 				Grass = (Byte[])copyObject.Grass.Clone();
 			if (copyObject.Water != null)
 				Water = (Byte[])copyObject.Water.Clone();
+
 		}
 	
 		protected override void ReadData(ESPReader reader)
 		{
 			using (MemoryStream stream = new MemoryStream(reader.ReadBytes(size)))
-			using (ESPReader subReader = new ESPReader(stream))
+			using (ESPReader subReader = new ESPReader(stream, reader.Plugin))
 			{
 				try
 				{
@@ -98,6 +118,7 @@ namespace ESPSharp.Subrecords
 					Dirt = subReader.ReadBytes(30);
 					Grass = subReader.ReadBytes(30);
 					Water = subReader.ReadBytes(30);
+
 				}
 				catch
 				{
@@ -148,6 +169,7 @@ namespace ESPSharp.Subrecords
 				writer.Write(new byte[30]);
 			else
 			writer.Write(Water);
+
 		}
 
 		protected override void WriteDataXML(XElement ele, ElderScrollsPlugin master)
@@ -183,6 +205,7 @@ namespace ESPSharp.Subrecords
 
 			ele.TryPathTo("Water", true, out subEle);
 			subEle.Value = Water.ToHex();
+
 		}
 
 		protected override void ReadDataXML(XElement ele, ElderScrollsPlugin master)
@@ -218,6 +241,7 @@ namespace ESPSharp.Subrecords
 
 			if (ele.TryPathTo("Water", false, out subEle))
 				Water = subEle.ToBytes();
+
 		}
 
 		public override object Clone()
@@ -225,9 +249,11 @@ namespace ESPSharp.Subrecords
 			return new FootstepMaterial(this);
 		}
 
+
         public int CompareTo(FootstepMaterial other)
         {
 			int result = 0;
+
 
 			return result;
 		}
@@ -251,6 +277,8 @@ namespace ESPSharp.Subrecords
         {
             return objA.CompareTo(objB) <= 0;
         }
+
+
 
         public bool Equals(FootstepMaterial other)
         {
@@ -323,5 +351,10 @@ namespace ESPSharp.Subrecords
 
             return !objA.Equals(objB);
         }
+
+
+
+
+
 	}
 }
