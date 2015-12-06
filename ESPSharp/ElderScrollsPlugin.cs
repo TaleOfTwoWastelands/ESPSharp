@@ -106,7 +106,6 @@ namespace ESPSharp
             foreach (var folder in Directory.EnumerateDirectories(sourceFolder, "*.*", SearchOption.TopDirectoryOnly))
             {
                 Group newGroup = Group.CreateGroup(folder);
-
                 newGroup.GroupAdded += (g) => outPlug.AllGroups.Add(g);
                 newGroup.RecordViewAdded += (r) => outPlug.RecordViews.Add(r);
                 outPlug.TopGroups.Add(newGroup);
@@ -114,8 +113,8 @@ namespace ESPSharp
 
                 newGroup.ReadXML(folder, outPlug);
             }
-
-            ElderScrollsPlugin.LoadedPlugins.Add(outPlug);
+			outPlug.TopGroups = outPlug.TopGroups.OrderBy(g => g.ToString()).ToList();
+			ElderScrollsPlugin.LoadedPlugins.Add(outPlug);
 
             return outPlug;
         }
@@ -167,12 +166,11 @@ namespace ESPSharp
 						TopGroups.Add(group);
 						AllGroups.Add(group);
 					}
-
-					
 				}
             }
-
-            ElderScrollsPlugin.LoadedPlugins.Add(this);
+			
+	        TopGroups = TopGroups.OrderBy(g => g.ToString()).ToList();
+			ElderScrollsPlugin.LoadedPlugins.Add(this);
 
             foreach (RecordView view in RecordViews)
             {
