@@ -29,11 +29,11 @@ namespace ESPSharp
             FormID = new FormID();
         }
 
-        public void WriteXML(string destinationFile, ElderScrollsPlugin master)
+        public XDocument WriteXML(ElderScrollsPlugin master)
         {
             XDocument doc = new XDocument();
 
-            XElement root = new XElement("Record", 
+            XElement root = new XElement("Record",
                                 new XAttribute("Tag", Tag));
 
             doc.Add(root);
@@ -55,10 +55,16 @@ namespace ESPSharp
                 root.Add(ele);
                 WriteDataXML(ele, master);
             }
+            return doc;
+        }
+
+        public void WriteXML(string destinationFile, ElderScrollsPlugin master)
+        {
+            XDocument doc = WriteXML(master);
+            XElement root = (XElement)doc.FirstNode;
 
             XMLPostProcessing(root, destinationFile);
-
-            doc.Save(destinationFile);
+            WriteXML(master).Save(destinationFile);
         }
 
         public static Record ReadXML(string sourceFile, ElderScrollsPlugin master)
