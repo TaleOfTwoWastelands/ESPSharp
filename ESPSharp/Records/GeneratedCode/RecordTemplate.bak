@@ -1,4 +1,5 @@
 ﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="Microsoft.VisualStudio.TextTemplating.14.0" #>
 <#@ assembly name="$(SolutionDir)/ESPSharp/bin/debug/ESPSharp.dll" #>
 <#@ template debug="false" hostspecific="false" language="C#" inherits="ESPSharpCustomT4" #>
 <#@ output extension=".cs" #>
@@ -30,7 +31,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp.Records
 {
-	public partial class <#= template.ClassName #> : Record, ICloneable<<#= template.ClassName#>><# WriteInterfaces(template); #><# if (template.Fields.Any(f => f.Name == "EditorID")) { #>, IEditorID<#}WriteLine("");#>
+	public partial class <#= template.ClassName #> : Record<# //WriteInterfaces(template); #><# if (template.Fields.Any(f => f.Name == "EditorID")) { #>, IEditorID<#}WriteLine("");#>
 	{
 		<# foreach (RecordField field in template.Fields) WritePropertyDeclaration(field); #>
 
@@ -46,7 +47,7 @@ namespace ESPSharp.Records
 
 		public <#= template.ClassName #>(<#= template.ClassName #> copyObject)
 		{
-			<# foreach (RecordField field in template.Fields) WriteCopyConstructorAssignment(field); #>
+			<# //foreach (RecordField field in template.Fields) WriteCopyConstructorAssignment(field); #>
 		}
 	
 		public override void ReadData(ESPReader reader, long dataEnd)
@@ -89,8 +90,16 @@ namespace ESPSharp.Records
 <# if (field.Type.IsSubclassOf(typeof(ESPSharp.Subrecord)) || field.Type.IsSubclassOf(typeof(ESPSharp.SubrecordCollection))){ #>
 				<#= field.Name #>.WriteBinary(writer);
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))){ #>
+<# if (field.isSorted) { #>
+			{
+				<#= field.Name #>.Sort();
 				foreach (var item in <#= field.Name #>)
 					item.WriteBinary(writer);
+			}
+<# } else { #>
+				foreach (var item in <#= field.Name #>)
+					item.WriteBinary(writer);
+<# } #>
 <# } #>
 <# } else { #>
 
@@ -112,6 +121,9 @@ namespace ESPSharp.Records
 <# } else if (field.Type.GetInterfaces().Contains(typeof(IEnumerable))) { #>
 				List<string> xmlNames = new List<string>{"<#= string.Join("\", \"", field.XMLSubNames) #>"};
 				int i = 0;
+<# if (field.isSorted){ #>
+				<#= field.Name #>.Sort();
+<# } #>
 				foreach (var entry in <#= field.Name #>)
 				{
 					i = i % xmlNames.Count();
@@ -163,11 +175,18 @@ namespace ESPSharp.Records
 			return new <#= template.ClassName #>(this);
 		}
 
-<# if(template.isComparable) { #>
+<# if(false) { #>
         public int CompareTo(<#= template.ClassName #> other)
         {
-			<# WriteCompareHashKeyCommand(template); #>
-        }
+			int result = 0;
+<# foreach (var field in template.Fields.Where(f => f.sortIndex >= 0).OrderBy(o => o.sortIndex)) { #>
+
+			if (result == 0 && <#= field.Name#> != null && other.<#= field.Name#> != null)	
+				<# WriteCompareCommand(field); #>
+<# } #>
+
+			return result;
+		}
 
         public static bool operator >(<#= template.ClassName #> objA, <#= template.ClassName #> objB)
         {
@@ -190,7 +209,7 @@ namespace ESPSharp.Records
         }
 
 <#}#>
-<# if(template.isEquatable) { #>
+<# if(false) { #>
         public bool Equals(<#= template.ClassName #> other)
         {
 			if (System.Object.ReferenceEquals(this, other))

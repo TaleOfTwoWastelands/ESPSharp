@@ -32,7 +32,6 @@ namespace ESPSharp
         public XDocument WriteXML(ElderScrollsPlugin master)
         {
             XDocument doc = new XDocument();
-
             XElement root = new XElement("Record",
                                 new XAttribute("Tag", Tag));
 
@@ -61,7 +60,7 @@ namespace ESPSharp
         public void WriteXML(string destinationFile, ElderScrollsPlugin master)
         {
             XDocument doc = WriteXML(master);
-            XElement root = (XElement)doc.FirstNode;
+            XElement root = doc.Root;
 
             XMLPostProcessing(root, destinationFile);
             WriteXML(master).Save(destinationFile);
@@ -70,7 +69,7 @@ namespace ESPSharp
         public static Record ReadXML(string sourceFile, ElderScrollsPlugin master)
         {
             XDocument doc = XDocument.Load(sourceFile);
-            XElement root = (XElement)doc.FirstNode;
+            XElement root = doc.Root;
 
             Record outRecord = Record.CreateRecord(root.Attribute("Tag").Value);
 
