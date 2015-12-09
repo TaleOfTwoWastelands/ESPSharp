@@ -7,7 +7,7 @@ using ESPSharp.Enums.Flags;
 
 namespace ESPSharp
 {
-    class TopGroup : Group
+    public class TopGroup : Group
     {
         public static Dictionary<string, string> tagToNameDictionary = new Dictionary<string, string>
         {

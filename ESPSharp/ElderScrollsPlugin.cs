@@ -28,7 +28,13 @@ namespace ESPSharp
         public List<Group> AllGroups = new List<Group>();
         public HashSet<RecordView> RecordViews = new HashSet<RecordView>();
 
-        protected MemoryMappedFile mmf;
+		public delegate void ProgressUpdate(string msg);
+	    public static event ProgressUpdate OnProgressUpdate;
+
+		public delegate void ProgressUpdateError(string msg);
+		public static event ProgressUpdateError OnProgressUpdateError;
+
+		protected MemoryMappedFile mmf;
 
         public string ProperName
         {
@@ -59,10 +65,17 @@ namespace ESPSharp
             if (source == "")
                 throw new Exception();
 
-            if (File.Exists(source))
-                ReadBinary(source);
-            else if (Directory.Exists(source))
-                ReadXML(source);
+	        try
+	        {
+				if (File.Exists(source))
+					ReadBinary(source);
+				else if (Directory.Exists(source))
+					ReadXML(source);
+			}
+	        catch (IOException)
+	        {
+				throw new IOException("Failed to load the source file " + source + Environment.NewLine + "Check to make sure it exists and isn't open in another program.");
+	        }
         }
 
         public void WriteXML(string destinationFolder)
@@ -93,7 +106,7 @@ namespace ESPSharp
         public static ElderScrollsPlugin ReadXML(string sourceFolder)
         {
             ElderScrollsPlugin outPlug = new ElderScrollsPlugin();
-            var headerLocation = Path.Combine(sourceFolder, "Header.xml");
+			var headerLocation = Path.Combine(sourceFolder, "Header.xml");
             var xml = XDocument.Load(headerLocation);
             outPlug.FileName = xml.Element("Record").Element("FileName").Value;
             outPlug.Name = Path.GetDirectoryName(sourceFolder);
@@ -150,7 +163,9 @@ namespace ESPSharp
 
                 Masters.Add(FileName);
 
-                while (reader.BaseStream.Position < reader.BaseStream.Length)
+				Log("Beginning loading plugin " + FileName);
+
+				while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
                     var group = Group.CreateGroup(reader);
 
@@ -170,6 +185,7 @@ namespace ESPSharp
 
 					
 				}
+				Log("Finished loading plugin " + FileName);
             }
 
             ElderScrollsPlugin.LoadedPlugins.Add(this);
@@ -250,5 +266,18 @@ namespace ESPSharp
 
             return null;
         }
-    }
+
+
+		#region Logging
+		public static void Log(string msg)
+		{
+			OnProgressUpdate?.Invoke(msg);
+		}
+
+		public static void LogError(string msg)
+		{
+			OnProgressUpdateError?.Invoke(msg);
+		}
+		#endregion
+	}
 }
