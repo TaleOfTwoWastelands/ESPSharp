@@ -276,7 +276,7 @@ namespace ESPSharp
 
 	    public void MergeGroup(Group group)
 	    {
-			ElderScrollsPlugin.Log((string.Format("Merging TopGroup {0} with {1} records", ((TopGroup)group).RecordType, group.AllRecordViews.Count)), 2);
+			ElderScrollsPlugin.Log((string.Format("Merging TopGroup {0} with {1} records", ((TopGroup)group).RecordType, group.AllRecordViews.Count)), LogLevel.Group);
 
 			group.ChildRecordViews.UnionWith(ChildRecordViews);
 			group.AllRecordViews.UnionWith(AllRecordViews);

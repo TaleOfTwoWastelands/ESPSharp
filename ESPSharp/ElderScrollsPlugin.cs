@@ -28,10 +28,10 @@ namespace ESPSharp
         public List<Group> AllGroups = new List<Group>();
         public HashSet<RecordView> RecordViews = new HashSet<RecordView>();
 
-		public delegate void ProgressUpdate(string msg, int level);
+		public delegate void ProgressUpdate(string msg, LogLevel level);
 	    public static event ProgressUpdate OnProgressUpdate;
 
-		public delegate void ProgressUpdateError(string msg, int level);
+		public delegate void ProgressUpdateError(string msg, LogLevel level);
 		public static event ProgressUpdateError OnProgressUpdateError;
 
 		protected MemoryMappedFile mmf;
@@ -163,7 +163,7 @@ namespace ESPSharp
 
                 Masters.Add(FileName);
 
-				Log("Beginning loading plugin " + FileName, 1);
+				Log("Beginning loading plugin " + FileName, LogLevel.Plugin);
 
 				while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
@@ -185,7 +185,7 @@ namespace ESPSharp
 
 					
 				}
-				Log("Finished loading plugin " + FileName, 1);
+				Log("Finished loading plugin " + FileName, LogLevel.Plugin);
             }
 
             ElderScrollsPlugin.LoadedPlugins.Add(this);
@@ -269,15 +269,25 @@ namespace ESPSharp
 
 
 		#region Logging
-		public static void Log(string msg, int level)
+		public static void Log(string msg, LogLevel level)
 		{
 			OnProgressUpdate?.Invoke(msg, level);
 		}
 
-		public static void LogError(string msg, int level)
+		public static void LogError(string msg, LogLevel level)
 		{
 			OnProgressUpdateError?.Invoke(msg, level);
 		}
 		#endregion
 	}
+
+    public enum LogLevel
+    {
+        Plugin,
+        Group,
+        Record,
+        SubrecordCollection,
+        Subrecord,
+        DataStructure
+    }
 }
