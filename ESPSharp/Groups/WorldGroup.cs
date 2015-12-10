@@ -7,7 +7,7 @@ using ESPSharp.DataTypes;
 
 namespace ESPSharp
 {
-    class WorldGroup : Group, ISubgroup
+    public class WorldGroup : Group, ISubgroup
     {
         public FormID Worldspace { get; protected set; }
 
