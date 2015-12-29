@@ -20,7 +20,8 @@ namespace ESPSharp
     public class ElderScrollsPlugin : IDisposable
     {
         public static List<ElderScrollsPlugin> LoadedPlugins = new List<ElderScrollsPlugin>();
-        public static Dictionary<uint, List<RecordView>> LoadedRecordViews = new Dictionary<uint, List<RecordView>>();        
+        public static Dictionary<uint, List<RecordView>> LoadedRecordViews = new Dictionary<uint, List<RecordView>>();
+        public static Dictionary<string, Dictionary<uint, List<RecordView>>> RecordViewsByType = new Dictionary<string, Dictionary<uint, List<RecordView>>>();
         public static List<KeyValuePair<string, bool>> pluginLocations = new List<KeyValuePair<string, bool>>();
         public List<string> Masters = new List<string>();
         public RecordView Header;
@@ -194,14 +195,29 @@ namespace ESPSharp
             {
                 LoadOrderFormID loID = new LoadOrderFormID(view.FormID, this);
 
+                Dictionary<uint, List<RecordView>> typeDict;
                 List<RecordView> viewList;
 
+                //add view to collection of all views
                 if (!ElderScrollsPlugin.LoadedRecordViews.TryGetValue(loID.RawValue, out viewList))
                 {
                     viewList = new List<RecordView>();
                     ElderScrollsPlugin.LoadedRecordViews.Add(loID.RawValue, viewList);
                 }
+                viewList.Add(view);
 
+                //add view to categorized collection of all views
+                string tag = view.Tag;
+                if (!ElderScrollsPlugin.RecordViewsByType.TryGetValue(tag, out typeDict))
+                {
+                    typeDict = new Dictionary<uint, List<RecordView>>();
+                    ElderScrollsPlugin.RecordViewsByType.Add(tag, typeDict);
+                }
+                if (!ElderScrollsPlugin.RecordViewsByType[tag].TryGetValue(loID.RawValue, out viewList))
+                {
+                    viewList = new List<RecordView>();
+                    ElderScrollsPlugin.RecordViewsByType[tag].Add(loID.RawValue, viewList);
+                }
                 viewList.Add(view);
             }
         }
