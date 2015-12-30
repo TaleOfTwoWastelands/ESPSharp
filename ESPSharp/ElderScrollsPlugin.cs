@@ -11,8 +11,8 @@ using System.Xml.Linq;
 using ESPSharp.Enums;
 using ESPSharp.Enums.Flags;
 using ESPSharp.Interfaces;
+using ESPSharp.Records;
 using ESPSharp.Subrecords;
-using ESPSharp.SubrecordCollections;
 using ESPSharp.DataTypes;
 
 namespace ESPSharp
@@ -52,13 +52,51 @@ namespace ESPSharp
 
         public string FileName { get; protected set; }
 
-        public ElderScrollsPlugin()
+        /// <summary>
+        /// Create a new, empty plugin
+        /// </summary>
+        /// <param name="name">The name of the plugin. </param>
+        /// <param name="author">The author of the plugin</param>
+        /// <param name="description">The description embedded in the plugin</param>
+        //Sorry this is hideous, only way to link the two constructors
+        public ElderScrollsPlugin(string name, string author = "", string description = "")
+            :this(name, 
+                 new Header(
+                    new PluginHeader(1.34f, 0, 0x800),
+                    null,
+                    null,
+                    new SimpleSubrecord<string>("CNAM", author),
+                    new SimpleSubrecord<string>("SNAM", description),
+                    null,
+                    null,
+                    null
+                ))
         {
         }
 
-        public ElderScrollsPlugin(string name)
+        /// <summary>
+        /// Creates a new plugin using the given header
+        /// </summary>
+        /// <param name="name">The name of the plugin</param>
+        /// <param name="header">The header for the plugin</param>
+        public ElderScrollsPlugin(string name, Header header)
+            :this(name, new RecordView(header))
         {
-            Name = name;
+        }
+
+        /// <summary>
+        /// Creates a new plugin using the given RecordView that is assumed to contain a Header record
+        /// </summary>
+        /// <param name="name">The name of the plugin</param>
+        /// <param name="header">The RecordView for the plugin, MUST be a view to a Header record</param>
+        public ElderScrollsPlugin(string name, RecordView header)
+        {
+            if (header.Record is Header)
+            {
+                Name = name;
+                Header = header;
+            }
+            else throw new ArgumentException("header must be a RecordView to a Header record");
         }
 
         public void Read(string source)
@@ -106,12 +144,10 @@ namespace ESPSharp
 
         public static ElderScrollsPlugin ReadXML(string sourceFolder)
         {
-            ElderScrollsPlugin outPlug = new ElderScrollsPlugin();
 			var headerLocation = Path.Combine(sourceFolder, "Header.xml");
             var xml = XDocument.Load(headerLocation);
+            ElderScrollsPlugin outPlug = new ElderScrollsPlugin(Path.GetDirectoryName(sourceFolder), new RecordView(headerLocation));
             outPlug.FileName = xml.Element("Record").Element("FileName").Value;
-            outPlug.Name = Path.GetDirectoryName(sourceFolder);
-            outPlug.Header = new RecordView(headerLocation);
 
             outPlug.ReadMasters();
 
@@ -146,54 +182,54 @@ namespace ESPSharp
             }
         }
 
-        public void ReadBinary(string file)
+        public static ElderScrollsPlugin ReadBinary(string file)
         {
-            FileName = Path.GetFileName(file);
-            Name = Path.GetFileNameWithoutExtension(file);
+            ElderScrollsPlugin outPlug = new ElderScrollsPlugin(Path.GetFileNameWithoutExtension(file), new Header());
+            outPlug.FileName = Path.GetFileName(file);
             FileInfo fi = new FileInfo(file);
-            mmf = MemoryMappedFile.CreateFromFile(file, FileMode.Open, Path.GetFileNameWithoutExtension(file), fi.Length, MemoryMappedFileAccess.Read);
+            outPlug.mmf = MemoryMappedFile.CreateFromFile(file, FileMode.Open, Path.GetFileNameWithoutExtension(file), fi.Length, MemoryMappedFileAccess.Read);
 
-            using (MemoryMappedViewStream stream = mmf.CreateViewStream(0, fi.Length, MemoryMappedFileAccess.Read))
-            using (ESPReader reader = new ESPReader(stream, this))
+            using (MemoryMappedViewStream stream = outPlug.mmf.CreateViewStream(0, fi.Length, MemoryMappedFileAccess.Read))
+            using (ESPReader reader = new ESPReader(stream, outPlug))
             {
-                Header = new RecordView(reader, mmf);
+                outPlug.Header = new RecordView(reader, outPlug.mmf);
 
-                Masters = new List<string>();
+                outPlug.Masters = new List<string>();
 
-                ReadMasters();
+                outPlug.ReadMasters();
 
-                Masters.Add(FileName);
+                outPlug.Masters.Add(outPlug.FileName);
 
-				Log("Beginning loading plugin " + FileName, LogLevel.Plugin);
+				Log("Beginning loading plugin " + outPlug.FileName, LogLevel.Plugin);
 
 				while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
                     var group = Group.CreateGroup(reader);
 
-                    group.GroupAdded += (g) => AllGroups.Add(g);
-                    group.RecordViewAdded += (r) => RecordViews.Add(r);
+                    group.GroupAdded += (g) => outPlug.AllGroups.Add(g);
+                    group.RecordViewAdded += (r) => outPlug.RecordViews.Add(r);
 
-                    group.ReadBinary(reader, mmf);
+                    group.ReadBinary(reader, outPlug.mmf);
 
-					var index = TopGroups.FindIndex(g => ((TopGroup)g).RecordType.Equals(((TopGroup)group).RecordType));
+					var index = outPlug.TopGroups.FindIndex(g => ((TopGroup)g).RecordType.Equals(((TopGroup)group).RecordType));
 					if (index > 0)
-						group.MergeGroup(TopGroups[index]);
+						group.MergeGroup(outPlug.TopGroups[index]);
 					else
 					{
-						TopGroups.Add(group);
-						AllGroups.Add(group);
+                        outPlug.TopGroups.Add(group);
+                        outPlug.AllGroups.Add(group);
 					}
 
 					
 				}
-				Log("Finished loading plugin " + FileName, LogLevel.Plugin);
+				Log("Finished loading plugin " + outPlug.FileName, LogLevel.Plugin);
             }
 
-            ElderScrollsPlugin.LoadedPlugins.Add(this);
+            ElderScrollsPlugin.LoadedPlugins.Add(outPlug);
 
-            foreach (RecordView view in RecordViews)
+            foreach (RecordView view in outPlug.RecordViews)
             {
-                LoadOrderFormID loID = new LoadOrderFormID(view.FormID, this);
+                LoadOrderFormID loID = new LoadOrderFormID(view.FormID, outPlug);
 
                 Dictionary<uint, List<RecordView>> typeDict;
                 List<RecordView> viewList;
@@ -220,6 +256,7 @@ namespace ESPSharp
                 }
                 viewList.Add(view);
             }
+            return outPlug;
         }
 
         public static void Clear()

@@ -61,7 +61,7 @@ class Program
         foreach (string file in args)
         {
             string outDir = Path.GetFileNameWithoutExtension(file);
-            ElderScrollsPlugin plugin = new ElderScrollsPlugin();
+            ElderScrollsPlugin plugin;
 
             if (outDir == Path.GetFileName(file))
             {
@@ -94,10 +94,11 @@ class Program
                 if (ElderScrollsPlugin.LoadedPlugins.Any(esp => esp.FileName == file))
                     plugin = ElderScrollsPlugin.LoadedPlugins.First(esp => esp.FileName == file);
                 else
-                    plugin.ReadBinary(file);
+                    plugin = ElderScrollsPlugin.ReadBinary(file);
 
                 if (Directory.Exists(outDir))
                     Directory.Delete(outDir, true);
+
                 Directory.CreateDirectory(outDir);
 
                 plugin.WriteXML(outDir);
